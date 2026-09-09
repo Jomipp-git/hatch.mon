@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,els,advance}=await setup();
+const hint=els['egg-hint'].textContent;assert.equal(els.toast.hidden,true);
+els['creature-button'].fire('click');assert.equal(els['egg-hint'].textContent,hint);assert.equal(els.toast.hidden,false);assert.notEqual(els.toast.textContent,hint);
+const first=els.toast.textContent;run('render()');assert.equal(els.toast.textContent,first);
+els['creature-button'].fire('click');assert.notEqual(els.toast.textContent,first);assert.equal(els['egg-hint'].textContent,hint);
+advance(2180);assert.equal(els.toast.hidden,true);assert.equal(els['egg-hint'].hidden,false);
+run('state.incubationRemaining=INCUBATION_MS*.4;render()');assert.notEqual(els['egg-hint'].textContent,hint);assert.equal(els.toast.hidden,true);
+run('state.incubationRemaining=0;hatch(()=>0);render()');assert.equal(els['egg-hint'].hidden,true);assert.equal(els.toast.hidden,true);
+console.log('PASS egg messages: phase hint separate from touch feedback, expiry, phase changes and hatch.');
+})().catch(e=>{console.error(e);process.exitCode=1});

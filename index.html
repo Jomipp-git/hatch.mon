@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#b4adc8">
+<title>Hatch.mon</title>
+<style>
+  :root{color-scheme:light;--ink:#303d35;--lcd:#d5dfd0;--shell:#bbb3cf;--border:#5c546b;--paper:#f3f0f7;--sprite-size:clamp(140px,32vw,160px)}
+  *{box-sizing:border-box} [hidden]{display:none!important}
+  body{margin:0;min-height:100svh;display:grid;place-items:center;padding:28px 16px;background:#e9e7ed;color:var(--ink);font:16px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
+  button{font:inherit;color:inherit;cursor:pointer;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--paper);padding:10px 12px;transition:background .15s,transform .15s}
+  button:hover:enabled{background:#fff} button:active:enabled{transform:translateY(2px)} button:disabled{opacity:.45;cursor:not-allowed}
+  button:focus-visible{outline:3px solid #466a4e;outline-offset:4px}
+  .console{width:min(100%,480px);padding:24px;background:var(--shell);border:2px solid var(--border);border-radius:22px 22px 40px 22px;box-shadow:inset 0 2px #ffffff70,inset 0 -6px #00000012,0 8px var(--border),0 20px 40px #30284018}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;gap:12px}
+  h1{font-size:1.45rem;letter-spacing:-1px;margin:0;color:#40394f} .pokemon-logo{display:block;width:clamp(72.5px,21.875vw,105px);height:30px;object-fit:contain;flex-shrink:0}
+  .bezel{background:#4e4a56;padding:12px;border-radius:10px 10px 20px 10px}
+  .screen{position:relative;isolation:isolate;overflow:hidden;background:var(--lcd);border:2px solid #303d35;padding:22px 20px;box-shadow:inset 2px 2px #00000010}
+  .scene-layer{position:relative;z-index:0;width:100%;min-width:0}
+  .habitat{width:100%;text-align:center;min-height:218px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #creature-button{border:0;background:transparent;box-shadow:none;padding:0;width:var(--sprite-size);height:var(--sprite-size);min-width:0;flex-shrink:0;display:grid;place-items:center}#creature-button:disabled{opacity:1}
+  #sprite{display:flex;align-items:center;justify-content:center;width:var(--sprite-size);height:var(--sprite-size);font-size:calc(var(--sprite-size) * .45);line-height:1;filter:drop-shadow(0 6px 0 #526b3920)}
+  h2{font-size:1.05rem;margin:8px 0} #health{font-size:.875rem;margin:0 0 12px}.subtle{font-size:.875rem;color:#555065}
+  #stats{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;padding-top:12px;border-top:1px solid #9ca989}
+  .meter label{display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;gap:6px}progress{display:block;appearance:none;width:100%;height:9px;border:1px solid #829483;border-radius:2px;background:#b1c1ad;overflow:hidden}
+  progress::-webkit-progress-bar{background:#b1c1ad}progress::-webkit-progress-value{background:var(--meter-color,#356745)}progress::-moz-progress-bar{background:var(--meter-color,#356745)}
+  .care{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.care button{padding:8px 2px;font-size:.78rem;box-shadow:0 3px var(--border)}.care .pixel-icon{display:block;width:18px;height:18px;margin:0 auto 3px}
+  .trainer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0 6px;font-size:.68rem;color:#494351}
+  .screen-tools{position:absolute;top:22px;left:10px;display:flex;flex-direction:column;gap:8px;z-index:2}.screen-tools button{width:44px;height:44px;min-height:44px;padding:4px;border:1px solid #74826770;border-radius:9px;background:#ffffff38;font-size:1.15rem}.screen-tools button:hover:enabled{background:#ffffff80}.screen-tools button:focus-visible{outline-offset:2px}
+  .emergency{display:flex;gap:8px;margin-top:14px}.emergency button{flex:1;background:#fff2cc}
+  .message-strip{height:56px;min-width:0;display:grid;align-items:center;padding:6px 10px;background:#c8d2c3;border:3px double #657260;border-radius:5px;overflow:hidden;text-align:center}
+  .message-strip #health,.message-strip #toast{grid-area:1/1;margin:0;width:100%;font-size:13.5px;line-height:18px;max-height:36px;overflow:hidden;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .message-strip:has(#toast:not([hidden])) #health{visibility:hidden}
+  #toast{opacity:0;transition:opacity .18s ease;pointer-events:none}#toast.visible{opacity:1}#toast[data-kind="event"]{font-weight:bold}#save-note{font-size:10px;margin:0;text-align:center;overflow:auto}
+
+  #restart{width:100%;margin-top:16px}
+  dialog{width:min(92vw,480px);max-height:85svh;overflow:auto;border:2px solid var(--border);border-radius:20px;padding:22px;background:#f4f1f8;color:var(--ink);box-shadow:0 20px 70px #0003}
+  dialog::backdrop{background:#29223480}dialog header{position:sticky;top:-22px;background:#f4f1f8;padding:8px 0;z-index:1}dialog h2{font-size:1.2rem}#close-panel{min-width:44px}
+  .panel-row{padding:14px 0;border-top:1px solid #d7d1df;display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-row div{flex:1;min-width:0}.panel-row p{font-size:.875rem;margin:5px 0}.panel-row button{font-size:.875rem;flex-shrink:0}.panel-row ul{padding-left:20px;font-size:.875rem}.panel-note{font-size:.875rem;margin:8px 0 18px}
+  .screen{transition:background .4s,color .4s}.screen.lights-off{background:#293a3d;color:#e3ebd1}.lights-off progress::-webkit-progress-bar{background:#445550}
+  .identity{display:flex;align-items:center;justify-content:center;gap:8px}#gender{font-size:1.2rem;font-weight:bold}#gender[data-gender="male"]{color:#2462bc}#gender[data-gender="female"]{color:#bd314e}.lights-off #gender[data-gender="male"]{color:#83baff}.lights-off #gender[data-gender="female"]{color:#ff93ae}
+  #nickname{margin:8px 0 2px;font-size:1.2rem;font-weight:bold;overflow-wrap:anywhere;max-width:100%}.identity.has-nickname #name{font-size:.85rem;font-weight:normal;margin:2px 0 10px}.identity.has-nickname #gender{font-size:1rem}#creature-button{position:relative}
+  .newborn{animation:newborn .55s ease-out}@keyframes newborn{from{transform:scale(.45);opacity:0}to{transform:scale(1);opacity:1}}
+  #sprite.sheet{width:calc(var(--sprite-size) * var(--frame-ratio-width,1));height:calc(var(--sprite-size) * var(--frame-ratio-height,1));margin:0;background-size:400% 400%;image-rendering:pixelated;background-repeat:no-repeat;font-size:0;filter:none}
+  #found-dialog{border:0;background:transparent;box-shadow:none;padding:12px;width:min(92vw,440px)}#found-dialog::backdrop{background:#25312560}
+  #found-bubble{width:100%;padding:22px;text-align:left;border:4px double #354333;border-radius:6px;background:#f3f7e6;box-shadow:5px 5px 0 #25312580;font-weight:bold}#found-bubble small{display:block;margin-top:14px;font-size:.8rem;text-align:right}
+  #nickname-form label{display:block;margin:12px 0 6px}#nickname-input{width:100%;font:inherit;padding:12px;border:2px solid var(--border);border-radius:8px;background:white;color:var(--ink)}.dialog-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  @media(prefers-reduced-motion:reduce){.newborn{animation:none!important}.screen,#toast{transition:none}}
+  #poop-layer{height:20px;display:flex;justify-content:center;gap:12px;width:100%;pointer-events:none}.poop{width:20px;height:16px;display:block;background:#806042;clip-path:polygon(40% 0,60% 0,60% 25%,80% 25%,80% 50%,100% 50%,100% 100%,0 100%,0 50%,20% 50%,20% 25%,40% 25%);box-shadow:inset 0 -4px #58402c;image-rendering:pixelated}
+  .pokemon-pixels{display:block;image-rendering:pixelated;image-rendering:crisp-edges;flex-shrink:0}#sprite:has(.pokemon-pixels){filter:none}#sprite.resting .pokemon-pixels{opacity:.8}
+  .heat-reaction{animation:heatReaction .26s ease-out}@keyframes heatReaction{35%{transform:translateY(-3px) scale(1.035,.97)}70%{transform:translateY(1px) scale(.985,1.015)}}
+  progress.meter-changed{animation:meterChanged .6s ease-out}@keyframes meterChanged{25%{filter:brightness(1.5);box-shadow:0 0 0 2px #8fa375;transform:translateY(-1px)}100%{filter:none;transform:none}}
+  @media(prefers-reduced-motion:reduce){.heat-reaction{animation:heatGlow .26s ease-out}progress.meter-changed{animation:meterGlow .6s ease-out}@keyframes heatGlow{50%{box-shadow:inset 0 0 0 1px #8fa375}}@keyframes meterGlow{30%{box-shadow:0 0 0 2px #8fa375}}}
+  .evolving{animation:evolve .7s ease-in-out}@keyframes evolve{50%{transform:scale(1.15);filter:brightness(1.35)}}
+  .social-section{border-top:1px solid #d7d1df;padding:16px 0}.social-section h3{font-size:1rem;margin:0 0 10px}.social-section label{display:block;margin:10px 0 5px;font-size:.875rem}
+  .social-section textarea,.social-section select{display:block;width:100%;max-width:100%;font:inherit;font-size:.8rem;padding:10px;border:1px solid var(--border);border-radius:8px;background:white;color:var(--ink)}.social-section textarea{resize:vertical;overflow-wrap:anywhere}
+  .social-qr{display:block;max-width:100%;height:auto;margin:12px auto;image-rendering:pixelated}.social-section video{display:block;width:100%;max-height:240px;background:#292234;border-radius:8px}.social-status{padding:10px;border:2px double #748267;border-radius:8px;font-size:.875rem;overflow-wrap:anywhere}.social-status:empty{display:none}
+  @media(max-width:370px){.screen-tools{left:2px;top:14px}.screen-tools button{width:40px;padding:2px;font-size:1rem}.console{padding:16px}.screen{padding:18px 12px}.care{grid-template-columns:repeat(2,1fr)}.trainer{flex-wrap:wrap}.panel-row{flex-wrap:wrap}}
+  @media(max-width:330px){:root{--sprite-size:130px}}
+  @media(prefers-reduced-motion:reduce){button{transition:none}.evolving{animation:none}}
+
+  .pixel-icon{display:inline-block;width:20px;height:20px;flex-shrink:0;vertical-align:middle;position:relative;font-size:20px;background:transparent;image-rendering:pixelated}
+  .icon-label{display:inline-flex;align-items:center;gap:8px}.egg-fallback{width:64px;height:64px}
+  .meter label span{font-weight:700;font-variant-numeric:tabular-nums;color:inherit}
+  progress[data-level="good"]{--meter-color:#356745}progress[data-level="warning"]{--meter-color:#92611b}progress[data-level="low"]{--meter-color:#a13d3c}
+  .lights-off progress[data-level="good"]{--meter-color:#85bc8d}.lights-off progress[data-level="warning"]{--meter-color:#e5b65f}.lights-off progress[data-level="low"]{--meter-color:#ed8d83}
+  .habitat:has(.pokemon-pixels){min-height:200px}.habitat:has(.pokemon-pixels) #creature-button,.habitat:has(.pokemon-pixels) #sprite{height:150px}
+  .habitat:has(.pokemon-pixels) h2{margin:2px 0 4px}.habitat:has(.pokemon-pixels) #nickname{margin:2px 0 0}
+  .care button{border-radius:8px}.screen-tools button{border-radius:6px}
+  .pokemon-pixels.feeding-idle{animation:petEat .84s ease-in-out;transform-origin:50% 75%}#sprite[data-reaction="play"]{animation:petPlay .6s steps(4)}#sprite[data-reaction="clean"]{animation:petClean .6s steps(3)}#sprite[data-reaction="train"]{animation:petTrain .6s steps(4)}#sprite[data-reaction="sick"]{animation:petSick .7s steps(4)}
+  @keyframes petEat{0%,100%{translate:0 0;rotate:0deg}18%,48%,76%{translate:0 5px;rotate:3deg}32%,62%,88%{translate:0 1px;rotate:1deg}}@keyframes petPlay{25%,65%{translate:0 -3px}45%{rotate:-3deg}}@keyframes petClean{50%{filter:brightness(1.25);translate:0 -2px}}@keyframes petTrain{25%{translate:-3px 0}75%{translate:3px 0}}@keyframes petSick{25%,75%{translate:-2px 0;opacity:.65}50%{translate:2px 0}}
+  @media(prefers-reduced-motion:reduce){#sprite[data-reaction],.pokemon-pixels.feeding-idle{animation:none}}
+  .pixel-icon[data-icon="bag"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.25em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.625em 0.125em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.625em 0.25em currentColor,0.75em 0.25em currentColor,0.125em 0.375em currentColor,0.75em 0.375em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.125em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.75em 0.625em currentColor,0.125em 0.75em currentColor,0.75em 0.75em currentColor,0.125em 0.875em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor,0.75em 0.875em currentColor}
+  .pixel-icon[data-icon="food"]{--pixels:0.5em 0em currentColor,0.375em 0.125em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.5em 0.25em currentColor,0.625em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0em 0.625em currentColor,0.125em 0.625em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.75em 0.625em currentColor,0.125em 0.75em currentColor,0.25em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.625em 0.75em currentColor,0.25em 0.875em currentColor,0.5em 0.875em currentColor}
+  .pixel-icon[data-icon="play"]{--pixels:0.25em 0em currentColor,0.375em 0em currentColor,0.5em 0em currentColor,0.625em 0em currentColor,0.125em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.75em 0.125em currentColor,0em 0.25em currentColor,0.25em 0.25em currentColor,0.625em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.75em 0.5em currentColor,0.875em 0.5em currentColor,0em 0.625em currentColor,0.25em 0.625em currentColor,0.625em 0.625em currentColor,0.875em 0.625em currentColor,0.125em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.75em 0.75em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor}
+  .pixel-icon[data-icon="light"]{--pixels:0.25em 0em currentColor,0.375em 0em currentColor,0.125em 0.125em currentColor,0.25em 0.125em currentColor,0em 0.25em currentColor,0.125em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.875em 0.5em currentColor,0em 0.625em currentColor,0.125em 0.625em currentColor,0.25em 0.625em currentColor,0.75em 0.625em currentColor,0.875em 0.625em currentColor,0.125em 0.75em currentColor,0.25em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.625em 0.75em currentColor,0.75em 0.75em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor}
+  .pixel-icon[data-icon="clean"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.375em 0.25em currentColor,0.5em 0.25em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0em 0.625em currentColor,0.125em 0.625em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.75em 0.625em currentColor,0.875em 0.625em currentColor,0em 0.75em currentColor,0.25em 0.75em currentColor,0.5em 0.75em currentColor,0.875em 0.75em currentColor,0em 0.875em currentColor,0.25em 0.875em currentColor,0.5em 0.875em currentColor,0.875em 0.875em currentColor}
+  .pixel-icon[data-icon="train"]{--pixels:0.125em 0.125em currentColor,0.75em 0.125em currentColor,0em 0.25em currentColor,0.125em 0.25em currentColor,0.75em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.875em 0.5em currentColor,0em 0.625em currentColor,0.125em 0.625em currentColor,0.75em 0.625em currentColor,0.875em 0.625em currentColor,0.125em 0.75em currentColor,0.75em 0.75em currentColor}
+  .pixel-icon[data-icon="oak"]{--pixels:0.125em 0em currentColor,0.25em 0em currentColor,0.375em 0em currentColor,0.5em 0em currentColor,0.625em 0em currentColor,0.75em 0em currentColor,0em 0.125em currentColor,0.125em 0.125em currentColor,0.75em 0.125em currentColor,0.875em 0.125em currentColor,0em 0.25em currentColor,0.25em 0.25em currentColor,0.5em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.875em 0.375em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.125em 0.75em currentColor,0.25em 0.75em currentColor,0.125em 0.875em currentColor}
+  .pixel-icon[data-icon="medicine"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.375em 0.25em currentColor,0.5em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.875em 0.5em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor}
+  .pixel-icon[data-icon="stone"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.25em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.625em 0.125em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.375em 0.25em currentColor,0.625em 0.25em currentColor,0.75em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.875em 0.5em currentColor,0.125em 0.625em currentColor,0.25em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.75em 0.625em currentColor,0.25em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.625em 0.75em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor}
+  .pixel-icon[data-icon="iq"]{--pixels:0.25em 0em currentColor,0.375em 0em currentColor,0.5em 0em currentColor,0.625em 0em currentColor,0.125em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.75em 0.125em currentColor,0em 0.25em currentColor,0.25em 0.25em currentColor,0.625em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.875em 0.375em currentColor,0.125em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.75em 0.5em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor}
+  .pixel-icon[data-icon="kindness"]{--pixels:0.125em 0em currentColor,0.25em 0em currentColor,0.625em 0em currentColor,0.75em 0em currentColor,0em 0.125em currentColor,0.125em 0.125em currentColor,0.25em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.625em 0.125em currentColor,0.75em 0.125em currentColor,0.875em 0.125em currentColor,0em 0.25em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.375em 0.25em currentColor,0.5em 0.25em currentColor,0.625em 0.25em currentColor,0.75em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor}
+  .pixel-icon[data-icon="style"]{--pixels:0.375em 0em currentColor,0.375em 0.125em currentColor,0.25em 0.25em currentColor,0.375em 0.25em currentColor,0.5em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.375em 0.625em currentColor,0.375em 0.75em currentColor}
+  .pixel-icon[data-icon="egg"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.25em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.625em 0.125em currentColor,0.125em 0.25em currentColor,0.75em 0.25em currentColor,0.125em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.75em 0.375em currentColor,0em 0.5em currentColor,0.875em 0.5em currentColor,0em 0.625em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.875em 0.625em currentColor,0.125em 0.75em currentColor,0.75em 0.75em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor}
+  .pixel-icon::before{content:'';position:absolute;left:0;top:0;width:.125em;height:.125em;box-shadow:var(--pixels);background:transparent}
+  .screen-tools .pixel-icon{width:24px;height:24px;font-size:24px;color:#344e3b}.lights-off .screen-tools .pixel-icon{color:#dce8d0}
+  .care .pixel-icon{font-size:18px}.egg-fallback{font-size:64px}
+  .social-flows{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.social-flows [aria-pressed="true"]{background:#d5dfd0;border-color:#46654c}
+  .breeding-result{border:2px solid #758470;padding:14px;border-radius:8px;background:#e5ebdf;margin:12px 0}.breeding-result[data-ok="false"]{border-color:#a16d50;background:#f0e4d8}.breeding-result h3{margin:0 0 8px}.breeding-result p{margin:6px 0;font-size:.875rem}
+  .social-section details{margin-top:12px}.social-section summary{cursor:pointer;font-size:.8rem}.social-section textarea{font-size:.7rem}
+  .habitat{position:relative}#bond{display:flex;gap:4px;justify-content:center;height:12px;margin:0 0 4px}#bond .pixel-icon{width:10px;height:10px;font-size:10px;color:#395947}#bond .empty{opacity:.23}
+  .time-controls button::before,.time-controls button::after{content:none!important;display:none!important}.time-controls button{background-image:none;box-shadow:none}
+  #sprite[data-reaction="happy"]{animation:petSway .65s ease-in-out}@keyframes petSway{25%{translate:-2px 0}75%{translate:2px 0}}
+  @media(prefers-reduced-motion:reduce){#sprite[data-reaction="happy"]{animation:none}}
+  .memory-card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #c5ccbd}.memory-card h3{font-size:.95rem;margin:0 0 6px}.memory-card p{font-size:.8rem;margin:5px 0;overflow-wrap:anywhere}.memory-sprite{display:flex;align-items:center;justify-content:center;min-width:0}.memory-sprite{width:80px;height:80px}.memory-sprite canvas{width:80px!important;height:80px!important}.dex-card{padding:8px 0;grid-template-columns:80px minmax(0,1fr);gap:10px}.memory-hearts{display:flex;gap:3px;margin:8px 0}.memory-hearts .pixel-icon{font-size:12px;width:12px;height:12px;color:#395947}.memory-hearts .empty{opacity:.25}
+  /* Fixed hardware slots: content and sprite bounds cannot size the shell. */
+  .console{height:684px;display:grid;grid-template-rows:32px 358px 56px 60px 18px 44px 16px;gap:8px;overflow:hidden}
+  .console>header{grid-row:1;margin:0;min-width:0}.bezel{grid-row:2;height:358px;min-width:0}.screen{height:334px;padding:16px 12px}
+  .scene-layer{height:298px;display:grid;grid-template-rows:220px 74px;gap:4px}
+  .habitat,.habitat:has(.pokemon-pixels){height:220px;min-height:0;display:grid;grid-template-rows:140px 16px 24px 26px 14px;justify-items:center;align-content:start}
+  #creature-button,.habitat:has(.pokemon-pixels) #creature-button{grid-row:1;width:100%;height:140px;overflow:hidden}
+  #sprite,.habitat:has(.pokemon-pixels) #sprite{height:140px;flex-shrink:0}
+  #sprite.sheet{width:calc(104px * var(--frame-ratio-width,1));height:calc(104px * var(--frame-ratio-height,1));translate:0 6px}
+  #poop-layer{grid-row:2;height:16px}#nickname{grid-row:3}#identity{grid-row:4;max-width:100%;min-width:0}#bond{grid-row:5}
+  #name,#nickname{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0!important}#name{font-size:.9rem}
+  #egg-hint{grid-row:2;margin:0;text-align:center;font-size:12px;line-height:18px;align-self:start;overflow-wrap:anywhere}
+  #stats{grid-row:2;margin:0;padding-top:8px;gap:6px 12px;min-width:0}
+  .message-strip{grid-row:3}.care{grid-row:4;margin:0;grid-template-columns:repeat(4,minmax(0,1fr));min-width:0}.care button{min-width:0;font-size:.7rem;padding:6px 1px}
+  .trainer{grid-row:5;margin:0}.emergency,#restart{grid-row:6;grid-column:1;margin:0;height:44px}.emergency:has(button:not([hidden])){z-index:1}#save-note{grid-row:7}
+  @media(max-width:370px){.console{padding:16px;height:668px}.screen{padding:16px 12px}.care{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main class="console">
+  <header><h1>hatch.mon</h1><img class="pokemon-logo" src="assets/pokemon_logo.png" alt="" aria-hidden="true"></header>
+  <div class="bezel"><section id="screen" class="screen" aria-label="Tu compañero">
+    <nav class="screen-tools" aria-label="Más opciones">
+      <button type="button" data-panel="inventory" aria-label="Mochila" title="Mochila"><span class="pixel-icon" data-icon="bag" aria-hidden="true"></span></button>
+      <button type="button" data-panel="training" aria-label="Entrenar" title="Entrenar"><span class="pixel-icon" data-icon="train" aria-hidden="true"></span></button>
+      <button type="button" data-panel="oak" aria-label="Profesor Oak" title="Profesor Oak"><span class="pixel-icon" data-icon="oak" aria-hidden="true"></span></button>
+    </nav>
+    <div class="scene-layer">
+    <div class="habitat">
+      <button id="creature-button" type="button" aria-label="Dar calor al huevo"><span id="sprite" role="img" aria-label="Huevo"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
+      <div id="poop-layer" aria-label="Suciedad del hábitat" hidden></div>
+      <p id="nickname" hidden></p>
+      <div id="identity" class="identity"><h2 id="name">¡Un huevo misterioso!</h2><span id="gender" hidden></span></div>
+      <div id="bond" aria-label="Vínculo" hidden></div>
+    </div>
+    <p id="egg-hint" aria-live="polite">Parece que a este huevo aún le queda mucho para abrirse</p>
+    <div id="stats" hidden>
+      <div class="meter"><label for="hambre">Hambre <span id="value-hambre">100</span></label><progress id="hambre" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="felicidad">Ánimo <span id="value-felicidad">100</span></label><progress id="felicidad" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="energia">Energía <span id="value-energia">100</span></label><progress id="energia" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="higiene">Higiene <span id="value-higiene">100</span></label><progress id="higiene" max="100" value="100">100%</progress></div>
+    </div>
+    </div>
+  </section></div>
+  <div id="message-strip" class="message-strip" aria-label="Mensajes">
+    <p id="health" role="status" hidden></p>
+    <div id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+  </div>
+  <div class="care" aria-label="Cuidados">
+    <button type="button" data-action="alimentar" disabled><span class="pixel-icon" data-icon="food" aria-hidden="true"></span>Alimentar</button>
+    <button type="button" data-action="jugar" disabled><span class="pixel-icon" data-icon="play" aria-hidden="true"></span>Jugar</button>
+    <button type="button" data-action="luz" disabled><span class="pixel-icon" data-icon="light" aria-hidden="true"></span>Apagar luz</button>
+    <button type="button" data-action="limpiar" disabled><span class="pixel-icon" data-icon="clean" aria-hidden="true"></span>Limpiar</button>
+  </div>
+  <div id="trainer" class="trainer" hidden><span id="trainer-energy"></span></div>
+  <div class="emergency">
+    <button type="button" data-action="curar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Curar</button>
+    <button type="button" data-action="auxiliar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Auxiliar</button>
+  </div>
+  <button id="restart" type="button" hidden>Nuevo comienzo · Reiniciar</button>
+  <p id="save-note" hidden></p>
+</main>
+<dialog id="panel" aria-labelledby="panel-title"><header><h2 id="panel-title"></h2><button id="close-panel" type="button" aria-label="Cerrar menú">✕</button></header><div id="panel-content"></div></dialog>
+<dialog id="found-dialog" aria-label="Objeto encontrado"><button id="found-bubble" type="button"><span id="found-text"></span><small>Pulsa aquí o en la pantalla para continuar ▼</small></button></dialog>
+<dialog id="nickname-dialog" aria-labelledby="nickname-title">
+  <h2 id="nickname-title">¡El Huevo ha eclosionado!</h2>
+  <p id="birth-message"></p>
+  <form id="nickname-form"><label for="nickname-input">¿Quieres ponerle un mote?</label><input id="nickname-input" name="nickname" maxlength="20" autocomplete="off" placeholder="Mote opcional">
+    <div class="dialog-actions"><button type="submit">Guardar mote</button><button id="skip-nickname" type="button">Sin mote</button></div>
+  </form>
+</dialog>
+<script src="evolutionTable.js"></script>
+<script src="hatchmonData_v2.js"></script>
+<script src="pokemonDataAdapter.js"></script>
+<script src="vitalSimulation.js"></script>
+<script src="relationship.js"></script>
+<script src="pokedex.js"></script>
+<script src="trainingActivities.js"></script>
+<script src="assets/pmd/manifest.js"></script>
+<script src="pmdRenderer.js"></script>
+<script src="pokemonRenderer.js"></script>
+<script src="socialEngine.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>
+'use strict';
+// Hatch.mon: configuración y motor independientes de la interfaz.
+// Datos Pokémon y condiciones: hatchmonData_v2.js, sin rellenar desde la tabla anterior.
+const MINUTE=60000, HOUR=60*MINUTE, DAY=24*HOUR;
+const TIME_SCALE=1; // Pruebas: 1440 hace transcurrir 4 días en 4 minutos. Escala TODO el juego.
+const INCUBATION_MS=0.1*DAY, HEAT_REDUCTION_MS=5*MINUTE;
+const SAVE_KEY='hatch.mon.v3';
+const CARE=['hambre','felicidad','energia','higiene'];
+const TRAIN=['iq','strength','kindness','style'];
+const LABELS={hambre:'Hambre',felicidad:'Ánimo',energia:'Energía',higiene:'Higiene',iq:'Intelecto',strength:'Fuerza',kindness:'Amabilidad',style:'Estilo'};
+const DECAY=CARE_CONFIG.decay;
+// Las tasas configuradas conservan decimales en cada muestra de un minuto.
+const MAX_AP=CARE_CONFIG.trainerMax, DROP_CHANCE=CARE_CONFIG.dropChance, SLEEP_RECOVERY=CARE_CONFIG.sleepRecovery; // energía recuperada por hora sin luz
+// Cinco PNG transparentes 4×4; celda calculada desde naturalWidth/4 y naturalHeight/4.
+// Mismo tamaño, bounding box y base en todas las hojas. No se generan imágenes.
+const EGG_SPRITES={columns:4,rows:4,phases:{
+  1:{url:'assets/eggs/egg_phase_1.png',frames:16,fps:3,pause:[2500,4500],sequence:[0,0,0,1,2,1,0]},
+  2:{url:'assets/eggs/egg_phase_2.png',frames:16,fps:5,pause:[1500,2800],sequence:[0,1,2,3,2,1,0]},
+  3:{url:'assets/eggs/egg_phase_3.png',frames:16,fps:6,pause:[900,1700],sequence:[0,1,2,3,4,5,6,7,6,4,2,0]},
+  4:{url:'assets/eggs/egg_phase_4.png',frames:16,fps:4.5,pause:[650,1100],sequence:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]},
+  5:{url:'assets/eggs/egg_phase_5.png',frames:16,fps:5.5,pause:null,revealPauseMs:250,sequence:Array.from({length:16},(_,i)=>i)}
+}};
+const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
+const itemCatalog={
+  thunder:{name:'Piedra Trueno',icon:'stone'},water:{name:'Piedra Agua',icon:'stone'},fire:{name:'Piedra Fuego',icon:'stone'},
+  leaf:{name:'Piedra Hoja',icon:'stone'},ice:{name:'Piedra Hielo',icon:'stone'},moon:{name:'Piedra Lunar',icon:'light'},
+  shiny:{name:'Piedra Día',icon:'light'},dawn:{name:'Piedra Alba',icon:'light'},oval:{name:'Piedra Oval',icon:'egg'},
+  electirizer:{name:'Electrizador',icon:'stone'},magmarizer:{name:'Magmatizador',icon:'stone'},
+  alola:{name:'Recuerdo de Alola',icon:'stone'},galar:{name:'Recuerdo de Galar',icon:'stone'},
+  berry:{name:'Baya',icon:'food',food:true},
+  berryStrength:{name:'Baya de Fuerza',icon:'food',food:true,attribute:'strength'},
+  berryIQ:{name:'Baya de Intelecto',icon:'food',food:true,attribute:'iq'},
+  berryKindness:{name:'Baya de Amabilidad',icon:'food',food:true,attribute:'kindness'},
+  berryStyle:{name:'Baya de Estilo',icon:'food',food:true,attribute:'style'},medicine:{name:'Medicina',icon:'medicine',heal:true}
+};
+// Normalizador del formato de reglas del motor. La fuente v2 aporta los valores;
+// los cuidados sostenidos exigen continuidad y el entrenamiento usa valores fijos.
+const ITEM_ALIASES={piedra_trueno:'thunder',piedra_agua:'water',piedra_fuego:'fire',piedra_hoja:'leaf',piedra_hielo:'ice',piedra_lunar:'moon',piedra_dia:'shiny',Electrizador:'electirizer',Magmatizador:'magmarizer'};
+const FIXED_FIELDS={minIQ:'iq',minStrength:'strength',minStyle:'style',minKindness:'kindness'};
+function normalizeRule(r){
+  const careMean={},training={};
+  for(const[k,v]of Object.entries(r.estadisticas||{})){
+    if(CARE.includes(k))careMean[k]=v;
+    else if(TRAIN.includes(k))training[k]=v;
+    else if(FIXED_FIELDS[k])training[FIXED_FIELDS[k]]=v;
+    else throw new Error(`Estadística desconocida: ${k}`);
+  }
+  for(const[field,key]of Object.entries(FIXED_FIELDS))if(r[field]!==undefined)training[key]=Math.max(training[key]||0,r[field]);
+  const item=r.objeto?(ITEM_ALIASES[r.objeto]||r.objeto):null;
+  if(item&&!itemCatalog[item])throw new Error(`Objeto desconocido: ${r.objeto}`);
+  return {to:r.destino,ageMs:(r.edadMinima||0)*DAY,minStageMs:0,careMean,training,item,
+    sustained:r.sostenidas||[],action:r.accionRequerida||null,repetitions:r.repeticionesAccion??1};
+}
+// Identificadores históricos del repertorio; el adapter los enlaza con IDs canónicos.
+// Los destinos, etapas y condiciones proceden exclusivamente de la fuente v2.
+function canonicalRule(r){
+  const raw={destino:PokemonData.legacyId(r.ToId),edadMinima:r.MinAgeDays,
+    minIQ:r.MinIQ??undefined,minStrength:r.MinStrength??undefined,minStyle:r.MinStyle??undefined,minKindness:r.MinKindness??undefined,
+    objeto:r.RequiredItem,accionRequerida:r.RequiredAction,repeticionesAccion:r.RequiredRepeats??1};
+  if(r.SustainedStat!=null){
+    const minimum=r.SustainedMin??r.SustainedPercent;
+    if(minimum===null||r.SustainedHours===null)return {...normalizeRule(raw),enabled:false};
+    raw.sostenidas=[{estadistica:PokemonData.careKey(r.SustainedStat),minimo:minimum,duracionMs:r.SustainedHours*HOUR}];
+  }
+  const optionalMinimum=field=>{const value=r[field];if(value===null||value===undefined||value==='')return null;if(typeof value!=='number'||!Number.isFinite(value)||value<0||value>100)throw Error(`${field} debe ser un número entre 0 y 100`);return value;};
+  const minMood=optionalMinimum('MinMood'),minBond=optionalMinimum('MinBond');
+  const configured=['MinMood','MinBond','MinAgeDays','MinIQ','MinStrength','MinStyle','MinKindness','RequiredItem','SustainedStat','RequiredAction'].some(k=>r[k]!==null&&r[k]!==undefined&&r[k]!=='');
+  return {...normalizeRule(raw),enabled:configured,minMood,minBond,canonicalRuleId:r.RuleId};
+}
+const evolutionConfig=Object.fromEntries(Object.entries(evolutionTable).map(([id])=>{
+  const data=PokemonData.get(id);
+  return [id,{name:data.DisplayName,stage:data.EvolutionStage,
+    rarity:data.Rarity,careDifficulty:data.CareDifficulty,familyId:data.FamilyId,
+    rules:PokemonData.rules(id).filter(r=>PokemonData.legacyId(r.ToId)).map(canonicalRule)}];
+}));
+for(const p of Object.values(evolutionConfig))for(const r of p.rules){
+  if(!evolutionConfig[r.to])throw new Error(`Destino inexistente: ${r.to}`);
+  for(const c of r.sustained)if(!CARE.includes(c.estadistica)||!Number.isFinite(c.minimo)||!Number.isFinite(c.duracionMs)||c.duracionMs<0)throw new Error('Condición sostenida inválida');
+}
+const STARTERS=PokemonData.roots();
+const trainingOptions={iq:{name:'Resolver acertijos',icon:'iq'},strength:{name:'Hacer ejercicio',icon:'train'},kindness:{name:'Practicar ayuda',icon:'kindness'},style:{name:'Ensayar una coreografía',icon:'style'}};
+function freshState(now=Date.now()){
+  return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
+    gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,
+    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],pokerus:false,heat:0,aid:0,
+    trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:'Cada clic de calor reduce la espera en 5 minutos.'};
+}
+let state=freshState();
+const clamp=n=>Math.max(0,Math.min(100,n));
+const alive=()=>state.phase==='alive'||state.phase==='critical';
+const interactionLocked=()=>state.birthScene||state.nicknamePending||state.foundItem!==null;
+const current=()=>evolutionConfig[state.pokemonId];
+function mean(k){return state.averages?.count?state.averages.sum[k]/state.averages.count:null;}
+const sustainedKey=c=>`${c.estadistica}:${c.minimo}`;
+function updateSustained(elapsed=0,before=state.care){
+  if(!alive())return;
+  const conditions=new Map(current().rules.flatMap(r=>r.sustained).map(c=>[sustainedKey(c),c]));
+  for(const[key,c]of conditions){
+    if(state.care[c.estadistica]<c.minimo)state.sustained[key]=0;
+    else if(before[c.estadistica]>=c.minimo)state.sustained[key]=(state.sustained[key]||0)+elapsed;
+    else state.sustained[key]=0;
+  }
+}
+function conditionsMet(r,testing=null){return r.enabled!==false&&alive()&&state.age>=r.ageMs&&
+  (r.minMood==null||state.care.felicidad>=r.minMood)&&(r.minBond==null||(state.relationship?.points||0)>=r.minBond)&&
+  Object.entries(r.careMean).every(([k,v])=>mean(k)!==null&&mean(k)>=v)&&
+  Object.entries(r.training).every(([k,v])=>state.training[k]>=v)&&
+  r.sustained.every(c=>(testing?.sustainedValues?.[sustainedKey(c)]??state.care[c.estadistica])>=c.minimo&&(state.sustained[sustainedKey(c)]||0)>=c.duracionMs)&&
+  (!r.action||(state.actions[r.action]||0)>=r.repetitions);}
+let evolutionSerial=0;
+function evolve(r,item=null,testing=null){
+  if(!current()?.rules.includes(r)||!conditionsMet(r,testing)||r.item!==item)return false;
+  if(item&&!testing&&!(state.inventory[item]>0))return false;
+  const previous=state.pokemonId;
+  if(item&&!testing){state.inventory[item]--;state.consumed.push({item,age:state.age,from:previous,to:r.to});}
+  state.milestones.push({from:previous,to:r.to,age:state.age,means:Object.fromEntries(CARE.map(k=>[k,mean(k)])),training:{...state.training},sustained:{...state.sustained},actions:{...state.actions},item:testing?null:item,...(testing?{testing:true,requiredItem:r.item,sustainedValues:{...testing.sustainedValues}}:{})});
+  state.pokemonId=r.to;state.stage++;state.stageAge=0;state.averages={sum:zeroCare(),count:0};state.sustained={};state.actions={};
+  state.message=`¡${evolutionConfig[previous].name} ha evolucionado a ${current().name}!`;
+  Relationship.reward(state,'evolve');Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id);Pokedex.record(state.pokedex,state.pokemonId,'evolved');
+  evolutionSerial++;return true;
+}
+// Herramienta explícita de Oak. Solo transiciones canónicas del repertorio actual.
+function forceEvolution(destination){
+  if(!alive()||interactionLocked())return false;
+  const r=current().rules.find(r=>r.to===destination&&r.enabled!==false);
+  if(!r||!PokemonData.validGender(destination,state.gender))return false;
+  const before=HatchMonSocial.copy(state);
+  // Evidencia histórica de testing: no altera las barras instantáneas ni tickea fisiología.
+  const testing={sustainedValues:{}};
+  if(r.minMood!=null)state.care.felicidad=Math.max(state.care.felicidad,r.minMood);
+  if(r.minBond!=null)state.relationship.points=Math.max(state.relationship.points,r.minBond);
+  const delta=Math.max(0,r.ageMs-state.age);state.age+=delta;state.stageAge+=delta;
+  for(const [k,min] of Object.entries(r.training))state.training[k]=Math.max(state.training[k],min);
+  if(r.action)state.actions[r.action]=Math.max(state.actions[r.action]||0,r.repetitions);
+  for(const c of r.sustained){
+    const key=sustainedKey(c);state.sustained[key]=Math.max(state.sustained[key]||0,c.duracionMs);
+    testing.sustainedValues[key]=Math.max(state.care[c.estadistica],c.minimo);
+  }
+  for(const [k,min] of Object.entries(r.careMean)){
+    if(!state.averages.count)state.averages.count=1;
+    state.averages.sum[k]=Math.max(state.averages.sum[k],min*state.averages.count);
+  }
+  if(evolve(r,r.item,testing))return true;
+  state=before;return false;
+}
+function checkEvolution(){if(!alive())return;const r=current().rules.find(r=>!r.item&&conditionsMet(r));if(r)evolve(r);}
+function die(cause){
+  state.phase='dead';state.vital.deathCause=cause;state.birthScene=false;state.nicknamePending=false;state.foundItem=null;
+  state.message=cause==='natural'?`${current().name} ha llegado al final de su vida. Su recuerdo permanece contigo.`:
+    `Game Over. ${current().name} ha muerto por abandono. Su recuerdo permanece contigo.`;
+  rememberDeath();
+}
+function checkHealth(){
+  if(!alive())return;
+  if(state.age>=state.vital.lifespan){die('natural');return;}
+  if(state.care.hambre<=0&&state.care.felicidad<=0){die('neglect');return;}
+  if(state.phase!=='critical'&&(state.care.hambre<=0||state.care.higiene<=0)){state.phase='critical';state.aid=0;state.message='Necesita ayuda. Pulsa Auxiliar tres veces para estabilizarlo.';}
+}
+// Una única simulación por minutos para actividad, ausencia y saltos de pruebas.
+function minuteStep(){
+  if(!alive())return;
+  state.age+=MINUTE;state.stageAge+=MINUTE;
+  state.trainer.energy=Math.min(MAX_AP,state.trainer.energy+CARE_CONFIG.trainerRecoveryPerMinute);
+  const before={...state.care};Vital.tick(state);Relationship.tick(state);
+  for(const k of CARE)state.averages.sum[k]+=state.care[k];
+  state.averages.count++;updateSustained(MINUTE,before);checkHealth();
+  if(alive())checkEvolution();
+}
+function sync(now=Date.now()){
+  const elapsed=Math.max(0,now-state.lastSync);state.lastSync=Math.max(state.lastSync,now);
+  advanceGameTime(elapsed*TIME_SCALE);
+}
+// Tiempo de juego, sin modificar el reloj real ni multiplicar los saltos de pruebas.
+function advanceGameTime(milliseconds){
+  let remaining=milliseconds;
+  if(state.phase==='egg'){
+    const spent=Math.min(remaining,state.incubationRemaining);
+    state.incubationRemaining=Math.max(0,state.incubationRemaining-spent);
+    remaining-=spent;
+    if(state.incubationRemaining>0)return;
+    hatchIncubatingEgg();
+  }
+  if(!alive()){state.remainder=0;return;}
+  state.remainder+=remaining;
+  while(state.remainder>=MINUTE&&alive()){state.remainder-=MINUTE;minuteStep();}
+  if(!alive())state.remainder=0;
+}
+function skipTime(hours){
+  if(![1,3,6].includes(hours)||state.phase==='dead'||interactionLocked())return false;
+  advanceGameTime(hours*HOUR);
+  return true;
+}
+function canSpend(cost){return alive()&&!interactionLocked()&&state.trainer.energy+1e-8>=cost;}
+function spend(cost){if(!canSpend(cost))return false;state.trainer.energy=Math.max(0,state.trainer.energy-cost);return true;}
+function denied(){state.message='Necesitas más AP. Recuperas 1 cada 10 min.';}
+const COST=CARE_CONFIG.costs;
+function allowed(action){
+  if(action==='luz')return alive()&&!interactionLocked(); // Despertar nunca cuesta AP.
+  return canSpend(COST[action])&&(!state.lightsOff||['curar','auxiliar'].includes(action))&&
+    (action==='auxiliar'?state.phase==='critical':state.phase==='alive')&&
+    (action!=='curar'||state.pokerus)&&(action!=='jugar'||state.care.energia>=CARE_CONFIG.play.energy);
+}
+function careAction(action,rng=Math.random){
+  if(!Object.hasOwn(COST,action))return false;
+  if(!allowed(action)){if(alive())denied();return false;}
+  if(action==='luz'){state.lightsOff=!state.lightsOff;state.message=state.lightsOff?'Luz apagada. Descansará y recuperará energía poco a poco.':'¡Buenos días! La luz está encendida.';return true;}
+  const usefulCare=action==='alimentar'?state.care.hambre<100:action==='limpiar'?(state.care.higiene<100||state.vital.dirt>0||state.vital.poops.length>0):true;
+  spend(COST[action]);
+  if(action==='alimentar')state.message=Vital.eat(state,CARE_CONFIG.feed);
+  if(action==='jugar'){
+    state.care.felicidad=clamp(state.care.felicidad+CARE_CONFIG.play.happiness*Vital.getLifeModifiers(state).play);state.care.energia=clamp(state.care.energia-CARE_CONFIG.play.energy);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.play.dirt);state.message='¡Qué bien lo habéis pasado!';
+    if(rng()<DROP_CHANCE){const ids=Object.keys(itemCatalog),id=ids[Math.floor(rng()*ids.length)];state.inventory[id]=(state.inventory[id]||0)+1;state.foundItem=id;state.message=`¡Jugando encontraste ${itemCatalog[id].name}! Está en la mochila.`;}
+  }
+  if(action==='limpiar'){Vital.clean(state);state.message='Hábitat limpio: sin deposiciones y con más bienestar.';}
+  if(action==='curar'){heal();state.message='¡Pokérus curado! Vuelve a sentirse bien.';}
+  if(action==='auxiliar'){
+    state.aid++;state.message=`Auxilios: ${state.aid}/${CARE_CONFIG.aid.steps}. Sigue acompañándolo.`;
+    if(state.aid===CARE_CONFIG.aid.steps){for(const k of CARE)state.care[k]=Math.max(CARE_CONFIG.aid.restore,state.care[k]);state.phase='alive';state.aid=0;state.message=state.pokerus?'Está estable. Ahora puedes curar el Pokérus.':'¡Está estable! Puedes volver a cuidarlo.';}
+  }
+  state.actions[action]=(state.actions[action]||0)+1;if(usefulCare)Relationship.reward(state,({alimentar:'care',limpiar:'care',jugar:'play',curar:'cure'})[action]);
+  updateSustained();checkHealth();checkEvolution();return true;
+}
+function heal(){state.pokerus=false;state.vital.illnessCause=null;state.vital.exposure={hygiene:0,energy:0};state.care.higiene=Math.max(CARE_CONFIG.cure.restore,state.care.higiene);state.care.energia=Math.max(CARE_CONFIG.cure.restore,state.care.energia);}
+function train(k){
+  if(!TRAIN.includes(k)||state.phase!=='alive')return false;
+  if(state.lightsOff){state.message='Enciende la luz para entrenar.';return false;}
+  if(state.care.energia<CARE_CONFIG.training.energy){state.message='Necesita descansar antes de entrenar.';return false;}
+  if(state.training[k]>=100){state.message='Este atributo ya está al máximo.';return false;}
+  if(!spend(CARE_CONFIG.training.ap)){denied();return false;}
+  state.training[k]=clamp(state.training[k]+CARE_CONFIG.training.gain);state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
+  state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
+  Relationship.reward(state,'train');state.message=`${LABELS[k]} +${CARE_CONFIG.training.gain}. ¡La práctica da sus frutos!`;updateSustained();checkHealth();checkEvolution();return true;
+}
+function itemUsable(id){
+  if(!Object.hasOwn(itemCatalog,id)||state.phase!=='alive'||!canSpend(CARE_CONFIG.itemAP)||!(state.inventory[id]>0))return false;
+  const item=itemCatalog[id];
+  if(state.lightsOff&&!item.heal)return false;
+  if(item.heal)return state.pokerus;
+  if(item.food)return !item.attribute||state.training[item.attribute]<100;
+  if(item.care)return Object.keys(item.care).some(k=>state.care[k]<100);
+  return current().rules.some(r=>r.item===id&&conditionsMet(r));
+}
+function useItem(id,destination=null){
+  if(!itemUsable(id))return false;
+  const item=itemCatalog[id];
+  if(item.care||item.heal||item.food){
+    spend(CARE_CONFIG.itemAP);state.inventory[id]--;state.consumed.push({item:id,age:state.age});
+    if(item.heal){heal();Relationship.reward(state,'cure');}if(item.care)for(const[k,v]of Object.entries(item.care))state.care[k]=clamp(state.care[k]+v);
+    state.message=`Has usado ${item.name}.`;
+    if(item.food){if(state.care.hambre<100)Relationship.reward(state,'care');state.message=Vital.eat(state,CARE_CONFIG.berry);if(item.attribute){state.training[item.attribute]=clamp(state.training[item.attribute]+CARE_CONFIG.berry.attribute);state.message+=` ${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}.`;}}
+    updateSustained();checkHealth();checkEvolution();return true;
+  }
+  const candidates=current().rules.filter(r=>r.item===id&&conditionsMet(r));
+  const chosen=destination?candidates.find(r=>r.to===destination):candidates.length===1?candidates[0]:null;
+  if(!chosen){state.message='Elige en la mochila a qué Pokémon quieres evolucionar.';return false;}
+  spend(CARE_CONFIG.itemAP);return evolve(chosen,id);
+}
+function hatch(rng=Math.random){
+  if(state.phase!=='egg'||state.incubationRemaining>0)return false;
+  state.pokemonId=state.social.active.offspring||Pokedex.choose(STARTERS,state.pokedex,rng);state.phase='alive';
+  state.care=Object.fromEntries(CARE.map(k=>[k,100]));
+  state.training=Object.fromEntries(TRAIN.map(k=>[k,0]));
+  state.averages={sum:zeroCare(),count:0};state.age=0;state.stageAge=0;state.remainder=0;
+  state.gender=PokemonData.gender(state.pokemonId,rng);state.vital=Vital.fresh(state.social.active.id);state.relationship=Relationship.fresh();
+  Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id);
+  state.birthScene=true;state.nicknamePending=false;state.message='¡Anda! ¿...?';return true;
+}
+function heat(rng=Math.random){
+  if(state.phase!=='egg')return false;
+  state.heat++;state.incubationRemaining=Math.max(0,state.incubationRemaining-HEAT_REDUCTION_MS);
+
+  if(state.incubationRemaining===0)hatchIncubatingEgg(rng);
+  return true;
+}
+function eggStage(){
+  const ratio=state.incubationRemaining/INCUBATION_MS;
+  if(ratio<=0)return {phase:5,message:'¡Anda! ¡El huevo está eclosionando!'};
+  if(ratio>.70)return {phase:1,message:'Parece que a este huevo aún le queda mucho para abrirse'};
+  if(ratio>=.50)return {phase:2,message:'¿Qué habrá dentro? Tendrás que esperar un poco más'};
+  if(ratio>=.25)return {phase:3,message:'A veces se mueve. Debe estar a punto de salir'};
+  return {phase:4,message:'Se escuchan sonidos. ¡Pronto saldrá!'};
+}
+function finishBirthScene(){if(!state.birthScene)return false;state.birthScene=false;state.nicknamePending=alive();state.message=`¡El Huevo ha eclosionado! Ha salido un ${current().name}.`;return true;}
+function setNickname(value=''){
+  if(!state.nicknamePending)return false;
+  state.nickname=String(value).trim().slice(0,20);state.nicknamePending=false;
+  state.message=state.nickname?`¡Bienvenido, ${state.nickname}!`:`¡Bienvenido, ${current().name}!`;return true;
+}
+function acknowledgeItem(){if(state.foundItem===null)return false;state.foundItem=null;return true;}
+// Guardado local: conserva edad, muestras, inventario y ausencia entre visitas.
+function validGameSave(s){
+  const finite=(n,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isFinite(n)&&n>=a&&n<=b;
+  const stats=(o,keys)=>o&&keys.every(k=>finite(o[k],0,100));
+  return s?.version===12&&['egg','alive','critical','dead'].includes(s.phase)&&(s.phase==='egg'?s.pokemonId===null:Object.hasOwn(evolutionConfig,s.pokemonId))&&
+    (s.phase==='egg'?s.care===null&&s.training===null&&s.averages===null&&s.age===0&&s.stageAge===0:stats(s.care,CARE)&&stats(s.training,TRAIN))&&finite(s.incubationRemaining,0,INCUBATION_MS)&&finite(s.age)&&finite(s.stageAge)&&Number.isInteger(s.stage)&&s.stage>=0&&
+    (s.phase==='egg'||(s.averages&&Number.isInteger(s.averages.count)&&finite(s.averages.count)&&s.averages.sum&&CARE.every(k=>finite(s.averages.sum[k],0,100*s.averages.count+1e-5))))&&
+    s.sustained&&Object.values(s.sustained).every(n=>finite(n))&&s.actions&&Object.values(s.actions).every(n=>Number.isInteger(n)&&finite(n))&&
+    s.inventory&&typeof s.inventory==='object'&&Object.entries(s.inventory).every(([id,n])=>Object.hasOwn(itemCatalog,id)&&Number.isInteger(n)&&finite(n))&&
+    (s.phase==='egg'?s.gender===null:PokemonData.validGender(s.pokemonId,s.gender))&&typeof s.nickname==='string'&&s.nickname.length<=20&&
+    typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
+    s.trainer&&finite(s.trainer.energy,0,MAX_AP)&&finite(s.lastSync)&&finite(s.remainder,0,MINUTE)&&
+    typeof s.pokerus==='boolean'&&Number.isInteger(s.heat)&&finite(s.heat,0,29)&&Number.isInteger(s.aid)&&finite(s.aid,0,2)&&Array.isArray(s.milestones)&&Array.isArray(s.consumed)&&typeof s.message==='string';
+}
+// Reserva de huevos, memorias y perfiles de crianza. Identidad y origen pertenecen a la
+// criatura; mochila de objetos y AP siguen perteneciendo a esta partida.
+const SNAPSHOT_FIELDS=['phase','pokemonId','incubationRemaining','care','training','age','stageAge','stage','gender','nickname','birthScene','nicknamePending','foundItem','lightsOff','averages','sustained','actions','consumed','milestones','pokerus','heat','aid','remainder','vital'];
+function snapshotOf(s=state){return HatchMonSocial.copy(Object.fromEntries(SNAPSHOT_FIELDS.map(k=>[k,s[k]])));}
+function activeEntity(){return {...HatchMonSocial.copy(state.social.active),kind:state.phase==='egg'?'egg':'creature',speciesId:state.phase==='egg'?state.social.active.offspring:state.pokemonId,snapshot:snapshotOf()};}
+function validSnapshot(s,e){
+  if(!s||Object.keys(s).length!==SNAPSHOT_FIELDS.length||!SNAPSHOT_FIELDS.every(k=>Object.hasOwn(s,k)))return false;
+  for(const key of ['sustained','actions'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
+  const base={...s,version:12,inventory:{},trainer:{energy:MAX_AP},lastSync:0,message:''};
+  if(!validGameSave(base)||(s.phase==='egg'?s.vital!==null:!Vital.valid(s.vital,s.age))||s.stage>10||s.stageAge>s.age||s.age>100*365*DAY)return false;
+  if(e.kind==='egg'?(e.speciesId!==e.offspring||e.offspring!==null&&!STARTERS.includes(e.offspring)):e.speciesId!==s.pokemonId)return false;
+  if(e.offspring!==null&&!STARTERS.includes(e.offspring))return false;
+  if(!e.parents.every(p=>PokemonData.get(p.speciesId)))return false;
+  if(s.birthScene||s.nicknamePending||s.foundItem!==null)return false;
+  if(s.phase==='alive'&&(s.care.hambre<=0||s.care.higiene<=0))return false;
+  if(!s.milestones.every(m=>m&&Object.hasOwn(evolutionConfig,m.from)&&Object.hasOwn(evolutionConfig,m.to)&&Number.isFinite(m.age)))return false;
+  if(!s.consumed.every(c=>c&&Object.hasOwn(itemCatalog,c.item)&&Number.isFinite(c.age)))return false;
+  return true;
+}
+function validSave(s){return s?.version===12&&Pokedex.valid(s.pokedex)&&(s.phase==='egg'?s.relationship===null:Relationship.valid(s.relationship))&&(s.phase==='egg'?s.vital===null:Vital.valid(s.vital,s.age))&&validGameSave({...s,version:12})&&HatchMonSocial.validStore(s.social,validSnapshot)&&Array.isArray(s.social.bredIds)&&s.social.bredIds.every(id=>typeof id==='string')&&new Set(s.social.bredIds).size===s.social.bredIds.length&&Array.isArray(s.social.memorials)&&s.social.memorials.every(e=>HatchMonSocial.entityOK(e,validSnapshot)&&e.snapshot.phase==='dead'&&Number.isFinite(e.bond)&&e.bond>=0&&e.bond<=RELATIONSHIP_CONFIG.max&&Number.isSafeInteger(e.diedAt)&&e.diedAt>=0)&&new Set(s.social.memorials.map(e=>e.id)).size===s.social.memorials.length&&s.social.eggs.every(e=>e.snapshot.incubationRemaining===INCUBATION_MS&&e.snapshot.remainder===0&&!s.social.memorials.some(m=>m.id===e.id))&&
+  (s.phase==='dead'||!s.social.memorials.some(e=>e.id===s.social.active.id))&&
+  (s.social.active.offspring===null||STARTERS.includes(s.social.active.offspring));}
+function hatchIncubatingEgg(rng=Math.random){
+  // hatch() sigue intacta: solo un huevo con origen explícito fija la raíz.
+  const offspring=state.social.active.offspring,result=hatch(rng);
+  if(result&&offspring&&STARTERS.includes(offspring)){state.pokemonId=offspring;state.gender=PokemonData.gender(offspring,rng);}
+  return result;
+}
+function exportEntity(id=state.social.active.id){
+  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  const entity=id===state.social.active.id?activeEntity():state.social.eggs.find(e=>e.id===id);
+  if(!entity||!['egg','alive'].includes(entity.snapshot.phase))throw Error('Solo se pueden compartir huevos o compañeros estables y vivos.');
+  return HatchMonSocial.pack(PokemonData.convertEntity(entity,true));
+}
+function readSocialCode(code){return HatchMonSocial.unpack(code,validSnapshot,e=>PokemonData.convertEntity(e,false));}
+function importEntity(code){
+  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  const payload=readSocialCode(code);
+  if(payload.entity.kind!=='egg')throw Error('Solo se importan huevos. Usa el código de un compañero vivo para crianza.');
+  HatchMonSocial.assertNew(state.social,payload);
+  if(state.social.memorials.some(e=>e.id===payload.entity.id))throw Error('Este compañero ya está en tus recuerdos.');
+  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error('Tu reserva está llena (60 huevos).');
+  const egg=HatchMonSocial.copy(payload.entity);egg.snapshot=snapshotOf(freshState());
+  state.social.eggs.push(egg);state.social.importedIds.push(payload.id);Pokedex.record(state.pokedex,egg.offspring,'received');
+  return '¡Huevo guardado! Esperará sin incubar hasta que puedas acogerlo.';
+}
+function breedingCheck(code){
+  const payload=readSocialCode(code);HatchMonSocial.assertNew(state.social,payload);
+  if(BREEDING_CONFIG.oncePerLife&&[state.social.active.id,payload.entity.id].some(id=>state.social.bredIds.includes(id)))return {payload,ok:false,reason:'Uno de los progenitores ya produjo un huevo en este dispositivo.'};
+  const result=HatchMonSocial.compatibility(activeEntity(),payload.entity);
+  if(result.ok)result.offspring=PokemonData.legacyId(result.offspring);
+  if(result.ok&&!STARTERS.includes(result.offspring))return {payload,ok:false,reason:'La raíz indicada en hatchmonData_v2.js todavía no está conectada a una especie jugable.'};
+  return {...result,payload,generatorId:result.ok?HatchMonSocial.breedingGenerator(activeEntity(),payload.entity):null};
+}
+function generatorInstruction(result){
+  const remote=result.payload.entity,hasDitto=[state.pokemonId,remote.speciesId].some(id=>PokemonData.get(id)?.EggGroup==='Ditto');
+  return hasDitto?'El Pokémon no-Ditto debe generar el huevo en su dispositivo. Comparte tu código con la otra persona.':'La hembra debe generar el huevo en su dispositivo. Comparte tu código con la otra persona.';
+}
+function breedFromCode(code){
+  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  const result=breedingCheck(code);if(!result.ok)throw Error(result.reason);
+  if(result.generatorId!==state.social.active.id)throw Error(generatorInstruction(result));
+  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error('Tu reserva está llena (60 huevos).');
+  const origin=e=>({id:e.id,speciesId:e.speciesId,name:e.snapshot.nickname||evolutionConfig[e.speciesId].name});
+  const egg={id:HatchMonSocial.uid(),kind:'egg',speciesId:result.offspring,offspring:result.offspring,
+    createdAt:Date.now(),parents:[origin(activeEntity()),origin(result.payload.entity)],snapshot:snapshotOf(freshState())};
+  state.vital.hasProducedEgg=true;for(const id of [state.social.active.id,result.payload.entity.id])if(!state.social.bredIds.includes(id))state.social.bredIds.push(id);
+  state.social.eggs.push(egg);state.social.importedIds.push(result.payload.id);Pokedex.record(state.pokedex,result.offspring,'bred');
+  return `¡${state.nickname||current().name} ha puesto un huevo! Está en Mis huevos.`;
+}
+function rememberDeath(){
+  if(state.phase!=='dead'||state.social.memorials.some(e=>e.id===state.social.active.id))return;
+  state.social.memorials.push({...activeEntity(),canonicalSpeciesId:PokemonData.canonicalId(state.pokemonId),diedAt:Date.now(),bond:state.relationship?.points||0});
+}
+function incubateStoredEgg(id){
+  if(alive()||interactionLocked())throw Error('Tu compañero vivo sigue contigo. No puedes guardarlo ni sustituirlo.');
+  const index=state.social.eggs.findIndex(e=>e.id===id),entity=state.social.eggs[index];
+  if(!entity||entity.kind!=='egg'||entity.snapshot.phase!=='egg')throw Error('Solo puedes incubar un huevo guardado.');
+  rememberDeath();
+  state.social.eggs.splice(index,1);
+  // Un huevo que vuelve al almacén pierde su progreso: allí no incuba ni tiene fisiología.
+  if(state.phase==='egg')state.social.eggs.push({...activeEntity(),snapshot:snapshotOf(freshState())});
+  Object.assign(state,HatchMonSocial.copy(entity.snapshot));state.relationship=null;
+  state.social.active={id:entity.id,createdAt:entity.createdAt,parents:HatchMonSocial.copy(entity.parents),offspring:entity.offspring};
+  state.lastSync=Date.now();state.message='El huevo ya está incubándose contigo.';
+  return state.message;
+}
+let storageWarning='';
+function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch{storageWarning='No se pudo guardar. Mantén esta pestaña abierta para conservar la partida.';}}
+function restore(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(raw){const data=JSON.parse(raw);if(validSave(data)){state=data;sync();}
+      else{localStorage.removeItem(SAVE_KEY);storageWarning='D inicia una partida nueva: el guardado anterior ya no es compatible.';}}
+  }catch{storageWarning='Guardado no disponible. La partida durará mientras la página siga abierta.';}
+}
+// UI: la pantalla principal solo muestra el compañero y sus necesidades.
+const $=id=>document.getElementById(id);
+const FEEDBACK_CONFIG={ordinaryMs:2000,eventMs:4000,fadeMs:180};
+let toastTimer=null,toastFadeTimer=null,lastMessage='',presentedPhase=null,presentedIllness=false;
+function hideToast(immediate=true){
+  if(toastTimer!==null)clearTimeout(toastTimer);toastTimer=null;
+  if(toastFadeTimer!==null)clearTimeout(toastFadeTimer);toastFadeTimer=null;
+  const toast=$('toast');toast.classList.remove('visible');
+  const finish=()=>{toast.hidden=true;toast.textContent='';toastFadeTimer=null;};
+  if(immediate||window.matchMedia('(prefers-reduced-motion: reduce)').matches)finish();
+  else toastFadeTimer=setTimeout(finish,FEEDBACK_CONFIG.fadeMs);
+}
+const EGG_TOUCH_FEEDBACK=['El huevo se ha movido un poco.','Parece que ha notado tu calor.','Sigue cuidándolo…','Algo se mueve dentro.','Parece que responde a tu toque.'];
+function showToast(message,important=false,eggInteraction=false){
+  if((state.phase==='egg'&&!eggInteraction)||!message||interactionLocked())return;
+  hideToast();const toast=$('toast');toast.dataset.kind=important?'event':'ordinary';toast.textContent=String(message).replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();toast.hidden=false;
+  void toast.offsetWidth;toast.classList.add('visible');
+  toastTimer=setTimeout(()=>hideToast(false),important?FEEDBACK_CONFIG.eventMs:FEEDBACK_CONFIG.ordinaryMs);
+}
+const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
+function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();}
+function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();panelName=null;}
+function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=text;}if(cls)n.className=cls;return n;}
+function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
+function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
+function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(pixelIcon(key),el('span',text));return n;}
+function row(title,detail,button){const r=el('div',undefined,'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
+function renderPanel(){
+  if(!panelName)return;
+  disposeMemorialSprites();
+  // El formulario social permanece estable durante los ticks: texto y cámara intactos.
+  if(panelName==='pokedex'){renderPokedex();return;}
+  if(panelName==='beginning'){renderBeginningChoices();return;}
+  if(panelName==='social'){if(!$('panel-content').dataset.socialReady)renderSocialPanel();return;}
+  const focusKey=document.activeElement?.dataset?.key;
+  const content=$('panel-content');content.replaceChildren();
+  $('panel-title').textContent={inventory:'Tu mochila',training:'Entrenamiento',oak:'Profesor Oak'}[panelName];
+  if(panelName==='inventory'){
+    content.append(row('Pokédex y Memorias','Especies descubiertas y compañeros que vivieron contigo.',socialButton('Consultar',()=>{panelName='pokedex';renderPanel();})));
+    content.append(row('Huevos guardados',`${state.social.eggs.length} en tu reserva de huevos.`,socialEntryButton()));
+    content.append(el('p','Al jugar tienes un 10% de probabilidad de encontrar un objeto. Usarlo cuesta 1 punto de criador.', 'panel-note'));
+    const entries=Object.entries(state.inventory).filter(([,n])=>n>0);
+    if(!entries.length)content.append(el('p','Tu mochila está vacía. ¡Quizá encuentres algo al jugar!'));
+    for(const[id,n]of entries){
+      const item=itemCatalog[id],routes=current()?.rules.filter(r=>r.item===id)||[];
+      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}; también cuenta como alimento.`:'Alimento suave que inicia digestión.'):item.care?'Recupera hambre.':item.heal?'Cura el Pokérus.':routes.length?'Elige el destino cuando se cumplan los requisitos.':'Objeto evolutivo: se usará cuando una evolución compatible lo requiera.');
+      content.append(entry);
+      if(item.care||item.heal||item.food)entry.append(panelButton('Usar',()=>useItem(id),!itemUsable(id),id));
+      for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton('Evolucionar',()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`)));
+    }
+  }
+  if(panelName==='training'){
+    if(state.phase==='egg'){content.append(el('p','El huevo no tiene atributos. Podrás entrenar a tu compañero cuando nazca.'));return;}
+    content.append(el('p','Cada sesión suma 5 puntos y cuesta 2 de energía de criador y 10 de tu compañero. Lo aprendido se conserva al evolucionar.', 'panel-note'));
+    for(const k of TRAIN){const o=trainingOptions[k];content.append(row(iconLabel(o.icon,`${LABELS[k]} · ${state.training[k]}/100`),o.name,panelButton('Practicar',()=>{const result=TrainingActivities.launch(k,{commit:train});if(result)closePanel();return result;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));}
+  }
+  if(panelName==='oak'){
+    content.append(row('Intercambio y crianza','Comparte por QR o código. Solo se guardan huevos; los compañeros fallecidos pasan a Memorias.',socialEntryButton()));
+    const resetButton=el('button','Reiniciar partida (testing)');resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
+    content.append(row('Herramientas de pruebas','Borra el guardado de Hatch.mon y vuelve al huevo al instante.',resetButton));
+    const timeControls=el('div',undefined,'dialog-actions');
+    timeControls.className='dialog-actions time-controls';timeControls.setAttribute('role','group');timeControls.setAttribute('aria-label','Avanzar tiempo de juego');
+    for(const hours of [1,3,6])timeControls.append(panelButton(`+${hours} h`,()=>skipTime(hours),state.phase==='dead'||interactionLocked(),`skip-${hours}`));
+    content.append(el('p','Avanzar tiempo: simula incubación, cuidados, sueño, AP y evolución. También puede causar enfermedad o Game Over.', 'panel-note'),timeControls);
+    if(state.phase==='egg'){content.append(el('p','Cada gesto aporta calor al huevo. Sus movimientos te dirán si está cerca de abrirse. No tiene estadísticas; su edad comienza al nacer.'));return;}
+    const forceRoutes=PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).filter(id=>id&&evolutionConfig[id]);
+    if(alive()&&forceRoutes.length){
+      content.append(el('p','Forzar evolución · testing/dev. Prepara edad, atributos y evidencias de la ruta elegida, sin desgaste ni gasto de objetos o AP.', 'panel-note'));
+      for(const target of forceRoutes)content.append(row(evolutionConfig[target].name,'',panelButton(forceRoutes.length===1?'Forzar evolución':'Forzar → '+evolutionConfig[target].name,()=>{const result=forceEvolution(target);if(result)closePanel();return result;},interactionLocked(),'force-'+target)));
+    }
+    content.append(el('p',`Etapa vital: ${Vital.getLifeStage(state)}. ${state.phase==='dead'?(state.vital.deathCause==='natural'?'Su vida ha concluido de forma natural.':'Siempre en tu recuerdo.'):state.vital.hasProducedEgg?'Ya ha producido su huevo.':'La crianza está disponible solo durante la madurez.'}`, 'panel-note'));
+    content.append(el('p',`${current().name} lleva contigo ${Math.floor(state.age/DAY)} días y ${Math.floor(state.age/HOUR)%24} horas.`, 'panel-note'));
+    content.append(el('p','El cuidado cuenta a lo largo de toda la etapa: tomo una muestra cada minuto. Entrenar mejora atributos permanentes. Las condiciones de Hatch.mon son una adaptación propia.', 'panel-note'));
+    content.append(el('p',`Tus medias: ${CARE.map(k=>`${LABELS[k]} ${mean(k)===null?'—':mean(k).toFixed(1)}`).join(' · ')}`, 'panel-note'));
+    if(!current().rules.length)content.append(el('p','¡Ha alcanzado su última evolución! Disfrutad de vuestra compañía.'));
+    for(const r of current().rules){
+      const section=row(evolutionConfig[r.to].name,'');const list=el('ul');
+      const req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
+      req(state.age>=r.ageMs,`Edad: ${r.ageMs/DAY} días.`);
+      if(r.minMood!=null)req(state.care.felicidad>=r.minMood,`Ánimo mínimo: ${r.minMood}.`);
+      if(r.minBond!=null)req((state.relationship?.points||0)>=r.minBond,`Vínculo mínimo: ${r.minBond}.`);
+      for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,`Media de ${LABELS[k]} ≥ ${v}.`);
+      for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,`${LABELS[k]} ≥ ${v}.`);
+      for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,`${LABELS[c.estadistica]} ≥ ${c.minimo} durante ${c.duracionMs/HOUR} h seguidas (${(elapsed/HOUR).toFixed(1)} h).`);}
+      if(r.action)req((state.actions[r.action]||0)>=r.repetitions,`${r.action}: ${state.actions[r.action]||0}/${r.repetitions} veces en esta etapa.`);
+      if(r.item)req(false,`Usar ${itemCatalog[r.item].name} desde la mochila (tienes ${state.inventory[r.item]||0}).`);
+      section.firstChild.append(list);content.append(section);
+    }
+    content.append(el('p','Las evoluciones sin objeto ocurren automáticamente. Si se cumplen varias a la vez, se elige la primera de esta lista. Las de objeto permiten elegir el destino desde la mochila.', 'panel-note'));
+    content.append(el('p','Apagar la luz permite recuperar energía poco a poco. Enciéndela para comer, jugar, limpiar o entrenar. El interruptor no gasta puntos.', 'panel-note'));
+    content.append(el('p','Tus acciones de cuidado cuestan 1 punto; jugar y curar, 2. Recuperas 1 cada 10 minutos automáticamente, hasta un máximo de 6. El hambre llena significa estar bien alimentado.', 'panel-note'));
+    if(state.milestones.length)content.append(el('p',`Recuerdos: ${state.milestones.map(m=>`${evolutionConfig[m.from]?.name||m.from} → ${evolutionConfig[m.to]?.name||m.to}`).join(' · ')}`, 'panel-note'));
+  }
+  if(focusKey){const target=[...content.querySelectorAll('button')].find(b=>b.dataset.key===focusKey&&!b.disabled);if(target)target.focus();else $('close-panel').focus();}
+}
+// Panel social: acciones explícitas, sin enlaces remotos ni lectura automática de cámara.
+let socialCameraStream=null,socialCameraTimer=null,socialCameraToken=0;
+function stopSocialCamera(){
+  socialCameraToken++;if(socialCameraTimer!==null)clearTimeout(socialCameraTimer);socialCameraTimer=null;
+  socialCameraStream?.getTracks().forEach(t=>t.stop());socialCameraStream=null;
+  const video=document.getElementById('social-video');if(video){video.srcObject=null;video.hidden=true;}
+}
+function socialEntryButton(){const b=el('button','Abrir');b.type='button';b.addEventListener('click',()=>{
+  sync();save();render();if(interactionLocked())return;
+  stopSocialCamera();panelName='social';$('panel-content').dataset.socialReady='';renderPanel();
+});return b;}
+function socialStatus(message){const node=document.getElementById('social-status');if(node)node.textContent=String(message);}
+function socialAction(callback){
+  sync();
+  try{if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');const message=callback();if(message)socialStatus(message);}
+  catch(error){socialStatus(error.message||'No se pudo completar la operación.');}
+  save();render();startTimer();if(panelName==='social')refreshSocialCollection();
+}
+function socialButton(label,callback){const b=el('button',label);b.type='button';b.addEventListener('click',callback);return b;}
+function entityLabel(e){return e.kind==='egg'?'Huevo':`${e.snapshot.nickname||evolutionConfig[e.speciesId]?.name||e.speciesId}`;}
+function eggDescription(e){
+  const species=PokemonData.get(e.offspring)?.DisplayName||'especie misteriosa';
+  return `${species}${e.parents.length?' · Progenitores: '+e.parents.map(p=>p.name).join(' y '):' · Origen sin registrar'}`;
+}
+function refreshSocialCollection(){
+  const select=document.getElementById('social-export-select');if(!select)return;
+  const selected=select.value;select.replaceChildren();
+  const entities=socialFlow==='companion'?(state.phase==='alive'?[activeEntity()]:[]):state.social.eggs;
+  for(const e of entities){const option=el('option',e.kind==='egg'?eggDescription(e)+' · '+e.id.slice(-6):entityLabel(e));option.value=e.id;select.append(option);}
+  select.value=entities.some(e=>e.id===selected)?selected:entities[0]?.id||'';
+  const generate=$('generate-social-qr');if(generate)generate.disabled=!entities.length||interactionLocked();
+}
+function generateSocialExport(){socialAction(()=>{
+  const code=exportEntity($('social-export-select').value);$('social-export-code').value=code;
+  const target=$('social-qr');target.replaceChildren();
+  try{
+    const qr=qrcode(0,'M');qr.addData(code,'Byte');qr.make();
+    const n=qr.getModuleCount(),scale=4,canvas=el('canvas',undefined,'social-qr');canvas.width=canvas.height=(n+8)*scale;
+    canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Código QR de intercambio. El mismo código está disponible en el campo de texto.');
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000000';
+    for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(qr.isDark(y,x))ctx.fillRect((x+4)*scale,(y+4)*scale,scale,scale);
+    const download=el('a','Guardar QR como imagen');download.href=canvas.toDataURL('image/png');download.download='hatchmon-qr.png';
+    target.append(canvas,download);
+  }catch{target.append(el('p','Este código no cabe en un QR o el generador no está disponible. Usa el código manual completo; contiene los mismos datos.','panel-note'));}
+  return 'Código generado. QR y texto representan la misma copia. Generar otro código no borra al compañero.';
+});}
+async function scanSocialCode(){
+  stopSocialCamera();const token=socialCameraToken;
+  const supported=()=>token===socialCameraToken&&dialog.open&&panelName==='social'&&!document.hidden;
+  try{
+    if(typeof globalThis.BarcodeDetector!=='function'||!navigator.mediaDevices?.getUserMedia)
+      throw Error('Este navegador no permite escanear QR. Pega el código manual para hacer la misma operación.');
+    const formats=await BarcodeDetector.getSupportedFormats();if(!supported())return;
+    if(!formats.includes('qr_code'))throw Error('El lector no admite QR. Utiliza el código manual.');
+    const detector=new BarcodeDetector({formats:['qr_code']});
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    if(!supported()){stream.getTracks().forEach(t=>t.stop());return;}
+    socialCameraStream=stream;const video=$('social-video');video.srcObject=stream;video.hidden=false;
+    await video.play();if(!supported())return;
+    socialStatus(socialFlow==='breed'?'Escanea el QR del otro compañero.':'Escanea el QR del huevo que quieres recibir.');
+    const detect=async()=>{
+      if(!supported())return;
+      try{
+        const codes=await detector.detect(video);if(!supported())return;
+        if(codes.length){const raw=codes[0].rawValue;readSocialCode(raw);$('social-input').value=raw;stopSocialCamera();socialStatus(socialFlow==='breed'?'QR leído. Pulsa Comprobar compatibilidad.':'QR leído. Pulsa Recibir huevo.');return;}
+      }catch{socialStatus('No se ha podido leer un código válido. Prueba de nuevo o pega el código manual.');}
+      if(supported())socialCameraTimer=setTimeout(detect,300);
+    };detect();
+  }catch(error){if(supported()){stopSocialCamera();socialStatus(error.name==='NotAllowedError'?'No se concedió acceso a la cámara. Puedes pegar el código manual.':error.message||'Cámara no disponible. Utiliza el código manual.');}}
+}
+let socialFlow='companion';
+function selectSocialFlow(flow){stopSocialCamera();socialFlow=flow;renderSocialPanel();}
+function showBreedingResult(){
+  sync();save();render();
+  const card=$('breeding-result');card.hidden=false;card.replaceChildren();
+  try{
+    const checkedCode=$('social-input').value;const result=breedingCheck(checkedCode);Pokedex.record(state.pokedex,result.payload.entity.speciesId,'seen');save();card.dataset.ok=String(result.ok);
+    card.append(el('h3',result.ok?'✓ Son compatibles':'✕ No pueden criar'));
+    if(!result.ok){card.append(el('p',result.reason));return;}
+    for(const [where,e] of [['Tu compañero',activeEntity()],['Otro compañero',result.payload.entity]]){
+      const data=PokemonData.get(e.speciesId);card.append(el('p',`${where}: ${entityLabel(e)} · ${PokemonData.genderLabel(e.snapshot.gender)} · ${data.EggGroup}`));
+    }
+    card.append(el('p',`Resultado: huevo de ${PokemonData.get(result.offspring).DisplayName}.`));
+    if(result.generatorId!==state.social.active.id){card.append(el('p',generatorInstruction(result)));return;}
+    card.append(el('p',`Lo crea ${state.nickname||current().name} en este dispositivo y se guarda en Mis huevos.`));
+    const create=socialButton('Crear huevo',()=>{
+      socialAction(()=>{try{if($('social-input').value!==checkedCode)throw Error('El código ha cambiado. Comprueba de nuevo la compatibilidad.');const message=breedFromCode(checkedCode);card.replaceChildren(el('h3',message),el('p','Puedes compartirlo desde Compartir huevo.'));return message;}
+        catch(error){card.dataset.ok='false';card.replaceChildren(el('h3','No se pudo crear el huevo'),el('p',error.message));throw error;}});
+    });card.append(create);
+  }catch(error){card.dataset.ok='false';card.append(el('h3','✕ No pueden criar'),el('p',error.message));}
+  finally{card.scrollIntoView?.({block:'nearest',behavior:'auto'});}
+}
+async function copySocialCode(){
+  const output=$('social-export-code');if(!output.value){socialStatus('Genera primero el QR.');return;}
+  try{await navigator.clipboard.writeText(output.value);socialStatus('Código alternativo copiado.');}
+  catch{$('social-manual').open=true;output.focus();output.select();socialStatus('Código seleccionado: usa Copiar del navegador (Ctrl/Cmd+C).');}
+}
+function renderSocialPanel(){
+  const content=$('panel-content');content.replaceChildren();content.dataset.socialReady='true';$('panel-title').textContent='Conectar';
+  const nav=el('nav',undefined,'social-flows');nav.setAttribute('aria-label','Acciones sociales');
+  const flows={companion:'Compartir compañero',breed:'Criar',receive:'Recibir huevo',egg:'Compartir huevo'};
+  for(const [id,label]of Object.entries(flows)){const b=socialButton(label,()=>selectSocialFlow(id));b.setAttribute('aria-pressed',String(socialFlow===id));nav.append(b);}content.append(nav);
+  const section=el('section',undefined,'social-section');section.append(el('h3',flows[socialFlow]));content.append(section);
+  const status=el('p',undefined,'social-status');status.id='social-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');section.append(status);
+  if(['companion','egg'].includes(socialFlow)){
+    section.append(el('p',socialFlow==='companion'?'Usa el QR para compartir tu compañero. Si no puedes escanearlo, copia el código alternativo.':'Elige un huevo de Mis huevos. La otra persona lo recibe desde Recibir huevo.','panel-note'));
+    const select=el('select');select.id='social-export-select';select.setAttribute('aria-label',socialFlow==='egg'?'Mis huevos':'Compañero activo');section.append(select);
+    const generate=socialButton('Generar QR',generateSocialExport);generate.id='generate-social-qr';section.append(generate);
+    const qr=el('div');qr.id='social-qr';section.append(qr);
+    section.append(socialButton('Copiar código alternativo',copySocialCode));
+    const details=el('details');details.id='social-manual';details.append(el('summary','Ver código alternativo'));
+    const output=el('textarea');output.id='social-export-code';output.readOnly=true;output.rows=2;output.setAttribute('aria-label','Código alternativo');details.append(output);section.append(details);
+    select.addEventListener('change',()=>{output.value='';qr.replaceChildren();});
+    if(socialFlow==='companion'&&state.phase!=='alive')section.append(el('p','Necesitas un compañero vivo y estable para compartir su perfil.'));
+    if(socialFlow==='egg'&&!state.social.eggs.length)section.append(el('p','Todavía no tienes huevos guardados.'));
+    refreshSocialCollection();
+  }else{
+    const breed=socialFlow==='breed';section.append(el('p',breed?'Crea un huevo nuevo a partir de dos compañeros. Escanea el QR del otro compañero y comprueba la compatibilidad.':'Recibe un huevo que otra persona ya ha creado. Escanea su QR o pega su código de huevo.','panel-note'));
+    section.append(socialButton('Escanear QR',scanSocialCode),socialButton('Parar cámara',()=>{stopSocialCamera();socialStatus('Cámara detenida.');}));
+    const video=el('video');video.id='social-video';video.muted=true;video.playsInline=true;video.hidden=true;section.append(video);
+    const label=el('label',breed?'Código alternativo del compañero':'Código alternativo del huevo');label.htmlFor='social-input';
+    const input=el('textarea');input.id='social-input';input.rows=2;input.maxLength=HatchMonSocial.MAX_CODE;input.spellcheck=false;section.append(label,input);
+    section.append(socialButton(breed?'Comprobar compatibilidad':'Recibir huevo',breed?showBreedingResult:()=>socialAction(()=>importEntity(input.value))));
+    if(breed){const card=el('div',undefined,'breeding-result');card.id='breeding-result';card.hidden=true;card.setAttribute('role','status');card.setAttribute('aria-live','polite');section.append(card);}
+  }
+
+  content.append(el('p','Los códigos funcionan offline. Compártelos solo con quien quieras: sin servidor no se puede restringir totalmente su uso en otros dispositivos.','panel-note'));
+}
+function startNewBeginning(eggId=null){
+  if(state.phase!=='dead')return;
+  rememberDeath();
+  if(eggId)incubateStoredEgg(eggId);
+  else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.pokedex=state.pokedex;state=next;}
+  cancelBirthAnimation();hideToast();clearPetReaction();if(dialog.open)closePanel();save();render();startTimer();
+}
+function renderBeginningChoices(){
+  const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Elige tu próximo comienzo';
+  content.append(el('p','Usa uno de Mis huevos o empieza con un huevo misterioso. Tus recuerdos permanecen.','panel-note'));
+  for(const egg of state.social.eggs)content.append(row('Huevo · '+egg.id.slice(-6),eggDescription(egg),socialButton('Incubar este huevo',()=>startNewBeginning(egg.id))));
+  content.append(socialButton('Empezar con huevo misterioso',()=>startNewBeginning()));
+}
+// Precarga conjunta: al cambiar de fase nunca se expone una URL sin cargar.
+// Imágenes ausentes, inválidas o demasiado lentas usan un icono pixel-art, sin rechazos.
+const eggAssets=new Map();
+function loadEggAsset(config){
+  return new Promise(resolve=>{
+    const image=new Image();let settled=false;
+    const finish=value=>{if(settled)return;settled=true;clearTimeout(deadline);image.onload=null;image.onerror=null;resolve(value);};
+    const deadline=setTimeout(()=>finish(null),5000);
+    image.onload=()=>{
+      const w=image.naturalWidth,h=image.naturalHeight;
+      finish(w>0&&h>0&&w%EGG_SPRITES.columns===0&&h%EGG_SPRITES.rows===0
+        ?{image,width:w/EGG_SPRITES.columns,height:h/EGG_SPRITES.rows}:null);
+    };
+    image.onerror=()=>finish(null);image.src=config.url;
+  });
+}
+const eggAssetsReady=Promise.all(Object.entries(EGG_SPRITES.phases).map(async([phase,config])=>[Number(phase),await loadEggAsset(config)]))
+  .then(entries=>{
+    // Mantener idéntica geometría entre fases; las hojas incompatibles no se usan.
+    const reference=entries.find(([,asset])=>asset)?.[1];
+    for(const[phase,asset]of entries)eggAssets.set(phase,asset&&asset.width===reference.width&&asset.height===reference.height?asset:null);
+  });
+let eggPageVisible=!document.hidden;
+const eggMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+function createEggController(sprite){
+  let phase=null,index=0,timeout=null,due=0,remaining=0,token=0,ready=false,complete=null,done=false,holding=false;
+  let paused=!eggPageVisible,asset=null;
+  const clear=()=>{if(timeout!==null)clearTimeout(timeout);timeout=null;};
+  function paint(frame){
+    sprite.dataset.eggPhase=String(phase);sprite.dataset.eggFrame=String(frame);
+    if(asset){
+      if(!sprite.classList.contains('sheet'))sprite.classList.add('sheet');
+      sprite.textContent='';
+      // La geometría del archivo solo define la proporción, nunca el tamaño en pantalla.
+      const longest=Math.max(asset.width,asset.height);
+      sprite.style.setProperty('--frame-ratio-width',String(asset.width/longest));sprite.style.setProperty('--frame-ratio-height',String(asset.height/longest));
+      sprite.style.backgroundImage=`url("${EGG_SPRITES.phases[phase].url}")`;
+      // Con fondo 400%×400%, cada tercio del recorrido corresponde a una celda.
+      sprite.style.backgroundPosition=`${frame%4*100/(EGG_SPRITES.columns-1)}% ${Math.floor(frame/4)*100/(EGG_SPRITES.rows-1)}%`;
+    }else{sprite.classList.remove('sheet');sprite.style.backgroundImage='';sprite.replaceChildren(pixelIcon('egg','egg-fallback'));}
+  }
+  function schedule(delay){
+    clear();remaining=delay;
+    if(paused||!ready||done||phase===null)return;
+    due=performance.now()+delay;timeout=setTimeout(step,delay);
+  }
+  function finish(){
+    clear();done=true;const callback=complete;complete=null;if(callback)callback();
+  }
+  function step(){
+    timeout=null;
+    if(paused||!ready||done||phase===null)return;
+    const config=EGG_SPRITES.phases[phase];
+    if(eggMotion.matches){finish();return;} // Solo fase 5 agenda este caso.
+    if(index+1<config.sequence.length){index++;paint(config.sequence[index]);schedule(1000/config.fps);return;}
+    if(phase===5){
+      if(!holding){holding=true;schedule(config.revealPauseMs||0);return;}
+      finish();return;
+    }
+    index=0;paint(config.sequence[0]);
+    schedule(config.pause[0]+Math.random()*(config.pause[1]-config.pause[0]));
+  }
+  function startPlayback(){
+    asset=eggAssets.get(phase)||null;ready=true;index=0;
+    const config=EGG_SPRITES.phases[phase];
+    paint(eggMotion.matches&&phase===5?config.frames-1:config.sequence[0]);
+    if(eggMotion.matches){if(phase===5)schedule(350);return;}
+    schedule(phase===5?1000/config.fps:config.pause[0]+Math.random()*(config.pause[1]-config.pause[0]));
+  }
+  function setPhase(next,onComplete=null){
+    if(phase===next)return; // render() periódico no reinicia frames ni temporizadores.
+    clear();phase=next;ready=false;done=false;holding=false;index=0;complete=onComplete;
+    const request=++token;
+    // Retener el frame anterior mientras termina la precarga, evitando parpadeos.
+    eggAssetsReady.then(()=>{if(request===token&&phase===next)startPlayback();});
+  }
+  function stop(){clear();token++;phase=null;ready=false;complete=null;done=false;asset=null;}
+  function pause(){if(paused)return;paused=true;if(timeout!==null)remaining=Math.max(0,due-performance.now());clear();}
+  function resume(){if(!paused)return;paused=false;if(ready&&!done&&phase!==null&&(!eggMotion.matches||phase===5))schedule(remaining);}
+  function motionChanged(){
+    if(!ready||phase===null||done)return;clear();
+    if(eggMotion.matches){paint(phase===5?15:0);if(phase===5)schedule(350);}
+    else{paint(EGG_SPRITES.phases[phase].sequence[index]);schedule(1000/EGG_SPRITES.phases[phase].fps);}
+  }
+  eggMotion.addEventListener('change',motionChanged);
+  return {setPhase,stop,pause,resume};
+}
+const eggController=createEggController($('sprite'));
+const pokemonRenderer=PokemonRenderer.create($('sprite'));let pokemonMode=false;
+let birthAnimation=null,birthReveal=false,birthFinishTimer=null;
+function cancelBirthAnimation(){
+  if(birthFinishTimer!==null)clearTimeout(birthFinishTimer);birthFinishTimer=null;
+  eggController.stop();birthAnimation=null;birthReveal=false;$('sprite').classList.remove('newborn');
+}
+function setEggVisual(phase){eggController.setPhase(phase,phase===5?revealNewborn:null);}
+function scheduleBirthFinish(){
+  if(birthFinishTimer!==null||!eggPageVisible)return;
+  // Solo espera la aparición .newborn; la eclosión ya terminó sus 16 frames.
+  birthFinishTimer=setTimeout(()=>{birthFinishTimer=null;if(!state.birthScene)return;finishBirthScene();cancelBirthAnimation();save();render();},eggMotion.matches?0:550);
+}
+function revealNewborn(){
+  if(!state.birthScene||birthReveal)return;
+  birthReveal=true;eggController.stop();render();$('sprite').classList.add('newborn');
+}
+function suspendEggVisuals(){
+  pokemonRenderer.pause();eggPageVisible=false;eggController.pause();
+  if(birthFinishTimer!==null)clearTimeout(birthFinishTimer);birthFinishTimer=null;
+}
+function resumeEggVisuals(){pokemonRenderer.resume();eggPageVisible=true;eggController.resume();}
+function presentNarrative(){
+  if(state.birthScene){
+    if(dialog.open)closePanel();
+    birthAnimation=true;
+    if(birthReveal)scheduleBirthFinish();
+    return;
+  }
+  if(birthAnimation)cancelBirthAnimation();
+  if(state.nicknamePending){
+    if(dialog.open)closePanel();
+    if(!$('nickname-dialog').open){$('birth-message').textContent=`¡Del Huevo ha salido un ${current().name}!`;$('nickname-input').value='';$('nickname-dialog').showModal();$('nickname-input').focus();}
+  }else if($('nickname-dialog').open)$('nickname-dialog').close();
+  if(state.foundItem!==null){
+    if(dialog.open)closePanel();
+    $('found-text').textContent=`¡Encontraste ${itemCatalog[state.foundItem].name}! Se ha guardado en tu mochila.`;
+    if(!$('found-dialog').open){$('found-dialog').showModal();$('found-bubble').focus();}
+  }else if($('found-dialog').open)$('found-dialog').close();
+}
+function render(forceFeedback=false){
+  const becameSick=presentedIllness===false&&state.pokerus;
+  const important=evolutionSerial!==shownEvolution||(!presentedIllness&&state.pokerus)||(presentedPhase!==state.phase&&['dead','critical'].includes(state.phase));
+  const egg=state.phase==='egg',dead=state.phase==='dead',critical=state.phase==='critical',birth=state.birthScene;
+  const showEgg=egg||(birth&&!birthReveal);if(!egg)$('creature-button').classList.remove('heat-reaction');
+  $('bond').hidden=egg||birth||dead;$('bond').replaceChildren();if(!egg&&!birth&&!dead){const hearts=Relationship.hearts(state);$('bond').setAttribute('aria-label',`Vínculo: ${hearts} de 5 corazones`);for(let i=0;i<5;i++)$('bond').append(pixelIcon('kindness',i<hearts?'':'empty'));}
+  $('stats').hidden=egg||birth;$('trainer').hidden=egg||dead||birth;$('restart').hidden=!dead;
+  $('creature-button').disabled=dead||interactionLocked();
+  $('screen').classList.toggle('lights-off',state.lightsOff&&!egg&&!birth);
+  if(showEgg){clearPetReaction();if(pokemonMode){pokemonRenderer.stop();pokemonMode=false;}setEggVisual(birth?5:eggStage().phase);}
+  else{
+    eggController.stop();$('sprite').classList.remove('sheet');$('sprite').style.backgroundImage='';
+    pokemonMode=true;renderCreature();
+  }
+  $('sprite').setAttribute('aria-label',showEgg?'Huevo':dead?'Lápida':critical?'Compañero debilitado':current().name);
+  $('creature-button').setAttribute('aria-label',egg?'Dar calor al huevo':'Acariciar a '+(state.nickname||current().name));
+  $('name').textContent=egg?'¡Un huevo misterioso!':birth?'¡Anda! ¡El huevo está eclosionando!':dead?`${current().name} · Game Over`:current().name;
+  $('gender').hidden=egg||birth;
+  $('gender').textContent=PokemonData.genderSymbol(state.gender);$('gender').dataset.gender=state.gender||'';$('gender').setAttribute('aria-label',PokemonData.genderLabel(state.gender));
+  $('identity').classList.toggle('has-nickname',!egg&&!birth&&!!state.nickname);
+  $('nickname').textContent=state.nickname;$('nickname').hidden=egg||birth||!state.nickname;
+  const hint=$('egg-hint');hint.hidden=!egg;if(egg&&hint.textContent!==eggStage().message)hint.textContent=eggStage().message;
+  const health=egg||birth?'':dead?(state.vital.deathCause==='natural'?'Su vida ha concluido de forma natural. Siempre en tu recuerdo.':'Siempre en tu recuerdo.'):critical?`Necesita auxilio${state.pokerus?' · Pokérus':''}`:state.pokerus?'Necesita una cura':'';
+  const poopLayer=$('poop-layer');poopLayer.replaceChildren();poopLayer.hidden=egg||birth||dead;
+  if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label','Deposición: necesita limpieza');poopLayer.append(node);}
+  $('health').textContent=health;$('health').hidden=!health;
+  if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
+  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=`${COST[a]} punto${COST[a]!==1?'s':''} de criador`;if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?'Encender luz':'Apagar luz'));}});
+  document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
+  $('trainer-energy').textContent=`Criador · ${Math.floor(state.trainer.energy+1e-8)}/${MAX_AP}`;
+  if(interactionLocked())hideToast();
+  if(state.message!==lastMessage||forceFeedback){lastMessage=state.message;if(!interactionLocked())showToast(state.message,important);}
+  presentedPhase=state.phase;presentedIllness=state.pokerus;
+  if(becameSick)petReaction('sick');
+  if(dead&&lastDeathId!==state.social.active.id){lastDeathId=state.social.active.id;petReaction('faint');}
+  $('save-note').hidden=!storageWarning;$('save-note').textContent=storageWarning;
+  if(evolutionSerial!==shownEvolution){shownEvolution=evolutionSerial;$('sprite').classList.remove('evolving');void $('sprite').offsetWidth;$('sprite').classList.add('evolving');}
+  if(dead&&timer!==null){clearInterval(timer);timer=null;}
+  presentNarrative();
+}
+function startTimer(){
+  if(timer!==null||state.phase==='dead')return;
+  timer=setInterval(()=>{
+    const age=state.age,phase=state.phase;sync();
+    if(state.phase==='egg'||state.age!==age||state.phase!==phase){
+      save();render();if(dialog.open&&(state.age!==age||state.phase!==phase))renderPanel();
+    }
+  },1000);
+}
+let temporaryVisual=null,reactionTimer=null,lastDeathId=null;
+function renderCreature(){
+  const visualState=temporaryVisual||(state.lightsOff?'sleep':state.pokerus||state.phase==='critical'?'sick':state.care?.energia<20?'tired':'normal');
+  pokemonRenderer.renderPokemon(state.pokemonId,{dead:state.phase==='dead'&&temporaryVisual!=='faint',resting:state.lightsOff||state.phase==='critical',visualState});
+}
+function clearPetReaction(){clearTimeout(reactionTimer);reactionTimer=null;temporaryVisual=null;delete $('sprite').dataset.reaction;}
+function petReaction(kind,emotion=null){
+  if((!alive()&&kind!=='faint')||interactionLocked())return;
+  clearPetReaction();temporaryVisual=kind;renderCreature();
+  $('sprite').dataset.reaction=kind;
+  reactionTimer=setTimeout(()=>{clearPetReaction();if(state.phase!=='egg')renderCreature();},kind==='faint'?1100:1700);
+}
+function interactWithPokemon(){const response=Relationship.interact(state);if(!response)return false;state.message=response.message;updateSustained();checkHealth();save();render(true);petReaction(response.kind,response.emotion);return true;}
+let collectionTab='pokedex',memorialRenderers=[];
+function disposeMemorialSprites(){for(const renderer of memorialRenderers)renderer.stop();memorialRenderers=[];}
+function collectionSprite(id){
+  const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');visual.setAttribute('aria-label',PokemonData.get(id)?.DisplayName||id);
+  const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false});return visual;
+}
+function renderPokedex(){
+  disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Pokédex y Memorias';
+  const tabs=el('nav',undefined,'social-flows');tabs.setAttribute('aria-label','Pokédex y Memorias');
+  for(const [id,label]of [['pokedex','POKÉDEX'],['memories','MEMORIAS']]){const button=socialButton(label,()=>{collectionTab=id;renderPokedex();});button.setAttribute('aria-pressed',String(collectionTab===id));tabs.append(button);}content.append(tabs);
+  if(collectionTab==='pokedex'){
+    const entries=Object.entries(state.pokedex);content.append(el('p',`${entries.length} formas vistas · ${entries.filter(([,e])=>e.ownedIds.length).length} cuidadas`,'panel-note'));
+    for(const [id,e]of entries){
+      const card=el('article',undefined,'memory-card dex-card'),copy=el('div');copy.append(el('h3',PokemonData.get(id).DisplayName),el('p',`${e.ownedIds.length?'Cuidado':'Visto'}${e.evolved?' · Evolucionado':''}${e.bred?' · Criado':''}${e.received?' · Recibido':''}`));card.append(collectionSprite(id),copy);content.append(card);
+    }return;
+  }
+  content.append(el('p','Compañeros que vivieron contigo. Sus recuerdos permanecen; no pueden reactivarse.','panel-note'));
+  if(!state.social.memorials.length)content.append(el('p','Todavía no hay recuerdos de compañeros fallecidos.'));
+  for(const memory of state.social.memorials){
+    const snap=memory.snapshot,id=memory.canonicalSpeciesId||memory.speciesId,data=PokemonData.get(id);
+    const card=el('article',undefined,'memory-card'),visual=collectionSprite(id);
+    const copy=el('div');copy.append(el('h3',`${data?.DisplayName||memory.speciesId} ${PokemonData.genderSymbol(snap.gender)}`));
+    if(snap.nickname)copy.append(el('p',`“${snap.nickname}”`,'memory-nickname'));
+    const hearts=el('div',undefined,'memory-hearts'),filled=Relationship.hearts({relationship:{points:memory.bond||0}});hearts.setAttribute('role','img');hearts.setAttribute('aria-label',`Vínculo final: ${filled} de 5 corazones`);
+    for(let i=0;i<5;i++)hearts.append(pixelIcon('kindness',i<filled?'':'empty'));copy.append(hearts);
+    const hours=Math.floor(snap.age/HOUR);copy.append(el('p',`Vivió ${Math.floor(hours/24)} días y ${hours%24} horas`));
+    copy.append(el('p',snap.vital?.deathCause==='natural'?'Muerte natural':snap.vital?.deathCause==='neglect'?'Falleció por abandono':'Causa no registrada'));
+    if(Number.isFinite(memory.diedAt))copy.append(el('p',new Date(memory.diedAt).toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'}),'subtle'));
+    card.append(visual,copy);content.append(card);
+  }
+}
+$('sprite').addEventListener('animationend',()=>{delete $('sprite').dataset.reaction;});
+function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();save();render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
+$('nickname-form').addEventListener('submit',event=>{event.preventDefault();dispatch(()=>setNickname($('nickname-input').value));});
+$('skip-nickname').addEventListener('click',()=>dispatch(()=>setNickname('')));
+$('nickname-dialog').addEventListener('cancel',event=>{event.preventDefault();dispatch(()=>setNickname(''));});
+function dismissFound(){dispatch(acknowledgeItem);document.querySelector('[data-action="jugar"]').focus();}
+$('found-bubble').addEventListener('click',event=>{event.stopPropagation();dismissFound();});
+$('found-dialog').addEventListener('click',event=>{if(event.target===$('found-dialog'))dismissFound();});
+$('found-dialog').addEventListener('cancel',event=>event.preventDefault());
+$('creature-button').addEventListener('click',()=>{if(state.phase!=='egg'){sync();interactWithPokemon();startTimer();return;}dispatch(()=>heat());if(state.phase==='egg'){showToast(EGG_TOUCH_FEEDBACK[(state.heat-1)%EGG_TOUCH_FEEDBACK.length],false,true);const button=$('creature-button');button.classList.remove('heat-reaction');void button.offsetWidth;button.classList.add('heat-reaction');}});
+$('creature-button').addEventListener('animationend',()=>$('creature-button').classList.remove('heat-reaction'));
+for(const k of CARE)$(k).addEventListener('animationend',()=>$(k).classList.remove('meter-changed'));
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>dispatch(()=>careAction(b.dataset.action),(b.dataset.action==='luz'?(state.lightsOff?'normal':'sleep'):({alimentar:'eat',jugar:'play',limpiar:'clean'})[b.dataset.action]))));
+document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
+$('close-panel').addEventListener('click',closePanel);dialog.addEventListener('close',()=>{disposeMemorialSprites();stopSocialCamera();panelName=null;});
+function resetGame(){
+  stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();lastDeathId=null;pokemonRenderer.stop();pokemonMode=false;$('creature-button').classList.remove('heat-reaction');
+  if(timer!==null)clearInterval(timer);timer=null;
+  if(dialog.open)closePanel();
+  for(const id of ['nickname-dialog','found-dialog'])if($(id).open)$(id).close();
+  storageWarning='';
+  try{localStorage.removeItem(SAVE_KEY);localStorage.removeItem(`${SAVE_KEY}.before-table-replacement`);localStorage.removeItem(`${SAVE_KEY}.before-canonical-v2`);localStorage.removeItem(`${SAVE_KEY}.before-vital-c`);}
+  catch{storageWarning='No se pudo borrar el guardado. Se ha reiniciado la sesión actual.';}
+  state=freshState();lastMessage=state.message;
+  render();startTimer();$('creature-button').focus();
+}
+window.HatchMon=Object.freeze({reset:resetGame});
+$('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(state.social.eggs.length)showPanel('beginning');else startNewBeginning();});
+window.addEventListener('pagehide',()=>{stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
+window.addEventListener('pageshow',()=>{if(!document.hidden){resumeEggVisuals();render();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopSocialCamera();clearPetReaction();suspendEggVisuals();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
+restore();save();lastMessage=state.message;render();startTimer();
+</script>
+</body>
+</html>

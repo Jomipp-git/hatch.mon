@@ -131,6 +131,10 @@
   .dex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dex-tile{padding:8px 3px;text-align:center;background:#d5dfd055;border:1px solid #a9b69b;border-radius:5px;min-width:0}.dex-tile summary{cursor:pointer;list-style:none}.dex-tile strong{font-size:.7rem;display:block;overflow-wrap:anywhere}.dex-tile p,.dex-tile small{font-size:.65rem}.dex-tile .memory-sprite{margin:auto}.unknown{font-size:1.3rem;color:#6b7961}
   .console{background-image:var(--motifImage,none),linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%);background-color:var(--shellBase,var(--shell));background-repeat:no-repeat;background-position:right bottom,center;background-size:160px 80px,100% 100%}
   .tracing-field{display:flex;flex-direction:column;padding:8px;gap:8px}.tracing-canvas{display:block;width:100%;height:auto;aspect-ratio:320/220;background:#d5dfd0;touch-action:none;user-select:none;image-rendering:pixelated}.tracing-canvas[data-centered="false"]{outline:2px dashed #52694a;outline-offset:-3px}.tracing-field>button{min-height:40px}
+  #game-root{width:min(100%,480px)}
+  .auth-console{width:min(100%,480px);padding:28px;background:var(--shell);border:2px solid var(--border);border-radius:22px;box-shadow:0 8px var(--border)}
+  #auth-google{width:100%;margin:0 0 16px}
+  .auth-console form,.auth-console label{display:grid;gap:8px}.auth-console form{gap:16px}.auth-console input{width:100%;font:inherit;padding:10px;border:1px solid var(--border);border-radius:6px}.auth-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.auth-links button{font-size:.8rem}.auth-message{min-height:3em;font-size:.85rem}#cloud-status{font-size:.75rem;text-align:center;max-width:460px;margin:14px auto 0}
 </style>
 </head>
 <body id="display-root">
@@ -144,6 +148,20 @@
     </feComponentTransfer>
   </filter>
 </defs></svg>
+<section id="auth-gate" class="auth-console" aria-labelledby="auth-title">
+<h1>hatch.mon</h1><h2 id="auth-title">Tu compañero te espera</h2>
+<p id="auth-message" class="auth-message" role="status">Comprobando sesión…</p>
+<button id="auth-retry" type="button" hidden onclick="location.reload()">Reintentar carga</button>
+<button id="auth-google" type="button">Continuar con Google</button>
+<form id="auth-form">
+<label id="auth-email-row">Email<input id="auth-email" type="email" autocomplete="email" required></label>
+<label id="auth-password-row">Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="6" required></label>
+<button id="auth-submit" type="submit">Entrar</button>
+</form>
+<nav class="auth-links" aria-label="Acceso"><button id="auth-login" type="button">Entrar</button><button id="auth-signup" type="button">Crear cuenta</button><button id="auth-recover" type="button">Olvidé mi contraseña</button></nav>
+<noscript>Activa JavaScript para iniciar sesión.</noscript>
+</section>
+<div id="game-root" hidden>
 <main class="console">
   <header><h1>hatch.mon</h1><img class="pokemon-logo" src="assets/pokemon_logo.png" alt="" aria-hidden="true"></header>
   <div class="bezel"><section id="screen" class="screen" aria-label="Tu compañero">
@@ -198,25 +216,31 @@
     <div class="dialog-actions"><button type="submit">Guardar mote</button><button id="skip-nickname" type="button">Sin mote</button></div>
   </form>
 </dialog>
-<script src="evolutionTable.js"></script>
-<script src="hatchmonData_v2.js"></script>
-<script src="pokemonDataAdapter.js"></script>
-<script src="vitalSimulation.js"></script>
-<script src="relationship.js"></script>
-<script src="pokedex.js"></script>
-<script src="shiny.js"></script>
-<script src="assets/skins/themes.js"></script>
-<script src="shellSkins.js"></script>
-<script src="styleTracing.js"></script>
-<script src="trainingActivities.js"></script>
-<script src="assets/pmd/manifest.js"></script>
-<script src="assets/pmd/listMetrics.js"></script>
-<script src="pmdRenderer.js"></script>
-<script src="pokemonRenderer.js"></script>
-<script src="socialEngine.js"></script>
-<script src="vendor/qrcode.js"></script>
-<script>
+</div>
+<p id="cloud-status" role="status" hidden></p>
+<script src="appEnvironment.js"></script>
+<script type="text/plain" data-game-src="evolutionTable.js"></script>
+<script type="text/plain" data-game-src="hatchmonData_v2.js"></script>
+<script type="text/plain" data-game-src="pokemonDataAdapter.js"></script>
+<script type="text/plain" data-game-src="vitalSimulation.js"></script>
+<script type="text/plain" data-game-src="relationship.js"></script>
+<script type="text/plain" data-game-src="pokedex.js"></script>
+<script type="text/plain" data-game-src="shiny.js"></script>
+<script type="text/plain" data-game-src="assets/skins/themes.js"></script>
+<script type="text/plain" data-game-src="shellSkins.js"></script>
+<script type="text/plain" data-game-src="styleTracing.js"></script>
+<script type="text/plain" data-game-src="trainingActivities.js"></script>
+<script type="text/plain" data-game-src="assets/pmd/manifest.js"></script>
+<script type="text/plain" data-game-src="assets/pmd/listMetrics.js"></script>
+<script type="text/plain" data-game-src="pmdRenderer.js"></script>
+<script type="text/plain" data-game-src="pokemonRenderer.js"></script>
+<script type="text/plain" data-game-src="socialEngine.js"></script>
+<script type="text/plain" data-game-src="vendor/qrcode.js"></script>
+<script type="text/plain" id="game-source">
 'use strict';
+const gameStorage=globalThis.window?.HatchStorage||globalThis.localStorage;
+const canUseTesting=(()=>{const enabled=globalThis.HatchEnvironment?.isDevelopmentEnvironment()===true;return()=>enabled;})();
+let runtimeStopped=false;
 // Hatch.mon: configuración y motor independientes de la interfaz.
 // Datos Pokémon y condiciones: hatchmonData_v2.js, sin rellenar desde la tabla anterior.
 const MINUTE=60000, HOUR=60*MINUTE, DAY=24*HOUR;
@@ -340,6 +364,7 @@ function evolve(r,item=null,testing=null){
 }
 // Herramienta explícita de Oak. Solo transiciones canónicas del repertorio actual.
 function forceEvolution(destination){
+  if(!canUseTesting())return false;
   if(!alive()||interactionLocked())return false;
   const r=current().rules.find(r=>r.to===destination&&r.enabled!==false);
   if(!r||!PokemonData.validGender(destination,state.gender))return false;
@@ -405,6 +430,7 @@ function advanceGameTime(milliseconds){
   if(!alive())state.remainder=0;
 }
 function skipTime(hours){
+  if(!canUseTesting())return false;
   if(![1,3,6].includes(hours)||state.phase==='dead'||interactionLocked())return false;
   advanceGameTime(hours*HOUR);
   return true;
@@ -610,12 +636,18 @@ function incubateStoredEgg(id){
   return state.message;
 }
 let storageWarning='';
-function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch{storageWarning='No se pudo guardar. Mantén esta pestaña abierta para conservar la partida.';}}
+let savedImportantState=null;
+function save({immediate=false}={}){
+  const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones]);
+  immediate=immediate||important!==savedImportantState;
+  try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
+  catch{storageWarning='No se pudo guardar. Mantén esta pestaña abierta para conservar la partida.';}
+}
 function restore(){
   try{
-    const raw=localStorage.getItem(SAVE_KEY);
+    const raw=gameStorage.getItem(SAVE_KEY);
     if(raw){const data=JSON.parse(raw);if(validSave(data)){state=data;sync();}
-      else{localStorage.removeItem(SAVE_KEY);storageWarning='D inicia una partida nueva: el guardado anterior ya no es compatible.';}}
+      else{gameStorage.removeItem(SAVE_KEY);storageWarning='D inicia una partida nueva: el guardado anterior ya no es compatible.';}}
   }catch{storageWarning='Guardado no disponible. La partida durará mientras la página siga abierta.';}
 }
 // UI: la pantalla principal solo muestra el compañero y sus necesidades.
@@ -647,13 +679,13 @@ function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(
 function row(title,detail,button){const r=el('div',undefined,'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
 const DISPLAY_PREFERENCE_KEY='hatch.mon.displayMode';
 let displayMode='color';
-try{if(localStorage.getItem(DISPLAY_PREFERENCE_KEY)==='lcd')displayMode='lcd';}catch{}
+try{if(gameStorage.getItem(DISPLAY_PREFERENCE_KEY)==='lcd')displayMode='lcd';}catch{}
 $('display-root').dataset.displayMode=displayMode;
 ShellSkins.apply($('display-root'));
 window.setDisplayMode=function(mode){
   if(mode!=='color'&&mode!=='lcd')throw new TypeError('Modo visual no válido');
   displayMode=mode;$('display-root').dataset.displayMode=mode;
-  try{localStorage.setItem(DISPLAY_PREFERENCE_KEY,mode);}catch{}
+  try{gameStorage.setItem(DISPLAY_PREFERENCE_KEY,mode);window.HatchCloud?.queue({immediate:true});}catch{}
   if(panelName==='settings')renderPanel();
   return mode;
 };
@@ -687,10 +719,13 @@ function renderPanel(){
     for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?'Máximo':['Novato','Aprendiz','Competente','Experto','Maestro'][Math.floor(state.training[k]/20)],meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',LABELS[k]);card.append(row(iconLabel(o.icon,LABELS[k]),`${rank} · ${state.training[k]} — ${o.name}`,panelButton('Practicar',()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
   }
   if(panelName==='settings'){
+    if(window.HatchAccount){const logout=el('button','Cerrar sesión');logout.type='button';logout.addEventListener('click',()=>void window.HatchAccount.logout());content.append(el('h3','Cuenta'),row(window.HatchAccount.email,'',logout));if(window.HatchAccount.hasBackup()){const backup=el('button','Descargar copia local pendiente');backup.type='button';backup.addEventListener('click',window.HatchAccount.downloadBackup);content.append(backup);}}
     content.append(el('h3','Visual'),el('p','Color o cuatro tonos LCD','panel-note'));
     const modes=el('div',undefined,'dialog-actions');
     for(const [mode,label]of [['color','Modo Color'],['lcd','Modo LCD monocromo']]){const button=el('button',label);button.type='button';button.dataset.key='display-'+mode;button.setAttribute('aria-pressed',String(displayMode===mode));button.addEventListener('click',()=>window.setDisplayMode(mode));modes.append(button);}content.append(modes,el('h3','Carcasa'));
-    const shells=el('div',undefined,'shell-options');for(const id of ['default',...ShellSkins.list()]){const theme=ShellSkins.theme(id),b=el('button',id==='default'?'Hatch.mon':theme.name);b.type='button';b.dataset.key='shell-'+id;b.style.background=theme.shellBase;b.style.color=theme.shellDark;b.setAttribute('aria-pressed',String(ShellSkins.selected()===id));b.addEventListener('click',()=>{ShellSkins.select(id,$('display-root'));renderPanel();});shells.append(b);}content.append(shells,el('h3','Testing'));
+    const shells=el('div',undefined,'shell-options');for(const id of ['default',...ShellSkins.list()]){const theme=ShellSkins.theme(id),b=el('button',id==='default'?'Hatch.mon':theme.name);b.type='button';b.dataset.key='shell-'+id;b.style.background=theme.shellBase;b.style.color=theme.shellDark;b.setAttribute('aria-pressed',String(ShellSkins.selected()===id));b.addEventListener('click',()=>{ShellSkins.select(id,$('display-root'));renderPanel();});shells.append(b);}content.append(shells);
+    if(!canUseTesting())return;
+    content.append(el('h3','Testing'));
     const resetButton=el('button','Reiniciar partida (testing)');resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
     content.append(row('Herramientas de pruebas','Borrar partida',resetButton));
     const timeControls=el('div',undefined,'dialog-actions');
@@ -971,7 +1006,7 @@ function render(forceFeedback=false){
   presentNarrative();
 }
 function startTimer(){
-  if(timer!==null||state.phase==='dead')return;
+  if(runtimeStopped||timer!==null||state.phase==='dead')return;
   timer=setInterval(()=>{
     const age=state.age,phase=state.phase;sync();
     if(state.phase==='egg'||state.age!==age||state.phase!==phase){
@@ -1033,7 +1068,7 @@ function renderPokedex(){
   }
 }
 $('sprite').addEventListener('animationend',()=>{delete $('sprite').dataset.reaction;});
-function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();save();render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
+function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();save({immediate:!!result});render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
 $('nickname-form').addEventListener('submit',event=>{event.preventDefault();dispatch(()=>setNickname($('nickname-input').value));});
 $('skip-nickname').addEventListener('click',()=>dispatch(()=>setNickname('')));
 $('nickname-dialog').addEventListener('cancel',event=>{event.preventDefault();dispatch(()=>setNickname(''));});
@@ -1048,25 +1083,29 @@ document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
 $('close-panel').addEventListener('click',closePanel);dialog.addEventListener('close',()=>{disposeMemorialSprites();stopSocialCamera();panelName=null;});
 function resetGame(){
+  if(!canUseTesting())return false;
   TrainingActivities.cancel();
   stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();lastDeathId=null;pokemonRenderer.stop();pokemonMode=false;$('creature-button').classList.remove('heat-reaction');
   if(timer!==null)clearInterval(timer);timer=null;
   if(dialog.open)closePanel();
   for(const id of ['nickname-dialog','found-dialog'])if($(id).open)$(id).close();
   storageWarning='';
-  try{localStorage.removeItem(SAVE_KEY);localStorage.removeItem(`${SAVE_KEY}.before-table-replacement`);localStorage.removeItem(`${SAVE_KEY}.before-canonical-v2`);localStorage.removeItem(`${SAVE_KEY}.before-vital-c`);}
+  try{gameStorage.removeItem(SAVE_KEY);gameStorage.removeItem(`${SAVE_KEY}.before-table-replacement`);gameStorage.removeItem(`${SAVE_KEY}.before-canonical-v2`);gameStorage.removeItem(`${SAVE_KEY}.before-vital-c`);}
   catch{storageWarning='No se pudo borrar el guardado. Se ha reiniciado la sesión actual.';}
   state=freshState();lastMessage=state.message;
   render();startTimer();$('creature-button').focus();
 }
-window.HatchMon=Object.freeze({reset:resetGame,roster:()=>HatchMonSocial.copy(obtainableRoster)});
+if(canUseTesting())window.HatchMon=Object.freeze({reset:resetGame,roster:()=>HatchMonSocial.copy(obtainableRoster)});
 $('training-game').addEventListener('cancel',event=>{event.preventDefault();TrainingActivities.cancel();$('training-game').close();});
 $('training-game').addEventListener('close',()=>TrainingActivities.cancel());
 $('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(state.social.eggs.length)showPanel('beginning');else startNewBeginning();});
-window.addEventListener('pagehide',()=>{TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
-window.addEventListener('pageshow',()=>{if(!document.hidden){resumeEggVisuals();render();}});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
+window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
+window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
+document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
+if(window.HatchCloud&&gameStorage.getItem(SAVE_KEY)&&!validSave(JSON.parse(gameStorage.getItem(SAVE_KEY))))throw Error('invalid-cloud-save');
+window.HatchRuntime={save,stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
 restore();save();lastMessage=state.message;render();startTimer();
 </script>
+<script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent='No se pudo conectar. Revisa Internet y recarga la página.';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>
 </body>
 </html>

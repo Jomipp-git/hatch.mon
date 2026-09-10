@@ -1,12 +1,16 @@
 # Hatch.mon
 
-Tamagotchi Pokémon retro, local y sin backend, cuentas, compilación ni CDN. Abre `index.html` con sus archivos y carpetas al lado. La cámara QR puede requerir localhost/HTTPS y soporte del navegador; pegar el código funciona sin cámara.
+Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTTP/HTTPS; Supabase proporciona acceso y guardado cloud, con SDK por CDN. La cámara QR puede requerir localhost/HTTPS y soporte del navegador; pegar el código funciona sin cámara.
 
 ## Arquitectura actual
 
 | Archivo | Responsabilidad | Dependencias principales |
 |---|---|---|
-| `index.html` | UI, incubación lógica, orquestación, evolución y persistencia | Adapter, Vital, renderer, social y QR |
+| `index.html` | Acceso visual, UI de juego, incubación y orquestación | Bootstrap, adapter, Vital, renderer, social y QR |
+| `authService.mjs` | Cliente Supabase, email, Google y recuperación | SDK oficial supabase-js por esm.sh (versión fijada) |
+| `cloudSaveService.mjs` | Envelope, caché por usuario, carga y autosave | Cliente Supabase, localStorage |
+| `appBootstrap.mjs` | Puerta de sesión/carga, arranque diferido y Cuenta | Auth, cloud save, módulos de juego |
+| `appEnvironment.js` | Detección central de entorno de testing | Hostname |
 | `vitalSimulation.js` | Balance, cuidados, fisiología, lifespan, LifeStage y requisitos vitales de crianza | `pokemonDataAdapter.js` |
 | `pokemonRenderer.js` | Render canvas, reproducción visual del huevo y fallback retro | Adapter, PmdVisuals, assets locales |
 | `pmdRenderer.js` | Resolución de animaciones, cadencia y validación visual de Eat | Adapter, `assets/pmd/manifest.js` |
@@ -34,7 +38,7 @@ Tamagotchi Pokémon retro, local y sin backend, cuentas, compilación ni CDN. Ab
 - Un solo compañero vivo activo, o un huevo incubándose. Los huevos guardados son inertes; no existe banco de criaturas vivas.
 - Muertos → Memorias, nunca reactivables. Perfiles vivos de QR sirven para crianza, no para almacenar compañeros.
 - El Pokémon se representa con assets propios; ante ausencia o fallo, marcador retro, nunca emoji.
-- Runtime local sin backend obligatorio. Reglas y balance solo cambian cuando la tarea lo solicita.
+- No se arranca el juego sin resolver sesión y carga cloud. Caché aislada por `session.user.id`; cloud manda al cargar. Reglas y balance solo cambian cuando la tarea lo solicita.
 
 ## Jugabilidad vigente
 
@@ -147,7 +151,7 @@ La creación ocurre en el dispositivo de quien determina la descendencia: la hem
 
 Se mantiene el sobre **HM1**, QR/manual, checksum de corrupción e historial de IDs. Los códigos de huevos se importan a la reserva. Los códigos de criaturas vivas se usan **solo como perfiles remotos de crianza**: importar como compañero se rechaza y no se almacenan snapshots vivos. La exportación no transfiere propiedad ni elimina al compañero; sin servidor no existe control global de copias o propiedad.
 
-La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendencia canónicos; mantiene MADURO, Ánimo, salud y un huevo por criatura en este dispositivo. El resultado es siempre un huevo guardado. Historial de códigos y progenitores impide repetir operaciones localmente; no sincroniza con otros dispositivos.
+La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendencia canónicos; mantiene MADURO, Ánimo, salud y un huevo por criatura en este dispositivo. El resultado es siempre un huevo guardado. Historial de códigos y progenitores impide repetir operaciones; forma parte del guardado cloud de la cuenta. El intercambio de códigos sigue siendo offline, sin transacciones entre cuentas.
 
 **Schema de partida 12.** Los saves de otras versiones se invalidan y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
 
@@ -206,3 +210,21 @@ La colección muestra todas las posiciones del roster, incluidas `???`, con filt
 Los motivos especiales se centralizan en `assets/skins/motifOverrides.json`: la línea Togepi usa triángulos rojos/azules discretos. Para nuevas carcasas, revisar paleta y añadir un motivo reconocible antes de considerarlas terminadas; una banda genérica de los temas anteriores no sustituye esa revisión.
 
 Estilo puntúa cobertura × precisión espacial, promediada sobre las cinco rondas: ≥90 % +5, ≥75 % +4, ≥60 % +3, ≥40 % +2, resto +1. La desviación se pondera por distancia recorrida, no por frecuencia de eventos ni tiempo. Al soltar puede retomarse el punto marcado; «Terminar recorrido» entrega la cobertura alcanzada y pasa al siguiente. Pointer capture y `touch-action:none` mantienen el gesto sin scroll. Cancelar sigue sin coste/recompensa.
+
+## Acceso y guardado cloud
+
+Ejecutar `python3 -m http.server 8080 --bind 127.0.0.1` en la raíz y abrir http://127.0.0.1:8080. No usar `file://` ni `npm run dev`: no hay package.json. Producción requiere HTTPS y conservar los módulos ES y assets junto a index.
+
+Email usa `signUp`/`signInWithPassword`; si se exige confirmación, se espera el correo antes de iniciar. Google usa `signInWithOAuth`. Recuperación usa `resetPasswordForEmail`, vuelve con `?recovery=1` y permite `updateUser` sin arrancar el juego. La sesión persistida y su renovación las gestiona el SDK. Solo se incluye la publishable key pública; nunca contraseñas ni secretos de proveedores en el save.
+
+`game_saves.game_state` contiene `{game, preferences: {shells, displayMode}}`, con `schema_version=1`; `game` conserva el esquema actual 12 y todos sus sistemas, incluidas identidades shiny, Pokédex, Memorias, huevos y entrenamiento. Se excluye el feedback temporal y se normaliza un nacimiento interrumpido para ofrecer el mote al volver. Las animaciones, DOM y temporizadores no se serializan. Una versión o partida inválida bloquea el arranque y no se reemplaza por un huevo.
+
+El arranque consulta por el ID de la sesión antes de cargar los scripts del juego. Un usuario nuevo comienza con su propio huevo. La caché usa el prefijo `hatch.mon.user.<userId>.`, incluidas carcasas y modo LCD; las claves locales anteriores sin usuario no se importan automáticamente. Cambiar de cuenta detiene y oculta el runtime y recarga el documento.
+
+La caché se actualiza inmediatamente. Alimentar, jugar, limpiar, entrenamiento completado, cambios de especie/fase, inventario, Pokédex, crianza/huevos, carcasas y configuración solicitan envío cloud inmediato al terminar. Los cambios fisiológicos se agrupan durante 15 segundos; snapshots idénticos no generan peticiones. Las escrituras son seriales y una confirmación anterior no limpia cambios posteriores pendientes. Reintenta fallos tras 30 segundos o al recuperar conexión. Cerrar sesión, desde Configuración → Cuenta, intenta vaciar el guardado antes de salir; `visibilitychange` al ocultarse y `pagehide` actualizan caché e intentan vaciar la cola; sigue siendo best effort. No se usa beforeunload ni sendBeacon: este último no permite integrar limpiamente la cabecera de autorización de Supabase. Un fallo mantiene caché y aviso. Si falla la consulta inicial pero existe caché de esa cuenta, se permite continuar localmente, con escritura cloud bloqueada hasta recargar. El indicador `cloud-dirty` permanece hasta confirmación. Al reabrir, si cloud coincide con la base conocida (`cloud-base`), se recupera y reenvía la caché pendiente; esto cubre un cierre antes de enviar. Si cloud ha cambiado, manda cloud y la copia pendiente queda como `cloud-backup`, descargable desde Cuenta, sin fusión automática.
+
+Testing solo se construye para localhost, 127.0.0.1 o loopback IPv6; reset, saltos y Force Evolution también comprueban el entorno. En producción no se expone `HatchMon`; el motor está encapsulado. Esta limitación evita accesos accidentales, no convierte un juego cliente en un sistema antitrampas. La autorización de datos corresponde a RLS.
+
+**Supabase:** no se han modificado tabla ni políticas. `user_id` debe tener unicidad para el upsert y las políticas SELECT/INSERT/UPDATE deben exigir `auth.uid() = user_id`. Autorizar las URLs exactas de entrada y recuperación (`http://127.0.0.1:8080/` y `http://127.0.0.1:8080/?recovery=1`, más `/index.html` si se usa esa ruta); añadir el dominio HTTPS al publicar. Mantener Google y correo habilitados. Flujos oficiales: [recuperación](https://supabase.com/docs/reference/javascript/auth-resetpasswordforemail) y [eventos de sesión](https://supabase.com/docs/reference/javascript/auth-onauthstatechange).
+
+**Validación:** `node --test tests/*.test.cjs` cubre regresión, contrato de Auth simulado, carga previa al juego, aislamiento A/B, envelope, prioridad cloud, reintentos y controles de producción. La pantalla de acceso se revisa en navegador real; estos mocks no verifican RLS ni proveedores. Completar manualmente con dos cuentas de prueba: registro/confirmación, Google, recuperación, logout/login, refresh y otro navegador; verificar guardado y rechazo de SELECT/UPDATE cruzados bajo sus JWT. No se han creado cuentas ni enviado correos de prueba. Edición simultánea desde varios dispositivos no tiene merge ni resolución de conflictos: prevalece la última escritura cloud; usar una sesión de juego a la vez.

@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
-const ctx=vm.createContext({TextEncoder,TextDecoder,btoa,atob,crypto:require('node:crypto').webcrypto});const run=s=>vm.runInContext(s,ctx);
+const ctx=vm.createContext({HatchEnvironment:{isDevelopmentEnvironment:()=>true},TextEncoder,TextDecoder,btoa,atob,crypto:require('node:crypto').webcrypto});const run=s=>vm.runInContext(s,ctx);
 for(const f of ['evolutionTable.js','hatchmonData_v2.js','pokemonDataAdapter.js','vitalSimulation.js','relationship.js','pokedex.js','shiny.js','assets/skins/themes.js','shellSkins.js','styleTracing.js','trainingActivities.js','socialEngine.js','vendor/qrcode.js'])run(fs.readFileSync(f,'utf8'));
-run(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1].split('// UI:')[0]);
+run(fs.readFileSync('index.html','utf8').match(/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/)[1].split('// UI:')[0]);
 function born(){run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")')}
 assert.equal(run('state.vital'),null);assert.equal(run('validSave(state)'),true);born();assert.equal(run('validSave(state)'),true);
 assert.equal(run('JSON.stringify(Vital.fresh("fixed"))===JSON.stringify(Vital.fresh("fixed"))'),true);

@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,els,advance}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="pichu";render();hideToast()');assert.equal(els.health.textContent,'Todo tranquilo.');
+run('showToast("Buen trabajo.")');assert.equal(els.toast.textContent,'Buen trabajo.');advance(2180);assert.equal(els.toast.hidden,true);assert.equal(els.health.textContent,'Todo tranquilo.');
+run('state.age=state.vital.lifespan*.5;render()');assert.equal(els.health.textContent,'Todo tranquilo.','Baby is not a breeding prompt');
+run('state.pokemonId="pikachu";render()');assert.equal(els.health.textContent,'Revisa la crianza en Oak.');
+run('state.care.hambre=20;render()');assert.equal(els.health.textContent,'Tiene hambre.');
+run('state.care.hambre=100;state.vital.hasProducedEgg=true;render()');assert.equal(els.health.textContent,'Todo tranquilo.');
+run('state.vital.dirt=60;render()');assert.equal(els.health.textContent,'Le vendría bien una limpieza.');
+run('state.vital.dirt=0;state.relationship.attention=8;render()');assert.equal(els.health.textContent,'Necesita un poco de espacio.');
+run('state.relationship.attention=0;state.lightsOff=true;render()');assert.equal(els.health.textContent,'Todo tranquilo.');
+console.log('PASS contextual status: neutral after feedback, eligible breeding only, care priority, dirt, space, used breeding and sleep.');
+})().catch(e=>{console.error(e);process.exitCode=1});

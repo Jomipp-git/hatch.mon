@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,storage,els}=await setup();
+assert.equal(run('ShellSkins.list().length'),0);run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="togetic"');assert.equal(run('ShellSkins.observe(state)'),false);
+run('state.age=state.vital.lifespan*.5');assert.equal(run('ShellSkins.observe(state)'),true);assert.equal(run('ShellSkins.observe(state)'),false);
+const id=run('PokemonData.canonicalId("togetic")');run(`ShellSkins.select('${id}',document.getElementById('display-root'))`);assert.equal(els['display-root'].dataset.shell,id);
+run('forceEvolution("togekiss");die("natural")');assert.ok(run('ShellSkins.list()').includes(id));
+const reload=await setup({initialShells:JSON.parse(storage.get('hatch.mon.shells'))});assert.equal(reload.els['display-root'].dataset.shell,id);assert.ok(reload.run('ShellSkins.list()').includes(id));
+assert.equal(run('ShellSkins.select("not-unlocked",document.getElementById("display-root"))'),false);
+run('showPanel("settings")');assert.ok(els['panel-content'].querySelectorAll('button').some(b=>b.dataset.key==='shell-'+id));
+console.log('PASS shells: maturity unlock once, selected theme, evolution/death persistence, reload, locked selection and settings access.');
+})().catch(e=>{console.error(e);process.exitCode=1});

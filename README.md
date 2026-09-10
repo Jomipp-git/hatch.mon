@@ -6,26 +6,29 @@ Tamagotchi Pokémon retro, local y sin backend, cuentas, compilación ni CDN. Ab
 
 | Archivo | Responsabilidad | Dependencias principales |
 |---|---|---|
-| `index.html` | UI, incubación, orquestación de partida, evolución y persistencia | Adapter, Vital, renderer, social y QR |
+| `index.html` | UI, incubación lógica, orquestación, evolución y persistencia | Adapter, Vital, renderer, social y QR |
 | `vitalSimulation.js` | Balance, cuidados, fisiología, lifespan, LifeStage y requisitos vitales de crianza | `pokemonDataAdapter.js` |
-| `pokemonRenderer.js` | Render canvas y fallback retro | Adapter, PmdVisuals, assets locales |
-| `pmdRenderer.js` | Resolución de estados y portraits temporales | Adapter, `assets/pmd/manifest.js` |
+| `pokemonRenderer.js` | Render canvas, reproducción visual del huevo y fallback retro | Adapter, PmdVisuals, assets locales |
+| `pmdRenderer.js` | Resolución de animaciones, cadencia y validación visual de Eat | Adapter, `assets/pmd/manifest.js` |
 | `relationship.js` | Vínculo, atención e interacción directa | Estado de partida; sin assets |
-| `pokedex.js` | Progreso por forma y selección ponderada | Adapter |
-| `trainingActivities.js` | Handlers reemplazables de entrenamiento | Callback al entrenamiento existente |
+| `pokedex.js` | Progreso normal/shiny, roster alcanzable y selección ponderada | Adapter |
+| `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
+| `shiny.js` | Política shiny preparada, activación pendiente de assets | Rareza canónica vía adapter |
+| `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
+| `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callback de resultado a `train` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
 | `socialEngine.js` | HM1, validación, historial y compatibilidad offline | Adapter, Vital |
 | `pokemonDataAdapter.js` | Consulta canónica, alias de IDs y compatibilidad biológica | Datos v2, repertorio legacy |
-| `hatchmonData_v2.js` | Catálogo y reglas canónicas | Ninguna dependencia de runtime |
+| `hatchmonData_v2.js` | Catálogo y reglas generados para runtime | Excel master, `tools/generateCanonicalData.py` |
 | `evolutionTable.js` | Repertorio histórico de 44 formas y nombres para resolver IDs | Consumido por adapter y orquestación |
 
 `assets/` contiene huevos, logo y sprites; `vendor/` contiene QR y licencia. `tests/` reúne verificaciones y el inventario de assets. `master/` conserva fuentes archivadas, sin uso en runtime. `AGENTS.md` define el flujo de trabajo para futuras modificaciones.
 
 **Ruta rápida por tarea:** cuidados → Vital y acciones concretas de index; sprites → renderer y assets; evolución → funciones evolutivas de index y consultas del adapter; breeding/QR → social, adapter y UI social de index (Vital solo para requisitos de salud/madurez); datos Pokémon → fuente v2 mediante consultas selectivas del adapter. Abrir únicamente los módulos necesarios.
 
-## Reglas canónicas clave
+## Reglas estructurales clave
 
-- `hatchmonData_v2.js` es la única fuente de datos Pokémon y reglas evolutivas/biológicas. Consultar mediante el adapter; no completar datos ausentes por inferencia ni copiar el catálogo.
+- `master/pokemonTable_HatchMon_Canonical_v2.xlsx` es la fuente maestra; `hatchmonData_v2.js` es su artefacto canónico de runtime para datos Pokémon y reglas evolutivas/biológicas. Consultar mediante el adapter; no completar datos ausentes por inferencia ni copiar el catálogo.
 - `evolutionTable.js` conserva repertorio e IDs históricos; no decide reglas canónicas ni proporciona gráficos al compañero activo.
 - LifeStage depende de edad/lifespan; EvolutionStage depende de la especie. Son independientes.
 - Un solo compañero vivo activo, o un huevo incubándose. Los huevos guardados son inertes; no existe banco de criaturas vivas.
@@ -46,7 +49,7 @@ Los cuidados mantienen decimales. El motor usa la misma simulación por minutos 
 | Energía | −4 | +24 |
 | Higiene | −5 | −5 |
 
-La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar cuesta 1 AP; jugar 2; entrenar 2. Entrenar aporta +5 al atributo, −10 energía, −4 hambre y +3 suciedad. Bayas de atributo aportan +1. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
+La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar cuesta 1 AP; jugar 2; entrenar 2. Completar entrenamiento aporta de +1 a +5 al atributo, −10 energía, −4 hambre y +3 suciedad. Bayas de atributo aportan +1. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
 
 Las deposiciones mantienen su aspecto aprobado y un máximo de tres. Sus multiplicadores de desgaste de higiene son 1 / 1,25 / 1,6 / 2. Alcanzar hambre 100 no penaliza. Comidas o bayas adicionales a saciedad añaden una unidad a `recentFeedingLoad`, que disminuye 0,75/h. Riesgo por ingesta extra: 0 / 0 / 15 / 30 / 50%, techo 50%; se usa el nivel entero superior de la carga restante. Una tirada por ingesta, nunca tiradas pasivas de sobrealimentación; los riesgos de varias ingestas se acumulan probabilísticamente.
 
@@ -103,17 +106,17 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 ## Entrenamiento preparado para minijuegos
 
-`TrainingActivities.launch()` conserva el entrenamiento inmediato y sus costes/recompensa actuales. Los handlers se pueden reemplazar con `register()`: IQ memoria/patrones, Strength timing/reflejos, Kindness decisión/interacción y Style ritmo/secuencia. Una sesión expone completar/cancelar y solo permite un commit; no hay cuatro minijuegos implementados todavía. El motor de entrenamiento y sus requisitos evolutivos siguen siendo la autoridad.
+`TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad identificación y Estilo trazado mediante `styleTracing.js`. Costes y requisitos permanecen en el motor de entrenamiento.
 
 ## Evolución y testing
 
 `MinMood` y `MinBond` son columnas independientes y opcionales (0–100): Ánimo **actual** y Vínculo **acumulado**. Vacío/null/ausente significa sin requisito; si hay ambos, se exigen ambos. El motor rechaza valores fuera de rango. Oak los presenta por separado y Force Evolution prepara ambos mínimos sin reducir valores.
 
-La tabla JSON/JS vigente añade ambos campos vacíos, sin cambiar requisitos de especies. Al regenerarla desde Excel deben conservarse como columnas distintas; los libros históricos de `master/` no se han reescrito. Ejemplos de formato, **no nuevas reglas de especies**: `{ "MinMood": 70, "MinBond": null }` exige Ánimo 70; `{ "MinMood": null, "MinBond": 60 }` exige Vínculo 60. No se han convertido automáticamente los requisitos sostenidos existentes en amistad.
+`tools/generateCanonicalData.py` exporta las hojas Pokemon y EvolutionRules según sus encabezados y DataDictionary, sin tablas manuales. Ejecutar `python3 tools/generateCanonicalData.py` (requiere openpyxl); `--check` verifica reproducibilidad. Genera `hatchmonData_v2.js` y `master/hatchmonData_v2.json`. MinBond vacío se exporta como null; MinMood, ausente en el Excel actual, sigue siendo opcional en el motor. MinBond usa puntos de Vínculo actuales, sin conversión a corazones. El master contiene un PokemonId duplicado (`0052L0`) preexistente; se conserva para no alterar datos fuera de esta integración.
 
 La evolución ordinaria usa solo `evolutionRules` canónico: edad, atributos, acciones, cuidados sostenidos y objetos. No se completan reglas ausentes con la tabla legacy. Las medias de cuidados se muestrean por etapa; las condiciones sostenidas requieren continuidad. Atributos de entrenamiento son valores fijos.
 
-Oak ofrece pistas, +1/+3/+6 horas y reinicio total; `HatchMon.reset()` también reinicia. Los saltos horarios sí simulan fisiología y pueden causar muerte.
+Oak ofrece pistas. Configuración concentra +1/+3/+6 horas, Force Evolution y reinicio total; `HatchMon.reset()` también reinicia. Los saltos horarios sí simulan fisiología y pueden causar muerte.
 
 **Forzar evolución C.2** permite elegir una ruta canónica. Aumenta edad al mínimo requerido (nunca la reduce), eleva solo atributos necesarios y completa contadores mínimos sin reducir los existentes. Prepara evidencia histórica de cuidados sostenidos exclusivamente para esa llamada de testing: duración y valor mínimo comprobados por `conditionsMet`. La evidencia sostenida no cambia las barras actuales; un requisito explícito MinMood sí eleva Ánimo hasta su mínimo. MinBond eleva Vínculo hasta su mínimo. Ninguno reduce valores ni altera los otros cuidados. El hito registra la evidencia y `testing:true`; no se trata de cuidado real realizado por el jugador.
 
@@ -146,31 +149,60 @@ Se mantiene el sobre **HM1**, QR/manual, checksum de corrupción e historial de 
 
 La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendencia canónicos; mantiene MADURO, Ánimo, salud y un huevo por criatura en este dispositivo. El resultado es siempre un huevo guardado. Historial de códigos y progenitores impide repetir operaciones localmente; no sincroniza con otros dispositivos.
 
-**Schema de partida 12.** Los saves anteriores se invalidan al abrir D y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. Se elimina `abuseReadyAt`, que ya era inerte. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
+**Schema de partida 12.** Los saves de otras versiones se invalidan y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
 
 ## Verificación
 
-Desde la raíz con Node:
+Desde la raíz:
 
 ```sh
-node tests/vital.test.cjs
-node tests/rebalance.test.cjs
-node tests/adjustment.test.cjs
-node tests/renderer-feedback.test.cjs
-node tests/feedback-anchor.test.cjs
-node tests/sprites.audit.cjs
-node tests/ui-polish.test.cjs
-node tests/social-ux.test.cjs
-node tests/emotional.test.cjs
-node tests/pmd.test.cjs
-node tests/mood-bond.test.cjs
-node tests/memories.test.cjs
+node --test tests/*.test.cjs
 ```
 
-Cubren vínculo, anti-spam, portraits/fallbacks PMD, continuidad de Pokédex, selección ponderada y balance C.1, lifespan, ausencia, crianza, todas las rutas de testing conectadas, preservación fisiológica, inventario, cuidados sostenidos, contadores, modelo de compañero, memorias, huevos inertes, schema, renderer, rutas y duplicados. El test de feedback comprueba ascendencia HTML real, anclaje CSS absoluto y comportamiento DOM en los cinco contextos; no mide píxeles en un navegador real.
-
-Se ha inspeccionado una lámina de los idle de assets de assets, no la aplicación renderizada. **Pendiente de inspección manual en navegador:** estados PMD en móvil, escala/encuadre entre animaciones, posición de portraits/corazones, logo, solapamientos y sensación emocional. La revisión anterior de navegador quedó bloqueada por la política de URLs; las pruebas DOM/canvas no sustituyen esa revisión.
+Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `node tests/sprites.audit.cjs` verifica por separado el paquete visual legacy. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
 
 ## Nota de Futuro
 
 **Sistema de Eclosión por Pasos (PWA / Mobile):** En futuras actualizaciones, la incubación dependerá de sincronizar pasos reales del podómetro del móvil en lugar de clics estáticos, para convertir Hatch.mon en una experiencia portátil. No está implementado en esta versión.
+
+## Configuración visual
+
+Configuración se abre desde el botón superior derecho del LCD. Color/LCD se guarda en `hatch.mon.displayMode`, separado de la partida. `window.setDisplayMode('color' | 'lcd')` cambia inmediatamente la presentación. El filtro SVG cuantiza luminancia en cuatro tonos (`#263b30`, `#52694a`, `#91a477`, `#d5dfbb`) sobre pantalla, banda y mini-sprites, sin modificar assets ni geometría.
+
+## Minijuegos de entrenamiento
+
+Intelecto tiene cinco secuencias de 2 a 6 luces: cada ronda correcta a la primera suma un punto, con +1 mínimo. Mostrar la secuencia no consume los cuatro segundos de respuesta; completar una respuesta inicia la siguiente ronda. Duración aproximada: 12–32 s según respuestas.
+
+Fuerza dispone de cinco rondas de 3 s y puntúa precisión con máxima puntuación dentro de la zona central. Amabilidad presenta diez tandas de tres residuos y tres distractores (30 residuos garantizados), con 1,5 s por tanda. Estilo ofrece cinco trazados progresivos, sin tiempo máximo ni tempo obligatorio. La preparación de 600 ms queda fuera de estos plazos; cada ventana comienza cuando se presenta su contenido.
+
+Para Fuerza y Amabilidad, rendimiento normalizado `s`: +5 al alcanzar 1; en otro caso `1 + floor(4*s)`, limitado a +1–+4. Intelecto otorga directamente el número de rondas correctas, con mínimo +1. No hay bonus por terminar rápido.
+
+El coste habitual se aplica una sola vez al completar (atributos limitados a 100). Cancelar, ocultar la pestaña o salir no concede puntos ni cobra la sesión. Vínculo añade 0,3 por punto obtenido, hasta 1,5. No cambia Ánimo. Force Evolution sigue funcionando sin minijuegos.
+
+## Colecciones y presentación
+
+El criador de la banda inferior ofrece consejos breves según cuidados; no altera estadísticas. Entrenamiento muestra barras y los menús resumen costes y requisitos. Pokédex conserva tabs de especies y Memorias, con variantes NORMAL/SHINY separadas.
+
+`HatchMon.roster()` calcula alcance desde `PokemonData.roots()` por reglas activas del roster runtime. El inventario reproducible está en `tests/obtainable-roster.json`: 44 formas, 13 raíces de huevo y 31 por evolución, sin formas desconectadas dentro del repertorio. No equivale a incorporar las 1.100 filas del catálogo canónico. El grafo verifica rutas configuradas, no garantiza cada condición mediante una partida completa.
+
+### Shiny: preparación, sin encuentros activados
+
+`shiny.js` contiene la probabilidad canónica `1/(10*Rarity)`, con activación deshabilitada. El tracker local identifica variantes para 43 formas; Raichu no está verificado. Falta sincronizar PNG shiny, comparar geometría/frameBounds/animaciones con normales y habilitar el selector de assets tras validar cobertura. No se inventan recolores.
+
+`social.active.isShiny` es identidad local opcional (ausente = normal), conservada al evolucionar y copiada a Memorias. El QR base no exporta este campo. `Pokedex.record(..., isShiny)` separa progreso shiny en la entrada; no implica descubrir la variante contraria. El renderer admite `isShiny` y selecciona `PMD_ASSETS[id].shiny` cuando exista, compartiendo escala normal; mientras falten esos assets muestra el normal. No hay tiradas activas ni herencia shiny.
+
+## Carcasas y diagnóstico
+
+Configuración → Carcasa permite elegir Hatch.mon o una edición desbloqueada. Los colores se extraen de Idle con `tools/generateShellThemes.py`; las 44 definiciones deterministas están en `assets/skins/themes.js`. El navegador solo aplica variables CSS, sin crear archivos. Desbloquear requiere estado vivo y LifeStage MADURO; se comprueba durante los pasos de simulación (incluido tiempo offline) y al renderizar. Cada forma se registra una sola vez.
+
+`hatch.mon.shells` guarda desbloqueos y selección fuera de la partida, por lo que sobreviven a evolución, muerte y nuevo comienzo. Oak usa una ficha de diagnóstico, barras de medias y detalles evolutivos plegados. Entrenamiento presenta Novato/Aprendiz/Competente/Experto/Maestro/Máximo junto a barra y valor discreto. No cambia requisitos, fisiología ni recompensas.
+
+## Refinamiento de interacción y colección
+
+Pedir espacio usa Hurt → Cringe → Pain → Idle. Amabilidad conserva los objetos durante una pulsación capturada y separa tandas con 300 ms sin input. Fuerza aumenta la velocidad por ronda, con preparación independiente; Estilo usa arrastre sobre curvas, onda, S, espiral y combinación final; marca progreso y una estela pixel-art. Intelecto conserva sus cinco rondas.
+
+La colección muestra todas las posiciones del roster, incluidas `???`, con filtro de variante secundario y detalle plegable de formas descubiertas. Memorias mantiene tarjetas de individuos. La escala de listas utiliza el área alfa de Idle (`assets/pmd/listMetrics.js`, generado por `tools/generateListMetrics.py`), con masa objetivo y límites de encuadre; el renderer principal no cambia. Se revisó una lámina del trío Togepi/Togetic/Togekiss, no la app en navegador.
+
+Los motivos especiales se centralizan en `assets/skins/motifOverrides.json`: la línea Togepi usa triángulos rojos/azules discretos. Para nuevas carcasas, revisar paleta y añadir un motivo reconocible antes de considerarlas terminadas; una banda genérica de los temas anteriores no sustituye esa revisión.
+
+Estilo puntúa cobertura × precisión espacial, promediada sobre las cinco rondas: ≥90 % +5, ≥75 % +4, ≥60 % +3, ≥40 % +2, resto +1. La desviación se pondera por distancia recorrida, no por frecuencia de eventos ni tiempo. Al soltar puede retomarse el punto marcado; «Terminar recorrido» entrega la cobertura alcanzada y pasa al siguiente. Pointer capture y `touch-action:none` mantienen el gesto sin scroll. Cancelar sigue sin coste/recompensa.

@@ -1054,6 +1054,10 @@ globalThis.PokemonRenderer=(()=>{
       const img=new Image(),timeout=setTimeout(()=>resolve(null),5000);img.onload=()=>{clearTimeout(timeout);resolve(img);};img.onerror=()=>{clearTimeout(timeout);resolve(null);};img.src=src;
     }));return cache.get(src);
   }
+  function frameBounds(def){
+    const c=def.crop||{x:0,y:0,width:def.width||16,height:def.height||16};
+    return def.frameBounds||[[c.x,c.y,c.x+c.width,c.y+c.height]];
+  }
   const geometryCache=new Map();
   function geometry(speciesId,list=false){
     const id=PokemonData.canonicalId(speciesId),key=id+':'+list;
@@ -1061,9 +1065,10 @@ globalThis.PokemonRenderer=(()=>{
     const base=definition(id),idle=(typeof PmdVisuals==='undefined'?null:PmdVisuals.candidates(id,'normal')[0])||base;
     const c=idle.crop||{width:16,height:16};
     const animations=list?[idle]:['normal','sleep','eat','happy','sick','train','faint'].flatMap(state=>typeof PmdVisuals==='undefined'?[base]:PmdVisuals.candidates(id,state));
-    const sizes=animations.flatMap(d=>d.frameBounds?.map(b=>[b[2]-b[0],b[3]-b[1]])||[[d.crop?.width||16,d.crop?.height||16]]);
+    const sizes=animations.flatMap(d=>frameBounds(d).map(b=>[b[2]-b[0],b[3]-b[1]]));
     const target=84,limit=98;
-    const scale=Math.min(target/c.height,limit/c.width,limit/Math.max(...sizes.map(b=>b[0])),limit/Math.max(...sizes.map(b=>b[1])));
+    const metric=list&&typeof PMD_LIST_METRICS!=='undefined'?PMD_LIST_METRICS[id]:null;
+    const scale=metric?Math.min(Math.sqrt(2700/metric.opaqueArea),limit/metric.width,limit/metric.height):Math.min(target/c.height,limit/c.width,limit/Math.max(...sizes.map(b=>b[0])),limit/Math.max(...sizes.map(b=>b[1])));
     const result=Object.freeze({scale,width:104,height:104,baseline:101});geometryCache.set(key,result);return result;
   }
   function create(host,{list=false}={}){
@@ -1078,12 +1083,12 @@ globalThis.PokemonRenderer=(()=>{
       const palette=def.palette||POKEMON_RENDER_CONFIG.palette;
       pixels.forEach((row,y)=>Array.from(row).forEach((value,x)=>{if(palette[Number(value)]){ctx.fillStyle=palette[Number(value)];ctx.fillRect(offsetX+x*scale,offsetY+y*scale,scale,scale);}}));
     }
-    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true}={}){
-      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}`;
+    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true,isShiny=false}={}){
+      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}:${isShiny}`;
       if(key===nextKey)return;stop();key=nextKey;const token=serial;
       canvas=document.createElement('canvas');canvas.className='pokemon-pixels';canvas.setAttribute('aria-hidden','true');host.append(canvas);
       const metrics=geometry(speciesId,list);canvas.width=metrics.width;canvas.height=metrics.height;canvas.style.width=`${metrics.width*1.3}px`;canvas.style.height=`${metrics.height*1.3}px`;
-      const base=definition(speciesId),available=typeof PmdVisuals==='undefined'?[]:PmdVisuals.candidates(speciesId,visualState);
+      const base=definition(speciesId),available=typeof PmdVisuals==='undefined'?[]:PmdVisuals.candidates(speciesId,visualState,isShiny);
       const definitions=dead?[POKEMON_RENDER_CONFIG.memorial]:[...available,base,POKEMON_RENDER_CONFIG.placeholder];
       const seen=new Set();const candidates=definitions.filter(d=>{const key=d.src||d;if(seen.has(key))return false;seen.add(key);return true;});
       host.dataset.speciesId=PokemonData.canonicalId(speciesId)||'';host.classList.toggle('resting',resting&&!dead);
@@ -1099,9 +1104,10 @@ globalThis.PokemonRenderer=(()=>{
         const w=def.width||img.naturalWidth,h=def.height||img.naturalHeight;
         const columns=def.type==='sheet'?def.columns:1,frames=def.type==='sheet'?def.frames:1,row=def.row||0;
         if(!Number.isInteger(w)||!Number.isInteger(h)||w<=0||h<=0||w*columns>img.naturalWidth||(row+1)*h>img.naturalHeight||frames>columns){attempt();return;}
-        const crop=def.crop||{x:0,y:0,width:w,height:h};
+        const first=list?def.frameBounds?.[0]:null;
+        const crop=first?{x:first[0],y:first[1],width:first[2]-first[0],height:first[3]-first[1]}:def.crop||{x:0,y:0,width:w,height:h};
         if(crop.x<0||crop.y<0||crop.width<=0||crop.height<=0||crop.x+crop.width>w||crop.y+crop.height>h){attempt();return;}
-        if((def.frameBounds||[[crop.x,crop.y,crop.x+crop.width,crop.y+crop.height]]).some(b=>(b[2]-b[0])*metrics.scale>98||(b[3]-b[1])*metrics.scale>98)){attempt();return;}
+        if((list?[frameBounds(def)[0]]:frameBounds(def)).some(b=>(b[2]-b[0])*metrics.scale>98||(b[3]-b[1])*metrics.scale>98)){attempt();return;}
         host.dataset.visual='asset';host.dataset.asset=def.src;host.dataset.visualState=visualState;
         canvas.classList.toggle('feeding-idle',visualState==='eat'&&def.animationName!=='Eat'&&animate);
         const scale=metrics.scale;let frame=0;
@@ -1109,7 +1115,7 @@ globalThis.PokemonRenderer=(()=>{
           cancel();if(serial!==token||paused)return;
           const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
           ctx.save();if(def.flip){ctx.translate(canvas.width,0);ctx.scale(-1,1);}
-          const b=def.frameBounds?.[frame]||[crop.x,crop.y,crop.x+crop.width,crop.y+crop.height];
+          const b=frameBounds(def)[frame]||frameBounds(def)[0];
           const fw=b[2]-b[0],fh=b[3]-b[1];
           const x=Math.max(3,Math.min(canvas.width-3-fw*scale,(canvas.width-crop.width*scale)/2+(b[0]-crop.x)*scale));
           const y=Math.max(3,Math.min(metrics.baseline-fh*scale,metrics.baseline-(crop.y+crop.height-b[1])*scale));
@@ -1123,5 +1129,91 @@ globalThis.PokemonRenderer=(()=>{
     }
     return {renderPokemon,stop,pause(){paused=true;cancel();},resume(){paused=false;currentDraw?.();}};
   }
-  return Object.freeze({create,definition,geometry});
+  function createEgg(sprite,{config,motion:eggMotion,createFallback}){
+const eggAssets=new Map();
+function loadEggAsset(assetConfig){
+  return new Promise(resolve=>{
+    const image=new Image();let settled=false;
+    const finish=value=>{if(settled)return;settled=true;clearTimeout(deadline);image.onload=null;image.onerror=null;resolve(value);};
+    const deadline=setTimeout(()=>finish(null),5000);
+    image.onload=()=>{
+      const w=image.naturalWidth,h=image.naturalHeight;
+      finish(w>0&&h>0&&w%config.columns===0&&h%config.rows===0
+        ?{image,width:w/config.columns,height:h/config.rows}:null);
+    };
+    image.onerror=()=>finish(null);image.src=assetConfig.url;
+  });
+}
+const eggAssetsReady=Promise.all(Object.entries(config.phases).map(async([phase,config])=>[Number(phase),await loadEggAsset(config)]))
+  .then(entries=>{
+    // Mantener idéntica geometría entre fases; las hojas incompatibles no se usan.
+    const reference=entries.find(([,asset])=>asset)?.[1];
+    for(const[phase,asset]of entries)eggAssets.set(phase,asset&&asset.width===reference.width&&asset.height===reference.height?asset:null);
+  });
+function createEggController(sprite){
+  let phase=null,index=0,timeout=null,due=0,remaining=0,token=0,ready=false,complete=null,done=false,holding=false;
+  let paused=document.hidden,asset=null;
+  const clear=()=>{if(timeout!==null)clearTimeout(timeout);timeout=null;};
+  function paint(frame){
+    sprite.dataset.eggPhase=String(phase);sprite.dataset.eggFrame=String(frame);
+    if(asset){
+      if(!sprite.classList.contains('sheet'))sprite.classList.add('sheet');
+      sprite.textContent='';
+      // La geometría del archivo solo define la proporción, nunca el tamaño en pantalla.
+      const longest=Math.max(asset.width,asset.height);
+      sprite.style.setProperty('--frame-ratio-width',String(asset.width/longest));sprite.style.setProperty('--frame-ratio-height',String(asset.height/longest));
+      sprite.style.backgroundImage=`url("${config.phases[phase].url}")`;
+      // Con fondo 400%×400%, cada tercio del recorrido corresponde a una celda.
+      sprite.style.backgroundPosition=`${frame%4*100/(config.columns-1)}% ${Math.floor(frame/4)*100/(config.rows-1)}%`;
+    }else{sprite.classList.remove('sheet');sprite.style.backgroundImage='';sprite.replaceChildren(createFallback());}
+  }
+  function schedule(delay){
+    clear();remaining=delay;
+    if(paused||!ready||done||phase===null)return;
+    due=performance.now()+delay;timeout=setTimeout(step,delay);
+  }
+  function finish(){
+    clear();done=true;const callback=complete;complete=null;if(callback)callback();
+  }
+  function step(){
+    timeout=null;
+    if(paused||!ready||done||phase===null)return;
+    const phaseConfig=config.phases[phase];
+    if(eggMotion.matches){finish();return;} // Solo fase 5 agenda este caso.
+    if(index+1<phaseConfig.sequence.length){index++;paint(phaseConfig.sequence[index]);schedule(1000/phaseConfig.fps);return;}
+    if(phase===5){
+      if(!holding){holding=true;schedule(phaseConfig.revealPauseMs||0);return;}
+      finish();return;
+    }
+    index=0;paint(phaseConfig.sequence[0]);
+    schedule(phaseConfig.pause[0]+Math.random()*(phaseConfig.pause[1]-phaseConfig.pause[0]));
+  }
+  function startPlayback(){
+    asset=eggAssets.get(phase)||null;ready=true;index=0;
+    const phaseConfig=config.phases[phase];
+    paint(eggMotion.matches&&phase===5?phaseConfig.frames-1:phaseConfig.sequence[0]);
+    if(eggMotion.matches){if(phase===5)schedule(350);return;}
+    schedule(phase===5?1000/phaseConfig.fps:phaseConfig.pause[0]+Math.random()*(phaseConfig.pause[1]-phaseConfig.pause[0]));
+  }
+  function setPhase(next,onComplete=null){
+    if(phase===next)return; // render() periódico no reinicia frames ni temporizadores.
+    clear();phase=next;ready=false;done=false;holding=false;index=0;complete=onComplete;
+    const request=++token;
+    // Retener el frame anterior mientras termina la precarga, evitando parpadeos.
+    eggAssetsReady.then(()=>{if(request===token&&phase===next)startPlayback();});
+  }
+  function stop(){clear();token++;phase=null;ready=false;complete=null;done=false;asset=null;}
+  function pause(){if(paused)return;paused=true;if(timeout!==null)remaining=Math.max(0,due-performance.now());clear();}
+  function resume(){if(!paused)return;paused=false;if(ready&&!done&&phase!==null&&(!eggMotion.matches||phase===5))schedule(remaining);}
+  function motionChanged(){
+    if(!ready||phase===null||done)return;clear();
+    if(eggMotion.matches){paint(phase===5?15:0);if(phase===5)schedule(350);}
+    else{paint(config.phases[phase].sequence[index]);schedule(1000/config.phases[phase].fps);}
+  }
+  eggMotion.addEventListener('change',motionChanged);
+  return {setPhase,stop,pause,resume};
+}
+    return createEggController(sprite);
+  }
+  return Object.freeze({create,createEgg,definition,geometry});
 })();

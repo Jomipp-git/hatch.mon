@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const ctx=vm.createContext({TextEncoder,TextDecoder,btoa,atob,crypto:require('node:crypto').webcrypto});const run=s=>vm.runInContext(s,ctx);
-for(const f of ['evolutionTable.js','hatchmonData_v2.js','pokemonDataAdapter.js','vitalSimulation.js','relationship.js','pokedex.js','trainingActivities.js','socialEngine.js'])run(fs.readFileSync(f,'utf8'));
+for(const f of ['evolutionTable.js','hatchmonData_v2.js','pokemonDataAdapter.js','vitalSimulation.js','relationship.js','pokedex.js','shiny.js','assets/skins/themes.js','shellSkins.js','styleTracing.js','trainingActivities.js','socialEngine.js'])run(fs.readFileSync(f,'utf8'));
 run(fs.readFileSync('index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1].split('// UI:')[0]);
 function born(){run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Test");state.pokemonId="pikachu";state.age=state.vital.lifespan*.5;state.care.energia=50')}
 const approx=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,`${a} != ${b}`);

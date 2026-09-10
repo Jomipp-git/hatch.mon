@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,els,storage}=await setup();const before=run('JSON.stringify(state)');
+run('window.setDisplayMode("lcd")');assert.equal(els['display-root'].dataset.displayMode,'lcd');assert.equal(run('JSON.stringify(state)'),before);assert.equal(storage.get('hatch.mon.displayMode'),'lcd');
+const reloaded=await setup({initialDisplayMode:storage.get('hatch.mon.displayMode')});assert.equal(reloaded.els['display-root'].dataset.displayMode,'lcd');
+assert.throws(()=>run('window.setDisplayMode("bad")'));run('showPanel("settings")');const keys=()=>els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);
+for(const key of ['display-color','display-lcd','skip-1','skip-3','skip-6','testing-reset'])assert.ok(keys().includes(key),key);
+run('showPanel("oak")');assert.ok(!keys().some(k=>k?.startsWith('skip-')||k?.startsWith('force-')||k==='testing-reset'));
+run('window.setDisplayMode("color")');assert.equal(els['display-root'].dataset.displayMode,'color');
+const html=fs.readFileSync('index.html','utf8');assert.equal((html.match(/type="discrete"/g)||[]).length,3);assert.ok(html.includes('color-interpolation-filters="sRGB"'));assert.ok(html.includes('[data-display-mode="lcd"] .memory-sprite'));assert.ok(html.includes('[data-display-mode="lcd"] .message-strip'));
+console.log('PASS display preference, reload, immediate toggle without gameplay mutation, settings controls and Oak separation; SVG/CSS structure.');
+})().catch(e=>{console.error(e);process.exitCode=1});

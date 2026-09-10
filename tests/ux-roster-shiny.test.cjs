@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,els,flush}=await setup();for(let rarity=1;rarity<=5;rarity++)assert.equal(run(`Shiny.probability(${rarity})`),1/(10*rarity));
+assert.equal(run('Shiny.enabled'),false);assert.equal(run('obtainableRoster.total'),44);assert.equal(run('obtainableRoster.egg.length'),13);assert.equal(run('obtainableRoster.excluded.length'),0);
+run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.social.active.isShiny=true;state.pokedex=Pokedex.fresh();Pokedex.record(state.pokedex,state.pokemonId,"owned",state.social.active.id,true);save()');
+const saved=JSON.parse(run('JSON.stringify(state)'));const restored=await setup({initialSave:saved});assert.equal(restored.run('state.social.active.isShiny'),true);
+run('Shiny.roll=()=>{throw Error("No reroll")};forceEvolution("pikachu")');assert.equal(run('state.social.active.isShiny'),true);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].seen'),false);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].shiny.seen'),true);
+assert.equal(run('Object.hasOwn(activeEntity(),"isShiny")'),false);
+run('die("natural")');assert.equal(run('state.social.memorials[0].isShiny'),true);
+run('collectionTab="memories";renderPokedex()');await flush();assert.ok(run('memorialRenderers.length')>0);
+console.log('PASS roster 44/13, shiny probability 1–5, prepared identity save/evolution/memories, separate dex and unchanged QR field shape.');
+})().catch(e=>{console.error(e);process.exitCode=1});

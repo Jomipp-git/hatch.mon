@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  const t=await setup(),{run,els,flush,advance}=t;
  function born(){run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Luz");render()')}
  assert.equal(run('state.relationship'),null);born();assert.equal(run('validSave(state)'),true);assert.equal(run('LABELS.felicidad'),'Ánimo');assert.equal(els['creature-button'].disabled,false);
- const original=run('state.relationship.points');els['creature-button'].fire('click');await flush();assert.ok(run('state.relationship.points')>original);assert.equal(els.sprite.dataset.visualState,'happy');assert.equal(els.portrait.hidden,false);advance(1701);await flush();assert.equal(els.portrait.hidden,true);
+ const original=run('state.relationship.points');els['creature-button'].fire('click');await flush();assert.ok(run('state.relationship.points')>original);assert.equal(els.sprite.dataset.visualState,'happy');assert.equal(els.portrait,undefined);advance(1701);await flush();assert.equal(els.portrait,undefined);
  run('var priorComfort=state.care.felicidad;for(let i=0;i<100;i++)Relationship.interact(state)');assert.ok(run('state.relationship.points')<=.75);assert.equal(run('priorComfort-state.care.felicidad'),1);assert.equal(run('state.relationship.attention'),12);
  run('for(let i=0;i<60;i++)Relationship.tick(state)');assert.ok(run('state.relationship.attention')<1e-7);
  run('state.lightsOff=true;render()');await flush();assert.equal(els.sprite.dataset.visualState,'sleep');els['creature-button'].fire('click');await flush();assert.equal(run('state.lightsOff'),false);assert.equal(els.sprite.dataset.visualState,'wake');

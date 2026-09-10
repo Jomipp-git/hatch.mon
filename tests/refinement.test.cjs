@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
+(async()=>{const {run,els,advance}=await setup();
+assert.equal(run('PMD_STATE_FALLBACKS.startled.join(",")'),'Hurt,Cringe,Pain,Idle');
+run('TrainingActivities.launch("kindness",{commit:()=>true})');advance(640);
+const field=els['training-game-content'].children[3],buttons=field.children.filter(b=>b.tagName==='button'),b=buttons.find(b=>['PAPEL','LATA','BOTELLA'].includes(b.textContent)),labels=buttons.map(b=>b.textContent);
+b.fire('pointerdown');advance(1800);assert.deepEqual(buttons.map(b=>b.textContent),labels);b.fire('pointerup');b.fire('click');assert.equal(b.dataset.result,'correct');advance(100);assert.deepEqual(buttons.map(b=>b.textContent),labels);advance(400);assert.equal(b.disabled,false);run('TrainingActivities.cancel()');
+run('collectionTab="pokedex";renderPokedex()');const grid=els['panel-content'].children.find(e=>e.className==='dex-grid');assert.equal(grid.children.length,44);
+const mass=run(`['togepi','togetic','togekiss'].map(id=>{const g=PokemonRenderer.geometry(id,true),m=PMD_LIST_METRICS[PokemonData.canonicalId(id)];return m.opaqueArea*g.scale*g.scale})`);assert.ok(Math.max(...mass)/Math.min(...mass)<1.5);
+assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).patternType'),'triangles');
+console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, 44 collection slots, comparable trio mass and Togekiss triangles.');
+})().catch(e=>{console.error(e);process.exitCode=1});

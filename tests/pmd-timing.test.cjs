@@ -8,8 +8,8 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
  run('globalThis.timingHost=document.createElement("div");globalThis.timingRenderer=PokemonRenderer.create(timingHost)');
  for(const id of ['electivire','togetic','pichu'])for(const state of ['normal','play','sleep','eat','happy','sick','faint','train']){
   run(`timingRenderer.renderPokemon('${id}',{visualState:'${state}'})`);await flush();
-  const def=run(`PmdVisuals.candidates('${id}','${state}')[0]`);if(def.frames<2)continue;
-  const delay=run(`PmdVisuals.frameDuration(PmdVisuals.candidates('${id}','${state}')[0],0)`);
+  const def=run(`PmdVisuals.candidates('${id}','${state}').find(d=>d.src===timingHost.dataset.asset)`);if(def.frames<2)continue;
+  const delay=run(`PmdVisuals.frameDuration(PmdVisuals.candidates('${id}','${state}').find(d=>d.src===timingHost.dataset.asset),0)`);
   const before=run('timingHost.children[0].context.draws.length');
   advance(delay-.01);assert.equal(run('timingHost.children[0].context.draws.length'),before,`${id}/${state} too early`);
   advance(.01);assert.equal(run('timingHost.children[0].context.draws.length'),before+1,`${id}/${state} cadence`);

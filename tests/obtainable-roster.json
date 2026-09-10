@@ -1,0 +1,341 @@
+{
+  "total": 44,
+  "egg": [
+    {
+      "id": "pichu",
+      "name": "Pichu"
+    },
+    {
+      "id": "eevee",
+      "name": "Eevee"
+    },
+    {
+      "id": "tyrogue",
+      "name": "Tyrogue"
+    },
+    {
+      "id": "munchlax",
+      "name": "Munchlax"
+    },
+    {
+      "id": "riolu",
+      "name": "Riolu"
+    },
+    {
+      "id": "toxel",
+      "name": "Toxel"
+    },
+    {
+      "id": "cleffa",
+      "name": "Cleffa"
+    },
+    {
+      "id": "igglybuff",
+      "name": "Igglybuff"
+    },
+    {
+      "id": "togepi",
+      "name": "Togepi"
+    },
+    {
+      "id": "azurill",
+      "name": "Azurill"
+    },
+    {
+      "id": "mantyke",
+      "name": "Mantyke"
+    },
+    {
+      "id": "elekid",
+      "name": "Elekid"
+    },
+    {
+      "id": "magby",
+      "name": "Magby"
+    }
+  ],
+  "evolutionOnly": [
+    {
+      "id": "pikachu",
+      "name": "Pikachu"
+    },
+    {
+      "id": "vaporeon",
+      "name": "Vaporeon"
+    },
+    {
+      "id": "jolteon",
+      "name": "Jolteon"
+    },
+    {
+      "id": "flareon",
+      "name": "Flareon"
+    },
+    {
+      "id": "espeon",
+      "name": "Espeon"
+    },
+    {
+      "id": "umbreon",
+      "name": "Umbreon"
+    },
+    {
+      "id": "leafeon",
+      "name": "Leafeon"
+    },
+    {
+      "id": "glaceon",
+      "name": "Glaceon"
+    },
+    {
+      "id": "sylveon",
+      "name": "Sylveon"
+    },
+    {
+      "id": "hitmonlee",
+      "name": "Hitmonlee"
+    },
+    {
+      "id": "hitmonchan",
+      "name": "Hitmonchan"
+    },
+    {
+      "id": "hitmontop",
+      "name": "Hitmontop"
+    },
+    {
+      "id": "snorlax",
+      "name": "Snorlax"
+    },
+    {
+      "id": "lucario",
+      "name": "Lucario"
+    },
+    {
+      "id": "toxtricityamp",
+      "name": "Toxtricity (Amped Form)"
+    },
+    {
+      "id": "toxtricitylow",
+      "name": "Toxtricity (Low Key Form)"
+    },
+    {
+      "id": "clefairy",
+      "name": "Clefairy"
+    },
+    {
+      "id": "jigglypuff",
+      "name": "Jigglypuff"
+    },
+    {
+      "id": "togetic",
+      "name": "Togetic"
+    },
+    {
+      "id": "marill",
+      "name": "Marill"
+    },
+    {
+      "id": "mantine",
+      "name": "Mantine"
+    },
+    {
+      "id": "electabuzz",
+      "name": "Electabuzz"
+    },
+    {
+      "id": "magmar",
+      "name": "Magmar"
+    },
+    {
+      "id": "raichu",
+      "name": "Raichu"
+    },
+    {
+      "id": "raichualola",
+      "name": "Raichu (Alolan Form)"
+    },
+    {
+      "id": "clefable",
+      "name": "Clefable"
+    },
+    {
+      "id": "wigglytuff",
+      "name": "Wigglytuff"
+    },
+    {
+      "id": "togekiss",
+      "name": "Togekiss"
+    },
+    {
+      "id": "azumarill",
+      "name": "Azumarill"
+    },
+    {
+      "id": "electivire",
+      "name": "Electivire"
+    },
+    {
+      "id": "magmortar",
+      "name": "Magmortar"
+    }
+  ],
+  "excluded": [],
+  "edges": [
+    {
+      "from": "pichu",
+      "to": "pikachu",
+      "enabled": true
+    },
+    {
+      "from": "pikachu",
+      "to": "raichu",
+      "enabled": true
+    },
+    {
+      "from": "pikachu",
+      "to": "raichualola",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "vaporeon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "jolteon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "flareon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "espeon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "umbreon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "leafeon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "glaceon",
+      "enabled": true
+    },
+    {
+      "from": "eevee",
+      "to": "sylveon",
+      "enabled": true
+    },
+    {
+      "from": "tyrogue",
+      "to": "hitmonlee",
+      "enabled": true
+    },
+    {
+      "from": "tyrogue",
+      "to": "hitmonchan",
+      "enabled": true
+    },
+    {
+      "from": "tyrogue",
+      "to": "hitmontop",
+      "enabled": true
+    },
+    {
+      "from": "munchlax",
+      "to": "snorlax",
+      "enabled": true
+    },
+    {
+      "from": "riolu",
+      "to": "lucario",
+      "enabled": true
+    },
+    {
+      "from": "toxel",
+      "to": "toxtricityamp",
+      "enabled": true
+    },
+    {
+      "from": "toxel",
+      "to": "toxtricitylow",
+      "enabled": true
+    },
+    {
+      "from": "cleffa",
+      "to": "clefairy",
+      "enabled": true
+    },
+    {
+      "from": "clefairy",
+      "to": "clefable",
+      "enabled": true
+    },
+    {
+      "from": "igglybuff",
+      "to": "jigglypuff",
+      "enabled": true
+    },
+    {
+      "from": "jigglypuff",
+      "to": "wigglytuff",
+      "enabled": true
+    },
+    {
+      "from": "togepi",
+      "to": "togetic",
+      "enabled": true
+    },
+    {
+      "from": "togetic",
+      "to": "togekiss",
+      "enabled": true
+    },
+    {
+      "from": "azurill",
+      "to": "marill",
+      "enabled": true
+    },
+    {
+      "from": "marill",
+      "to": "azumarill",
+      "enabled": true
+    },
+    {
+      "from": "mantyke",
+      "to": "mantine",
+      "enabled": true
+    },
+    {
+      "from": "elekid",
+      "to": "electabuzz",
+      "enabled": true
+    },
+    {
+      "from": "electabuzz",
+      "to": "electivire",
+      "enabled": true
+    },
+    {
+      "from": "magby",
+      "to": "magmar",
+      "enabled": true
+    },
+    {
+      "from": "magmar",
+      "to": "magmortar",
+      "enabled": true
+    }
+  ]
+}

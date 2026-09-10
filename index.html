@@ -305,7 +305,7 @@ function canonicalRule(r){
     raw.sostenidas=[{estadistica:PokemonData.careKey(r.SustainedStat),minimo:minimum,duracionMs:r.SustainedHours*HOUR}];
   }
   const optionalMinimum=field=>{const value=r[field];if(value===null||value===undefined||value==='')return null;if(typeof value!=='number'||!Number.isFinite(value)||value<0||value>100)throw Error(`${field} debe ser un número entre 0 y 100`);return value;};
-  const minMood=optionalMinimum('MinMood'),minBond=optionalMinimum('MinBond');
+  const minMood=optionalMinimum('MinMood'),minBond=Relationship.evaluateMinBond(null,r.MinBond).minimumHearts;
   const configured=['MinMood','MinBond','MinAgeDays','MinIQ','MinStrength','MinStyle','MinKindness','RequiredItem','SustainedStat','RequiredAction'].some(k=>r[k]!==null&&r[k]!==undefined&&r[k]!=='');
   return {...normalizeRule(raw),enabled:configured,minMood,minBond,canonicalRuleId:r.RuleId};
 }
@@ -345,7 +345,7 @@ function updateSustained(elapsed=0,before=state.care){
   }
 }
 function conditionsMet(r,testing=null){return r.enabled!==false&&alive()&&state.age>=r.ageMs&&
-  (r.minMood==null||state.care.felicidad>=r.minMood)&&(r.minBond==null||(state.relationship?.points||0)>=r.minBond)&&
+  (r.minMood==null||state.care.felicidad>=r.minMood)&&Relationship.evaluateMinBond(state,r.minBond).met&&
   Object.entries(r.careMean).every(([k,v])=>mean(k)!==null&&mean(k)>=v)&&
   Object.entries(r.training).every(([k,v])=>state.training[k]>=v)&&
   r.sustained.every(c=>(testing?.sustainedValues?.[sustainedKey(c)]??state.care[c.estadistica])>=c.minimo&&(state.sustained[sustainedKey(c)]||0)>=c.duracionMs)&&
@@ -372,7 +372,8 @@ function forceEvolution(destination){
   // Evidencia histórica de testing: no altera las barras instantáneas ni tickea fisiología.
   const testing={sustainedValues:{}};
   if(r.minMood!=null)state.care.felicidad=Math.max(state.care.felicidad,r.minMood);
-  if(r.minBond!=null)state.relationship.points=Math.max(state.relationship.points,r.minBond);
+  const bondRequirement=Relationship.evaluateMinBond(state,r.minBond);
+  if(!bondRequirement.met)state.relationship.points=bondRequirement.minimumPoints;
   const delta=Math.max(0,r.ageMs-state.age);state.age+=delta;state.stageAge+=delta;
   for(const [k,min] of Object.entries(r.training))state.training[k]=Math.max(state.training[k],min);
   if(r.action)state.actions[r.action]=Math.max(state.actions[r.action]||0,r.repetitions);
@@ -750,7 +751,7 @@ function renderPanel(){
       const req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
       req(state.age>=r.ageMs,`Edad: ${r.ageMs/DAY} días.`);
       if(r.minMood!=null)req(state.care.felicidad>=r.minMood,`Ánimo mínimo: ${r.minMood}.`);
-      if(r.minBond!=null)req((state.relationship?.points||0)>=r.minBond,`Vínculo ≥ ${r.minBond} \u2665`);
+      if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,`Vínculo ≥ ${r.minBond} \u2665`);
       for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,`Media de ${LABELS[k]} ≥ ${v}.`);
       for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,`${LABELS[k]} ≥ ${v}.`);
       for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,`${LABELS[c.estadistica]} ≥ ${c.minimo} durante ${c.duracionMs/HOUR} h seguidas (${(elapsed/HOUR).toFixed(1)} h).`);}

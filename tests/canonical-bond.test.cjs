@@ -1,12 +1,32 @@
 const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
-(async()=>{const {run}=await setup();
-run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="pichu";var source=PokemonData.rules("pichu")[0];var minimum=source.MinBond');
-assert.ok(run('minimum>0'));assert.equal(run('source===HATCHMON_DATA.evolutionRules.find(r=>r.RuleId===source.RuleId)'),true);
-run('var bondOnly={...source,MinAgeDays:0,MinIQ:null,MinStyle:null,MinStrength:null,MinKindness:null,RequiredItem:null,RequiredAction:null,SustainedStat:null}');
-for(const blank of ['null','""']){run(`state.relationship.points=0;var r=canonicalRule({...bondOnly,MinBond:${blank}})`);assert.equal(run('conditionsMet(r)'),true);}
-run('var r=canonicalRule(bondOnly);state.relationship.points=minimum-1');assert.equal(run('conditionsMet(r)'),false);
-run('state.relationship.points=minimum');assert.equal(run('conditionsMet(r)'),true);
-run('state.relationship.points=0;forceEvolution("pikachu")');assert.equal(run('state.relationship.points'),run('minimum+RELATIONSHIP_CONFIG.rewards.evolve'));
-run('state.pokemonId="pichu";state.relationship.points=50;forceEvolution("pikachu")');assert.ok(run('state.relationship.points')>=50);
-console.log('PASS canonical MinBond: direct adapter exposure, blank/null, insufficient/sufficient, Force minimum plus existing evolution reward and preservation.');
+(async()=>{const {run,els}=await setup();
+run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");var bondRules=HATCHMON_DATA.evolutionRules.filter(r=>r.MinBond!=null)');
+assert.equal(run('bondRules.length'),12);assert.equal(run('bondRules.filter(r=>r.MinBond===2).length'),11);assert.equal(run('bondRules.filter(r=>r.MinBond===3).length'),1);
+const text=n=>n.textContent+n.children.map(text).join(' ');
+for(let i=0;i<12;i++){
+ run(`var source=bondRules[${i}];var from=PokemonData.legacyId(source.FromId);var to=PokemonData.legacyId(source.ToId);var playable=!!from;var r=canonicalRule(source);`);
+ // Three canonical families are not playable yet: minimal canonical UI fixtures only.
+ run('if(!playable){from=source.FromId;to=source.ToId;r.to=to;evolutionConfig[from]={name:PokemonData.get(from).DisplayName,rules:[r]};evolutionConfig[to]={name:PokemonData.get(to).DisplayName,rules:[]};}else{r=evolutionConfig[from].rules.find(x=>x.canonicalRuleId===source.RuleId);}state.pokemonId=from;state.age=r.ageMs;state.training={iq:0,strength:0,kindness:0,style:0,...r.training};state.care.felicidad=100;state.sustained={};for(const c of r.sustained){state.care[c.estadistica]=100;state.sustained[sustainedKey(c)]=c.duracionMs;}state.relationship.points=0;var minimum=source.MinBond*RELATIONSHIP_CONFIG.perHeart;');
+ assert.equal(run('PokemonData.rules(source.FromId).includes(source)'),true);
+ for(const delta of [-.01,0,1]){
+  run(`state.relationship.points=minimum+${delta};panelName='oak';renderPanel()`);
+  const expected=delta>=0;assert.equal(run('Relationship.evaluateMinBond(state,source.MinBond).met'),expected);assert.equal(run('conditionsMet(r)'),expected,run('source.RuleId'));
+  const section=els['panel-content'].children.find(n=>n.children.some(c=>c.tagName==='summary'&&c.textContent===run('evolutionConfig[to].name')));
+  assert.ok(text(section).includes(`${expected?'✓':'○'} Vínculo ≥ ${run('source.MinBond')} ♥`),run('source.RuleId'));
+ }
+ run('state.relationship.points=minimum;state.age=r.ageMs-1');assert.equal(run('conditionsMet(r)'),false);run('state.age=r.ageMs');
+ for(const key of run('Object.keys(r.training)')){run(`state.training.${key}=r.training.${key}-1`);assert.equal(run('conditionsMet(r)'),false);run(`state.training.${key}=r.training.${key}`);}
+ for(let j=0;j<run('r.sustained.length');j++){run(`var c=r.sustained[${j}];state.sustained[sustainedKey(c)]=c.duracionMs-1`);assert.equal(run('conditionsMet(r)'),false);run('state.sustained[sustainedKey(c)]=c.duracionMs');}
+ if(run('playable')){
+  run('state.relationship.points=minimum-.01');assert.equal(run('evolve(r)'),false);
+  run('state.relationship.points=minimum');assert.equal(run('evolve(r)'),true);
+  run('state.pokemonId=from;state.relationship.points=0');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),run('minimum+RELATIONSHIP_CONFIG.rewards.evolve'));
+  run('state.pokemonId=from;state.relationship.points=90');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),95);
+ }
+}
+for(const blank of ['null','undefined','""']){
+ run(`var absent=canonicalRule({...bondRules[0],MinBond:${blank},MinAgeDays:0});state.relationship.points=0`);assert.equal(run('absent.minBond'),null);assert.equal(run('conditionsMet(absent)'),true);
+}
+for(const value of ['-1','6','NaN','"2"'])assert.throws(()=>run(`canonicalRule({...bondRules[0],MinBond:${value}})`));
+console.log('PASS 12 canonical Bond rules: 40/60 points, below/exact/above, high Mood insufficient, Oak=engine, all age/training gates; 9 playable evolution/Force paths, 3 canonical UI fixtures; nulls and invalid units.');
 })().catch(e=>{console.error(e);process.exitCode=1});

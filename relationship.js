@@ -17,6 +17,12 @@ globalThis.Relationship=(()=>{
   reward(s,'touch');s.care.felicidad=Math.min(100,s.care.felicidad+RELATIONSHIP_CONFIG.positiveMood);return {kind:'happy',message:r.points>=RELATIONSHIP_CONFIG.closeBond?'Reconoce tu cariño y se acerca.':'Le gusta que estés aquí.'};
  }
  const hearts=s=>Math.min(5,Math.floor((s.relationship?.points||0)/RELATIONSHIP_CONFIG.perHeart));
+ function evaluateMinBond(s,minimumHearts){
+  if(minimumHearts===null||minimumHearts===undefined||minimumHearts==='')return {minimumHearts:null,minimumPoints:0,met:true};
+  if(typeof minimumHearts!=='number'||!Number.isFinite(minimumHearts)||minimumHearts<0||minimumHearts>RELATIONSHIP_CONFIG.max/RELATIONSHIP_CONFIG.perHeart)throw Error('MinBond debe estar entre 0 y 5 corazones');
+  const minimumPoints=minimumHearts*RELATIONSHIP_CONFIG.perHeart;
+  return {minimumHearts,minimumPoints,met:(s?.relationship?.points||0)>=minimumPoints};
+ }
  function valid(r){return r&&Number.isFinite(r.points)&&r.points>=0&&r.points<=RELATIONSHIP_CONFIG.max&&Number.isFinite(r.attention)&&r.attention>=0&&r.attention<=RELATIONSHIP_CONFIG.attentionMax&&(r.lastPenaltyAge===null||Number.isFinite(r.lastPenaltyAge)&&r.lastPenaltyAge>=0);}
- return Object.freeze({fresh,reward,tick,interact,hearts,valid});
+ return Object.freeze({fresh,reward,tick,interact,hearts,evaluateMinBond,valid});
 })();

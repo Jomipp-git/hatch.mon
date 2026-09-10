@@ -35,8 +35,8 @@ def generate():
                 if kind.startswith(('number', 'integer', 'decimal')):
                     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
                         raise ValueError(f'{name}.{field}: invalid number {value!r}')
-                if field == 'MinBond' and not 0 <= value <= 100:
-                    raise ValueError('MinBond outside 0–100')
+                if field == 'MinBond' and not 0 <= value <= 5:
+                    raise ValueError('MinBond outside 0–5 hearts')
     ids = [r['PokemonId'] for r in tables['Pokemon']]
     rules = tables['EvolutionRules']
     if len({r['RuleId'] for r in rules}) != len(rules):

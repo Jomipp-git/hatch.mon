@@ -15,7 +15,7 @@ born('marill');run('state.actions.jugar=2');run('forceEvolution("azumarill")');a
 born('marill');run('state.actions.jugar=20');run('forceEvolution("azumarill")');assert.equal(run('state.milestones.at(-1).actions.jugar'),20);
 born('eevee');snapshot();assert.equal(run('forceEvolution("magmar")'),false);assert.equal(run('JSON.stringify(state)===JSON.stringify(before)'),true);
 // Normal evolution still requires actual care and an inventory item; testing evidence is ephemeral.
-born('pichu');run('state.age=DAY;state.sustained["felicidad:70"]=6*HOUR');assert.equal(run('conditionsMet(current().rules[0])'),false);run('state.care.felicidad=70;state.relationship.points=PokemonData.rules("pichu")[0].MinBond');assert.equal(run('evolve(current().rules[0])'),true);
+born('pichu');run('state.age=DAY;state.sustained["felicidad:70"]=6*HOUR');assert.equal(run('conditionsMet(current().rules[0])'),false);run('state.care.felicidad=70;state.relationship.points=Relationship.evaluateMinBond(state,PokemonData.rules("pichu")[0].MinBond).minimumPoints');assert.equal(run('evolve(current().rules[0])'),true);
 born('pikachu');run('state.age=2*DAY');assert.equal(run('evolve(current().rules[0],"thunder")'),false);run('state.inventory.thunder=1');assert.equal(run('evolve(current().rules[0],"thunder")'),true);assert.equal(run('state.inventory.thunder'),0);
 // No live bank; profiles remain valid for breeding, never importable as companions.
 born();run('state.pokerus=false;var profile=exportEntity()');born();assert.throws(()=>run('importEntity(profile)'),/Solo se importan huevos/);assert.equal(run('typeof activateEntity'),'undefined');assert.equal(run('Object.hasOwn(state.social,"collection")'),false);

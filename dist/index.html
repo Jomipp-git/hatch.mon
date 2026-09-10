@@ -26,7 +26,7 @@
   .meter label{display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;gap:6px}progress{display:block;appearance:none;width:100%;height:9px;border:1px solid #829483;border-radius:2px;background:#b1c1ad;overflow:hidden}
   progress::-webkit-progress-bar{background:#b1c1ad}progress::-webkit-progress-value{background:var(--meter-color,#356745)}progress::-moz-progress-bar{background:var(--meter-color,#356745)}
   .care{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.care button{padding:8px 2px;font-size:.78rem;box-shadow:0 3px var(--border)}.care .pixel-icon{display:block;width:18px;height:18px;margin:0 auto 3px}
-  .trainer{display:flex;justify-content:center;align-items:center;gap:10px;margin:12px 0 6px;font-size:.68rem;color:#494351}
+  .trainer{display:flex;justify-content:center;align-items:center;gap:10px;margin:12px 0 6px;font-size:.68rem;color:#494351}.coin-balance{font-size:.65rem;color:#3f5142;white-space:nowrap}
   .screen-tools{position:absolute;top:22px;left:10px;display:flex;flex-direction:column;gap:8px;z-index:2}.screen-tools button{width:44px;height:44px;min-height:44px;padding:4px;border:1px solid #74826770;border-radius:9px;background:#ffffff38;font-size:1.15rem}.screen-tools button:hover:enabled{background:#ffffff80}.screen-tools button:focus-visible{outline-offset:2px}
   .emergency{display:flex;gap:8px;margin-top:14px}.emergency button{flex:1;background:#fff2cc}
   .message-strip{height:56px;min-width:0;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:7px;padding:5px 8px;background:#c8d2c3;border:3px double #657260;border-radius:5px;overflow:hidden;text-align:center}
@@ -114,7 +114,7 @@
   @media(max-width:370px){.console{padding:16px;height:668px}.screen{padding:16px 12px}.care{grid-template-columns:repeat(4,minmax(0,1fr))}}
   .screen-tools.settings-tool{left:auto;right:10px;top:22px}
   .pixel-icon[data-icon="settings"]{--pixels:0em .25em currentColor,.125em .25em currentColor,.25em .125em currentColor,.25em .25em currentColor,.25em .375em currentColor,.375em .25em currentColor,.5em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,0em .625em currentColor,.125em .625em currentColor,.25em .625em currentColor,.375em .625em currentColor,.5em .5em currentColor,.5em .625em currentColor,.5em .75em currentColor,.625em .625em currentColor,.75em .625em currentColor}
-  [data-display-mode="lcd"] .screen,[data-display-mode="lcd"] .message-strip,[data-display-mode="lcd"] .memory-sprite,[data-display-mode="lcd"] .memory-hearts{filter:url(#lcd-palette)}
+  [data-display-mode="lcd"] .screen,[data-display-mode="lcd"] .message-strip,[data-display-mode="lcd"] .memory-sprite,[data-display-mode="lcd"] .memory-hearts,[data-display-mode="lcd"] #panel[data-lcd-surface="true"]{filter:url(#lcd-palette)}
   [data-display-mode="lcd"] .screen .empty{opacity:.55}
   .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a}
   .minigame-field button{touch-action:manipulation;min-height:56px;font-weight:bold;border-radius:3px}.minigame-field button.lit{background:#52694a;color:#fff;box-shadow:inset 0 0 0 3px #263b30}.minigame-field button:active{background:#91a477}
@@ -171,7 +171,7 @@
       <button type="button" data-panel="training" aria-label="Entrenar" title="Entrenar"><span class="pixel-icon" data-icon="train" aria-hidden="true"></span></button>
       <button type="button" data-panel="oak" aria-label="Profesor Oak" title="Profesor Oak"><span class="pixel-icon" data-icon="oak" aria-hidden="true"></span></button>
     </nav>
-    <nav class="screen-tools settings-tool" aria-label="Configuración"><button type="button" data-panel="settings" aria-label="Configuración" title="Configuración"><span class="pixel-icon" data-icon="settings" aria-hidden="true"></span></button></nav>
+    <nav class="screen-tools settings-tool" aria-label="Configuración y tienda"><button type="button" data-panel="settings" aria-label="Configuración" title="Configuración"><span class="pixel-icon" data-icon="settings" aria-hidden="true"></span></button><button type="button" data-panel="shop" aria-label="Tienda" title="Tienda">SHOP</button></nav>
     <div class="scene-layer">
     <div class="habitat">
       <button id="creature-button" type="button" aria-label="Dar calor al huevo"><span id="sprite" role="img" aria-label="Huevo"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
@@ -199,7 +199,7 @@
     <button type="button" data-action="luz" disabled><span class="pixel-icon" data-icon="light" aria-hidden="true"></span>Apagar luz</button>
     <button type="button" data-action="limpiar" disabled><span class="pixel-icon" data-icon="clean" aria-hidden="true"></span>Limpiar</button>
   </div>
-  <div id="trainer" class="trainer" hidden><button id="trainer-energy" class="trainer-energy" type="button" aria-label="Acciones del criador" title="Cada cuidado consume acciones. Recuperas 1 cada 10 minutos."></button></div>
+  <div id="trainer" class="trainer" hidden><button id="trainer-energy" class="trainer-energy" type="button" aria-label="Acciones del criador" title="Cada cuidado consume acciones. Recuperas 1 cada 10 minutos."></button><span id="coin-balance" class="coin-balance" aria-label="Monedas">Monedas: 0</span></div>
   <div class="emergency">
     <button type="button" data-action="curar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Curar</button>
     <button type="button" data-action="auxiliar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Auxiliar</button>
@@ -265,17 +265,25 @@ const EGG_SPRITES={columns:4,rows:4,phases:{
 }};
 const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
 const itemCatalog={
-  thunder:{name:'Piedra Trueno',icon:'stone'},water:{name:'Piedra Agua',icon:'stone'},fire:{name:'Piedra Fuego',icon:'stone'},
-  leaf:{name:'Piedra Hoja',icon:'stone'},ice:{name:'Piedra Hielo',icon:'stone'},moon:{name:'Piedra Lunar',icon:'light'},
-  shiny:{name:'Piedra Día',icon:'light'},dawn:{name:'Piedra Alba',icon:'light'},oval:{name:'Piedra Oval',icon:'egg'},
-  electirizer:{name:'Electrizador',icon:'stone'},magmarizer:{name:'Magmatizador',icon:'stone'},
-  alola:{name:'Recuerdo de Alola',icon:'stone'},galar:{name:'Recuerdo de Galar',icon:'stone'},
-  berry:{name:'Baya',icon:'food',food:true},
-  berryStrength:{name:'Baya de Fuerza',icon:'food',food:true,attribute:'strength'},
-  berryIQ:{name:'Baya de Intelecto',icon:'food',food:true,attribute:'iq'},
-  berryKindness:{name:'Baya de Amabilidad',icon:'food',food:true,attribute:'kindness'},
-  berryStyle:{name:'Baya de Estilo',icon:'food',food:true,attribute:'style'},medicine:{name:'Medicina',icon:'medicine',heal:true}
+  thunder:{name:'Piedra Trueno',icon:'stone',price:180},water:{name:'Piedra Agua',icon:'stone',price:180},fire:{name:'Piedra Fuego',icon:'stone',price:180},
+  leaf:{name:'Piedra Hoja',icon:'stone',price:180},ice:{name:'Piedra Hielo',icon:'stone',price:185},moon:{name:'Piedra Lunar',icon:'light',price:185},
+  shiny:{name:'Piedra Día',icon:'light',price:190},dawn:{name:'Piedra Alba',icon:'light',price:190},oval:{name:'Piedra Oval',icon:'egg',price:130},
+  electirizer:{name:'Electrizador',icon:'stone',price:170},magmarizer:{name:'Magmatizador',icon:'stone',price:170},
+  alola:{name:'Recuerdo de Alola',icon:'stone',price:210},galar:{name:'Recuerdo de Galar',icon:'stone',price:210},
+  berry:{name:'Baya',icon:'food',food:true,price:35},
+  berryStrength:{name:'Baya de Fuerza',icon:'food',food:true,attribute:'strength',price:75},
+  berryIQ:{name:'Baya de Intelecto',icon:'food',food:true,attribute:'iq',price:75},
+  berryKindness:{name:'Baya de Amabilidad',icon:'food',food:true,attribute:'kindness',price:75},
+  berryStyle:{name:'Baya de Estilo',icon:'food',food:true,attribute:'style',price:75},medicine:{name:'Medicina',icon:'medicine',heal:true,price:70}
 };
+const COIN_REWARDS=Object.freeze([0,2,4,7,11,16]);
+const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))];
+const shopDayKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+function dailyShop(date=new Date()){
+  const ids=Object.keys(itemCatalog),key=shopDayKey(date);let seed=[...key].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
+  for(let i=ids.length-1;i>0;i--){seed=(seed*1664525+1013904223)>>>0;const j=seed%(i+1);[ids[i],ids[j]]=[ids[j],ids[i]];}
+  return ids.slice(0,3);
+}
 // Normalizador del formato de reglas del motor. La fuente v2 aporta los valores;
 // los cuidados sostenidos exigen continuidad y el entrenamiento usa valores fijos.
 const ITEM_ALIASES={piedra_trueno:'thunder',piedra_agua:'water',piedra_fuego:'fire',piedra_hoja:'leaf',piedra_hielo:'ice',piedra_lunar:'moon',piedra_dia:'shiny',Electrizador:'electirizer',Magmatizador:'magmarizer'};
@@ -326,7 +334,7 @@ const trainingOptions={iq:{name:'Resolver acertijos',icon:'iq'},strength:{name:'
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,
-    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],pokerus:false,heat:0,aid:0,
+    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
     trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:'Cada clic de calor reduce la espera en 5 minutos.'};
 }
 let state=freshState();
@@ -477,7 +485,7 @@ function train(k,gain=CARE_CONFIG.training.gain){
   if(!spend(CARE_CONFIG.training.ap)){denied();return false;}
   state.training[k]=clamp(state.training[k]+gain);state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
   state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
-  Relationship.reward(state,'train',gain/5);state.message=`${LABELS[k]} +${gain}. ¡La práctica da sus frutos!`;updateSustained();checkHealth();checkEvolution();return true;
+  const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=`${LABELS[k]} +${gain} · +${coins} monedas.`;updateSustained();checkHealth();checkEvolution();return true;
 }
 function itemUsable(id){
   if(!Object.hasOwn(itemCatalog,id)||state.phase!=='alive'||!canSpend(CARE_CONFIG.itemAP)||!(state.inventory[id]>0))return false;
@@ -502,6 +510,11 @@ function useItem(id,destination=null){
   const chosen=destination?candidates.find(r=>r.to===destination):candidates.length===1?candidates[0]:null;
   if(!chosen){state.message='Elige en la mochila a qué Pokémon quieres evolucionar.';return false;}
   spend(CARE_CONFIG.itemAP);return evolve(chosen,id);
+}
+function buyShopItem(id){
+  const item=itemCatalog[id];if(!item||!dailyShop().includes(id)||state.coins<item.price)return false;
+  state.coins-=item.price;state.inventory[id]=(state.inventory[id]||0)+1;state.message=`Has comprado ${item.name}.`;
+  return true;
 }
 function hatch(rng=Math.random){
   if(state.phase!=='egg'||state.incubationRemaining>0)return false;
@@ -544,7 +557,7 @@ function validGameSave(s){
     (s.phase==='egg'?s.care===null&&s.training===null&&s.averages===null&&s.age===0&&s.stageAge===0:stats(s.care,CARE)&&stats(s.training,TRAIN))&&finite(s.incubationRemaining,0,INCUBATION_MS)&&finite(s.age)&&finite(s.stageAge)&&Number.isInteger(s.stage)&&s.stage>=0&&
     (s.phase==='egg'||(s.averages&&Number.isInteger(s.averages.count)&&finite(s.averages.count)&&s.averages.sum&&CARE.every(k=>finite(s.averages.sum[k],0,100*s.averages.count+1e-5))))&&
     s.sustained&&Object.values(s.sustained).every(n=>finite(n))&&s.actions&&Object.values(s.actions).every(n=>Number.isInteger(n)&&finite(n))&&
-    s.inventory&&typeof s.inventory==='object'&&Object.entries(s.inventory).every(([id,n])=>Object.hasOwn(itemCatalog,id)&&Number.isInteger(n)&&finite(n))&&
+    s.inventory&&typeof s.inventory==='object'&&Object.entries(s.inventory).every(([id,n])=>Object.hasOwn(itemCatalog,id)&&Number.isInteger(n)&&finite(n))&&Number.isSafeInteger(s.coins)&&s.coins>=0&&
     (s.phase==='egg'?s.gender===null:PokemonData.validGender(s.pokemonId,s.gender))&&typeof s.nickname==='string'&&s.nickname.length<=20&&
     typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
     s.trainer&&finite(s.trainer.energy,0,MAX_AP)&&finite(s.lastSync)&&finite(s.remainder,0,MINUTE)&&
@@ -558,7 +571,7 @@ function activeEntity(){const {isShiny,...identity}=HatchMonSocial.copy(state.so
 function validSnapshot(s,e){
   if(!s||Object.keys(s).length!==SNAPSHOT_FIELDS.length||!SNAPSHOT_FIELDS.every(k=>Object.hasOwn(s,k)))return false;
   for(const key of ['sustained','actions'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
-  const base={...s,version:12,inventory:{},trainer:{energy:MAX_AP},lastSync:0,message:''};
+  const base={...s,version:12,inventory:{},coins:0,trainer:{energy:MAX_AP},lastSync:0,message:''};
   if(!validGameSave(base)||(s.phase==='egg'?s.vital!==null:!Vital.valid(s.vital,s.age))||s.stage>10||s.stageAge>s.age||s.age>100*365*DAY)return false;
   if(e.kind==='egg'?(e.speciesId!==e.offspring||e.offspring!==null&&!STARTERS.includes(e.offspring)):e.speciesId!==s.pokemonId)return false;
   if(e.offspring!==null&&!STARTERS.includes(e.offspring))return false;
@@ -645,10 +658,15 @@ function save({immediate=false}={}){
   try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
   catch{storageWarning='No se pudo guardar. Mantén esta pestaña abierta para conservar la partida.';}
 }
+function migrateSave(data){
+  if(!data||typeof data!=='object')return data;
+  if(!Number.isSafeInteger(data.coins)||data.coins<0)data.coins=0;
+  return data;
+}
 function restore(){
   try{
     const raw=gameStorage.getItem(SAVE_KEY);
-    if(raw){const data=JSON.parse(raw);if(validSave(data)){state=data;sync();}
+    if(raw){const data=migrateSave(JSON.parse(raw));if(validSave(data)){state=data;sync();}
       else{gameStorage.removeItem(SAVE_KEY);storageWarning='D inicia una partida nueva: el guardado anterior ya no es compatible.';}}
   }catch{storageWarning='Guardado no disponible. La partida durará mientras la página siga abierta.';}
 }
@@ -672,8 +690,8 @@ function showToast(message,important=false,eggInteraction=false){
   toastTimer=setTimeout(()=>hideToast(false),important?FEEDBACK_CONFIG.eventMs:FEEDBACK_CONFIG.ordinaryMs);
 }
 const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
-function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();}
-function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();panelName=null;}
+function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();}
+function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=text;}if(cls)n.className=cls;return n;}
 function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
 function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
@@ -700,7 +718,7 @@ function renderPanel(){
   if(panelName==='social'){if(!$('panel-content').dataset.socialReady)renderSocialPanel();return;}
   const focusKey=document.activeElement?.dataset?.key;
   const content=$('panel-content');content.replaceChildren();
-  $('panel-title').textContent={inventory:'Tu mochila',training:'Entrenamiento',oak:'Profesor Oak',settings:'Configuración'}[panelName];
+  $('panel-title').textContent={inventory:'Tu mochila',training:'Entrenamiento',oak:'Profesor Oak',settings:'Configuración',shop:'Tienda'}[panelName];
   if(panelName==='inventory'){
     content.append(row('Pokédex y Memorias','Especies descubiertas y compañeros que vivieron contigo.',socialButton('Consultar',()=>{panelName='pokedex';renderPanel();})));
     content.append(row('Huevos guardados',`${state.social.eggs.length} en tu reserva de huevos.`,socialEntryButton()));
@@ -718,7 +736,14 @@ function renderPanel(){
   if(panelName==='training'){
     if(state.phase==='egg'){content.append(el('p','El huevo no tiene atributos. Podrás entrenar a tu compañero cuando nazca.'));return;}
     content.append(el('p','Resultado +1–5 · 2 AP · −10 energía', 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?'Máximo':['Novato','Aprendiz','Competente','Experto','Maestro'][Math.floor(state.training[k]/20)],meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',LABELS[k]);card.append(row(iconLabel(o.icon,LABELS[k]),`${rank} · ${state.training[k]} — ${o.name}`,panelButton('Practicar',()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?'Máximo':['Novato','Aprendiz','Competente','Experto','Maestro'][Math.floor(state.training[k]/20)],meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',LABELS[k]);card.append(row(iconLabel(o.icon,LABELS[k]),`${rank} · ${state.training[k]} — ${o.name}`,panelButton('Practicar',()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>` · +${coinReward(gain)} monedas`,commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+  }
+  if(panelName==='shop'){
+    content.append(el('p',`Monedas: ${state.coins} · Oferta de hoy`, 'panel-note'));
+    for(const id of dailyShop()){
+      const item=itemCatalog[id],description=item.heal?'Medicina para curar Pokérus.':item.food?(item.attribute?`Baya de ${LABELS[item.attribute]}.`:'Alimento para tu compañero.'):'Objeto evolutivo. Se usará cuando una evolución compatible lo requiera.';
+      content.append(row(iconLabel(item.icon,`${item.name} · ${item.price} monedas`),description,panelButton('Comprar',()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
+    }
   }
   if(panelName==='settings'){
     if(window.HatchAccount){const logout=el('button','Cerrar sesión');logout.type='button';logout.addEventListener('click',()=>void window.HatchAccount.logout());content.append(el('h3','Cuenta'),row(window.HatchAccount.email,'',logout));if(window.HatchAccount.hasBackup()){const backup=el('button','Descargar copia local pendiente');backup.type='button';backup.addEventListener('click',window.HatchAccount.downloadBackup);content.append(backup);}}
@@ -743,7 +768,7 @@ function renderPanel(){
   }
   if(panelName==='oak'){
     content.append(row('Intercambio y crianza','QR y códigos · Reserva de huevos',socialEntryButton()));
-    if(state.phase==='egg'){content.append(el('p','Cada gesto aporta calor al huevo. Sus movimientos te dirán si está cerca de abrirse. No tiene estadísticas; su edad comienza al nacer.'));return;}
+    if(state.phase==='egg'){content.append(el('p',state.heat<3?'Prueba a tocar el huevo: cada toque le da calor y puede abrirse antes. También eclosionará si esperas.':'¡Sigue así! Cuanto más calor le des, antes podría eclosionar. Esperar sigue siendo una opción.'));return;}
     const diagnosis=el('div',undefined,'diagnosis');
     for(const [label,value]of [['Etapa',Vital.getLifeStage(state)],['Edad',`${Math.floor(state.age/DAY)} d · ${Math.floor(state.age/HOUR)%24} h`],['Crianza',state.vital.hasProducedEgg?'Completada':Vital.breedingReason(state)?'No disponible':'Disponible'],['Evolución',!current().rules.length?'Última forma':current().rules.some(r=>r.item)?'Pendiente / objeto':'Pendiente']])diagnosis.append(row(label,value));content.append(diagnosis);
     const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=mean(k),cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label','Media de '+LABELS[k]);cell.append(el('small',`${LABELS[k]} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
@@ -1003,6 +1028,7 @@ function render(forceFeedback=false){
   for(let i=0;i<MAX_AP;i++)pips.append(el('span',undefined,`action-pip${i<actionPoints?' filled':''}`));
   actionIndicator.replaceChildren(el('span',`Acciones: ${actionPoints}/${MAX_AP}`),pips,el('span','+1 / 10 min','trainer-recharge'));
   actionIndicator.setAttribute('aria-label',`Acciones del criador: ${actionPoints} de ${MAX_AP}. Cada cuidado consume acciones; recuperas 1 cada 10 minutos.`);
+  $('coin-balance').textContent=`Monedas: ${state.coins}`;$('coin-balance').setAttribute('aria-label',`${state.coins} monedas`);
   if(interactionLocked())hideToast();
   if(state.message!==lastMessage||forceFeedback){lastMessage=state.message;if(!interactionLocked())showToast(state.message,important);}
   presentedPhase=state.phase;presentedIllness=state.pokerus;
@@ -1048,7 +1074,7 @@ function collectionSprite(id,isShiny=false){
   const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny});return visual;
 }
 function renderPokedex(){
-  disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Pokédex y Memorias';
+  dialog.dataset.lcdSurface='true';disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Pokédex y Memorias';
   const tabs=el('nav',undefined,'social-flows');tabs.setAttribute('aria-label','Pokédex y Memorias');
   for(const [id,label]of [['pokedex','POKÉDEX'],['memories','MEMORIAS']]){const button=socialButton(label,()=>{collectionTab=id;renderPokedex();});button.setAttribute('aria-pressed',String(collectionTab===id));tabs.append(button);}content.append(tabs);
   if(collectionTab==='pokedex'){
@@ -1116,8 +1142,8 @@ $('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(sta
 window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
 document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
-if(window.HatchCloud&&gameStorage.getItem(SAVE_KEY)&&!validSave(JSON.parse(gameStorage.getItem(SAVE_KEY))))throw Error('invalid-cloud-save');
-window.HatchRuntime={save,stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
+if(window.HatchCloud&&gameStorage.getItem(SAVE_KEY)&&!validSave(migrateSave(JSON.parse(gameStorage.getItem(SAVE_KEY)))))throw Error('invalid-cloud-save');
+window.HatchRuntime={save,applyCloudSave(game,preferences={}){game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;state=game;state.lastSync=Date.now();savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
 restore();save();lastMessage=state.message;render();startTimer();
 </script>
 <script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent='No se pudo conectar. Revisa Internet y recarga la página.';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>

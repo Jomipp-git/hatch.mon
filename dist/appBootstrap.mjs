@@ -10,7 +10,7 @@ async function start(session){
  if(started||starting||leaving||recovery)return;starting=true;message.textContent='Cargando compañero…';$('auth-form').hidden=true;
  try{
   userId=session.user.id;const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
-  service=createCloudSaveService({client,session,cache,notify});
+  service=createCloudSaveService({client,session,cache,notify,onRemote:(game,preferences)=>window.HatchRuntime?.applyCloudSave(game,preferences)});
   try{await service.load();}catch(error){
    if(error.message==='unsupported-save')throw error;
    const cached=snapshotCache(cache);if(!cached?.game)throw error;
@@ -29,7 +29,7 @@ async function start(session){
   const source=$('game-source').textContent;
   const script=document.createElement('script');script.textContent='(()=>{\n'+source+'\n})();';document.head.append(script);
   if(!window.HatchRuntime)throw Error('game-start-failed');
-  started=true;gate.hidden=true;game.hidden=false;service.queue();
+  started=true;gate.hidden=true;game.hidden=false;service.startRealtime?.();service.queue();
  }catch(error){service?.close();lock();message.textContent=error.message==='unsupported-save'?'Esta partida necesita otra versión de Hatch.mon. No se ha modificado.':'No se pudo cargar tu compañero. Reintenta con conexión.';$('auth-form').hidden=true;$('auth-google').hidden=true;$('auth-retry').hidden=false;}
  finally{starting=false;}
 }
@@ -52,7 +52,7 @@ $('auth-form').addEventListener('submit',async event=>{
 });
 $('auth-google').addEventListener('click',async()=>{if(starting||busy)return;try{const {error}=await auth.google();if(error)throw error;}catch(error){message.textContent=humanError(error);}});
 for(const next of ['login','signup','recover'])$('auth-'+next).addEventListener('click',()=>{if(starting||busy||leaving)return;message.textContent='';formMode(next);});
-window.addEventListener('online',()=>{if(service?.isBlocked())notify('Conexión recuperada. Recarga para resolver la partida cloud.');else void service?.flush();});
+window.addEventListener('online',()=>{if(service?.isBlocked())notify('Conexión recuperada. Recarga para resolver la partida cloud.');else{void service?.reconcile();void service?.flush();}});
 function flushOnLeave(){window.HatchRuntime?.save();queueMicrotask(()=>{service?.queue();void service?.flush();});}
 window.addEventListener('pagehide',flushOnLeave);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)flushOnLeave();});

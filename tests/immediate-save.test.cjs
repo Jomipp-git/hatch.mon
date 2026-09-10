@@ -9,7 +9,7 @@ test('important save starts without debounce, ordered writes keep latest dirty u
  remote.game_state=Object.fromEntries(Object.entries(remote.game_state).reverse());write(3);svc.queue();svc.close();const reopened=createCloudSaveService({client,session:{user:{id:'A'}},cache});await reopened.load();assert.equal(JSON.parse(cache.getItem('hatch.mon.v3')).value,3);const flush=reopened.flush();await settle();release();await flush;assert.equal(remote.game_state.game.value,3);reopened.close();
 });
 test('frequent physiology stays batched and identical snapshots create no new request',async()=>{
- const {createCloudSaveService}=await import('../cloudSaveService.mjs');let count=0;const client={auth:{getSession:async()=>({data:{session:{user:{id:'A'}}}})},from:()=>({upsert:async()=>{count++;return{error:null}}})},cache=store();const svc=createCloudSaveService({client,session:{user:{id:'A'}},cache,delay:100000});
+ const {createCloudSaveService}=await import('../cloudSaveService.mjs');let count=0;const client={auth:{getSession:async()=>({data:{session:{user:{id:'A'}}}})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null,error:null})})}),upsert:async()=>{count++;return{error:null}}})},cache=store();const svc=createCloudSaveService({client,session:{user:{id:'A'}},cache,delay:100000});
  for(let i=0;i<50;i++){cache.setItem('hatch.mon.v3',JSON.stringify({version:12,value:i}));svc.queue();}await settle();assert.equal(count,0);await svc.flush();assert.equal(count,1);svc.queue({immediate:true});await settle();assert.equal(count,1);svc.close();
 });
 test('feeding, training, evolution, birth, shell and configuration request immediate saves; ordinary time does not',async()=>{

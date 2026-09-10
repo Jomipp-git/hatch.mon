@@ -1,9 +1,9 @@
 const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
 (async()=>{const {run,els}=await setup();
 run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");var bondRules=HATCHMON_DATA.evolutionRules.filter(r=>r.MinBond!=null)');
-assert.equal(run('bondRules.length'),12);assert.equal(run('bondRules.filter(r=>r.MinBond===2).length'),11);assert.equal(run('bondRules.filter(r=>r.MinBond===3).length'),1);
+assert.equal(run('bondRules.length'),17);assert.equal(run('bondRules.filter(r=>r.MinBond===2).length'),15);assert.equal(run('bondRules.filter(r=>r.MinBond===3).length'),1);assert.equal(run('bondRules.filter(r=>r.MinBond===5).length'),1);
 const text=n=>n.textContent+n.children.map(text).join(' ');
-for(let i=0;i<12;i++){
+for(let i=0;i<run('bondRules.length');i++){
  run(`var source=bondRules[${i}];var from=PokemonData.legacyId(source.FromId);var to=PokemonData.legacyId(source.ToId);var playable=!!from;var r=canonicalRule(source);`);
  // Three canonical families are not playable yet: minimal canonical UI fixtures only.
  run('if(!playable){from=source.FromId;to=source.ToId;r.to=to;evolutionConfig[from]={name:PokemonData.get(from).DisplayName,rules:[r]};evolutionConfig[to]={name:PokemonData.get(to).DisplayName,rules:[]};}else{r=evolutionConfig[from].rules.find(x=>x.canonicalRuleId===source.RuleId);}state.pokemonId=from;state.age=r.ageMs;state.training={iq:0,strength:0,kindness:0,style:0,...r.training};state.care.felicidad=100;state.sustained={};for(const c of r.sustained){state.care[c.estadistica]=100;state.sustained[sustainedKey(c)]=c.duracionMs;}state.relationship.points=0;var minimum=source.MinBond*RELATIONSHIP_CONFIG.perHeart;');
@@ -20,8 +20,8 @@ for(let i=0;i<12;i++){
  if(run('playable')){
   run('state.relationship.points=minimum-.01');assert.equal(run('evolve(r)'),false);
   run('state.relationship.points=minimum');assert.equal(run('evolve(r)'),true);
-  run('state.pokemonId=from;state.relationship.points=0');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),run('minimum+RELATIONSHIP_CONFIG.rewards.evolve'));
-  run('state.pokemonId=from;state.relationship.points=90');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),95);
+  run('state.pokemonId=from;state.relationship.points=0');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),run('Math.min(RELATIONSHIP_CONFIG.max,minimum+RELATIONSHIP_CONFIG.rewards.evolve)'));
+  run('state.pokemonId=from;state.relationship.points=90');assert.equal(run('forceEvolution(to)'),true);assert.equal(run('state.relationship.points'),run('Math.min(RELATIONSHIP_CONFIG.max,Math.max(90,minimum)+RELATIONSHIP_CONFIG.rewards.evolve)'));
  }
 }
 for(const blank of ['null','undefined','""']){

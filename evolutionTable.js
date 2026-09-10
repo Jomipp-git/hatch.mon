@@ -101,5 +101,13 @@ const evolutionTable = {
 
   magby: { nombre: 'Magby', emoji: '🔥', etapa: 'Baby', evoluciones: [{ destino: 'magmar', edadMinima: 1.0, estadisticas: { style: 50 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
   magmar: { nombre: 'Magmar', emoji: '🔥👹', etapa: 'Kid', evoluciones: [{ destino: 'magmortar', edadMinima: 2.0, objeto: 'Magmatizador' }] },
-  magmortar: { nombre: 'Magmortar', emoji: '🔥💥', etapa: 'Adult', evoluciones: [] }
+  magmortar: { nombre: 'Magmortar', emoji: '🔥💥', etapa: 'Adult', evoluciones: [] },
+
+  // Repertorio histórico de IDs para el content update. Las reglas viven en la fuente v2.
+  bulbasaur:{nombre:'Bulbasaur',emoji:'',etapa:'Kid',evoluciones:[]},ivysaur:{nombre:'Ivysaur',emoji:'',etapa:'Teen',evoluciones:[]},venusaur:{nombre:'Venusaur',emoji:'',etapa:'Adult',evoluciones:[]},
+  charmander:{nombre:'Charmander',emoji:'',etapa:'Kid',evoluciones:[]},charmeleon:{nombre:'Charmeleon',emoji:'',etapa:'Teen',evoluciones:[]},charizard:{nombre:'Charizard',emoji:'',etapa:'Adult',evoluciones:[]},
+  squirtle:{nombre:'Squirtle',emoji:'',etapa:'Kid',evoluciones:[]},wartortle:{nombre:'Wartortle',emoji:'',etapa:'Teen',evoluciones:[]},blastoise:{nombre:'Blastoise',emoji:'',etapa:'Adult',evoluciones:[]},
+  dratini:{nombre:'Dratini',emoji:'',etapa:'Kid',evoluciones:[]},dragonair:{nombre:'Dragonair',emoji:'',etapa:'Teen',evoluciones:[]},dragonite:{nombre:'Dragonite',emoji:'',etapa:'Adult',evoluciones:[]},
+  abra:{nombre:'Abra',emoji:'',etapa:'Kid',evoluciones:[]},kadabra:{nombre:'Kadabra',emoji:'',etapa:'Teen',evoluciones:[]},alakazam:{nombre:'Alakazam',emoji:'',etapa:'Adult',evoluciones:[]},
+  growlithe:{nombre:'Growlithe',emoji:'',etapa:'Kid',evoluciones:[]},arcanine:{nombre:'Arcanine',emoji:'',etapa:'Adult',evoluciones:[]}
 };

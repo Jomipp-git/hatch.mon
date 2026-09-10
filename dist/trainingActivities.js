@@ -6,7 +6,7 @@ globalThis.TrainingActivities=(()=>{
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
  const strengthPrecision=position=>position>=config.strengthPerfectMin&&position<=config.strengthPerfectMax?1:Math.max(0,position<config.strengthPerfectMin?position/config.strengthPerfectMin:(1-position)/(1-config.strengthPerfectMax));
  function register(attribute,launcher){if(!Object.hasOwn(modes,attribute)||typeof launcher!=='function')throw Error('Actividad no válida');launchers[attribute]=launcher;}
- function launch(attribute,{commit,onActive=()=>{}}){
+ function launch(attribute,{commit,onActive=()=>{},formatReward=()=>''}){
   if(!Object.hasOwn(modes,attribute)||active)return false;
   let done=false,timer=null,frame=null,dialog=null,dispose=null;
   const requestFrame=globalThis.requestAnimationFrame||((fn)=>setTimeout(fn,16));
@@ -26,7 +26,7 @@ globalThis.TrainingActivities=(()=>{
   let visibleStrengthPosition=.5;
   const strengthPosition=t=>(Math.sin(t/(420-round*60))+1)/2;
   const button=(label,fn,onPress=false)=>{const b=node('button',label);b.type='button';b.addEventListener('pointerdown',event=>{if(event.button!==undefined&&event.button!==0)return;if(onPress){event.preventDefault();fn();return;}b.setPointerCapture?.(event.pointerId);held.add(b);presses.set(b,{round,valid:phase==='play'});});b.addEventListener('pointerup',()=>held.delete(b));b.addEventListener('pointercancel',()=>{held.delete(b);presses.delete(b);});b.addEventListener('lostpointercapture',()=>held.delete(b));b.addEventListener('click',event=>{if(onPress){if(event.detail===0)fn();return;}const press=presses.get(b);presses.delete(b);if(press&&press.round!==round)return;fn(press);});field.append(b);controls.push(b);return b;};
-  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?['','Sigue practicando','Un buen comienzo','¡Correcto!','¡Muy bien!','¡Perfecto!'][gain]:'No se pudo completar: revisa energía y AP.');setText(status,ok?`${modes[attribute]} · +${gain}`:'Sin coste ni recompensa');exit.textContent='Volver';exit.addEventListener('click',()=>dialog.close());};
+  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?['','Sigue practicando','Un buen comienzo','¡Correcto!','¡Muy bien!','¡Perfecto!'][gain]:'No se pudo completar: revisa energía y AP.');setText(status,ok?`${modes[attribute]} · +${gain}${formatReward(gain)}`:'Sin coste ni recompensa');exit.textContent='Volver';exit.addEventListener('click',()=>dialog.close());};
   if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,onFinish:finish});return true;}
   if(attribute==='iq'){
    setText(hint,'Observa las luces y repite el orden.');

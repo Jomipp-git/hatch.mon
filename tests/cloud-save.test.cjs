@@ -18,6 +18,18 @@ test('new user cannot inherit cache; pending copy preserved; unsupported schema 
  const svc=createCloudSaveService({client,session:{user:{id:'A'}},cache});await svc.load();assert.equal(cache.getItem('hatch.mon.v3'),null);assert.ok(cache.getItem('cloud-backup'));
  client.rows.set('A',{schema_version:99,game_state:{game:{version:12}}});await assert.rejects(svc.load(),/unsupported-save/);assert.equal(client.calls.length,0);svc.close();
 });
+test('Realtime converges devices, rejects stale pending state and removes its only subscription',async()=>{
+ const {createCloudSaveService,userStorage}=await import('../cloudSaveService.mjs');const storage=store(),cacheA=userStorage(storage,'A-device'),cacheB=userStorage(storage,'B-device');let remote=null,writes=0,removed=0,handlerA,handlerB,channelCount=0;
+ const channel=handler=>({on(_event,_filter,next){handler(next);return this;},subscribe(){return this;},unsubscribe(){removed++;}});
+ const client={auth:{getSession:async()=>({data:{session:{user:{id:'user'}}}})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:remote,error:null})})}),upsert:async row=>{writes++;remote=structuredClone(row);remote.updated_at=new Date(Date.now()+writes).toISOString();handlerA?.({new:remote});handlerB?.({new:remote});return{data:{updated_at:remote.updated_at},error:null}}}),channel(){return ++channelCount===1?channel(next=>handlerA=next):channel(next=>handlerB=next);},removeChannel(){removed++;}};
+ const seenA=[],seenB=[],a=createCloudSaveService({client,session:{user:{id:'user'}},cache:cacheA,onRemote:game=>seenA.push(game.value),delay:100000}),b=createCloudSaveService({client,session:{user:{id:'user'}},cache:cacheB,onRemote:game=>seenB.push(game.value),delay:100000});
+ await a.load();await b.load();a.startRealtime();b.startRealtime();
+ cacheB.setItem('hatch.mon.v3',JSON.stringify({version:12,value:80}));b.queue();
+ cacheA.setItem('hatch.mon.v3',JSON.stringify({version:12,value:100}));a.queue();await a.flush();
+ assert.deepEqual(seenB,[100]);assert.equal(JSON.parse(cacheB.getItem('hatch.mon.v3')).value,100);await b.flush();assert.equal(writes,1);
+ const newer={schema_version:1,updated_at:new Date(Date.now()+1000).toISOString(),game_state:{game:{version:12,value:120},preferences:{displayMode:'lcd'},sync:{revision:2,sourceId:'other'}}};assert.equal(b.applyRemote(newer),true);assert.equal(b.applyRemote({...newer,updated_at:new Date(Date.now()+500).toISOString()}),false);assert.deepEqual(seenB,[100,120]);
+ a.close();b.close();assert.ok(removed>=2);
+});
 test('production has no testing UI and debug entry points do nothing',async()=>{
  const {setup}=require('./uiHarness.cjs'),h=await setup({development:false});assert.equal(h.win.HatchMon,undefined);h.run('HatchEnvironment.isDevelopmentEnvironment=()=>true');h.run("showPanel('settings')");const labels=h.els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);assert.ok(!labels.some(k=>/testing|skip-|force-/.test(k||'')));const before=h.run('JSON.stringify(state)');assert.equal(h.run('skipTime(6)'),false);assert.equal(h.run('resetGame()'),false);assert.equal(h.run('forceEvolution()'),false);assert.equal(h.run('JSON.stringify(state)'),before);
  const vm=require('node:vm'),fs=require('node:fs');for(const [hostname,expected] of [['127.0.0.1',true],['localhost',true],['hatch.mon',false],['localhost.evil.test',false],['',false]]){const c=vm.createContext({location:{hostname}});vm.runInContext(fs.readFileSync('appEnvironment.js','utf8'),c);assert.equal(c.HatchEnvironment.isDevelopmentEnvironment(),expected);}

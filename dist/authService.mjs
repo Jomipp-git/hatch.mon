@@ -12,10 +12,11 @@ export const auth={
  update:password=>client.auth.updateUser({password}),
  logout:()=>client.auth.signOut({scope:'local'})
 };
+const authText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
 export function humanError(error){
- if(error?.code==='email_not_confirmed')return 'Confirma primero tu correo.';
- if(error?.code==='invalid_credentials')return 'Email o contraseña incorrectos.';
- if(error?.status===429)return 'Espera un momento antes de intentarlo otra vez.';
- if(error?.code==='weak_password')return 'Usa una contraseña más segura.';
- return 'No se ha podido completar. Revisa los datos y la conexión.';
+ if(error?.code==='email_not_confirmed')return authText('auth.emailUnconfirmed');
+ if(error?.code==='invalid_credentials')return authText('auth.invalidCredentials');
+ if(error?.status===429)return authText('auth.rateLimited');
+ if(error?.code==='weak_password')return authText('auth.weakPassword');
+ return authText('auth.requestFailed');
 }

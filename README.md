@@ -10,6 +10,7 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `authService.mjs` | Cliente Supabase, email, Google y recuperación | SDK oficial supabase-js por esm.sh (versión fijada) |
 | `cloudSaveService.mjs` | Envelope, caché por usuario, carga y autosave | Cliente Supabase, localStorage |
 | `appBootstrap.mjs` | Puerta de sesión/carga, arranque diferido y Cuenta | Auth, cloud save, módulos de juego |
+| `i18n.js` | Catálogo único ES/EN, interpolaciones, fallback y actualización de textos | DOM; preferencia local/cloud en servicios existentes |
 | `appEnvironment.js` | Detección central de entorno de testing | Hostname |
 | `vitalSimulation.js` | Balance, cuidados, fisiología, lifespan, LifeStage y requisitos vitales de crianza | `pokemonDataAdapter.js` |
 | `pokemonRenderer.js` | Render canvas, reproducción visual del huevo y fallback retro | Adapter, PmdVisuals, assets locales |
@@ -242,3 +243,11 @@ Testing solo se construye para localhost, 127.0.0.1 o loopback IPv6; reset, salt
 **Supabase:** no se han modificado tabla ni políticas. `user_id` debe tener unicidad para el upsert y las políticas SELECT/INSERT/UPDATE deben exigir `auth.uid() = user_id`. Para la actualización inmediata entre dispositivos, habilitar `game_saves` en la publicación `supabase_realtime`; si no está habilitada, la app conserva la reconciliación de 30 segundos. Autorizar las URLs exactas de entrada y recuperación (`http://127.0.0.1:8080/` y `http://127.0.0.1:8080/?recovery=1`, más `/index.html` si se usa esa ruta); añadir el dominio HTTPS al publicar. Mantener Google y correo habilitados. Flujos oficiales: [recuperación](https://supabase.com/docs/reference/javascript/auth-resetpasswordforemail) y [eventos de sesión](https://supabase.com/docs/reference/javascript/auth-onauthstatechange).
 
 **Validación:** `node --test tests/*.test.cjs` cubre regresión, contrato de Auth simulado, carga previa al juego, aislamiento A/B, envelope, prioridad cloud, Realtime y controles de producción. La pantalla de acceso se revisa en navegador real; estos mocks no verifican RLS, publicación Realtime ni proveedores. Completar manualmente con dos dispositivos de la misma cuenta: una acción importante en cada uno, llegada sin recarga, conflicto de caché y logout; verificar también rechazo de SELECT/UPDATE cruzados bajo sus JWT.
+
+## Internacionalización
+
+`i18n.js` contiene el catálogo ES/EN. Usa `HatchI18n.t(key, params)` en toda presentación y `data-i18n`, `data-i18n-aria`, `data-i18n-title` o `data-i18n-placeholder` para HTML estático. Los textos dinámicos los actualiza su renderer. No se traducen nombres oficiales Pokémon, datos canónicos ni códigos.
+
+`hatch.mon.language` conserva la preferencia local; el envelope cloud usa `preferences.language`. Un valor ausente o distinto de `es`/`en` vuelve a español. No cambia el schema de criatura. El mapa temporal de mensajes permite retraducir feedback visible; no se persiste. Al cargar se descarta únicamente el feedback transitorio antiguo.
+
+`node --test tests/*.test.cjs` comprueba catálogo, persistencia, renders y detección razonable de literales visibles. El detector está en `tests/i18n-audit.cjs`; no sustituye una revisión de código. La auditoría y excepciones están en `I18N_AUDIT.md`. El build vigente es `python3 tools/buildMobileRuntime.py --optimize`: regenera `dist/` desde source, sin compilación npm ni typecheck configurado.

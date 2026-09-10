@@ -20,12 +20,13 @@ const DIGESTION_CONFIG={max:6,maxPoops:3,minDelayMinutes:45,maxDelayMinutes:120,
 const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120,
   poopCount:2,poopAgeMinutes:180,riskPerHour:.08,maxRiskPerHour:.18,
   happinessDecay:1.5,otherDecay:1.12,recovery:.8,
-  messages:{hygiene:'No se encuentra bien. Necesita un entorno más limpio.',
-    energy:'Está agotado y no se encuentra bien. Apaga la luz para que descanse.',
-    poops:'La suciedad acumulada le ha hecho sentirse mal. Necesita limpieza y una cura.',
-    food:'Tanta comida seguida no le ha sentado muy bien.'}};
+  messages:{hygiene:'illness.hygiene',
+    energy:'illness.energy',
+    poops:'illness.poops',
+    food:'illness.food'}};
 const BREEDING_CONFIG={lifeStage:'MADURO',happiness:70,minCare:40,maxPoops:1,maxDirt:50,oncePerLife:true};
 globalThis.Vital=(()=>{
+  const vitalText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   const bound=(x,a=0,b=CARE_CONFIG.max)=>Math.min(b,Math.max(a,x));
   function seed(id){let h=2166136261;for(const c of String(id))h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;}
   function random(v){v.rng=(Math.imul(v.rng,1664525)+1013904223)>>>0;return v.rng/4294967296;}
@@ -45,16 +46,16 @@ globalThis.Vital=(()=>{
     const c=CARE_CONFIG.difficulty;
     return {decay:bound(1+(d-c.baseline)*c.decayWeight,c.minFactor,c.maxDecay),risk:bound(1+(d-c.baseline)*c.riskWeight,c.minFactor,c.maxRisk)};
   }
-  function infect(s,cause){if(s.pokerus)return false;s.pokerus=true;s.vital.illnessCause=cause;s.message=SICKNESS_CONFIG.messages[cause];return true;}
+  function infect(s,cause){if(s.pokerus)return false;s.pokerus=true;s.vital.illnessCause=cause;s.message=vitalText(SICKNESS_CONFIG.messages[cause]);return true;}
   function schedule(s){const c=DIGESTION_CONFIG;s.vital.nextPoopAt=s.age+(c.minDelayMinutes+random(s.vital)*(c.maxDelayMinutes-c.minDelayMinutes))*CARE_CONFIG.minute;}
   function eat(s,meal){
     const v=s.vital,full=s.care.hambre===CARE_CONFIG.max;
     s.care.hambre=bound(s.care.hambre+meal.hunger);v.digestion=bound(v.digestion+meal.digestion,0,DIGESTION_CONFIG.max);v.dirt=bound(v.dirt+meal.dirt);
     if(v.nextPoopAt===null)schedule(s);
-    let message=full?'Ya parece bastante lleno.':'Una buena comida. 🍎';
+    let message=full?vitalText('care.meal.0'):vitalText('care.meal.1');
     if(full){
       v.recentFeedingLoad+=meal.load;
-      if(Math.ceil(v.recentFeedingLoad)>=DIGESTION_CONFIG.warningLoad)message='Quizá sea mejor dejarle descansar antes de comer más.';
+      if(Math.ceil(v.recentFeedingLoad)>=DIGESTION_CONFIG.warningLoad)message=vitalText('care.meal.2');
       // Una sola tirada por acción de ingesta, nunca desde tick().
       const chance=abuseRisk(v.recentFeedingLoad);
       if(!s.pokerus&&chance>0&&random(v)<chance&&infect(s,'food'))message=s.message;
@@ -91,10 +92,10 @@ globalThis.Vital=(()=>{
     if(!s.pokerus&&cause){const hourly=Math.min(SICKNESS_CONFIG.maxRiskPerHour,SICKNESS_CONFIG.riskPerHour*m.risk*d.risk);if(random(v)<1-Math.pow(1-hourly,1/60))infect(s,cause);}
   }
   function breedingReason(s){
-    if(!s.vital||getLifeStage(s)!==BREEDING_CONFIG.lifeStage)return 'Solo puede criar en la etapa vital MADURO.';
-    if(BREEDING_CONFIG.oncePerLife&&s.vital.hasProducedEgg)return 'Este compañero ya ha producido su único huevo.';
+    if(!s.vital||getLifeStage(s)!==BREEDING_CONFIG.lifeStage)return vitalText('breeding.matureOnly');
+    if(BREEDING_CONFIG.oncePerLife&&s.vital.hasProducedEgg)return vitalText('breeding.alreadyProduced');
     if(s.phase!=='alive'||s.pokerus||s.care.felicidad<BREEDING_CONFIG.happiness||Object.values(s.care).some(n=>n<BREEDING_CONFIG.minCare)||
-      s.vital.poops.length>BREEDING_CONFIG.maxPoops||s.vital.dirt>BREEDING_CONFIG.maxDirt)return 'Necesita buen estado general y Ánimo de al menos 70 para criar.';
+      s.vital.poops.length>BREEDING_CONFIG.maxPoops||s.vital.dirt>BREEDING_CONFIG.maxDirt)return vitalText('breeding.needsCare');
     return null;
   }
   function valid(v,age){

@@ -60,6 +60,9 @@
   .social-qr{display:block;max-width:100%;height:auto;margin:12px auto;image-rendering:pixelated}.social-section video{display:block;width:100%;max-height:240px;background:#292234;border-radius:8px}.social-status{padding:10px;border:2px double #748267;border-radius:8px;font-size:.875rem;overflow-wrap:anywhere}.social-status:empty{display:none}
   @media(max-width:370px){.screen-tools{left:2px;top:14px}.screen-tools button{width:40px;padding:2px;font-size:1rem}.console{padding:16px}.screen{padding:18px 12px}.care{grid-template-columns:repeat(2,1fr)}.trainer{flex-wrap:wrap}.panel-row{flex-wrap:wrap}}
   @media(max-width:330px){:root{--sprite-size:130px}}
+  @media(max-width:430px){body{padding:12px 8px;place-items:start center}.console{width:100%;padding:16px;border-radius:16px 16px 30px 16px}.bezel{padding:8px}.screen{padding:18px 10px}.care{gap:6px}.care button{font-size:.67rem}.message-strip{grid-template-columns:38px minmax(0,1fr);padding:4px 6px}.oak-plate{width:38px;height:42px}.oak-plate img{width:34px;height:38px}dialog{width:calc(100vw - 16px);max-height:calc(100svh - 16px);padding:16px}.panel-row{gap:10px}.panel-row>div{min-width:0}.shell-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(min-width:600px) and (max-width:800px){body{padding:24px}.console{width:min(100%,560px)}.care{grid-template-columns:repeat(4,1fr)}}
+
   @media(prefers-reduced-motion:reduce){button{transition:none}.evolving{animation:none}}
 
   .pixel-icon{display:inline-block;width:20px;height:20px;flex-shrink:0;vertical-align:middle;position:relative;font-size:20px;background:transparent;image-rendering:pixelated}
@@ -114,12 +117,13 @@
   @media(max-width:370px){.console{padding:16px;height:668px}.screen{padding:16px 12px}.care{grid-template-columns:repeat(4,minmax(0,1fr))}}
   .screen-tools.settings-tool{left:auto;right:10px;top:22px}
   .pixel-icon[data-icon="settings"]{--pixels:0em .25em currentColor,.125em .25em currentColor,.25em .125em currentColor,.25em .25em currentColor,.25em .375em currentColor,.375em .25em currentColor,.5em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,0em .625em currentColor,.125em .625em currentColor,.25em .625em currentColor,.375em .625em currentColor,.5em .5em currentColor,.5em .625em currentColor,.5em .75em currentColor,.625em .625em currentColor,.75em .625em currentColor}
+  .pixel-icon[data-icon="shop"]{--pixels:.25em 0em currentColor,.375em 0em currentColor,.5em 0em currentColor,.625em 0em currentColor,.125em .125em currentColor,.25em .125em currentColor,.375em .125em currentColor,.5em .125em currentColor,.625em .125em currentColor,.75em .125em currentColor,.125em .25em currentColor,.375em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,.125em .375em currentColor,.25em .375em currentColor,.375em .375em currentColor,.5em .375em currentColor,.625em .375em currentColor,.75em .375em currentColor,.125em .5em currentColor,.75em .5em currentColor,.125em .625em currentColor,.375em .625em currentColor,.5em .625em currentColor,.75em .625em currentColor,.125em .75em currentColor,.375em .75em currentColor,.5em .75em currentColor,.75em .75em currentColor,.125em .875em currentColor,.25em .875em currentColor,.375em .875em currentColor,.5em .875em currentColor,.625em .875em currentColor,.75em .875em currentColor}
   [data-display-mode="lcd"] .screen,[data-display-mode="lcd"] .message-strip,[data-display-mode="lcd"] .memory-sprite,[data-display-mode="lcd"] .memory-hearts,[data-display-mode="lcd"] #panel[data-lcd-surface="true"]{filter:url(#lcd-palette)}
   [data-display-mode="lcd"] .screen .empty{opacity:.55}
   .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a}
   .minigame-field button{touch-action:manipulation;min-height:56px;font-weight:bold;border-radius:3px}.minigame-field button.lit{background:#52694a;color:#fff;box-shadow:inset 0 0 0 3px #263b30}.minigame-field button:active{background:#91a477}
   .timing-track{grid-column:1/-1;height:40px;position:relative;background:#d5dfbb;border:2px solid #52694a;overflow:hidden}.timing-zone{position:absolute;height:100%;background:#91a477}.timing-marker{position:absolute;transform:translateX(-50%);top:0;width:4px;height:100%;background:#263b30}
-  #training-game-content>p{min-height:32px}#training-game-content>button{margin-top:12px;width:100%}.minigame-field{outline:calc(var(--pulse,0)*4px) solid #52694a}
+  #training-game-content>p{min-height:32px;overflow-wrap:anywhere}#training-game-content button{min-width:0;white-space:normal;overflow-wrap:anywhere}.social-flows>button{min-width:0;overflow-wrap:anywhere}#training-game-content>button{margin-top:12px;width:100%}.minigame-field{outline:calc(var(--pulse,0)*4px) solid #52694a}
   [data-display-mode="lcd"] #training-game{filter:url(#lcd-palette)}
   .panel-note{font-size:.78rem;margin:6px 0 12px}.panel-row{padding:10px 0}.panel-row p{font-size:.78rem}.panel-row ul{padding-left:18px;font-size:.78rem}.memory-card{align-items:center}.memory-sprite{height:80px}
   .minigame-field button[data-object]::before{content:'';display:block;width:24px;height:28px;margin:0 auto 6px;background:currentColor;image-rendering:pixelated}
@@ -150,76 +154,77 @@
   </filter>
 </defs></svg>
 <section id="auth-gate" class="auth-console" aria-labelledby="auth-title">
-<h1>hatch.mon</h1><h2 id="auth-title">Tu compañero te espera</h2>
-<p id="auth-message" class="auth-message" role="status">Comprobando sesión…</p>
-<button id="auth-retry" type="button" hidden onclick="location.reload()">Reintentar carga</button>
-<button id="auth-google" type="button">Continuar con Google</button>
+<h1>hatch.mon</h1><h2 id="auth-title" data-i18n="auth.title.login"></h2>
+<p id="auth-message" class="auth-message" role="status" data-i18n="auth.loadingSession"></p>
+<button id="auth-retry" type="button" hidden onclick="location.reload()" data-i18n="auth.retryLoad"></button>
+<button id="auth-google" type="button" data-i18n="auth.google"></button>
 <form id="auth-form">
-<label id="auth-email-row">Email<input id="auth-email" type="email" autocomplete="email" required></label>
-<label id="auth-password-row">Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="6" required></label>
-<button id="auth-submit" type="submit">Entrar</button>
+<label id="auth-email-row"><span data-i18n="auth.email"></span><input id="auth-email" type="email" autocomplete="email" required></label>
+<label id="auth-password-row"><span data-i18n="auth.password"></span><input id="auth-password" type="password" autocomplete="current-password" minlength="6" required></label>
+<button id="auth-submit" type="submit" data-i18n="auth.signIn"></button>
 </form>
-<nav class="auth-links" aria-label="Acceso"><button id="auth-login" type="button">Entrar</button><button id="auth-signup" type="button">Crear cuenta</button><button id="auth-recover" type="button">Olvidé mi contraseña</button></nav>
+<nav class="auth-links" data-i18n-aria="auth.access"><button id="auth-login" type="button" data-i18n="auth.signIn"></button><button id="auth-signup" type="button" data-i18n="auth.signUp"></button><button id="auth-recover" type="button" data-i18n="auth.forgotPassword"></button></nav>
 <noscript>Activa JavaScript para iniciar sesión.</noscript>
 </section>
 <div id="game-root" hidden>
 <main class="console">
   <header><h1>hatch.mon</h1><img class="pokemon-logo" src="assets/pokemon_logo.png" alt="" aria-hidden="true"></header>
-  <div class="bezel"><section id="screen" class="screen" aria-label="Tu compañero">
-    <nav class="screen-tools" aria-label="Más opciones">
-      <button type="button" data-panel="inventory" aria-label="Mochila" title="Mochila"><span class="pixel-icon" data-icon="bag" aria-hidden="true"></span></button>
-      <button type="button" data-panel="training" aria-label="Entrenar" title="Entrenar"><span class="pixel-icon" data-icon="train" aria-hidden="true"></span></button>
-      <button type="button" data-panel="oak" aria-label="Profesor Oak" title="Profesor Oak"><span class="pixel-icon" data-icon="oak" aria-hidden="true"></span></button>
+  <div class="bezel"><section id="screen" class="screen" data-i18n-aria="ui.screen">
+    <nav class="screen-tools" data-i18n-aria="ui.moreOptions">
+      <button type="button" data-panel="inventory" data-i18n-aria="inventory" data-i18n-title="inventory"><span class="pixel-icon" data-icon="bag" aria-hidden="true"></span></button>
+      <button type="button" data-panel="training" data-i18n-aria="training" data-i18n-title="training"><span class="pixel-icon" data-icon="train" aria-hidden="true"></span></button>
+      <button type="button" data-panel="oak" data-i18n-aria="oak" data-i18n-title="oak"><span class="pixel-icon" data-icon="oak" aria-hidden="true"></span></button>
     </nav>
-    <nav class="screen-tools settings-tool" aria-label="Configuración y tienda"><button type="button" data-panel="settings" aria-label="Configuración" title="Configuración"><span class="pixel-icon" data-icon="settings" aria-hidden="true"></span></button><button type="button" data-panel="shop" aria-label="Tienda" title="Tienda">SHOP</button></nav>
+    <nav class="screen-tools settings-tool" data-i18n-aria="ui.settingsShop"><button type="button" data-panel="settings" data-i18n-aria="settings" data-i18n-title="settings"><span class="pixel-icon" data-icon="settings" aria-hidden="true"></span></button><button type="button" data-panel="shop" data-i18n-aria="shop" data-i18n-title="shop"><span class="pixel-icon" data-icon="shop" aria-hidden="true"></span></button></nav>
     <div class="scene-layer">
     <div class="habitat">
-      <button id="creature-button" type="button" aria-label="Dar calor al huevo"><span id="sprite" role="img" aria-label="Huevo"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
-      <div id="poop-layer" aria-label="Suciedad del hábitat" hidden></div>
+      <button id="creature-button" type="button"><span id="sprite" role="img"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
+      <div id="poop-layer" data-i18n-aria="ui.habitatDirt" hidden></div>
       <p id="nickname" hidden></p>
-      <div id="identity" class="identity"><h2 id="name">¡Un huevo misterioso!</h2><span id="gender" hidden></span></div>
-      <div id="bond" aria-label="Vínculo" hidden></div>
+      <div id="identity" class="identity"><h2 id="name"></h2><span id="gender" hidden></span></div>
+      <div id="bond" hidden></div>
     </div>
-    <p id="egg-hint" aria-live="polite">Parece que a este huevo aún le queda mucho para abrirse</p>
+    <p id="egg-hint" aria-live="polite"></p>
     <div id="stats" hidden>
-      <div class="meter"><label for="hambre">Hambre <span id="value-hambre">100</span></label><progress id="hambre" max="100" value="100">100%</progress></div>
-      <div class="meter"><label for="felicidad">Ánimo <span id="value-felicidad">100</span></label><progress id="felicidad" max="100" value="100">100%</progress></div>
-      <div class="meter"><label for="energia">Energía <span id="value-energia">100</span></label><progress id="energia" max="100" value="100">100%</progress></div>
-      <div class="meter"><label for="higiene">Higiene <span id="value-higiene">100</span></label><progress id="higiene" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="hambre"><span data-i18n="hunger"></span> <span id="value-hambre">100</span></label><progress id="hambre" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="felicidad"><span data-i18n="mood"></span> <span id="value-felicidad">100</span></label><progress id="felicidad" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="energia"><span data-i18n="energy"></span> <span id="value-energia">100</span></label><progress id="energia" max="100" value="100">100%</progress></div>
+      <div class="meter"><label for="higiene"><span data-i18n="hygiene"></span> <span id="value-higiene">100</span></label><progress id="higiene" max="100" value="100">100%</progress></div>
     </div>
     </div>
   </section></div>
-  <div id="message-strip" class="message-strip" aria-label="Mensajes del Profesor Oak"><span class="oak-plate" aria-hidden="true"><img src="assets/ui/professor_oak.png" width="96" height="96" alt=""></span>
+  <div id="message-strip" class="message-strip" data-i18n-aria="oak.statusLabel"><span class="oak-plate" aria-hidden="true"><img src="assets/ui/professor_oak.png" width="96" height="96" alt=""></span>
     <p id="health" role="status" hidden></p>
     <div id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
   </div>
-  <div class="care" aria-label="Cuidados">
-    <button type="button" data-action="alimentar" disabled><span class="pixel-icon" data-icon="food" aria-hidden="true"></span>Alimentar</button>
-    <button type="button" data-action="jugar" disabled><span class="pixel-icon" data-icon="play" aria-hidden="true"></span>Jugar</button>
-    <button type="button" data-action="luz" disabled><span class="pixel-icon" data-icon="light" aria-hidden="true"></span>Apagar luz</button>
-    <button type="button" data-action="limpiar" disabled><span class="pixel-icon" data-icon="clean" aria-hidden="true"></span>Limpiar</button>
+  <div class="care" data-i18n-aria="ui.care">
+    <button type="button" data-action="alimentar" disabled><span class="pixel-icon" data-icon="food" aria-hidden="true"></span><span data-i18n="feed"></span></button>
+    <button type="button" data-action="jugar" disabled><span class="pixel-icon" data-icon="play" aria-hidden="true"></span><span data-i18n="play"></span></button>
+    <button type="button" data-action="luz" disabled><span class="pixel-icon" data-icon="light" aria-hidden="true"></span><span data-i18n="lights"></span></button>
+    <button type="button" data-action="limpiar" disabled><span class="pixel-icon" data-icon="clean" aria-hidden="true"></span><span data-i18n="clean"></span></button>
   </div>
-  <div id="trainer" class="trainer" hidden><button id="trainer-energy" class="trainer-energy" type="button" aria-label="Acciones del criador" title="Cada cuidado consume acciones. Recuperas 1 cada 10 minutos."></button><span id="coin-balance" class="coin-balance" aria-label="Monedas">Monedas: 0</span></div>
+  <div id="trainer" class="trainer" hidden><button id="trainer-energy" class="trainer-energy" type="button" data-i18n-title="ui.actionsHelp"></button><span id="coin-balance" class="coin-balance"></span></div>
   <div class="emergency">
-    <button type="button" data-action="curar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Curar</button>
-    <button type="button" data-action="auxiliar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span> Auxiliar</button>
+    <button type="button" data-action="curar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span><span data-i18n="heal"></span></button>
+    <button type="button" data-action="auxiliar" hidden><span class="pixel-icon" data-icon="medicine" aria-hidden="true"></span><span data-i18n="assist"></span></button>
   </div>
-  <button id="restart" type="button" hidden>Nuevo comienzo · Reiniciar</button>
+  <button id="restart" type="button" hidden data-i18n="ui.restart"></button>
   <p id="save-note" hidden></p>
 </main>
-<dialog id="training-game" aria-label="Minijuego de entrenamiento"><div id="training-game-content"></div></dialog>
-<dialog id="panel" aria-labelledby="panel-title"><header><h2 id="panel-title"></h2><button id="close-panel" type="button" aria-label="Cerrar menú">✕</button></header><div id="panel-content"></div></dialog>
-<dialog id="found-dialog" aria-label="Objeto encontrado"><button id="found-bubble" type="button"><span id="found-text"></span><small>Pulsa aquí o en la pantalla para continuar ▼</small></button></dialog>
+<dialog id="training-game" data-i18n-aria="minigame.common.dialogLabel"><div id="training-game-content"></div></dialog>
+<dialog id="panel" aria-labelledby="panel-title"><header><h2 id="panel-title"></h2><button id="close-panel" type="button" data-i18n-aria="ui.closeMenu">✕</button></header><div id="panel-content"></div></dialog>
+<dialog id="found-dialog" data-i18n-aria="ui.foundItem"><button id="found-bubble" type="button"><span id="found-text"></span><small data-i18n="ui.continue"></small></button></dialog>
 <dialog id="nickname-dialog" aria-labelledby="nickname-title">
-  <h2 id="nickname-title">¡El Huevo ha eclosionado!</h2>
+  <h2 id="nickname-title" data-i18n="ui.hatchTitle"></h2>
   <p id="birth-message"></p>
-  <form id="nickname-form"><label for="nickname-input">¿Quieres ponerle un mote?</label><input id="nickname-input" name="nickname" maxlength="20" autocomplete="off" placeholder="Mote opcional">
-    <div class="dialog-actions"><button type="submit">Guardar mote</button><button id="skip-nickname" type="button">Sin mote</button></div>
+  <form id="nickname-form"><label for="nickname-input" data-i18n="ui.nicknameForm"></label><input id="nickname-input" name="nickname" maxlength="20" autocomplete="off" data-i18n-placeholder="optionalNickname">
+    <div class="dialog-actions"><button type="submit" data-i18n="saveNickname"></button><button id="skip-nickname" type="button" data-i18n="skipNickname"></button></div>
   </form>
 </dialog>
 </div>
 <p id="cloud-status" role="status" hidden></p>
 <script src="appEnvironment.js"></script>
+<script src="i18n.js"></script>
 <script type="text/plain" data-game-src="evolutionTable.js"></script>
 <script type="text/plain" data-game-src="hatchmonData_v2.js"></script>
 <script type="text/plain" data-game-src="pokemonDataAdapter.js"></script>
@@ -240,6 +245,7 @@
 <script type="text/plain" id="game-source">
 'use strict';
 const gameStorage=globalThis.window?.HatchStorage||globalThis.localStorage;
+const I18n=globalThis.HatchI18n;const t=(key,vars)=>I18n?.t(key,vars)||key;
 const canUseTesting=(()=>{const enabled=globalThis.HatchEnvironment?.isDevelopmentEnvironment()===true;return()=>enabled;})();
 let runtimeStopped=false;
 // Hatch.mon: configuración y motor independientes de la interfaz.
@@ -250,7 +256,10 @@ const INCUBATION_MS=0.1*DAY, HEAT_REDUCTION_MS=5*MINUTE;
 const SAVE_KEY='hatch.mon.v3';
 const CARE=['hambre','felicidad','energia','higiene'];
 const TRAIN=['iq','strength','kindness','style'];
-const LABELS={hambre:'Hambre',felicidad:'Ánimo',energia:'Energía',higiene:'Higiene',iq:'Intelecto',strength:'Fuerza',kindness:'Amabilidad',style:'Estilo'};
+const LABELS=Object.fromEntries([...CARE,...TRAIN].map(k=>[k,k]));
+for(const k of [...CARE,...TRAIN])Object.defineProperty(LABELS,k,{get:()=>t(`stat.${k}`)});
+const itemLabel=id=>t(`item.${id}`)||itemCatalog[id]?.name||id;
+const evolutionActionLabel=id=>t(`oak.requirement.action.${id}`)||id;
 const DECAY=CARE_CONFIG.decay;
 // Las tasas configuradas conservan decimales en cada muestra de un minuto.
 const MAX_AP=CARE_CONFIG.trainerMax, DROP_CHANCE=CARE_CONFIG.dropChance;
@@ -265,16 +274,16 @@ const EGG_SPRITES={columns:4,rows:4,phases:{
 }};
 const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
 const itemCatalog={
-  thunder:{name:'Piedra Trueno',icon:'stone',price:180},water:{name:'Piedra Agua',icon:'stone',price:180},fire:{name:'Piedra Fuego',icon:'stone',price:180},
-  leaf:{name:'Piedra Hoja',icon:'stone',price:180},ice:{name:'Piedra Hielo',icon:'stone',price:185},moon:{name:'Piedra Lunar',icon:'light',price:185},
-  shiny:{name:'Piedra Día',icon:'light',price:190},dawn:{name:'Piedra Alba',icon:'light',price:190},oval:{name:'Piedra Oval',icon:'egg',price:130},
-  electirizer:{name:'Electrizador',icon:'stone',price:170},magmarizer:{name:'Magmatizador',icon:'stone',price:170},
-  alola:{name:'Recuerdo de Alola',icon:'stone',price:210},galar:{name:'Recuerdo de Galar',icon:'stone',price:210},
-  berry:{name:'Baya',icon:'food',food:true,price:35},
-  berryStrength:{name:'Baya de Fuerza',icon:'food',food:true,attribute:'strength',price:75},
-  berryIQ:{name:'Baya de Intelecto',icon:'food',food:true,attribute:'iq',price:75},
-  berryKindness:{name:'Baya de Amabilidad',icon:'food',food:true,attribute:'kindness',price:75},
-  berryStyle:{name:'Baya de Estilo',icon:'food',food:true,attribute:'style',price:75},medicine:{name:'Medicina',icon:'medicine',heal:true,price:70}
+  thunder:{get name(){return t('item.thunder');},icon:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',price:180},
+  leaf:{get name(){return t('item.leaf');},icon:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',price:185},
+  shiny:{get name(){return t('item.shiny');},icon:'light',price:190},dawn:{get name(){return t('item.dawn');},icon:'light',price:190},oval:{get name(){return t('item.oval');},icon:'egg',price:130},
+  electirizer:{get name(){return t('item.electirizer');},icon:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',price:170},
+  alola:{get name(){return t('item.alola');},icon:'stone',price:210},galar:{get name(){return t('item.galar');},icon:'stone',price:210},
+  berry:{get name(){return t('item.berry');},icon:'food',food:true,price:35},
+  berryStrength:{get name(){return t('item.berryStrength');},icon:'food',food:true,attribute:'strength',price:75},
+  berryIQ:{get name(){return t('item.berryIQ');},icon:'food',food:true,attribute:'iq',price:75},
+  berryKindness:{get name(){return t('item.berryKindness');},icon:'food',food:true,attribute:'kindness',price:75},
+  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',heal:true,price:70}
 };
 const COIN_REWARDS=Object.freeze([0,2,4,7,11,16]);
 const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))];
@@ -330,12 +339,12 @@ for(const p of Object.values(evolutionConfig))for(const r of p.rules){
 }
 const STARTERS=PokemonData.roots();
 const obtainableRoster=Pokedex.roster(evolutionConfig,STARTERS);
-const trainingOptions={iq:{name:'Resolver acertijos',icon:'iq'},strength:{name:'Hacer ejercicio',icon:'train'},kindness:{name:'Practicar ayuda',icon:'kindness'},style:{name:'Ensayar una coreografía',icon:'style'}};
+const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{nameKey:'minigame.strength.activity',icon:'train'},kindness:{nameKey:'minigame.kindness.activity',icon:'kindness'},style:{nameKey:'minigame.style.activity',icon:'style'}};
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,
     averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
-    trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:'Cada clic de calor reduce la espera en 5 minutos.'};
+    trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('heatHint')};
 }
 let state=freshState();
 const clamp=n=>Math.max(0,Math.min(100,n));
@@ -367,7 +376,7 @@ function evolve(r,item=null,testing=null){
   if(item&&!testing){state.inventory[item]--;state.consumed.push({item,age:state.age,from:previous,to:r.to});}
   state.milestones.push({from:previous,to:r.to,age:state.age,means:Object.fromEntries(CARE.map(k=>[k,mean(k)])),training:{...state.training},sustained:{...state.sustained},actions:{...state.actions},item:testing?null:item,...(testing?{testing:true,requiredItem:r.item,sustainedValues:{...testing.sustainedValues}}:{})});
   state.pokemonId=r.to;state.stage++;state.stageAge=0;state.averages={sum:zeroCare(),count:0};state.sustained={};state.actions={};
-  state.message=`¡${evolutionConfig[previous].name} ha evolucionado a ${current().name}!`;
+  state.message=t('evolution.success',{from:evolutionConfig[previous].name,to:current().name});
   Relationship.reward(state,'evolve');Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);Pokedex.record(state.pokedex,state.pokemonId,'evolved',null,state.social.active.isShiny===true);
   evolutionSerial++;return true;
 }
@@ -400,15 +409,14 @@ function forceEvolution(destination){
 function checkEvolution(){if(!alive())return;const r=current().rules.find(r=>!r.item&&conditionsMet(r));if(r)evolve(r);}
 function die(cause){
   state.phase='dead';state.vital.deathCause=cause;state.birthScene=false;state.nicknamePending=false;state.foundItem=null;
-  state.message=cause==='natural'?`${current().name} ha llegado al final de su vida. Su recuerdo permanece contigo.`:
-    `Game Over. ${current().name} ha muerto por abandono. Su recuerdo permanece contigo.`;
+  state.message=t(cause==='natural'?'death.natural':'death.neglect',{name:current().name});
   rememberDeath();
 }
 function checkHealth(){
   if(!alive())return;
   if(state.age>=state.vital.lifespan){die('natural');return;}
   if(state.care.hambre<=0&&state.care.felicidad<=0){die('neglect');return;}
-  if(state.phase!=='critical'&&(state.care.hambre<=0||state.care.higiene<=0)){state.phase='critical';state.aid=0;state.message='Necesita ayuda. Pulsa Auxiliar tres veces para estabilizarlo.';}
+  if(state.phase!=='critical'&&(state.care.hambre<=0||state.care.higiene<=0)){state.phase='critical';state.aid=0;state.message=t('care.critical');}
 }
 // Una única simulación por minutos para actividad, ausencia y saltos de pruebas.
 function minuteStep(){
@@ -447,7 +455,7 @@ function skipTime(hours){
 }
 function canSpend(cost){return alive()&&!interactionLocked()&&state.trainer.energy+1e-8>=cost;}
 function spend(cost){if(!canSpend(cost))return false;state.trainer.energy=Math.max(0,state.trainer.energy-cost);return true;}
-function denied(){state.message='Necesitas más AP. Recuperas 1 cada 10 min.';}
+function denied(){state.message=t('care.noActions');}
 const COST=CARE_CONFIG.costs;
 function allowed(action){
   if(action==='luz')return alive()&&!interactionLocked(); // Despertar nunca cuesta AP.
@@ -458,19 +466,19 @@ function allowed(action){
 function careAction(action,rng=Math.random){
   if(!Object.hasOwn(COST,action))return false;
   if(!allowed(action)){if(alive())denied();return false;}
-  if(action==='luz'){state.lightsOff=!state.lightsOff;state.message=state.lightsOff?'Luz apagada. Descansará y recuperará energía poco a poco.':'¡Buenos días! La luz está encendida.';return true;}
+  if(action==='luz'){state.lightsOff=!state.lightsOff;state.message=state.lightsOff?t('care.lightsOff'):t('care.lightsOn');return true;}
   const usefulCare=action==='alimentar'?state.care.hambre<100:action==='limpiar'?(state.care.higiene<100||state.vital.dirt>0||state.vital.poops.length>0):true;
   spend(COST[action]);
   if(action==='alimentar')state.message=Vital.eat(state,CARE_CONFIG.feed);
   if(action==='jugar'){
-    state.care.felicidad=clamp(state.care.felicidad+CARE_CONFIG.play.happiness*Vital.getLifeModifiers(state).play);state.care.energia=clamp(state.care.energia-CARE_CONFIG.play.energy);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.play.dirt);state.message='¡Qué bien lo habéis pasado!';
-    if(rng()<DROP_CHANCE){const ids=Object.keys(itemCatalog),id=ids[Math.floor(rng()*ids.length)];state.inventory[id]=(state.inventory[id]||0)+1;state.foundItem=id;state.message=`¡Jugando encontraste ${itemCatalog[id].name}! Está en la mochila.`;}
+    state.care.felicidad=clamp(state.care.felicidad+CARE_CONFIG.play.happiness*Vital.getLifeModifiers(state).play);state.care.energia=clamp(state.care.energia-CARE_CONFIG.play.energy);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.play.dirt);state.message=t('care.play');
+    if(rng()<DROP_CHANCE){const ids=Object.keys(itemCatalog),id=ids[Math.floor(rng()*ids.length)];state.inventory[id]=(state.inventory[id]||0)+1;state.foundItem=id;state.message=t('care.playFound',{name:itemLabel(id)});}
   }
-  if(action==='limpiar'){Vital.clean(state);state.message='Hábitat limpio: sin deposiciones y con más bienestar.';}
-  if(action==='curar'){heal();state.message='¡Pokérus curado! Vuelve a sentirse bien.';}
+  if(action==='limpiar'){Vital.clean(state);state.message=t('care.clean');}
+  if(action==='curar'){heal();state.message=t('care.heal');}
   if(action==='auxiliar'){
-    state.aid++;state.message=`Auxilios: ${state.aid}/${CARE_CONFIG.aid.steps}. Sigue acompañándolo.`;
-    if(state.aid===CARE_CONFIG.aid.steps){for(const k of CARE)state.care[k]=Math.max(CARE_CONFIG.aid.restore,state.care[k]);state.phase='alive';state.aid=0;state.message=state.pokerus?'Está estable. Ahora puedes curar el Pokérus.':'¡Está estable! Puedes volver a cuidarlo.';}
+    state.aid++;state.message=t('care.aid',{current:state.aid,total:CARE_CONFIG.aid.steps});
+    if(state.aid===CARE_CONFIG.aid.steps){for(const k of CARE)state.care[k]=Math.max(CARE_CONFIG.aid.restore,state.care[k]);state.phase='alive';state.aid=0;state.message=state.pokerus?t('care.stableVirus'):t('care.stable');}
   }
   state.actions[action]=(state.actions[action]||0)+1;if(usefulCare)Relationship.reward(state,({alimentar:'care',limpiar:'care',jugar:'play',curar:'cure'})[action]);
   updateSustained();checkHealth();checkEvolution();return true;
@@ -479,13 +487,13 @@ function heal(){state.pokerus=false;state.vital.illnessCause=null;state.vital.ex
 function train(k,gain=CARE_CONFIG.training.gain){
   if(!Number.isInteger(gain)||gain<1||gain>5)return false;
   if(!TRAIN.includes(k)||state.phase!=='alive')return false;
-  if(state.lightsOff){state.message='Enciende la luz para entrenar.';return false;}
-  if(state.care.energia<CARE_CONFIG.training.energy){state.message='Necesita descansar antes de entrenar.';return false;}
-  if(state.training[k]>=100){state.message='Este atributo ya está al máximo.';return false;}
+  if(state.lightsOff){state.message=t('care.lightsTraining');return false;}
+  if(state.care.energia<CARE_CONFIG.training.energy){state.message=t('care.lowEnergy');return false;}
+  if(state.training[k]>=100){state.message=t('care.maxAttribute');return false;}
   if(!spend(CARE_CONFIG.training.ap)){denied();return false;}
   state.training[k]=clamp(state.training[k]+gain);state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
   state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
-  const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=`${LABELS[k]} +${gain} · +${coins} monedas.`;updateSustained();checkHealth();checkEvolution();return true;
+  const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=t('training.reward',{stat:LABELS[k],gain,coins});updateSustained();checkHealth();checkEvolution();return true;
 }
 function itemUsable(id){
   if(!Object.hasOwn(itemCatalog,id)||state.phase!=='alive'||!canSpend(CARE_CONFIG.itemAP)||!(state.inventory[id]>0))return false;
@@ -502,18 +510,18 @@ function useItem(id,destination=null){
   if(item.care||item.heal||item.food){
     spend(CARE_CONFIG.itemAP);state.inventory[id]--;state.consumed.push({item:id,age:state.age});
     if(item.heal){heal();Relationship.reward(state,'cure');}if(item.care)for(const[k,v]of Object.entries(item.care))state.care[k]=clamp(state.care[k]+v);
-    state.message=`Has usado ${item.name}.`;
-    if(item.food){if(state.care.hambre<100)Relationship.reward(state,'care');state.message=Vital.eat(state,CARE_CONFIG.berry);if(item.attribute){state.training[item.attribute]=clamp(state.training[item.attribute]+CARE_CONFIG.berry.attribute);state.message+=` ${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}.`;}}
+    state.message=t('item.used',{name:itemLabel(id)});
+    if(item.food){if(state.care.hambre<100)Relationship.reward(state,'care');state.message=Vital.eat(state,CARE_CONFIG.berry);if(item.attribute){state.training[item.attribute]=clamp(state.training[item.attribute]+CARE_CONFIG.berry.attribute);state.message=t('item.statReward',{message:state.message,stat:LABELS[item.attribute],gain:CARE_CONFIG.berry.attribute});}}
     updateSustained();checkHealth();checkEvolution();return true;
   }
   const candidates=current().rules.filter(r=>r.item===id&&conditionsMet(r));
   const chosen=destination?candidates.find(r=>r.to===destination):candidates.length===1?candidates[0]:null;
-  if(!chosen){state.message='Elige en la mochila a qué Pokémon quieres evolucionar.';return false;}
+  if(!chosen){state.message=t('evolution.chooseRoute');return false;}
   spend(CARE_CONFIG.itemAP);return evolve(chosen,id);
 }
 function buyShopItem(id){
   const item=itemCatalog[id];if(!item||!dailyShop().includes(id)||state.coins<item.price)return false;
-  state.coins-=item.price;state.inventory[id]=(state.inventory[id]||0)+1;state.message=`Has comprado ${item.name}.`;
+  state.coins-=item.price;state.inventory[id]=(state.inventory[id]||0)+1;state.message=t('shop.bought',{name:itemLabel(id)});
   return true;
 }
 function hatch(rng=Math.random){
@@ -525,7 +533,7 @@ function hatch(rng=Math.random){
   state.social.active.isShiny=Shiny.enabled?Shiny.roll(state.pokemonId,rng):false;
   state.gender=PokemonData.gender(state.pokemonId,rng);state.vital=Vital.fresh(state.social.active.id);state.relationship=Relationship.fresh();
   Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);
-  state.birthScene=true;state.nicknamePending=false;state.message='¡Anda! ¿...?';return true;
+  state.birthScene=true;state.nicknamePending=false;state.message=t('egg.hatchStart');return true;
 }
 function heat(rng=Math.random){
   if(state.phase!=='egg')return false;
@@ -536,17 +544,17 @@ function heat(rng=Math.random){
 }
 function eggStage(){
   const ratio=state.incubationRemaining/INCUBATION_MS;
-  if(ratio<=0)return {phase:5,message:'¡Anda! ¡El huevo está eclosionando!'};
-  if(ratio>.70)return {phase:1,message:'Parece que a este huevo aún le queda mucho para abrirse'};
-  if(ratio>=.50)return {phase:2,message:'¿Qué habrá dentro? Tendrás que esperar un poco más'};
-  if(ratio>=.25)return {phase:3,message:'A veces se mueve. Debe estar a punto de salir'};
-  return {phase:4,message:'Se escuchan sonidos. ¡Pronto saldrá!'};
+  if(ratio<=0)return {phase:5,message:t('ui.eggHatching')};
+  if(ratio>.70)return {phase:1,message:t('ui.eggHint.1')};
+  if(ratio>=.50)return {phase:2,message:t('ui.eggHint.2')};
+  if(ratio>=.25)return {phase:3,message:t('ui.eggHint.3')};
+  return {phase:4,message:t('ui.eggHint.4')};
 }
-function finishBirthScene(){if(!state.birthScene)return false;state.birthScene=false;state.nicknamePending=alive();state.message=`¡El Huevo ha eclosionado! Ha salido un ${current().name}.`;return true;}
+function finishBirthScene(){if(!state.birthScene)return false;state.birthScene=false;state.nicknamePending=alive();state.message=t('ui.hatched',{name:current().name});return true;}
 function setNickname(value=''){
   if(!state.nicknamePending)return false;
   state.nickname=String(value).trim().slice(0,20);state.nicknamePending=false;
-  state.message=state.nickname?`¡Bienvenido, ${state.nickname}!`:`¡Bienvenido, ${current().name}!`;return true;
+  state.message=t('birth.welcome',{name:state.nickname||current().name});return true;
 }
 function acknowledgeItem(){if(state.foundItem===null)return false;state.foundItem=null;return true;}
 // Guardado local: conserva edad, muestras, inventario y ausencia entre visitas.
@@ -592,63 +600,60 @@ function hatchIncubatingEgg(rng=Math.random){
   return result;
 }
 function exportEntity(id=state.social.active.id){
-  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  if(interactionLocked())throw Error(t('connect.interactionLocked'));
   const entity=id===state.social.active.id?activeEntity():state.social.eggs.find(e=>e.id===id);
-  if(!entity||!['egg','alive'].includes(entity.snapshot.phase))throw Error('Solo se pueden compartir huevos o compañeros estables y vivos.');
+  if(!entity||!['egg','alive'].includes(entity.snapshot.phase))throw Error(t('connect.sharingUnavailable'));
   return HatchMonSocial.pack(PokemonData.convertEntity(entity,true));
 }
 function readSocialCode(code){return HatchMonSocial.unpack(code,validSnapshot,e=>PokemonData.convertEntity(e,false));}
 function importEntity(code){
-  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  if(interactionLocked())throw Error(t('connect.interactionLocked'));
   const payload=readSocialCode(code);
-  if(payload.entity.kind!=='egg')throw Error('Solo se importan huevos. Usa el código de un compañero vivo para crianza.');
+  if(payload.entity.kind!=='egg')throw Error(t('connect.onlyEggImport'));
   HatchMonSocial.assertNew(state.social,payload);
-  if(state.social.memorials.some(e=>e.id===payload.entity.id))throw Error('Este compañero ya está en tus recuerdos.');
-  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error('Tu reserva está llena (60 huevos).');
+  if(state.social.memorials.some(e=>e.id===payload.entity.id))throw Error(t('connect.memorialDuplicate'));
+  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error(t('connect.eggStorageFull',{max:HatchMonSocial.MAX_EGGS}));
   const egg=HatchMonSocial.copy(payload.entity);egg.snapshot=snapshotOf(freshState());
   state.social.eggs.push(egg);state.social.importedIds.push(payload.id);Pokedex.record(state.pokedex,egg.offspring,'received');
-  return '¡Huevo guardado! Esperará sin incubar hasta que puedas acogerlo.';
+  return t('connect.eggStored');
 }
 function breedingCheck(code){
   const payload=readSocialCode(code);HatchMonSocial.assertNew(state.social,payload);
-  if(BREEDING_CONFIG.oncePerLife&&[state.social.active.id,payload.entity.id].some(id=>state.social.bredIds.includes(id)))return {payload,ok:false,reason:'Uno de los progenitores ya produjo un huevo en este dispositivo.'};
+  if(BREEDING_CONFIG.oncePerLife&&[state.social.active.id,payload.entity.id].some(id=>state.social.bredIds.includes(id)))return {payload,ok:false,reason:t('breeding.oncePerLife')};
   const result=HatchMonSocial.compatibility(activeEntity(),payload.entity);
   if(result.ok)result.offspring=PokemonData.legacyId(result.offspring);
-  if(result.ok&&!STARTERS.includes(result.offspring))return {payload,ok:false,reason:'La raíz indicada en hatchmonData_v2.js todavía no está conectada a una especie jugable.'};
+  if(result.ok&&!STARTERS.includes(result.offspring))return {payload,ok:false,reason:t('breeding.rootUnavailable')};
   return {...result,payload,generatorId:result.ok?HatchMonSocial.breedingGenerator(activeEntity(),payload.entity):null};
 }
 function generatorInstruction(result){
   const remote=result.payload.entity,hasDitto=[state.pokemonId,remote.speciesId].some(id=>PokemonData.get(id)?.EggGroup==='Ditto');
-  return hasDitto?'El Pokémon no-Ditto debe generar el huevo en su dispositivo. Comparte tu código con la otra persona.':'La hembra debe generar el huevo en su dispositivo. Comparte tu código con la otra persona.';
+  return t(hasDitto?'breeding.dittoGenerator':'breeding.femaleGenerator');
 }
 function breedFromCode(code){
-  if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');
+  if(interactionLocked())throw Error(t('connect.interactionLocked'));
   const result=breedingCheck(code);if(!result.ok)throw Error(result.reason);
   if(result.generatorId!==state.social.active.id)throw Error(generatorInstruction(result));
-  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error('Tu reserva está llena (60 huevos).');
+  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error(t('connect.eggStorageFull',{max:HatchMonSocial.MAX_EGGS}));
   const origin=e=>({id:e.id,speciesId:e.speciesId,name:e.snapshot.nickname||evolutionConfig[e.speciesId].name});
   const egg={id:HatchMonSocial.uid(),kind:'egg',speciesId:result.offspring,offspring:result.offspring,
     createdAt:Date.now(),parents:[origin(activeEntity()),origin(result.payload.entity)],snapshot:snapshotOf(freshState())};
   state.vital.hasProducedEgg=true;for(const id of [state.social.active.id,result.payload.entity.id])if(!state.social.bredIds.includes(id))state.social.bredIds.push(id);
   state.social.eggs.push(egg);state.social.importedIds.push(result.payload.id);Pokedex.record(state.pokedex,result.offspring,'bred');
-  return `¡${state.nickname||current().name} ha puesto un huevo! Está en Mis huevos.`;
+  return t('breeding.eggCreated',{name:state.nickname||current().name});
 }
 function rememberDeath(){
   if(state.phase!=='dead'||state.social.memorials.some(e=>e.id===state.social.active.id))return;
   state.social.memorials.push({...activeEntity(),isShiny:state.social.active.isShiny===true,canonicalSpeciesId:PokemonData.canonicalId(state.pokemonId),diedAt:Date.now(),bond:state.relationship?.points||0});
 }
 function incubateStoredEgg(id){
-  if(alive()||interactionLocked())throw Error('Tu compañero vivo sigue contigo. No puedes guardarlo ni sustituirlo.');
+  if(alive()||interactionLocked())throw Error(t('connect.activeCompanionPresent'));
   const index=state.social.eggs.findIndex(e=>e.id===id),entity=state.social.eggs[index];
-  if(!entity||entity.kind!=='egg'||entity.snapshot.phase!=='egg')throw Error('Solo puedes incubar un huevo guardado.');
-  rememberDeath();
-  state.social.eggs.splice(index,1);
-  // Un huevo que vuelve al almacén pierde su progreso: allí no incuba ni tiene fisiología.
+  if(!entity||entity.kind!=='egg'||entity.snapshot.phase!=='egg')throw Error(t('connect.onlyStoredEgg'));
+  rememberDeath();state.social.eggs.splice(index,1);
   if(state.phase==='egg')state.social.eggs.push({...activeEntity(),snapshot:snapshotOf(freshState())});
   Object.assign(state,HatchMonSocial.copy(entity.snapshot));state.relationship=null;
   state.social.active={id:entity.id,createdAt:entity.createdAt,parents:HatchMonSocial.copy(entity.parents),offspring:entity.offspring};
-  state.lastSync=Date.now();state.message='El huevo ya está incubándose contigo.';
-  return state.message;
+  state.lastSync=Date.now();state.message=t('connect.eggIncubating');return state.message;
 }
 let storageWarning='';
 let savedImportantState=null;
@@ -656,7 +661,7 @@ function save({immediate=false}={}){
   const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones]);
   immediate=immediate||important!==savedImportantState;
   try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
-  catch{storageWarning='No se pudo guardar. Mantén esta pestaña abierta para conservar la partida.';}
+  catch{storageWarning=t('system.localSaveFailed');}
 }
 function migrateSave(data){
   if(!data||typeof data!=='object')return data;
@@ -666,9 +671,9 @@ function migrateSave(data){
 function restore(){
   try{
     const raw=gameStorage.getItem(SAVE_KEY);
-    if(raw){const data=migrateSave(JSON.parse(raw));if(validSave(data)){state=data;sync();}
-      else{gameStorage.removeItem(SAVE_KEY);storageWarning='D inicia una partida nueva: el guardado anterior ya no es compatible.';}}
-  }catch{storageWarning='Guardado no disponible. La partida durará mientras la página siga abierta.';}
+    if(raw){const data=migrateSave(JSON.parse(raw));if(validSave(data)){state=data;state.message='';sync();}
+      else{gameStorage.removeItem(SAVE_KEY);storageWarning=t('system.incompatibleSave');}}
+  }catch{storageWarning=t('system.storageUnavailable');}
 }
 // UI: la pantalla principal solo muestra el compañero y sus necesidades.
 const $=id=>document.getElementById(id);
@@ -682,8 +687,8 @@ function hideToast(immediate=true){
   if(immediate||window.matchMedia('(prefers-reduced-motion: reduce)').matches)finish();
   else toastFadeTimer=setTimeout(finish,FEEDBACK_CONFIG.fadeMs);
 }
-const EGG_TOUCH_FEEDBACK=['El huevo se ha movido un poco.','Parece que ha notado tu calor.','Sigue cuidándolo…','Algo se mueve dentro.','Parece que responde a tu toque.'];
-function showToast(message,important=false,eggInteraction=false){
+const EGG_TOUCH_FEEDBACK=['egg.touch.1','egg.touch.2','egg.touch.3','egg.touch.4','egg.touch.5'];
+function showToast(message,important=false,eggInteraction=false){message=I18n?.localize(message)??message;
   if((state.phase==='egg'&&!eggInteraction)||!message||interactionLocked())return;
   hideToast();const toast=$('toast');toast.dataset.kind=important?'event':'ordinary';toast.textContent=String(message).replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();toast.hidden=false;
   void toast.offsetWidth;toast.classList.add('visible');
@@ -692,12 +697,14 @@ function showToast(message,important=false,eggInteraction=false){
 const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
 function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();}
 function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
-function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=text;}if(cls)n.className=cls;return n;}
+function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=I18n?.localize(text)??text;}if(cls)n.className=cls;return n;}
 function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
 function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
 function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(pixelIcon(key),el('span',text));return n;}
 function row(title,detail,button){const r=el('div',undefined,'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
 const DISPLAY_PREFERENCE_KEY='hatch.mon.displayMode';
+const LANGUAGE_PREFERENCE_KEY='hatch.mon.language';
+try{I18n?.setLanguage(gameStorage.getItem(LANGUAGE_PREFERENCE_KEY)||'es');}catch{}
 let displayMode='color';
 try{if(gameStorage.getItem(DISPLAY_PREFERENCE_KEY)==='lcd')displayMode='lcd';}catch{}
 $('display-root').dataset.displayMode=displayMode;
@@ -718,75 +725,67 @@ function renderPanel(){
   if(panelName==='social'){if(!$('panel-content').dataset.socialReady)renderSocialPanel();return;}
   const focusKey=document.activeElement?.dataset?.key;
   const content=$('panel-content');content.replaceChildren();
-  $('panel-title').textContent={inventory:'Tu mochila',training:'Entrenamiento',oak:'Profesor Oak',settings:'Configuración',shop:'Tienda'}[panelName];
+  $('panel-title').textContent={inventory:t('inventory'),training:t('training'),oak:t('oak'),settings:t('settings'),shop:t('shop')}[panelName];
   if(panelName==='inventory'){
-    content.append(row('Pokédex y Memorias','Especies descubiertas y compañeros que vivieron contigo.',socialButton('Consultar',()=>{panelName='pokedex';renderPanel();})));
-    content.append(row('Huevos guardados',`${state.social.eggs.length} en tu reserva de huevos.`,socialEntryButton()));
-    content.append(el('p','Objetos · Usar: 1 AP', 'panel-note'));
+    content.append(row(t('ui.inventory.collection'),t('ui.inventory.collectionDetail'),socialButton(t('consult'),()=>{panelName='pokedex';renderPanel();})));
+    content.append(row(t('ui.inventory.storedEggs'),t('ui.inventory.storedEggsDetail',{count:state.social.eggs.length}),socialEntryButton()));
+    content.append(el('p',t('ui.inventory.itemCost'), 'panel-note'));
     const entries=Object.entries(state.inventory).filter(([,n])=>n>0);
-    if(!entries.length)content.append(el('p','Tu mochila está vacía. ¡Quizá encuentres algo al jugar!'));
+    if(!entries.length)content.append(el('p',t('ui.inventory.empty')));
     for(const[id,n]of entries){
       const item=itemCatalog[id],routes=current()?.rules.filter(r=>r.item===id)||[];
-      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:'Alimento'):item.care?'Alimento':item.heal?'Medicina':'Evolución');
+      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):item.care?t('ui.inventory.food'):item.heal?t('ui.inventory.medicine'):t('ui.inventory.evolution'));
       content.append(entry);
-      if(item.care||item.heal||item.food)entry.append(panelButton('Usar',()=>useItem(id),!itemUsable(id),id));
-      for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton('Evolucionar',()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`)));
+      if(item.care||item.heal||item.food)entry.append(panelButton(t('use'),()=>useItem(id),!itemUsable(id),id));
+      for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton(t('evolve'),()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`)));
     }
   }
   if(panelName==='training'){
-    if(state.phase==='egg'){content.append(el('p','El huevo no tiene atributos. Podrás entrenar a tu compañero cuando nazca.'));return;}
-    content.append(el('p','Resultado +1–5 · 2 AP · −10 energía', 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?'Máximo':['Novato','Aprendiz','Competente','Experto','Maestro'][Math.floor(state.training[k]/20)],meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',LABELS[k]);card.append(row(iconLabel(o.icon,LABELS[k]),`${rank} · ${state.training[k]} — ${o.name}`,panelButton('Practicar',()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>` · +${coinReward(gain)} monedas`,commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+    if(state.phase==='egg'){content.append(el('p',t('minigame.training.eggUnavailable')));return;}
+    content.append(el('p',t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy}), 'panel-note'));
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
   }
   if(panelName==='shop'){
-    content.append(el('p',`Monedas: ${state.coins} · Oferta de hoy`, 'panel-note'));
+    content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
     for(const id of dailyShop()){
-      const item=itemCatalog[id],description=item.heal?'Medicina para curar Pokérus.':item.food?(item.attribute?`Baya de ${LABELS[item.attribute]}.`:'Alimento para tu compañero.'):'Objeto evolutivo. Se usará cuando una evolución compatible lo requiera.';
-      content.append(row(iconLabel(item.icon,`${item.name} · ${item.price} monedas`),description,panelButton('Comprar',()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
+      const item=itemCatalog[id],description=item.heal?t('ui.shop.heal'):item.food?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):t('ui.shop.evolutionItem');
+      content.append(row(iconLabel(item.icon,t('ui.shop.item',{name:itemLabel(id),price:item.price})),description,panelButton(t('buy'),()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
     }
   }
   if(panelName==='settings'){
-    if(window.HatchAccount){const logout=el('button','Cerrar sesión');logout.type='button';logout.addEventListener('click',()=>void window.HatchAccount.logout());content.append(el('h3','Cuenta'),row(window.HatchAccount.email,'',logout));if(window.HatchAccount.hasBackup()){const backup=el('button','Descargar copia local pendiente');backup.type='button';backup.addEventListener('click',window.HatchAccount.downloadBackup);content.append(backup);}}
-    content.append(el('h3','Visual'),el('p','Color o cuatro tonos LCD','panel-note'));
+    content.append(el('h3',t('language')),el('p',t('languageHelp'),'panel-note'));const languages=el('div',undefined,'dialog-actions');for(const [code,label] of [['es','spanish'],['en','english']]){const button=el('button',t(label));button.type='button';button.setAttribute('aria-pressed',String(I18n?.getLanguage()===code));button.addEventListener('click',()=>{I18n?.setLanguage(code);try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,code);window.HatchCloud?.queue({immediate:true});}catch{}renderPanel();render(true);});languages.append(button);}content.append(languages);
+
+    if(window.HatchAccount){const logout=el('button',t('logout'));logout.type='button';logout.addEventListener('click',()=>void window.HatchAccount.logout());content.append(el('h3',t('account')),row(window.HatchAccount.email,'',logout));if(window.HatchAccount.hasBackup()){const backup=el('button',t('system.downloadBackup'));backup.type='button';backup.addEventListener('click',window.HatchAccount.downloadBackup);content.append(backup);}}
+    content.append(el('h3',t('ui.visual')),el('p',t('ui.visualDetail'),'panel-note'));
     const modes=el('div',undefined,'dialog-actions');
-    for(const [mode,label]of [['color','Modo Color'],['lcd','Modo LCD monocromo']]){const button=el('button',label);button.type='button';button.dataset.key='display-'+mode;button.setAttribute('aria-pressed',String(displayMode===mode));button.addEventListener('click',()=>window.setDisplayMode(mode));modes.append(button);}content.append(modes,el('h3','Carcasa'));
+    for(const [mode,label]of [['color','colorMode'],['lcd','lcdMode']]){const button=el('button',t(label));button.type='button';button.dataset.key='display-'+mode;button.setAttribute('aria-pressed',String(displayMode===mode));button.addEventListener('click',()=>window.setDisplayMode(mode));modes.append(button);}content.append(modes,el('h3',t('ui.shell')));
     const shells=el('div',undefined,'shell-options');for(const id of ['default',...ShellSkins.list()]){const theme=ShellSkins.theme(id),b=el('button',id==='default'?'Hatch.mon':theme.name);b.type='button';b.dataset.key='shell-'+id;b.style.background=theme.shellBase;b.style.color=theme.shellDark;b.setAttribute('aria-pressed',String(ShellSkins.selected()===id));b.addEventListener('click',()=>{ShellSkins.select(id,$('display-root'));renderPanel();});shells.append(b);}content.append(shells);
     if(!canUseTesting())return;
-    content.append(el('h3','Testing'));
-    const resetButton=el('button','Reiniciar partida (testing)');resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
-    content.append(row('Herramientas de pruebas','Borrar partida',resetButton));
+    content.append(el('h3',t('testing.title')));
+    const resetButton=el('button',t('testing.reset'));resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
+    content.append(row(t('testing.tools'),t('testing.delete'),resetButton));
     const timeControls=el('div',undefined,'dialog-actions');
-    timeControls.className='dialog-actions time-controls';timeControls.setAttribute('role','group');timeControls.setAttribute('aria-label','Avanzar tiempo de juego');
+    timeControls.className='dialog-actions time-controls';timeControls.setAttribute('role','group');timeControls.setAttribute('aria-label',t('testing.advance'));
     for(const hours of [1,3,6])timeControls.append(panelButton(`+${hours} h`,()=>skipTime(hours),state.phase==='dead'||interactionLocked(),`skip-${hours}`));
-    content.append(el('p','Simula tiempo real; puede causar Game Over.', 'panel-note'),timeControls);
+    content.append(el('p',t('testing.warning'), 'panel-note'),timeControls);
     if(state.phase==='egg')return;
     const forceRoutes=PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).filter(id=>id&&evolutionConfig[id]);
     if(alive()&&forceRoutes.length){
-      content.append(el('p','Elegir evolución · Sin coste', 'panel-note'));
-      for(const target of forceRoutes)content.append(row(evolutionConfig[target].name,'',panelButton(forceRoutes.length===1?'Forzar evolución':'Forzar → '+evolutionConfig[target].name,()=>{const result=forceEvolution(target);if(result)closePanel();return result;},interactionLocked(),'force-'+target)));
+      content.append(el('p',t('evolution.forceChoose'), 'panel-note'));
+      for(const target of forceRoutes)content.append(row(evolutionConfig[target].name,'',panelButton(forceRoutes.length===1?t('evolution.force'):t('evolution.forceRoute',{name:evolutionConfig[target].name}),()=>{const result=forceEvolution(target);if(result)closePanel();return result;},interactionLocked(),'force-'+target)));
     }
   }
   if(panelName==='oak'){
-    content.append(row('Intercambio y crianza','QR y códigos · Reserva de huevos',socialEntryButton()));
-    if(state.phase==='egg'){content.append(el('p',state.heat<3?'Prueba a tocar el huevo: cada toque le da calor y puede abrirse antes. También eclosionará si esperas.':'¡Sigue así! Cuanto más calor le des, antes podría eclosionar. Esperar sigue siendo una opción.'));return;}
-    const diagnosis=el('div',undefined,'diagnosis');
-    for(const [label,value]of [['Etapa',Vital.getLifeStage(state)],['Edad',`${Math.floor(state.age/DAY)} d · ${Math.floor(state.age/HOUR)%24} h`],['Crianza',state.vital.hasProducedEgg?'Completada':Vital.breedingReason(state)?'No disponible':'Disponible'],['Evolución',!current().rules.length?'Última forma':current().rules.some(r=>r.item)?'Pendiente / objeto':'Pendiente']])diagnosis.append(row(label,value));content.append(diagnosis);
-    const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=mean(k),cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label','Media de '+LABELS[k]);cell.append(el('small',`${LABELS[k]} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
-    for(const r of current().rules){
-      const section=el('details',undefined,'evolution-detail');section.append(el('summary',evolutionConfig[r.to].name));const list=el('ul');
-      const req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
-      req(state.age>=r.ageMs,`Edad: ${r.ageMs/DAY} días.`);
-      if(r.minMood!=null)req(state.care.felicidad>=r.minMood,`Ánimo mínimo: ${r.minMood}.`);
-      if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,`Vínculo ≥ ${r.minBond} \u2665`);
-      for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,`Media de ${LABELS[k]} ≥ ${v}.`);
-      for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,`${LABELS[k]} ≥ ${v}.`);
-      for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,`${LABELS[c.estadistica]} ≥ ${c.minimo} durante ${c.duracionMs/HOUR} h seguidas (${(elapsed/HOUR).toFixed(1)} h).`);}
-      if(r.action)req((state.actions[r.action]||0)>=r.repetitions,`${r.action}: ${state.actions[r.action]||0}/${r.repetitions} veces en esta etapa.`);
-      if(r.item)req(false,`Usar ${itemCatalog[r.item].name} desde la mochila (tienes ${state.inventory[r.item]||0}).`);
-      section.append(list);content.append(section);
-    }
-    content.append(el('p','Sin objeto: automática. Con objeto: elige desde Mochila.', 'panel-note'));
-    if(state.milestones.length)content.append(el('p',`Recorrido: ${state.milestones.map(m=>`${evolutionConfig[m.from]?.name||m.from} → ${evolutionConfig[m.to]?.name||m.to}`).join(' · ')}`, 'panel-note'));
+    const stat=k=>t(`stat.${k}`),stage=value=>t(`stage.${String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'')}`);
+    content.append(row(t('oak.exchange'),t('oak.exchangeDetail'),socialEntryButton()));
+    if(state.phase==='egg'){content.append(el('p',t(state.heat<3?'oak.eggEarly':'oak.eggLate')));return;}
+    const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=state.vital.hasProducedEgg?t('oak.breedingDone'):Vital.breedingReason(state)?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
+    for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
+    const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=mean(k),cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',t('oak.average',{stat:stat(k)}));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
+    for(const r of current().rules){const section=el('details',undefined,'evolution-detail');section.append(el('summary',evolutionConfig[r.to].name));const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
+      req(state.age>=r.ageMs,t('oak.requirement.age',{days:r.ageMs/DAY}));if(r.minMood!=null)req(state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
+      for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,t('oak.requirement.average',{stat:stat(k),value:v}));for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,t('oak.requirement.stat',{stat:stat(k),value:v}));for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,t('oak.requirement.sustained',{stat:stat(c.estadistica),value:c.minimo,hours:c.duracionMs/HOUR,elapsed:(elapsed/HOUR).toFixed(1)}));}if(r.action)req((state.actions[r.action]||0)>=r.repetitions,t('oak.requirement.action',{action:evolutionActionLabel(r.action),current:state.actions[r.action]||0,required:r.repetitions}));if(r.item)req(false,t('oak.requirement.item',{item:itemLabel(r.item),count:state.inventory[r.item]||0}));section.append(list);content.append(section);}
+    content.append(el('p',t('oak.itemFlow'),'panel-note'));if(state.milestones.length)content.append(el('p',t('oak.path',{path:state.milestones.map(m=>`${evolutionConfig[m.from]?.name||m.from} → ${evolutionConfig[m.to]?.name||m.to}`).join(' · ')}),'panel-note'));
   }
   if(focusKey){const target=[...content.querySelectorAll('button')].find(b=>b.dataset.key===focusKey&&!b.disabled);if(target)target.focus();else $('close-panel').focus();}
 }
@@ -794,142 +793,95 @@ function renderPanel(){
 let socialCameraStream=null,socialCameraTimer=null,socialCameraToken=0;
 function stopSocialCamera(){
   socialCameraToken++;if(socialCameraTimer!==null)clearTimeout(socialCameraTimer);socialCameraTimer=null;
-  socialCameraStream?.getTracks().forEach(t=>t.stop());socialCameraStream=null;
+  socialCameraStream?.getTracks().forEach(track=>track.stop());socialCameraStream=null;
   const video=document.getElementById('social-video');if(video){video.srcObject=null;video.hidden=true;}
 }
-function socialEntryButton(){const b=el('button','Abrir');b.type='button';b.addEventListener('click',()=>{
-  sync();save();render();if(interactionLocked())return;
-  stopSocialCamera();panelName='social';$('panel-content').dataset.socialReady='';renderPanel();
+function socialEntryButton(){const b=el('button',t('open'));b.type='button';b.addEventListener('click',()=>{
+  sync();save();render();if(interactionLocked())return;stopSocialCamera();panelName='social';$('panel-content').dataset.socialReady='';renderPanel();
 });return b;}
 function socialStatus(message){const node=document.getElementById('social-status');if(node)node.textContent=String(message);}
 function socialAction(callback){
-  sync();
-  try{if(interactionLocked())throw Error('Termina primero el diálogo de tu compañero.');const message=callback();if(message)socialStatus(message);}
-  catch(error){socialStatus(error.message||'No se pudo completar la operación.');}
+  sync();try{if(interactionLocked())throw Error(t('connect.interactionLocked'));const message=callback();if(message)socialStatus(message);}
+  catch(error){socialStatus(I18n.errorMessage(error,'connect.operationFailed'));}
   save();render();startTimer();if(panelName==='social')refreshSocialCollection();
 }
-function socialButton(label,callback){const b=el('button',label);b.type='button';b.addEventListener('click',callback);return b;}
-function entityLabel(e){return e.kind==='egg'?'Huevo':`${e.snapshot.nickname||evolutionConfig[e.speciesId]?.name||e.speciesId}`;}
-function eggDescription(e){
-  const species=PokemonData.get(e.offspring)?.DisplayName||'especie misteriosa';
-  return `${species}${e.parents.length?' · Progenitores: '+e.parents.map(p=>p.name).join(' y '):' · Origen sin registrar'}`;
+function socialButton(label,callback){const button=el('button',label);button.type='button';button.addEventListener('click',callback);return button;}
+function entityLabel(entity){return entity.kind==='egg'?t('connect.egg'):`${entity.snapshot.nickname||evolutionConfig[entity.speciesId]?.name||entity.speciesId}`;}
+function eggDescription(entity){
+  const species=PokemonData.get(entity.offspring)?.DisplayName||t('connect.egg');
+  return entity.parents.length?t('connect.eggDescription',{species,parents:entity.parents.map(parent=>parent.name).join(t('connect.parentJoin'))}):t('connect.eggUnknownOrigin',{species});
 }
 function refreshSocialCollection(){
-  const select=document.getElementById('social-export-select');if(!select)return;
-  const selected=select.value;select.replaceChildren();
+  const select=document.getElementById('social-export-select');if(!select)return;const selected=select.value;select.replaceChildren();
   const entities=socialFlow==='companion'?(state.phase==='alive'?[activeEntity()]:[]):state.social.eggs;
-  for(const e of entities){const option=el('option',e.kind==='egg'?eggDescription(e)+' · '+e.id.slice(-6):entityLabel(e));option.value=e.id;select.append(option);}
-  select.value=entities.some(e=>e.id===selected)?selected:entities[0]?.id||'';
+  for(const entity of entities){const option=el('option',entity.kind==='egg'?`${eggDescription(entity)} · ${entity.id.slice(-6)}`:entityLabel(entity));option.value=entity.id;select.append(option);}
+  select.value=entities.some(entity=>entity.id===selected)?selected:entities[0]?.id||'';
   const generate=$('generate-social-qr');if(generate)generate.disabled=!entities.length||interactionLocked();
 }
 function generateSocialExport(){socialAction(()=>{
-  const code=exportEntity($('social-export-select').value);$('social-export-code').value=code;
-  const target=$('social-qr');target.replaceChildren();
-  try{
-    const qr=qrcode(0,'M');qr.addData(code,'Byte');qr.make();
-    const n=qr.getModuleCount(),scale=4,canvas=el('canvas',undefined,'social-qr');canvas.width=canvas.height=(n+8)*scale;
-    canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Código QR de intercambio. El mismo código está disponible en el campo de texto.');
-    const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000000';
-    for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(qr.isDark(y,x))ctx.fillRect((x+4)*scale,(y+4)*scale,scale,scale);
-    const download=el('a','Guardar QR como imagen');download.href=canvas.toDataURL('image/png');download.download='hatchmon-qr.png';
-    target.append(canvas,download);
-  }catch{target.append(el('p','Este código no cabe en un QR o el generador no está disponible. Usa el código manual completo; contiene los mismos datos.','panel-note'));}
-  return 'Código generado. QR y texto representan la misma copia. Generar otro código no borra al compañero.';
+  const code=exportEntity($('social-export-select').value);$('social-export-code').value=code;const target=$('social-qr');target.replaceChildren();
+  try{const qr=qrcode(0,'M');qr.addData(code,'Byte');qr.make();const count=qr.getModuleCount(),scale=4,canvas=el('canvas',undefined,'social-qr');canvas.width=canvas.height=(count+8)*scale;
+    canvas.setAttribute('role','img');canvas.setAttribute('aria-label',t('qr.description'));const context=canvas.getContext('2d');context.fillStyle='#ffffff';context.fillRect(0,0,canvas.width,canvas.height);context.fillStyle='#000000';
+    for(let y=0;y<count;y++)for(let x=0;x<count;x++)if(qr.isDark(y,x))context.fillRect((x+4)*scale,(y+4)*scale,scale,scale);
+    const download=el('a',t('qr.saveImage'));download.href=canvas.toDataURL('image/png');download.download='hatchmon-qr.png';target.append(canvas,download);
+  }catch{target.append(el('p',t('qr.tooLarge'),'panel-note'));}return t('qr.generated');
 });}
 async function scanSocialCode(){
-  stopSocialCamera();const token=socialCameraToken;
-  const supported=()=>token===socialCameraToken&&dialog.open&&panelName==='social'&&!document.hidden;
+  stopSocialCamera();const token=socialCameraToken,supported=()=>token===socialCameraToken&&dialog.open&&panelName==='social'&&!document.hidden;
   try{
-    if(typeof globalThis.BarcodeDetector!=='function'||!navigator.mediaDevices?.getUserMedia)
-      throw Error('Este navegador no permite escanear QR. Pega el código manual para hacer la misma operación.');
-    const formats=await BarcodeDetector.getSupportedFormats();if(!supported())return;
-    if(!formats.includes('qr_code'))throw Error('El lector no admite QR. Utiliza el código manual.');
-    const detector=new BarcodeDetector({formats:['qr_code']});
-    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-    if(!supported()){stream.getTracks().forEach(t=>t.stop());return;}
-    socialCameraStream=stream;const video=$('social-video');video.srcObject=stream;video.hidden=false;
-    await video.play();if(!supported())return;
-    socialStatus(socialFlow==='breed'?'Escanea el QR del otro compañero.':'Escanea el QR del huevo que quieres recibir.');
-    const detect=async()=>{
-      if(!supported())return;
-      try{
-        const codes=await detector.detect(video);if(!supported())return;
-        if(codes.length){const raw=codes[0].rawValue;readSocialCode(raw);$('social-input').value=raw;stopSocialCamera();socialStatus(socialFlow==='breed'?'QR leído. Pulsa Comprobar compatibilidad.':'QR leído. Pulsa Recibir huevo.');return;}
-      }catch{socialStatus('No se ha podido leer un código válido. Prueba de nuevo o pega el código manual.');}
-      if(supported())socialCameraTimer=setTimeout(detect,300);
-    };detect();
-  }catch(error){if(supported()){stopSocialCamera();socialStatus(error.name==='NotAllowedError'?'No se concedió acceso a la cámara. Puedes pegar el código manual.':error.message||'Cámara no disponible. Utiliza el código manual.');}}
+    if(typeof globalThis.BarcodeDetector!=='function'||!navigator.mediaDevices?.getUserMedia)throw Error(t('qr.cameraUnsupported'));
+    const formats=await BarcodeDetector.getSupportedFormats();if(!supported())return;if(!formats.includes('qr_code'))throw Error(t('qr.readerUnsupported'));
+    const detector=new BarcodeDetector({formats:['qr_code']}),stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    if(!supported()){stream.getTracks().forEach(track=>track.stop());return;}socialCameraStream=stream;const video=$('social-video');video.srcObject=stream;video.hidden=false;await video.play();if(!supported())return;
+    socialStatus(t(socialFlow==='breed'?'qr.scanCompanion':'qr.scanEgg'));
+    const detect=async()=>{if(!supported())return;try{const codes=await detector.detect(video);if(!supported())return;if(codes.length){const raw=codes[0].rawValue;readSocialCode(raw);$('social-input').value=raw;stopSocialCamera();socialStatus(t(socialFlow==='breed'?'qr.scannedCompanion':'qr.scannedEgg'));return;}}
+      catch{socialStatus(t('qr.readFailed'));}if(supported())socialCameraTimer=setTimeout(detect,300);};detect();
+  }catch(error){if(supported()){stopSocialCamera();socialStatus(error.name==='NotAllowedError'?t('qr.cameraDenied'):I18n.errorMessage(error,'qr.cameraUnavailable'));}}
 }
 let socialFlow='companion';
 function selectSocialFlow(flow){stopSocialCamera();socialFlow=flow;renderSocialPanel();}
 function showBreedingResult(){
-  sync();save();render();
-  const card=$('breeding-result');card.hidden=false;card.replaceChildren();
-  try{
-    const checkedCode=$('social-input').value;const result=breedingCheck(checkedCode);Pokedex.record(state.pokedex,result.payload.entity.speciesId,'seen');save();card.dataset.ok=String(result.ok);
-    card.append(el('h3',result.ok?'✓ Son compatibles':'✕ No pueden criar'));
-    if(!result.ok){card.append(el('p',result.reason));return;}
-    for(const [where,e] of [['Tu compañero',activeEntity()],['Otro compañero',result.payload.entity]]){
-      const data=PokemonData.get(e.speciesId);card.append(el('p',`${where}: ${entityLabel(e)} · ${PokemonData.genderLabel(e.snapshot.gender)} · ${data.EggGroup}`));
-    }
-    card.append(el('p',`Resultado: huevo de ${PokemonData.get(result.offspring).DisplayName}.`));
-    if(result.generatorId!==state.social.active.id){card.append(el('p',generatorInstruction(result)));return;}
-    card.append(el('p',`Lo crea ${state.nickname||current().name} en este dispositivo y se guarda en Mis huevos.`));
-    const create=socialButton('Crear huevo',()=>{
-      socialAction(()=>{try{if($('social-input').value!==checkedCode)throw Error('El código ha cambiado. Comprueba de nuevo la compatibilidad.');const message=breedFromCode(checkedCode);card.replaceChildren(el('h3',message),el('p','Puedes compartirlo desde Compartir huevo.'));return message;}
-        catch(error){card.dataset.ok='false';card.replaceChildren(el('h3','No se pudo crear el huevo'),el('p',error.message));throw error;}});
+  sync();save();render();const card=$('breeding-result');card.hidden=false;card.replaceChildren();
+  try{const checkedCode=$('social-input').value,result=breedingCheck(checkedCode);Pokedex.record(state.pokedex,result.payload.entity.speciesId,'seen');save();card.dataset.ok=String(result.ok);
+    card.append(el('h3',result.ok?`✓ ${t('breeding.compatible')}`:`✕ ${t('breeding.incompatible')}`));if(!result.ok){card.append(el('p',result.reason));return;}
+    for(const [where,entity] of [[t('breeding.yourCompanion'),activeEntity()],[t('breeding.otherCompanion'),result.payload.entity]]){const data=PokemonData.get(entity.speciesId);card.append(el('p',`${where}: ${entityLabel(entity)} · ${PokemonData.genderLabel(entity.snapshot.gender)} · ${data.EggGroup}`));}
+    card.append(el('p',t('breeding.result',{species:PokemonData.get(result.offspring).DisplayName})));if(result.generatorId!==state.social.active.id){card.append(el('p',generatorInstruction(result)));return;}
+    card.append(el('p',t('breeding.localGenerator',{name:state.nickname||current().name})));const create=socialButton(t('breeding.createEgg'),()=>{
+      socialAction(()=>{try{if($('social-input').value!==checkedCode)throw Error(t('breeding.codeChanged'));const message=breedFromCode(checkedCode);card.replaceChildren(el('h3',message),el('p',t('breeding.shareEgg')));return message;}
+        catch(error){card.dataset.ok='false';card.replaceChildren(el('h3',t('breeding.createFailed')),el('p',I18n.errorMessage(error,'connect.operationFailed')));throw error;}});
     });card.append(create);
-  }catch(error){card.dataset.ok='false';card.append(el('h3','✕ No pueden criar'),el('p',error.message));}
+  }catch(error){card.dataset.ok='false';card.append(el('h3',`✕ ${t('breeding.incompatible')}`),el('p',I18n.errorMessage(error,'connect.operationFailed')));}
   finally{card.scrollIntoView?.({block:'nearest',behavior:'auto'});}
 }
 async function copySocialCode(){
-  const output=$('social-export-code');if(!output.value){socialStatus('Genera primero el QR.');return;}
-  try{await navigator.clipboard.writeText(output.value);socialStatus('Código alternativo copiado.');}
-  catch{$('social-manual').open=true;output.focus();output.select();socialStatus('Código seleccionado: usa Copiar del navegador (Ctrl/Cmd+C).');}
+  const output=$('social-export-code');if(!output.value){socialStatus(t('qr.generateFirst'));return;}
+  try{await navigator.clipboard.writeText(output.value);socialStatus(t('qr.copied'));}
+  catch{$('social-manual').open=true;output.focus();output.select();socialStatus(t('qr.copyFallback'));}
 }
 function renderSocialPanel(){
-  const content=$('panel-content');content.replaceChildren();content.dataset.socialReady='true';$('panel-title').textContent='Conectar';
-  const nav=el('nav',undefined,'social-flows');nav.setAttribute('aria-label','Acciones sociales');
-  const flows={companion:'Compartir compañero',breed:'Criar',receive:'Recibir huevo',egg:'Compartir huevo'};
-  for(const [id,label]of Object.entries(flows)){const b=socialButton(label,()=>selectSocialFlow(id));b.setAttribute('aria-pressed',String(socialFlow===id));nav.append(b);}content.append(nav);
-  const section=el('section',undefined,'social-section');section.append(el('h3',flows[socialFlow]));content.append(section);
-  const status=el('p',undefined,'social-status');status.id='social-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');section.append(status);
+  const content=$('panel-content');content.replaceChildren();content.dataset.socialReady='true';$('panel-title').textContent=t('connect.title');
+  const nav=el('nav',undefined,'social-flows');nav.setAttribute('aria-label',t('connect.socialActions'));const flows={companion:'connect.shareCompanion',breed:'connect.breed',receive:'connect.receiveEgg',egg:'connect.shareEgg'};
+  for(const [id,key]of Object.entries(flows)){const button=socialButton(t(key),()=>selectSocialFlow(id));button.setAttribute('aria-pressed',String(socialFlow===id));nav.append(button);}content.append(nav);
+  const section=el('section',undefined,'social-section');section.append(el('h3',t(flows[socialFlow])));content.append(section);const status=el('p',undefined,'social-status');status.id='social-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');section.append(status);
   if(['companion','egg'].includes(socialFlow)){
-    section.append(el('p',socialFlow==='companion'?'Usa el QR para compartir tu compañero. Si no puedes escanearlo, copia el código alternativo.':'Elige un huevo de Mis huevos. La otra persona lo recibe desde Recibir huevo.','panel-note'));
-    const select=el('select');select.id='social-export-select';select.setAttribute('aria-label',socialFlow==='egg'?'Mis huevos':'Compañero activo');section.append(select);
-    const generate=socialButton('Generar QR',generateSocialExport);generate.id='generate-social-qr';section.append(generate);
-    const qr=el('div');qr.id='social-qr';section.append(qr);
-    section.append(socialButton('Copiar código alternativo',copySocialCode));
-    const details=el('details');details.id='social-manual';details.append(el('summary','Ver código alternativo'));
-    const output=el('textarea');output.id='social-export-code';output.readOnly=true;output.rows=2;output.setAttribute('aria-label','Código alternativo');details.append(output);section.append(details);
-    select.addEventListener('change',()=>{output.value='';qr.replaceChildren();});
-    if(socialFlow==='companion'&&state.phase!=='alive')section.append(el('p','Necesitas un compañero vivo y estable para compartir su perfil.'));
-    if(socialFlow==='egg'&&!state.social.eggs.length)section.append(el('p','Todavía no tienes huevos guardados.'));
-    refreshSocialCollection();
+    section.append(el('p',t(socialFlow==='companion'?'connect.companionGuide':'connect.eggGuide'),'panel-note'));const select=el('select');select.id='social-export-select';select.setAttribute('aria-label',t(socialFlow==='egg'?'connect.myEggs':'connect.activeCompanion'));section.append(select);
+    const generate=socialButton(t('qr.generate'),generateSocialExport);generate.id='generate-social-qr';section.append(generate);const qr=el('div');qr.id='social-qr';section.append(qr);section.append(socialButton(t('qr.copyAlternate'),copySocialCode));
+    const details=el('details');details.id='social-manual';details.append(el('summary',t('qr.viewAlternate')));const output=el('textarea');output.id='social-export-code';output.readOnly=true;output.rows=2;output.setAttribute('aria-label',t('qr.alternateCode'));details.append(output);section.append(details);select.addEventListener('change',()=>{output.value='';qr.replaceChildren();});
+    if(socialFlow==='companion'&&state.phase!=='alive')section.append(el('p',t('connect.noLiveCompanion')));if(socialFlow==='egg'&&!state.social.eggs.length)section.append(el('p',t('connect.noStoredEggs')));refreshSocialCollection();
   }else{
-    const breed=socialFlow==='breed';section.append(el('p',breed?'Crea un huevo nuevo a partir de dos compañeros. Escanea el QR del otro compañero y comprueba la compatibilidad.':'Recibe un huevo que otra persona ya ha creado. Escanea su QR o pega su código de huevo.','panel-note'));
-    section.append(socialButton('Escanear QR',scanSocialCode),socialButton('Parar cámara',()=>{stopSocialCamera();socialStatus('Cámara detenida.');}));
-    const video=el('video');video.id='social-video';video.muted=true;video.playsInline=true;video.hidden=true;section.append(video);
-    const label=el('label',breed?'Código alternativo del compañero':'Código alternativo del huevo');label.htmlFor='social-input';
-    const input=el('textarea');input.id='social-input';input.rows=2;input.maxLength=HatchMonSocial.MAX_CODE;input.spellcheck=false;section.append(label,input);
-    section.append(socialButton(breed?'Comprobar compatibilidad':'Recibir huevo',breed?showBreedingResult:()=>socialAction(()=>importEntity(input.value))));
-    if(breed){const card=el('div',undefined,'breeding-result');card.id='breeding-result';card.hidden=true;card.setAttribute('role','status');card.setAttribute('aria-live','polite');section.append(card);}
+    const breed=socialFlow==='breed';section.append(el('p',t(breed?'connect.breedGuide':'connect.receiveGuide'),'panel-note'));section.append(socialButton(t('qr.scan'),scanSocialCode),socialButton(t('qr.stopCamera'),()=>{stopSocialCamera();socialStatus(t('qr.cameraStopped'));}));
+    const video=el('video');video.id='social-video';video.muted=true;video.playsInline=true;video.hidden=true;section.append(video);const label=el('label',t(breed?'qr.companionCode':'qr.eggCode'));label.htmlFor='social-input';const input=el('textarea');input.id='social-input';input.rows=2;input.maxLength=HatchMonSocial.MAX_CODE;input.spellcheck=false;section.append(label,input);
+    section.append(socialButton(t(breed?'breeding.check':'connect.receiveEgg'),breed?showBreedingResult:()=>socialAction(()=>importEntity(input.value))));if(breed){const card=el('div',undefined,'breeding-result');card.id='breeding-result';card.hidden=true;card.setAttribute('role','status');card.setAttribute('aria-live','polite');section.append(card);}
   }
-
-  content.append(el('p','Los códigos funcionan offline. Compártelos solo con quien quieras: sin servidor no se puede restringir totalmente su uso en otros dispositivos.','panel-note'));
+  content.append(el('p',t('connect.offlineNotice'),'panel-note'));
 }
 function startNewBeginning(eggId=null){
-  if(state.phase!=='dead')return;
-  rememberDeath();
-  if(eggId)incubateStoredEgg(eggId);
-  else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.pokedex=state.pokedex;state=next;}
+  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.pokedex=state.pokedex;state=next;}
   cancelBirthAnimation();hideToast();clearPetReaction();if(dialog.open)closePanel();save();render();startTimer();
 }
 function renderBeginningChoices(){
-  const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Elige tu próximo comienzo';
-  content.append(el('p','Usa uno de Mis huevos o empieza con un huevo misterioso. Tus recuerdos permanecen.','panel-note'));
-  for(const egg of state.social.eggs)content.append(row('Huevo · '+egg.id.slice(-6),eggDescription(egg),socialButton('Incubar este huevo',()=>startNewBeginning(egg.id))));
-  content.append(socialButton('Empezar con huevo misterioso',()=>startNewBeginning()));
+  const content=$('panel-content');content.replaceChildren();$('panel-title').textContent=t('connect.startChoice');content.append(el('p',t('connect.startGuide'),'panel-note'));
+  for(const egg of state.social.eggs)content.append(row(t('connect.storedEgg',{id:egg.id.slice(-6)}),eggDescription(egg),socialButton(t('connect.incubateEgg'),()=>startNewBeginning(egg.id))));content.append(socialButton(t('connect.startMysteriousEgg'),()=>startNewBeginning()));
 }
 // Precarga conjunta: al cambiar de fase nunca se expone una URL sin cargar.
 // Imágenes ausentes, inválidas o demasiado lentas usan un icono pixel-art, sin rechazos.
@@ -967,29 +919,29 @@ function presentNarrative(){
   if(birthAnimation)cancelBirthAnimation();
   if(state.nicknamePending){
     if(dialog.open)closePanel();
-    if(!$('nickname-dialog').open){$('birth-message').textContent=`¡Del Huevo ha salido un ${current().name}!`;$('nickname-input').value='';$('nickname-dialog').showModal();$('nickname-input').focus();}
+    if(!$('nickname-dialog').open){$('birth-message').textContent=t('ui.birthMessage',{name:current().name});$('nickname-input').value='';$('nickname-dialog').showModal();$('nickname-input').focus();}
   }else if($('nickname-dialog').open)$('nickname-dialog').close();
   if(state.foundItem!==null){
     if(dialog.open)closePanel();
-    $('found-text').textContent=`¡Encontraste ${itemCatalog[state.foundItem].name}! Se ha guardado en tu mochila.`;
+    $('found-text').textContent=t('ui.found',{name:itemLabel(state.foundItem)});
     if(!$('found-dialog').open){$('found-dialog').showModal();$('found-bubble').focus();}
   }else if($('found-dialog').open)$('found-dialog').close();
 }
 function companionStatus(){
   if(state.phase==='egg'||state.birthScene)return '';
-  if(state.phase==='dead')return 'Siempre en tu recuerdo.';
-  if(state.phase==='critical')return state.pokerus?'Necesita auxilio · Pokérus':'Necesita auxilio';
-  if(state.pokerus)return 'Necesita una cura.';
-  if(state.care.hambre<35)return 'Tiene hambre.';
-  if(state.care.energia<30)return state.lightsOff?'Está descansando.':'Está con sueño.';
-  if(state.care.higiene<40||state.vital.poops.length||state.vital.dirt>=BREEDING_CONFIG.maxDirt)return 'Le vendría bien una limpieza.';
-  if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return 'Necesita un poco de espacio.';
-  if(state.care.felicidad<40)return 'Le apetece jugar.';
+  if(state.phase==='dead')return t('ui.remembered');
+  if(state.phase==='critical')return state.pokerus?t('ui.criticalVirus'):t('ui.critical');
+  if(state.pokerus)return t('ui.treatment');
+  if(state.care.hambre<35)return t('ui.hungry');
+  if(state.care.energia<30)return state.lightsOff?t('ui.sleeping'):t('ui.sleepy');
+  if(state.care.higiene<40||state.vital.poops.length||state.vital.dirt>=BREEDING_CONFIG.maxDirt)return t('ui.cleaningNeeded');
+  if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return t('ui.needsSpace');
+  if(state.care.felicidad<40)return t('ui.wantsPlay');
   if(!state.lightsOff&&!interactionLocked()){
-    if(current().rules.some(r=>r.item&&itemUsable(r.item)))return 'Puede evolucionar. Revisa la mochila.';
-    if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return 'Revisa la crianza en Oak.';
+    if(current().rules.some(r=>r.item&&itemUsable(r.item)))return t('oak.ready');
+    if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return t('oak.breedingReady');
   }
-  return 'Todo tranquilo.';
+  return t('ui.calm');
 }
 let trainingVisualsPaused=false,trainingNeedsFeedback=false;
 function render(forceFeedback=false){
@@ -999,7 +951,7 @@ function render(forceFeedback=false){
   const important=evolutionSerial!==shownEvolution||(!presentedIllness&&state.pokerus)||(presentedPhase!==state.phase&&['dead','critical'].includes(state.phase));
   const egg=state.phase==='egg',dead=state.phase==='dead',critical=state.phase==='critical',birth=state.birthScene;
   const showEgg=egg||(birth&&!birthReveal);if(!egg)$('creature-button').classList.remove('heat-reaction');
-  $('bond').hidden=egg||birth||dead;$('bond').replaceChildren();if(!egg&&!birth&&!dead){const hearts=Relationship.hearts(state);$('bond').setAttribute('aria-label',`Vínculo: ${hearts} de 5 corazones`);for(let i=0;i<5;i++)$('bond').append(pixelIcon('kindness',i<hearts?'':'empty'));}
+  $('bond').hidden=egg||birth||dead;$('bond').replaceChildren();if(!egg&&!birth&&!dead){const hearts=Relationship.hearts(state);$('bond').setAttribute('aria-label',t('ui.bondAria',{current:hearts,max:5}));for(let i=0;i<5;i++)$('bond').append(pixelIcon('kindness',i<hearts?'':'empty'));}
   $('stats').hidden=egg||birth;$('trainer').hidden=egg||dead||birth;$('restart').hidden=!dead;
   $('creature-button').disabled=dead||interactionLocked();
   $('screen').classList.toggle('lights-off',state.lightsOff&&!egg&&!birth);
@@ -1008,9 +960,9 @@ function render(forceFeedback=false){
     eggController.stop();$('sprite').classList.remove('sheet');$('sprite').style.backgroundImage='';
     pokemonMode=true;renderCreature();
   }
-  $('sprite').setAttribute('aria-label',showEgg?'Huevo':dead?'Lápida':critical?'Compañero debilitado':current().name);
-  $('creature-button').setAttribute('aria-label',egg?'Dar calor al huevo':'Acariciar a '+(state.nickname||current().name));
-  $('name').textContent=egg?'¡Un huevo misterioso!':birth?'¡Anda! ¡El huevo está eclosionando!':dead?`${current().name} · Game Over`:current().name;
+  $('sprite').setAttribute('aria-label',showEgg?t('ui.egg'):dead?t('ui.tombstone'):critical?t('ui.weakened'):current().name);
+  $('creature-button').setAttribute('aria-label',egg?t('ui.warmEgg'):t('ui.pet',{name:state.nickname||current().name}));
+  $('name').textContent=egg?t('eggTitle'):birth?t('ui.eggHatching'):dead?t('death.title',{name:current().name}):current().name;
   $('gender').hidden=egg||birth;
   $('gender').textContent=PokemonData.genderSymbol(state.gender);$('gender').dataset.gender=state.gender||'';$('gender').setAttribute('aria-label',PokemonData.genderLabel(state.gender));
   $('identity').classList.toggle('has-nickname',!egg&&!birth&&!!state.nickname);
@@ -1018,23 +970,23 @@ function render(forceFeedback=false){
   const hint=$('egg-hint');hint.hidden=!egg;if(egg&&hint.textContent!==eggStage().message)hint.textContent=eggStage().message;
   const health=companionStatus();
   const poopLayer=$('poop-layer');poopLayer.replaceChildren();poopLayer.hidden=egg||birth||dead;
-  if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label','Deposición: necesita limpieza');poopLayer.append(node);}
+  if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label',t('ui.poopAria'));poopLayer.append(node);}
   $('health').textContent=health;$('health').hidden=!health;
   if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
-  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=`${COST[a]} punto${COST[a]!==1?'s':''} de criador`;if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?'Encender luz':'Apagar luz'));}});
+  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));}});
   document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
   const actionPoints=Math.floor(state.trainer.energy+1e-8),actionIndicator=$('trainer-energy');
   const pips=el('span',undefined,'action-pips');pips.setAttribute('aria-hidden','true');
   for(let i=0;i<MAX_AP;i++)pips.append(el('span',undefined,`action-pip${i<actionPoints?' filled':''}`));
-  actionIndicator.replaceChildren(el('span',`Acciones: ${actionPoints}/${MAX_AP}`),pips,el('span','+1 / 10 min','trainer-recharge'));
-  actionIndicator.setAttribute('aria-label',`Acciones del criador: ${actionPoints} de ${MAX_AP}. Cada cuidado consume acciones; recuperas 1 cada 10 minutos.`);
-  $('coin-balance').textContent=`Monedas: ${state.coins}`;$('coin-balance').setAttribute('aria-label',`${state.coins} monedas`);
+  actionIndicator.replaceChildren(el('span',t('ui.actionsValue',{current:actionPoints,max:MAX_AP})),pips,el('span',t('ui.recharge'),'trainer-recharge'));
+  actionIndicator.setAttribute('aria-label',t('ui.actionsAria',{current:actionPoints,max:MAX_AP}));
+  $('coin-balance').textContent=t('ui.coinBalance',{coins:state.coins});$('coin-balance').setAttribute('aria-label',t('ui.coinBalanceAria',{coins:state.coins}));
   if(interactionLocked())hideToast();
-  if(state.message!==lastMessage||forceFeedback){lastMessage=state.message;if(!interactionLocked())showToast(state.message,important);}
+  if(state.message!==lastMessage||forceFeedback){lastMessage=state.message;if(!interactionLocked())showToast(I18n.localize(state.message),important);}
   presentedPhase=state.phase;presentedIllness=state.pokerus;
   if(becameSick)petReaction('sick');
   if(dead&&lastDeathId!==state.social.active.id){lastDeathId=state.social.active.id;petReaction('faint');}
-  $('save-note').hidden=!storageWarning;$('save-note').textContent=storageWarning;
+  $('save-note').hidden=!storageWarning;$('save-note').textContent=I18n.localize(storageWarning);
   if(evolutionSerial!==shownEvolution){shownEvolution=evolutionSerial;$('sprite').classList.remove('evolving');void $('sprite').offsetWidth;$('sprite').classList.add('evolving');}
   if(dead&&timer!==null){clearInterval(timer);timer=null;}
   presentNarrative();
@@ -1074,40 +1026,40 @@ function collectionSprite(id,isShiny=false){
   const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny});return visual;
 }
 function renderPokedex(){
-  dialog.dataset.lcdSurface='true';disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent='Pokédex y Memorias';
-  const tabs=el('nav',undefined,'social-flows');tabs.setAttribute('aria-label','Pokédex y Memorias');
-  for(const [id,label]of [['pokedex','POKÉDEX'],['memories','MEMORIAS']]){const button=socialButton(label,()=>{collectionTab=id;renderPokedex();});button.setAttribute('aria-pressed',String(collectionTab===id));tabs.append(button);}content.append(tabs);
+  dialog.dataset.lcdSurface='true';disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent=t('ui.inventory.collection');
+  const tabs=el('nav',undefined,'social-flows');tabs.setAttribute('aria-label',t('ui.inventory.collection'));
+  for(const [id,label]of [['pokedex',t('dex.tab')],['memories',t('memories.tab')]]){const button=socialButton(label,()=>{collectionTab=id;renderPokedex();});button.setAttribute('aria-pressed',String(collectionTab===id));tabs.append(button);}content.append(tabs);
   if(collectionTab==='pokedex'){
-    const variantTabs=el('nav',undefined,'social-flows');for(const [v,label]of [['normal','NORMAL'],['shiny','SHINY']]){const b=socialButton(label,()=>{dexVariant=v;renderPokedex();});b.setAttribute('aria-pressed',String(dexVariant===v));variantTabs.append(b);}variantTabs.className='variant-tabs';content.append(variantTabs);if(dexVariant==='shiny'&&!Shiny.enabled)content.append(el('p','Shiny preparado; encuentros pendientes de validar assets.','panel-note'));
-    const entries=Object.entries(state.pokedex).map(([id,e])=>[id,dexVariant==='shiny'?e.shiny:e]).filter(([,e])=>e?.seen);content.append(el('p',`${entries.length} / ${obtainableRoster.total} descubiertos · ${entries.length} vistas · ${entries.filter(([,e])=>e.ownedIds.length).length} cuidadas · ${state.social.memorials.length} memorias`,'panel-note'));
-    const completion=el('progress');completion.max=obtainableRoster.total;completion.value=entries.length;completion.setAttribute('aria-label',`${entries.length} de ${obtainableRoster.total} descubiertos`);content.append(completion);
+    const variantTabs=el('nav',undefined,'social-flows');for(const [v,label]of [['normal',t('dex.normal')],['shiny',t('dex.shiny')]]){const b=socialButton(label,()=>{dexVariant=v;renderPokedex();});b.setAttribute('aria-pressed',String(dexVariant===v));variantTabs.append(b);}variantTabs.className='variant-tabs';content.append(variantTabs);if(dexVariant==='shiny'&&!Shiny.enabled)content.append(el('p',t('dex.shinyPending'),'panel-note'));
+    const entries=Object.entries(state.pokedex).map(([id,e])=>[id,dexVariant==='shiny'?e.shiny:e]).filter(([,e])=>e?.seen);content.append(el('p',t('dex.summary',{count:entries.length,total:obtainableRoster.total,owned:entries.filter(([,e])=>e.ownedIds.length).length,memories:state.social.memorials.length}),'panel-note'));
+    const completion=el('progress');completion.max=obtainableRoster.total;completion.value=entries.length;completion.setAttribute('aria-label',t('dex.progress',{count:entries.length,total:obtainableRoster.total}));content.append(completion);
     const grid=el('div',undefined,'dex-grid');
     for(const entry of [...obtainableRoster.egg,...obtainableRoster.evolutionOnly]){
       const id=PokemonData.canonicalId(entry.id),e=entries.find(([key])=>key===id)?.[1];
       const card=el(e?'details':'article',undefined,'dex-tile');
-      if(e){const summary=el('summary');summary.append(collectionSprite(id,dexVariant==='shiny'),el('strong',PokemonData.get(id).DisplayName));card.append(summary,el('p',`${e.ownedIds.length?'Cuidado':'Visto'}${e.evolved?' · Evolucionado':''}${e.bred?' · Criado':''}${e.received?' · Recibido':''}`));}
-      else{const mystery=el('div','???','memory-sprite unknown');mystery.setAttribute('aria-label','Forma no descubierta');card.append(mystery,el('small','Sin descubrir'));}
+      if(e){const summary=el('summary');summary.append(collectionSprite(id,dexVariant==='shiny'),el('strong',PokemonData.get(id).DisplayName));card.append(summary,el('p',[t(e.ownedIds.length?'dex.owned':'dex.seen'),e.evolved&&t('dex.evolved'),e.bred&&t('dex.bred'),e.received&&t('dex.received')].filter(Boolean).join(' · ')));}
+      else{const mystery=el('div','???','memory-sprite unknown');mystery.setAttribute('aria-label',t('dex.unknownForm'));card.append(mystery,el('small',t('dex.unknown')));}
       grid.append(card);
     }content.append(grid);return;
   }
-  content.append(el('p',`${obtainableRoster.total} obtenibles · ${Object.values(state.pokedex).filter(e=>e.seen).length} vistas · ${Object.values(state.pokedex).filter(e=>e.ownedIds.length).length} cuidadas · ${state.social.memorials.length} memorias`,'panel-note'));
-  content.append(el('p','Compañeros que vivieron contigo. Sus recuerdos permanecen; no pueden reactivarse.','panel-note'));
-  if(!state.social.memorials.length)content.append(el('p','Todavía no hay recuerdos de compañeros fallecidos.'));
+  content.append(el('p',t('memories.summary',{total:obtainableRoster.total,count:Object.values(state.pokedex).filter(e=>e.seen).length,owned:Object.values(state.pokedex).filter(e=>e.ownedIds.length).length,memories:state.social.memorials.length}),'panel-note'));
+  content.append(el('p',t('memories.help'),'panel-note'));
+  if(!state.social.memorials.length)content.append(el('p',t('memories.empty')));
   for(const memory of state.social.memorials){
     const snap=memory.snapshot,id=memory.canonicalSpeciesId||memory.speciesId,data=PokemonData.get(id);
     const card=el('article',undefined,'memory-card'),visual=collectionSprite(id,memory.isShiny===true);
     const copy=el('div');copy.append(el('h3',`${data?.DisplayName||memory.speciesId} ${PokemonData.genderSymbol(snap.gender)}`));
     if(snap.nickname)copy.append(el('p',`“${snap.nickname}”`,'memory-nickname'));
-    const hearts=el('div',undefined,'memory-hearts'),filled=Relationship.hearts({relationship:{points:memory.bond||0}});hearts.setAttribute('role','img');hearts.setAttribute('aria-label',`Vínculo final: ${filled} de 5 corazones`);
+    const hearts=el('div',undefined,'memory-hearts'),filled=Relationship.hearts({relationship:{points:memory.bond||0}});hearts.setAttribute('role','img');hearts.setAttribute('aria-label',t('memories.bond',{hearts:filled}));
     for(let i=0;i<5;i++)hearts.append(pixelIcon('kindness',i<filled?'':'empty'));copy.append(hearts);
-    const hours=Math.floor(snap.age/HOUR);copy.append(el('p',`Vivió ${Math.floor(hours/24)} días y ${hours%24} horas`));
-    copy.append(el('p',snap.vital?.deathCause==='natural'?'Muerte natural':snap.vital?.deathCause==='neglect'?'Falleció por abandono':'Causa no registrada'));
-    if(Number.isFinite(memory.diedAt))copy.append(el('p',new Date(memory.diedAt).toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'}),'subtle'));
+    const hours=Math.floor(snap.age/HOUR);copy.append(el('p',t('memories.age',{days:Math.floor(hours/24),hours:hours%24})));
+    copy.append(el('p',snap.vital?.deathCause==='natural'?t('memories.natural'):snap.vital?.deathCause==='neglect'?t('memories.neglect'):t('memories.unknown')));
+    if(Number.isFinite(memory.diedAt))copy.append(el('p',new Date(memory.diedAt).toLocaleDateString(I18n.getLocale(),{day:'numeric',month:'short',year:'numeric'}),'subtle'));
     card.append(visual,copy);content.append(card);
   }
 }
 $('sprite').addEventListener('animationend',()=>{delete $('sprite').dataset.reaction;});
-$('trainer-energy').addEventListener('click',()=>showToast('Cada cuidado consume acciones. Recuperas 1 cada 10 min.'));
+$('trainer-energy').addEventListener('click',()=>showToast(t('ui.actionsHelp')));
 function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();save({immediate:!!result});render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
 $('nickname-form').addEventListener('submit',event=>{event.preventDefault();dispatch(()=>setNickname($('nickname-input').value));});
 $('skip-nickname').addEventListener('click',()=>dispatch(()=>setNickname('')));
@@ -1116,7 +1068,7 @@ function dismissFound(){dispatch(acknowledgeItem);document.querySelector('[data-
 $('found-bubble').addEventListener('click',event=>{event.stopPropagation();dismissFound();});
 $('found-dialog').addEventListener('click',event=>{if(event.target===$('found-dialog'))dismissFound();});
 $('found-dialog').addEventListener('cancel',event=>event.preventDefault());
-$('creature-button').addEventListener('click',()=>{if(state.phase!=='egg'){sync();interactWithPokemon();startTimer();return;}dispatch(()=>heat());if(state.phase==='egg'){showToast(EGG_TOUCH_FEEDBACK[(state.heat-1)%EGG_TOUCH_FEEDBACK.length],false,true);const button=$('creature-button');button.classList.remove('heat-reaction');void button.offsetWidth;button.classList.add('heat-reaction');}});
+$('creature-button').addEventListener('click',()=>{if(state.phase!=='egg'){sync();interactWithPokemon();startTimer();return;}dispatch(()=>heat());if(state.phase==='egg'){showToast(t(EGG_TOUCH_FEEDBACK[(state.heat-1)%EGG_TOUCH_FEEDBACK.length]),false,true);const button=$('creature-button');button.classList.remove('heat-reaction');void button.offsetWidth;button.classList.add('heat-reaction');}});
 $('creature-button').addEventListener('animationend',()=>$('creature-button').classList.remove('heat-reaction'));
 for(const k of CARE)$(k).addEventListener('animationend',()=>$(k).classList.remove('meter-changed'));
 document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>dispatch(()=>careAction(b.dataset.action),(b.dataset.action==='luz'?(state.lightsOff?'normal':'sleep'):({alimentar:'eat',jugar:'play',limpiar:'clean'})[b.dataset.action]))));
@@ -1131,7 +1083,7 @@ function resetGame(){
   for(const id of ['nickname-dialog','found-dialog'])if($(id).open)$(id).close();
   storageWarning='';
   try{gameStorage.removeItem(SAVE_KEY);gameStorage.removeItem(`${SAVE_KEY}.before-table-replacement`);gameStorage.removeItem(`${SAVE_KEY}.before-canonical-v2`);gameStorage.removeItem(`${SAVE_KEY}.before-vital-c`);}
-  catch{storageWarning='No se pudo borrar el guardado. Se ha reiniciado la sesión actual.';}
+  catch{storageWarning=t('system.resetStorageFailed');}
   state=freshState();lastMessage=state.message;
   render();startTimer();$('creature-button').focus();
 }
@@ -1143,9 +1095,9 @@ window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivit
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
 document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
 if(window.HatchCloud&&gameStorage.getItem(SAVE_KEY)&&!validSave(migrateSave(JSON.parse(gameStorage.getItem(SAVE_KEY)))))throw Error('invalid-cloud-save');
-window.HatchRuntime={save,applyCloudSave(game,preferences={}){game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;state=game;state.lastSync=Date.now();savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
+window.HatchRuntime={save,applyCloudSave(game,preferences={}){game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;state=game;state.lastSync=Date.now();savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
 restore();save();lastMessage=state.message;render();startTimer();
 </script>
-<script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent='No se pudo conectar. Revisa Internet y recarga la página.';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>
+<script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent=globalThis.HatchI18n?.t('errors.network')||'errors.network';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>
 </body>
 </html>

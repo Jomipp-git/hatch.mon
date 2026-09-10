@@ -1,5 +1,6 @@
 'use strict';
 globalThis.StyleTracing=(()=>{
+ const t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
  const config=Object.freeze({width:320,height:220,tolerances:[18,16,14,12,10],samples:120});
  const curves=[
   t=>[30+260*t,160-100*Math.sin(Math.PI*t)],
@@ -33,8 +34,8 @@ globalThis.StyleTracing=(()=>{
   return {points,tolerance,start,move,end,current,progress:()=>progress/(points.length-1),complete:()=>progress>=points.length-1-.5,score:()=>Math.min(1,progress/(points.length-1))*(travel?Math.max(0,1-error/travel):0)};
  }
  function mount({field,hint,status,node,onFinish}){
-  field.className='minigame-field tracing-field';hint.textContent='Mantén pulsado y sigue el recorrido.';
-  const canvas=node('canvas'),next=node('button','Terminar recorrido');canvas.width=config.width;canvas.height=config.height;canvas.className='tracing-canvas';canvas.setAttribute('aria-label','Recorrido de coreografía. Arrastra desde el punto marcado.');next.type='button';field.append(canvas,next);
+  field.className='minigame-field tracing-field';hint.textContent=t('minigame.style.instructions');
+  const canvas=node('canvas'),next=node('button',t('minigame.style.finishPath'));canvas.width=config.width;canvas.height=config.height;canvas.className='tracing-canvas';canvas.setAttribute('aria-label',t('minigame.style.canvasLabel'));next.type='button';field.append(canvas,next);
   let round=0,scorer=createScorer(0),pointer=null,disposed=false,centered=true,trail=[],scores=[],paintFrame=null,gestureRect=null;
   const requestFrame=globalThis.requestAnimationFrame||((fn)=>setTimeout(fn,16)),cancelFrame=globalThis.cancelAnimationFrame||clearTimeout;
   function scheduleDraw(){if(paintFrame!==null||disposed)return;paintFrame=requestFrame(()=>{paintFrame=null;if(!disposed)draw();});}
@@ -45,7 +46,7 @@ globalThis.StyleTracing=(()=>{
    const end=Math.floor(scorer.progress()*(scorer.points.length-1));stroke([...scorer.points.slice(0,end+1),scorer.current()],'#263b30',5);
    ctx.fillStyle=centered?'#52694a':'#263b30';for(const p of trail)ctx.fillRect(Math.round(p[0]/3)*3-2,Math.round(p[1]/3)*3-2,4,4);
    const start=scorer.current(),finish=scorer.points.at(-1);ctx.strokeStyle='#263b30';ctx.lineWidth=2;ctx.strokeRect(finish[0]-6,finish[1]-6,12,12);ctx.fillStyle='#263b30';ctx.fillRect(start[0]-6,start[1]-6,12,12);ctx.fillStyle='#d5dfbb';ctx.fillRect(start[0]-2,start[1]-2,4,4);
-   status.textContent=`${round+1} / 5 · ${Math.round(scorer.progress()*100)} %`;
+   status.textContent=t('minigame.style.progress',{round:round+1,total:curves.length,percent:Math.round(scorer.progress()*100)});
   }
   function release(){const id=pointer;pointer=null;scorer.end();if(id!==null&&canvas.hasPointerCapture?.(id))canvas.releasePointerCapture(id);}
   function advance(){if(disposed)return;release();scores.push(scorer.score());round++;if(round===curves.length){disposed=true;onFinish(grade(scores.reduce((a,b)=>a+b,0)/scores.length));return;}scorer=createScorer(round);trail=[];centered=true;draw();}

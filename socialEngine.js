@@ -3,6 +3,7 @@
  */
 'use strict';
 globalThis.HatchMonSocial = (() => {
+  const socialText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   const MAX_CODE = 60000, MAX_EGGS = 60, MAX_HISTORY = 5000;
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
   const idOK = x => typeof x === 'string' && /^[a-zA-Z0-9_-]{8,80}$/.test(x);
@@ -47,32 +48,32 @@ globalThis.HatchMonSocial = (() => {
     let binary = '';for(const byte of bytes)binary += String.fromCharCode(byte);
     const encoded = btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
     const code = `HM1.${encoded}.${checksum(encoded)}`;
-    if(code.length > MAX_CODE)throw Error('Este compañero tiene demasiados recuerdos para el formato de intercambio V1.');
+    if(code.length > MAX_CODE)throw Error(socialText('qr.exportTooLarge'));
     return code;
   }
   function unpack(input,validateSnapshot,normalizeEntity=x=>x) {
-    if(typeof input !== 'string' || input.length > MAX_CODE + 100)throw Error('El código es demasiado largo.');
+    if(typeof input !== 'string' || input.length > MAX_CODE + 100)throw Error(socialText('qr.codeTooLong'));
     const code = input.trim(),parts = /^HM1\.([A-Za-z0-9_-]+)\.([a-f0-9]{8})$/.exec(code);
-    if(!parts || checksum(parts[1]) !== parts[2])throw Error('Código incompleto o corrupto. Copia el código entero.');
+    if(!parts || checksum(parts[1]) !== parts[2])throw Error(socialText('qr.codeCorrupt'));
     let p;
     try {
       const encoded = parts[1].replace(/-/g,'+').replace(/_/g,'/');
       const binary = atob(encoded + '='.repeat((4-encoded.length%4)%4));
       p = JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(binary,c=>c.charCodeAt(0))));
-    } catch {throw Error('El contenido del código no es válido.');}
-    if(object(p)&&object(p.entity)){try{p.entity=normalizeEntity(p.entity);}catch{throw Error('Estructura de entidad no válida.');}}
+    } catch {throw Error(socialText('qr.codeInvalid'));}
+    if(object(p)&&object(p.entity)){try{p.entity=normalizeEntity(p.entity);}catch{throw Error(socialText('qr.entityInvalid'));}}
     if(!object(p) || p.protocol !== 'hatchmon' || p.version !== 1 || !idOK(p.id) || !time(p.exportedAt) ||
       !entityOK(p.entity,validateSnapshot) || !['egg','alive'].includes(p.entity.snapshot.phase) ||
       p.entity.snapshot.birthScene || p.entity.snapshot.nicknamePending || p.entity.snapshot.foundItem !== null)
-      throw Error('El código contiene una especie, estado o versión no compatible.');
+      throw Error(socialText('qr.codeUnsupported'));
     return p;
   }
   function assertNew(store,payload) {
-    if(store.importedIds.includes(payload.id))throw Error('Este código ya se ha utilizado en este dispositivo.');
-    if(store.importedIds.length >= MAX_HISTORY)throw Error('El historial local está lleno. Conserva una copia del guardado.');
-    if(store.memorials?.some(e=>e.id===payload.entity.id))throw Error('Este compañero está en Memorias y no puede volver a participar.');
+    if(store.importedIds.includes(payload.id))throw Error(socialText('qr.codeUsed'));
+    if(store.importedIds.length >= MAX_HISTORY)throw Error(socialText('qr.historyFull'));
+    if(store.memorials?.some(e=>e.id===payload.entity.id))throw Error(socialText('qr.memorialBlocked'));
     if(store.active.id === payload.entity.id || store.eggs.some(e=>e.id === payload.entity.id))
-      throw Error('Este compañero o huevo ya está contigo, aunque el código sea diferente.');
+      throw Error(socialText('qr.duplicateEntity'));
   }
   function compatibility(a,b) {
     for(const e of [a,b]){const reason=Vital.breedingReason(e.snapshot);if(reason)return {ok:false,reason};}

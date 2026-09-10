@@ -1,5 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const ctx=vm.createContext({HatchEnvironment:{isDevelopmentEnvironment:()=>true},TextEncoder,TextDecoder,btoa,atob,crypto:require('node:crypto').webcrypto});const run=s=>vm.runInContext(s,ctx);
+run(fs.readFileSync('i18n.js','utf8'));
 for(const f of ['evolutionTable.js','hatchmonData_v2.js','pokemonDataAdapter.js','vitalSimulation.js','relationship.js','pokedex.js','shiny.js','assets/skins/themes.js','shellSkins.js','styleTracing.js','trainingActivities.js','socialEngine.js'])run(fs.readFileSync(f,'utf8'));
 run(fs.readFileSync('index.html','utf8').match(/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/)[1].split('// UI:')[0]);
 function born(id='magby'){run(`state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('Brasa');state.pokemonId='${id}';state.gender=PokemonData.gender(state.pokemonId);state.age=10*HOUR;state.stageAge=state.age;state.care={hambre:75,felicidad:21,energia:61,higiene:88};state.training={iq:12,strength:23,kindness:34,style:8};state.vital.dirt=32;state.vital.poops=[{id:1,createdAge:0}];state.vital.poopSerial=1;state.pokerus=true;state.vital.illnessCause='food';`)}

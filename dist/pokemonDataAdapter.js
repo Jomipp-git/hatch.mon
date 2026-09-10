@@ -3,6 +3,7 @@
  */
 'use strict';
 globalThis.PokemonData = (() => {
+  const dataText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   if(HATCHMON_DATA.schemaVersion!==2)throw Error('Se requiere hatchmonData_v2.js (schemaVersion 2).');
   const records=new Map(HATCHMON_DATA.pokemon.map(p=>[p.PokemonId,p]));
   const aliases={raichualola:'0026L0',toxtricityamp:'0849A0',toxtricitylow:'0849B0'};
@@ -30,29 +31,29 @@ globalThis.PokemonData = (() => {
   const validGender=(id,value)=>genders(id).includes(value);
   function compatibility(a,b){
     const fail=reason=>({ok:false,reason});
-    if(a.id===b.id)return fail('Un compañero no puede criar consigo mismo.');
+    if(a.id===b.id)return fail(dataText('breeding.self'));
     if([a,b].some(e=>e.kind!=='creature'||e.snapshot.phase!=='alive'||e.snapshot.birthScene||e.snapshot.nicknamePending||
-      e.snapshot.foundItem!==null||e.snapshot.lightsOff||e.snapshot.pokerus))return fail('Ambos compañeros deben estar vivos, sanos, despiertos y disponibles.');
+      e.snapshot.foundItem!==null||e.snapshot.lightsOff||e.snapshot.pokerus))return fail(dataText('breeding.availability'));
     const aa=get(a.speciesId),bb=get(b.speciesId);
-    if(!aa||!bb)return fail('La especie no está en hatchmonData_v2.js.');
-    if(!validGender(aa.PokemonId,a.snapshot.gender)||!validGender(bb.PokemonId,b.snapshot.gender))return fail('El género no es válido según la fuente canónica.');
+    if(!aa||!bb)return fail(dataText('breeding.speciesUnavailable'));
+    if(!validGender(aa.PokemonId,a.snapshot.gender)||!validGender(bb.PokemonId,b.snapshot.gender))return fail(dataText('breeding.invalidGender'));
     // Interpretación literal de contract.dittoRule; EggGroup identifica el caso especial.
     const ditto=p=>p.EggGroup==='Ditto';
     const eligible=p=>p.Breedable===true&&p.EvolutionStage!=='Baby'&&!p.Genderless&&p.Rarity!==5;
     let parent;
     if(ditto(aa)||ditto(bb)){
-      if(ditto(aa)&&ditto(bb))return fail('La fuente canónica no permite criar dos Ditto.');
+      if(ditto(aa)&&ditto(bb))return fail(dataText('breeding.twoDitto'));
       const wildcard=ditto(aa)?aa:bb;parent=ditto(aa)?bb:aa;
-      if(wildcard.Breedable!==true||!eligible(parent))return fail('Ditto requiere una pareja Breedable que no sea Baby, Genderless ni Rarity 5.');
+      if(wildcard.Breedable!==true||!eligible(parent))return fail(dataText('breeding.dittoPartner'));
     }else{
-      if(!eligible(aa)||!eligible(bb))return fail('Alguna especie no es reproducible, es bebé, carece de género o tiene rareza 5.');
-      if(!aa.EggGroup||aa.EggGroup!==bb.EggGroup)return fail('No comparten el EggGroup canónico.');
+      if(!eligible(aa)||!eligible(bb))return fail(dataText('breeding.ineligibleSpecies'));
+      if(!aa.EggGroup||aa.EggGroup!==bb.EggGroup)return fail(dataText('breeding.eggGroupMismatch'));
       if(!['male','female'].includes(a.snapshot.gender)||!['male','female'].includes(b.snapshot.gender)||a.snapshot.gender===b.snapshot.gender)
-        return fail('Se requiere una pareja macho y hembra.');
+        return fail(dataText('breeding.genderPair'));
       parent=a.snapshot.gender==='female'?aa:bb;
     }
-    if(!parent.BaseOffspringId||!records.has(parent.BaseOffspringId))return fail('La fuente no define un BaseOffspringId válido. No se inventará una raíz.');
-    return {ok:true,offspring:parent.BaseOffspringId,reason:'Son compatibles. El huevo se guardará en tu colección.'};
+    if(!parent.BaseOffspringId||!records.has(parent.BaseOffspringId))return fail(dataText('breeding.invalidOffspring'));
+    return {ok:true,offspring:parent.BaseOffspringId,reason:dataText('breeding.compatibleStored')};
   }
   function convertEntity(entity,toCanonical){
     const e=JSON.parse(JSON.stringify(entity));
@@ -68,5 +69,5 @@ globalThis.PokemonData = (() => {
     rules:id=>HATCHMON_DATA.evolutionRules.filter(r=>r.FromId===canonicalId(id)),
     roots:()=>[...legacyToCanonical.keys()].filter(id=>get(id).PreEvolutionId===null),
     genderSymbol:value=>({male:'♂',female:'♀',genderless:'⚲'}[value]||''),
-    genderLabel:value=>({male:'Macho',female:'Hembra',genderless:'Sin género'}[value]||'Género no disponible')});
+    genderLabel:value=>({male:dataText('gender.male'),female:dataText('gender.female'),genderless:dataText('gender.genderless')}[value]||dataText('gender.unavailable'))});
 })();

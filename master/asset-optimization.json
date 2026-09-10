@@ -1,0 +1,7506 @@
+{
+  "assets/eggs/egg_phase_1.png": {
+    "before": 716232,
+    "after": 344607,
+    "originalSize": [
+      1256,
+      1256
+    ],
+    "size": [
+      832,
+      832
+    ],
+    "outputHash": "5f5ab127fa2424bdc18a08ad22ba91427308f71f57786fc76789db00ddcfd030",
+    "losslessPixels": false
+  },
+  "assets/eggs/egg_phase_2.png": {
+    "before": 742341,
+    "after": 358076,
+    "originalSize": [
+      1256,
+      1256
+    ],
+    "size": [
+      832,
+      832
+    ],
+    "outputHash": "744aab8f6024aee05e71dcc914730b03877d6211d40470f0d5a0a8676a908e01",
+    "losslessPixels": false
+  },
+  "assets/eggs/egg_phase_3.png": {
+    "before": 783315,
+    "after": 377210,
+    "originalSize": [
+      1256,
+      1256
+    ],
+    "size": [
+      832,
+      832
+    ],
+    "outputHash": "144462fd6242aca5c6c6fcc7f55d569756a6f5d846c80862ddf21eaaa348535d",
+    "losslessPixels": false
+  },
+  "assets/eggs/egg_phase_4.png": {
+    "before": 786598,
+    "after": 378397,
+    "originalSize": [
+      1256,
+      1256
+    ],
+    "size": [
+      832,
+      832
+    ],
+    "outputHash": "a9c3f0208d5dc23cc0e9cae2a01462e45894b52e3ace72a95452f8c568ac6913",
+    "losslessPixels": false
+  },
+  "assets/eggs/egg_phase_5.png": {
+    "before": 1019781,
+    "after": 492742,
+    "originalSize": [
+      1256,
+      1256
+    ],
+    "size": [
+      832,
+      832
+    ],
+    "outputHash": "a71679e85988bab9d4063360f3c2934e5e97d9aef83105adee5774caf1b0916a",
+    "losslessPixels": false
+  },
+  "assets/pmd/0025A0/portraits/Happy.png": {
+    "before": 1272,
+    "after": 1248,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "53fd67e08d99d7263a54f17b1f77e1f274a82cabc9aff8e03fb3d55e4ad47ad3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/portraits/Normal.png": {
+    "before": 1165,
+    "after": 1120,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "67c58c67855df2729707775e82ad76abeb7ae704a5547bffa0760ddd97fd864b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/portraits/Pain.png": {
+    "before": 1217,
+    "after": 1172,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "79eedfa5fa1ad826698f4c82e3e1035f97820b6adb0217d6789e78226faedf12",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/portraits/Sad.png": {
+    "before": 1180,
+    "after": 1174,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a318a6c25291f91b7286f244d383e6a41f4064235d6e88629d422c3c5d8a4e93",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/portraits/Sigh.png": {
+    "before": 1208,
+    "after": 1155,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ae2eab6d35eb7ea069397ff9a883b7b62f1041099e30073621f6d5bf5ec0794d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/portraits/Worried.png": {
+    "before": 1120,
+    "after": 1077,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "48bc927f2c51e22b386541aaca006ce16e08b11821a440982efafdf96c2b778c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Cringe-Anim.png": {
+    "before": 698,
+    "after": 675,
+    "originalSize": [
+      48,
+      64
+    ],
+    "size": [
+      48,
+      64
+    ],
+    "outputHash": "f4316824faf65faca74850413d4ac7a0ca98cbb1a38ff2074fe6d465efca674a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Eat-Anim.png": {
+    "before": 988,
+    "after": 931,
+    "originalSize": [
+      96,
+      48
+    ],
+    "size": [
+      96,
+      48
+    ],
+    "outputHash": "26c44201db145b0bbf05f6f5f355601a4cf7dc54579f56ff4ce573f13e3c0b7f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Faint-Anim.png": {
+    "before": 4658,
+    "after": 3357,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "25708ce17ec46856e3e56c7d777473919320cd323427ec809b5fb6813d07dd66",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/HitGround-Anim.png": {
+    "before": 1463,
+    "after": 1358,
+    "originalSize": [
+      320,
+      40
+    ],
+    "size": [
+      320,
+      40
+    ],
+    "outputHash": "37c19d80aaeec368e62aeb52ea536b6de2562efd65610dc1c481690f2f1deb96",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Hop-Anim.png": {
+    "before": 15300,
+    "after": 13573,
+    "originalSize": [
+      400,
+      704
+    ],
+    "size": [
+      400,
+      704
+    ],
+    "outputHash": "5528d934faa7b9dc887f37d49f5348cf44ef1d116a0db483debe772b6d3c688d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Hurt-Anim.png": {
+    "before": 4577,
+    "after": 4259,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "db5b2171a4f64db3c37bd6f92e98bc0c41048d0a567851e853e07795cbd3bd8a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Idle-Anim.png": {
+    "before": 8301,
+    "after": 7084,
+    "originalSize": [
+      240,
+      448
+    ],
+    "size": [
+      240,
+      448
+    ],
+    "outputHash": "82dab4d84d8a071763b915ee67550657a62f2fa754371214e049aade8b59507c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Laying-Anim.png": {
+    "before": 871,
+    "after": 765,
+    "originalSize": [
+      24,
+      256
+    ],
+    "size": [
+      24,
+      256
+    ],
+    "outputHash": "f4b58230cf8209f8e6df9a72804f94734143111f24ad8a8bfd6764d476d7930b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Nod-Anim.png": {
+    "before": 3246,
+    "after": 2745,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "4ad7f03ab307c63a481743dde9b00c0c0d9d50ba22d8871036affeb35f7e893e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Pain-Anim.png": {
+    "before": 13950,
+    "after": 12055,
+    "originalSize": [
+      480,
+      384
+    ],
+    "size": [
+      480,
+      384
+    ],
+    "outputHash": "7ea13ec9e3d50d014409220ef2ca1b1757b550d352a970baf5aea62cdac8942a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Pose-Anim.png": {
+    "before": 2715,
+    "after": 2030,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "64dcf2e9f7392cdadf373ffe177851a0e66a2e142e9e7e16fab7d63558784e83",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Rotate-Anim.png": {
+    "before": 15128,
+    "after": 14094,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "4cf7c30648bbd15efaa9985c70c9e00d1255f7a226d99cf8824588de474ee574",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Shoot-Anim.png": {
+    "before": 11534,
+    "after": 9711,
+    "originalSize": [
+      440,
+      448
+    ],
+    "size": [
+      440,
+      448
+    ],
+    "outputHash": "f848e8017eeb335d0b7659c9cc35979fbeac96a4d36d2e239c24328f1bdf5820",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Sleep-Anim.png": {
+    "before": 672,
+    "after": 644,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "68ec01c352e365bcd8e36cc8688a5d75736ac0c9d815b27eac1a4c725a024e97",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Wake-Anim.png": {
+    "before": 7270,
+    "after": 4030,
+    "originalSize": [
+      200,
+      320
+    ],
+    "size": [
+      200,
+      320
+    ],
+    "outputHash": "497e52e6960989cd366bbaddf32a6e03e99b8f7475836b3d9d045b6d24df970b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0025A0/sprites/Walk-Anim.png": {
+    "before": 6437,
+    "after": 5898,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "d2b09f6c1828785826b005d1356b8376a29c4c5359d7d2bc7e525bd2821faaa5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Angry.png": {
+    "before": 1844,
+    "after": 1809,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a2e80777f73a9c69befbe974c8922a2c35a185394c7da588a4f0240a21970a45",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Happy.png": {
+    "before": 1614,
+    "after": 1602,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "de1bb9539690c5c3e2776e1c97e1f0946dbc823cae20f30e03bdf6a26b02e8ec",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Joyous.png": {
+    "before": 1709,
+    "after": 1644,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "91e2496b4d081da89b1ccb083d14b755218498c8969c2d538ebda292e928b25a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Normal.png": {
+    "before": 1478,
+    "after": 1427,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4adaa713130cdc39cab3681c97afbfd89ff01e26197f1e61ce45ed84624ab608",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Pain.png": {
+    "before": 1572,
+    "after": 1495,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "89ac9bc4ef7ab630ee890907027fa49acdf078ef42fdd55929441c5a3f8204fc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Sad.png": {
+    "before": 1476,
+    "after": 1407,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e7dbc98d56a4a9026953e9a2bcfdf8a03976b4aa9d5d6494b791582534563d6e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Sigh.png": {
+    "before": 1642,
+    "after": 1583,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "52dd54f8bcced978305e01508604576508c6105e63b61628fdbdcbd587e90678",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Surprised.png": {
+    "before": 1756,
+    "after": 1671,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e6bb96fb06ed4e4d352a3756f70d02956e593c6d8694a09be69c161e20a455d6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/portraits/Worried.png": {
+    "before": 1397,
+    "after": 1322,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ea51062bc871051833794768d7e38c76041d9fe7ec2c502627ba67cd4b376037",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Faint-Anim.png": {
+    "before": 5049,
+    "after": 4821,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "7b5d752b6afe3b8d81a935a6b7782c0e12196a4cb0aaa952f48eccd71e63fb43",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/HitGround-Anim.png": {
+    "before": 2388,
+    "after": 2353,
+    "originalSize": [
+      320,
+      40
+    ],
+    "size": [
+      320,
+      40
+    ],
+    "outputHash": "842ea268327a88af50fd29e0718f54e393a5542d282c102d0361fcbdc1077e1b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Hop-Anim.png": {
+    "before": 26292,
+    "after": 25431,
+    "originalSize": [
+      400,
+      768
+    ],
+    "size": [
+      400,
+      768
+    ],
+    "outputHash": "30a004c89ad2f6b269259a6c2c570c3745c55fc4d587ebe4558f4f4abc6e2f04",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Hurt-Anim.png": {
+    "before": 6695,
+    "after": 6637,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "f5fd509f8c6f5fb0705cc88e6f064e937fce22714dc1d704ac9ae2c7f307ca23",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Idle-Anim.png": {
+    "before": 16242,
+    "after": 15948,
+    "originalSize": [
+      240,
+      448
+    ],
+    "size": [
+      240,
+      448
+    ],
+    "outputHash": "2be806b01810d577ba81285c43c52d664247973c8af539ee26f7d3d000ce8e83",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Laying-Anim.png": {
+    "before": 1299,
+    "after": 1247,
+    "originalSize": [
+      32,
+      192
+    ],
+    "size": [
+      32,
+      192
+    ],
+    "outputHash": "96aa77d3309c7c18969c15fef909caf200e383af87763ef6f39f8abc9e59141a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Nod-Anim.png": {
+    "before": 4626,
+    "after": 4524,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "b316e90dbf2db8464dd58773922ce709edce1329f5ba35402ef843f59455e4e1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Pain-Anim.png": {
+    "before": 26086,
+    "after": 25765,
+    "originalSize": [
+      480,
+      384
+    ],
+    "size": [
+      480,
+      384
+    ],
+    "outputHash": "558d5ed39180fea59ccdb184bff036d1a348fcca8edf845851dbc93265686733",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Pose-Anim.png": {
+    "before": 4483,
+    "after": 4258,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "7be185518d4f4268688d2d207e25c13c313ab514d6f56776604e0fd9bae1112f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Shoot-Anim.png": {
+    "before": 16855,
+    "after": 16659,
+    "originalSize": [
+      440,
+      448
+    ],
+    "size": [
+      440,
+      448
+    ],
+    "outputHash": "1ecfb2914d866f4bf6fcad890c4608bf03eabbb45fe89d9d9e73d013e6031d45",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Wake-Anim.png": {
+    "before": 16590,
+    "after": 16344,
+    "originalSize": [
+      200,
+      384
+    ],
+    "size": [
+      200,
+      384
+    ],
+    "outputHash": "a24fcb6edcfb7f79aefe08b2fed5ded740545aecf9e1992c65c7e7d9e28892f8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026A0/sprites/Walk-Anim.png": {
+    "before": 10731,
+    "after": 10676,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "ef1f6e04c09a35bd45c2625ed6e9cfa17855a0f7d710d95e5bc5ba656f655a2a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026L0/portraits/Surprised.png": {
+    "before": 1797,
+    "after": 1758,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4891c6722279cc7b71ccd163c73c38ed1e84854f702ab00c727e2fabb79e2dbf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026L0/portraits/Worried.png": {
+    "before": 1377,
+    "after": 1337,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a34d797e3b30327f24f29fccb26af4970708250240b3518246574aaf446076fd",
+    "losslessPixels": true
+  },
+  "assets/pmd/0026L0/sprites/Walk-Anim.png": {
+    "before": 14002,
+    "after": 13936,
+    "originalSize": [
+      256,
+      576
+    ],
+    "size": [
+      256,
+      576
+    ],
+    "outputHash": "07f629e9992260c8c03ddd6c13f9359fcb27f764f949958b629ca5a9f408baf0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/portraits/Sad.png": {
+    "before": 1964,
+    "after": 1938,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "99cf57c02605f5bed317f439831e7e5f51876eaa441c74c1082d9c131adaddea",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/portraits/Worried.png": {
+    "before": 1886,
+    "after": 1846,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7f6ec4ccf734a07d8c161643bc8bdda0b89f20a2d084c7574d0fa10864698156",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Hop-Anim.png": {
+    "before": 16682,
+    "after": 15389,
+    "originalSize": [
+      240,
+      640
+    ],
+    "size": [
+      240,
+      640
+    ],
+    "outputHash": "19d52576cbb4b55fc1fe7b49c2acb4733e32fc9eb091fa32732988594ebee53c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Hurt-Anim.png": {
+    "before": 5473,
+    "after": 5090,
+    "originalSize": [
+      112,
+      448
+    ],
+    "size": [
+      112,
+      448
+    ],
+    "outputHash": "777b1a2aaec1169bc78154323f82815cd90c5a1a4c3e114289c301048aff0545",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Idle-Anim.png": {
+    "before": 11298,
+    "after": 10466,
+    "originalSize": [
+      192,
+      320
+    ],
+    "size": [
+      192,
+      320
+    ],
+    "outputHash": "34776f68204fbcb7a98b80c6e6e73ff46cf4631691d3feac47eb86e40b888b7d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Rotate-Anim.png": {
+    "before": 6881,
+    "after": 5326,
+    "originalSize": [
+      216,
+      256
+    ],
+    "size": [
+      216,
+      256
+    ],
+    "outputHash": "905d4df17f5f1b394dd222c4121cb2a56bb94ebcfe21ca33ab48acea611610e7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Sleep-Anim.png": {
+    "before": 645,
+    "after": 636,
+    "originalSize": [
+      48,
+      24
+    ],
+    "size": [
+      48,
+      24
+    ],
+    "outputHash": "4492c07774a1fe164f01a17f6e6b5972f99c97afb0306fb40bef95487bfa868f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0035A0/sprites/Walk-Anim.png": {
+    "before": 11404,
+    "after": 10579,
+    "originalSize": [
+      192,
+      320
+    ],
+    "size": [
+      192,
+      320
+    ],
+    "outputHash": "d04fa7d907635c6b2f26e26920dbd10dd09442f0eba70fd4f78456d9e3c23db7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/portraits/Normal.png": {
+    "before": 1177,
+    "after": 1148,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "38d0419b5a15c1a92b444c1b3d20e3e032db5a635a249372d4a82f0e694e9f54",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Hop-Anim.png": {
+    "before": 16714,
+    "after": 15369,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "f5e7ec2812d032c75488b51eed62bcdd26d2657f7b0d63d7743b721449233072",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Hurt-Anim.png": {
+    "before": 5750,
+    "after": 5354,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "1027f626b230651498bee1d2fd5b01a33281f0b96d0bf4e1036a74696dbea6c9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Idle-Anim.png": {
+    "before": 13767,
+    "after": 12907,
+    "originalSize": [
+      192,
+      384
+    ],
+    "size": [
+      192,
+      384
+    ],
+    "outputHash": "1c52757962047ba10d3749d078bd91afceb0b69494c5cdc99b2dee57305a9ed6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Rotate-Anim.png": {
+    "before": 21913,
+    "after": 20851,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "8e0f413734d42651e0199f8bc4bee2d82cdf6f8f33f342ea85c7d64fb6ff44ad",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Sleep-Anim.png": {
+    "before": 871,
+    "after": 841,
+    "originalSize": [
+      64,
+      32
+    ],
+    "size": [
+      64,
+      32
+    ],
+    "outputHash": "baa9b906da6a846b424656b6de97a706563befe791cc30402760814f2cf42828",
+    "losslessPixels": true
+  },
+  "assets/pmd/0036A0/sprites/Walk-Anim.png": {
+    "before": 14960,
+    "after": 13926,
+    "originalSize": [
+      256,
+      384
+    ],
+    "size": [
+      256,
+      384
+    ],
+    "outputHash": "e112acb10211afa36d72c9c0c76b85db4e72582c20400b4c689e44b8ad9ccecb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Happy.png": {
+    "before": 1103,
+    "after": 1070,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9293afa93c43a2dfebd917d2528d7820f30c5e50d8b95a1fdbd8569cce4a9a11",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Joyous.png": {
+    "before": 1256,
+    "after": 1240,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ccfb016d42ecefba2180589f2cc68537cd340de539e28ddd6d6ebb2a562a6b42",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Normal.png": {
+    "before": 1342,
+    "after": 1313,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f1e3c11dae587f95ea03a5c5e1f3951c5bdcfd3390f39cda7d1806e12a408502",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Sad.png": {
+    "before": 1293,
+    "after": 1253,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e050c3943c9b0ecb5d90c08e5251ad7ffd2c0755f39537efce5f65f247bbd3d4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Sigh.png": {
+    "before": 1209,
+    "after": 1172,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6e15795adea722baa632494083cf80ef8681a97774dbe1a3bf8575351db75087",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Surprised.png": {
+    "before": 1747,
+    "after": 1692,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "fa4708434ccc6e007319bcd6deb06c805f5ee198a27f05402b465f3d71ddbc49",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/portraits/Worried.png": {
+    "before": 1293,
+    "after": 1272,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "de97fb32b7da7534184a42c37f140f5adcd0594b66e19566f35f30a10cd24982",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Faint-Anim.png": {
+    "before": 3207,
+    "after": 3021,
+    "originalSize": [
+      128,
+      256
+    ],
+    "size": [
+      128,
+      256
+    ],
+    "outputHash": "8e6b2b0817714118bd12a7dd95a79caa8eb365d8cf3b19cdaa27c1718016385a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Hop-Anim.png": {
+    "before": 14677,
+    "after": 14262,
+    "originalSize": [
+      240,
+      640
+    ],
+    "size": [
+      240,
+      640
+    ],
+    "outputHash": "eebf81d5883243c37d0708ff01a70bfba9ad5ac52f4d45a6d3e2a3b79c848cad",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Hurt-Anim.png": {
+    "before": 3481,
+    "after": 3425,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "2d02575aed3bc5b0da3ac61817b7382afaf8b74bc73210f2278fb228d7e9f9bf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Idle-Anim.png": {
+    "before": 4663,
+    "after": 4606,
+    "originalSize": [
+      120,
+      256
+    ],
+    "size": [
+      120,
+      256
+    ],
+    "outputHash": "dca1766ba18f648e5c4f57ff6470c70627d5c2b1bbc74888147d8c5f3de485ce",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Laying-Anim.png": {
+    "before": 626,
+    "after": 601,
+    "originalSize": [
+      32,
+      128
+    ],
+    "size": [
+      32,
+      128
+    ],
+    "outputHash": "14658a4e0cf9254dafddb130d3adb35c1160a50c939c3c1610c550e2a5789d97",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Nod-Anim.png": {
+    "before": 2455,
+    "after": 2434,
+    "originalSize": [
+      72,
+      256
+    ],
+    "size": [
+      72,
+      256
+    ],
+    "outputHash": "227910c2a671bbe7bcbb8152d6678071b7313b0a963ccd8059554bbc46da1ec4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Pose-Anim.png": {
+    "before": 1710,
+    "after": 1566,
+    "originalSize": [
+      72,
+      256
+    ],
+    "size": [
+      72,
+      256
+    ],
+    "outputHash": "95fdc1d7ee1892a5b2bf34eae17725f2d68f4ae3f0912f0ce08a8878d2689812",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Rotate-Anim.png": {
+    "before": 5310,
+    "after": 4395,
+    "originalSize": [
+      216,
+      256
+    ],
+    "size": [
+      216,
+      256
+    ],
+    "outputHash": "b1f907abc148abb3b8401a8975553203fdcea12d7f7b769dde064efa49f65446",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Shoot-Anim.png": {
+    "before": 13455,
+    "after": 13188,
+    "originalSize": [
+      384,
+      320
+    ],
+    "size": [
+      384,
+      320
+    ],
+    "outputHash": "6f8645d0e688984ab2a07d5ef6bca9a24e7ba4cd50e0a58716ea1ea7f5553bc6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Wake-Anim.png": {
+    "before": 4211,
+    "after": 4001,
+    "originalSize": [
+      160,
+      256
+    ],
+    "size": [
+      160,
+      256
+    ],
+    "outputHash": "b58e21912305948b8e1a666907eac2732466f1c7693b945d123f06a753623fa8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0039A0/sprites/Walk-Anim.png": {
+    "before": 8208,
+    "after": 7962,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "085ce0647285aa4cb3299caba2c68c10b8d5a6a94bfbb4ef09d5db2d84c74534",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/portraits/Happy.png": {
+    "before": 1599,
+    "after": 1582,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "fb4dcca274b4b3c761befd543c3b3672825d2ce68eb6ed902850317234629f07",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/portraits/Joyous.png": {
+    "before": 1541,
+    "after": 1476,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7c5c022061953c1687117ece25642b56c4e391a3bd8efd25486739131a1aa5af",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/portraits/Normal.png": {
+    "before": 1529,
+    "after": 1466,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "36ca46c5d4bfbf7deab3015fa4facdf06d59a40c6b14b6cec0c95061cb1ffa32",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/portraits/Sigh.png": {
+    "before": 1742,
+    "after": 1685,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e5863de72f572ccf86d37351481649733e922b7a212db98d2879fa484d7da959",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/portraits/Surprised.png": {
+    "before": 1519,
+    "after": 1518,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "39ae9a70c7d398a14f311ee3f4187fc0490f1eda3152dd1a624120c958a1801e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Hop-Anim.png": {
+    "before": 19426,
+    "after": 18191,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "edc34f9b85a78a3e958fb3437aa5fdde2af688a2d5459b3844db15912fac88e2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Hurt-Anim.png": {
+    "before": 5923,
+    "after": 5566,
+    "originalSize": [
+      80,
+      448
+    ],
+    "size": [
+      80,
+      448
+    ],
+    "outputHash": "54c0ad436f89cf4b93ceb895f8bf5cfc665e7b9f5ac4534d9710e0844d3c31a3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Idle-Anim.png": {
+    "before": 8628,
+    "after": 7917,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "2aa6a812b4ddc64984d04afacd8664fe20a614e317b9149017604bd1c4433a7e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Rotate-Anim.png": {
+    "before": 20286,
+    "after": 19226,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "99fd546a562900dca188d8bcf1ca0266615ae64a324f8657ab9ecd83180f4818",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Shoot-Anim.png": {
+    "before": 18687,
+    "after": 16451,
+    "originalSize": [
+      520,
+      448
+    ],
+    "size": [
+      520,
+      448
+    ],
+    "outputHash": "fc00ca9dcef2c61a9c0bb39bf7e0f3d614b4fff10ab4450f18cd6d8d0fe6ea2c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Sleep-Anim.png": {
+    "before": 728,
+    "after": 709,
+    "originalSize": [
+      48,
+      24
+    ],
+    "size": [
+      48,
+      24
+    ],
+    "outputHash": "33ca93af704b5c33659386ae2e026d7c016df3a11f50b03ac1224f2b2b4b3750",
+    "losslessPixels": true
+  },
+  "assets/pmd/0040A0/sprites/Walk-Anim.png": {
+    "before": 8512,
+    "after": 7953,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "4c043e1c3a6f09b80597f8906f5b80d081c8a661b92d9f0383b766a5c6ceb373",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Happy.png": {
+    "before": 1456,
+    "after": 1395,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "8750143cd9f134ebd68cd8b00c5d4a0b14515d17c7c9ac82be9b48a1aad65029",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Joyous.png": {
+    "before": 1696,
+    "after": 1634,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3efe25d9a99572172274b7d8406107bd0548074eff3a74e0abe4869cdf0d1632",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Normal.png": {
+    "before": 1487,
+    "after": 1429,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e490c3cbc1a4242d78eacecf1ad486d8aecbdad3559c0237f73078c7b6cfc3ac",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Sad.png": {
+    "before": 1523,
+    "after": 1450,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f24e11a19e667ea6d3aafae96c44ed2d472a8ef307b290695d26655ea658eaf6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Surprised.png": {
+    "before": 1588,
+    "after": 1524,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "bbba6dff9f0a694680bc203be6540bdbfef2973377e28c537f885b439d19c4cf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/portraits/Worried.png": {
+    "before": 1626,
+    "after": 1536,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4ce01b1e313523d25d3cab16574788bee6a02eba41393d9c719b3a461668966d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Charge-Anim.png": {
+    "before": 8939,
+    "after": 7426,
+    "originalSize": [
+      400,
+      320
+    ],
+    "size": [
+      400,
+      320
+    ],
+    "outputHash": "52e3e17977791701562d8de5111337c8b371253ed228bdc68cc501f80eea6a42",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Hop-Anim.png": {
+    "before": 28600,
+    "after": 26725,
+    "originalSize": [
+      400,
+      768
+    ],
+    "size": [
+      400,
+      768
+    ],
+    "outputHash": "b179a935a78efa09574729c317b7875715c9e84cb164e4de9172296926c35ef0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Hurt-Anim.png": {
+    "before": 6970,
+    "after": 6519,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "d72635be027a52a60d055c19813c015f6774c3bb90acebe53a4050e9a3ed29f1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Idle-Anim.png": {
+    "before": 6921,
+    "after": 6575,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "0c34ae143cdf248d244ba7131201809e0d90e84198f99eb445daafc2adb0da14",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Rotate-Anim.png": {
+    "before": 27719,
+    "after": 26005,
+    "originalSize": [
+      360,
+      384
+    ],
+    "size": [
+      360,
+      384
+    ],
+    "outputHash": "59cc7fb52ff53b69bd7f7c4cb596d1528af5ab4400d19ec6775edff100141189",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Sleep-Anim.png": {
+    "before": 1104,
+    "after": 1070,
+    "originalSize": [
+      64,
+      32
+    ],
+    "size": [
+      64,
+      32
+    ],
+    "outputHash": "866dfb221b0cf0a2a90d025bde2a8092caf91c10c046ff68ae73328f54e14693",
+    "losslessPixels": true
+  },
+  "assets/pmd/0106A0/sprites/Walk-Anim.png": {
+    "before": 10344,
+    "after": 9634,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "4e7faa6649821b3fd2c14a1013f778133f3f3b2fade0558744300680d7fbad3f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Charge-Anim.png": {
+    "before": 6669,
+    "after": 6119,
+    "originalSize": [
+      240,
+      320
+    ],
+    "size": [
+      240,
+      320
+    ],
+    "outputHash": "c2ce046d7266b7acd3638f6e9d0b8995a734dc1d406ae81d04e24fb9f10ee6dd",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Hop-Anim.png": {
+    "before": 20800,
+    "after": 19296,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "25a8462dfad8edc80e2fde5e7794f91511ff1904ebfbfbb553a3267e3cfade52",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Hurt-Anim.png": {
+    "before": 5431,
+    "after": 5170,
+    "originalSize": [
+      64,
+      384
+    ],
+    "size": [
+      64,
+      384
+    ],
+    "outputHash": "157d280fc5509044c751a72bbf9dc2e0d91bba7315d3c646ed469e9cb2fceff9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Idle-Anim.png": {
+    "before": 9178,
+    "after": 8642,
+    "originalSize": [
+      192,
+      448
+    ],
+    "size": [
+      192,
+      448
+    ],
+    "outputHash": "c9bae0f5d8bf2b1344a77de1733b3ff11801db21eb9be19afa32da25a1b87951",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Rotate-Anim.png": {
+    "before": 21673,
+    "after": 20458,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "178dc8e486789bd136304c414b7c01db4b6834a4da46f374e38037a1ed587cb0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Sleep-Anim.png": {
+    "before": 802,
+    "after": 782,
+    "originalSize": [
+      48,
+      32
+    ],
+    "size": [
+      48,
+      32
+    ],
+    "outputHash": "4181b50b8cce1e1f53998f751b0d18ef21e236c2835dea969790907d312a6e66",
+    "losslessPixels": true
+  },
+  "assets/pmd/0107A0/sprites/Walk-Anim.png": {
+    "before": 8798,
+    "after": 8243,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "fd4694168bea9e8da915291a3fbf4781afd980392e72f6a25f5ae78bb5744661",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/portraits/Angry.png": {
+    "before": 2164,
+    "after": 2101,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "cb912d5374d58dd655b19f73ae48c04bd099baec1f40bf292cf5898d2793af1a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/portraits/Pain.png": {
+    "before": 2079,
+    "after": 2052,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "8cf7ae3261364f1f48698b49ed790f093075c821c7670e79270cb5a1d4adf913",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/portraits/Sad.png": {
+    "before": 2071,
+    "after": 2016,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "882c97bd7591b3f8ffccb144bccf6c5ff0891ea11a463222bc54f67782f61d87",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Hop-Anim.png": {
+    "before": 21284,
+    "after": 17163,
+    "originalSize": [
+      400,
+      768
+    ],
+    "size": [
+      400,
+      768
+    ],
+    "outputHash": "0be6bf84089691cf93d388fdf677523d04155c27d0f737b6bd0af4e8e60e2b1d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Hurt-Anim.png": {
+    "before": 5468,
+    "after": 5089,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "87abba776eac078a8172f43105704018ec97054d72aa323758e8983f4307a49a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Idle-Anim.png": {
+    "before": 9248,
+    "after": 8598,
+    "originalSize": [
+      160,
+      448
+    ],
+    "size": [
+      160,
+      448
+    ],
+    "outputHash": "d3962bcd6b4b2ff99cf3463a4867f03e1a40cfe30c9c2fb6d20cc8d5db63e979",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Rotate-Anim.png": {
+    "before": 22631,
+    "after": 20629,
+    "originalSize": [
+      360,
+      384
+    ],
+    "size": [
+      360,
+      384
+    ],
+    "outputHash": "638325a9ff878ec855d168d286c58e228d617978b37b6ba7bddf30d24c09621f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Shoot-Anim.png": {
+    "before": 16224,
+    "after": 14418,
+    "originalSize": [
+      528,
+      448
+    ],
+    "size": [
+      528,
+      448
+    ],
+    "outputHash": "0a174b8521ceab1fbf2fcbe85f8f75e10a730bb22db926bcc6ee4637a5b450e4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Sleep-Anim.png": {
+    "before": 766,
+    "after": 746,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "0d8293668337a41a97e8ccd0fba2bd2ce8ee6debc117830fc52ff15a81b767ef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0125A0/sprites/Walk-Anim.png": {
+    "before": 9248,
+    "after": 8598,
+    "originalSize": [
+      160,
+      448
+    ],
+    "size": [
+      160,
+      448
+    ],
+    "outputHash": "d3962bcd6b4b2ff99cf3463a4867f03e1a40cfe30c9c2fb6d20cc8d5db63e979",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/portraits/Normal.png": {
+    "before": 1983,
+    "after": 1945,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2d86f5d19cdf56e2f7dac5a9f45b07c7bd67d83c75e030987e13f297ef0f7786",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/portraits/Worried.png": {
+    "before": 1726,
+    "after": 1674,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e6667c4648d367e05b3fc5edb702e87a79f122dfd48e7369103ccffafd674ac6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Hop-Anim.png": {
+    "before": 25712,
+    "after": 23256,
+    "originalSize": [
+      400,
+      704
+    ],
+    "size": [
+      400,
+      704
+    ],
+    "outputHash": "ccf54ca79e0b0b0b6e7bcab8a91d437feab17dd1f178462cf4027ab669dec66b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Hurt-Anim.png": {
+    "before": 7327,
+    "after": 6933,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "1f3627b4790801912b25861d233801e270433665250564c82c43e294946e9569",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Idle-Anim.png": {
+    "before": 7779,
+    "after": 7347,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "321b74d2e8b9693c2f1e1220510ba0cec77ff6761a848fc7487fb4bcbc919532",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Rotate-Anim.png": {
+    "before": 25344,
+    "after": 24098,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "a342bb46934538c21d404c8b2e5a0cf772949be9fd309d296daa13864a12cadf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Shoot-Anim.png": {
+    "before": 18329,
+    "after": 16240,
+    "originalSize": [
+      480,
+      448
+    ],
+    "size": [
+      480,
+      448
+    ],
+    "outputHash": "0e9582c409f2f0856445b3a16b93c86a33ae0900f2af49211e6e75a803d96489",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Sleep-Anim.png": {
+    "before": 859,
+    "after": 826,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "bce4ffdf1f086b8b47ece1d6f0f5eed3b07ba43f7fd8fd1b9a5fc36a1d7f4731",
+    "losslessPixels": true
+  },
+  "assets/pmd/0126A0/sprites/Walk-Anim.png": {
+    "before": 10126,
+    "after": 9522,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "616645f067b6e77ad1ef19dd4fd1e72e6ff3e746547f1f5d2a7717da183f201c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Cringe-Anim.png": {
+    "before": 903,
+    "after": 872,
+    "originalSize": [
+      64,
+      48
+    ],
+    "size": [
+      64,
+      48
+    ],
+    "outputHash": "5cff917c0abd5ddd7a27659c913e628cdcabf7b401749b15d0542d46003b86ac",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Eat-Anim.png": {
+    "before": 1130,
+    "after": 1088,
+    "originalSize": [
+      96,
+      32
+    ],
+    "size": [
+      96,
+      32
+    ],
+    "outputHash": "d8fbdaf4da626246167deac5c71bfc86b29ea937e815684acc40d61d57386c6f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Faint-Anim.png": {
+    "before": 4165,
+    "after": 3841,
+    "originalSize": [
+      160,
+      256
+    ],
+    "size": [
+      160,
+      256
+    ],
+    "outputHash": "d9c643b230997917ea6e7524ef35f0a97a3d30fdadfbf8bd7bcf137a3fb1a805",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/HitGround-Anim.png": {
+    "before": 2084,
+    "after": 1971,
+    "originalSize": [
+      256,
+      40
+    ],
+    "size": [
+      256,
+      40
+    ],
+    "outputHash": "b6aaa1c129924eb3fbc8c9bea2511b75ff8c3ed46257317195f8fbee9779e862",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Hop-Anim.png": {
+    "before": 18602,
+    "after": 17303,
+    "originalSize": [
+      320,
+      640
+    ],
+    "size": [
+      320,
+      640
+    ],
+    "outputHash": "f68ab9f788d18ec3ce7edd21a50cec21d382fc1c79e90e6b378729f773452aea",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Hurt-Anim.png": {
+    "before": 5554,
+    "after": 5400,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "4399aa071cd748e787d8131bc16f162e4580292005f6a8572d1c201819804b6b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Idle-Anim.png": {
+    "before": 3926,
+    "after": 3922,
+    "originalSize": [
+      48,
+      256
+    ],
+    "size": [
+      48,
+      256
+    ],
+    "outputHash": "640a9c737de57045f183a6716f253519bf5ecabbebc5994544a439268cc4f8db",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Laying-Anim.png": {
+    "before": 886,
+    "after": 823,
+    "originalSize": [
+      24,
+      128
+    ],
+    "size": [
+      24,
+      128
+    ],
+    "outputHash": "a90dfe0fd21596133d9163e0623c9076eb8eaa4145719af4bd501c1d332db0da",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Nod-Anim.png": {
+    "before": 3554,
+    "after": 3297,
+    "originalSize": [
+      96,
+      256
+    ],
+    "size": [
+      96,
+      256
+    ],
+    "outputHash": "87c44eb5d93900045910b8cbb8bcbe0a6fb4fc4bf754bed7a8aa196ba07a41cb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Pain-Anim.png": {
+    "before": 16732,
+    "after": 15787,
+    "originalSize": [
+      384,
+      320
+    ],
+    "size": [
+      384,
+      320
+    ],
+    "outputHash": "0156166b1c03bfabe10280729ced203c5de5aaa3b01ef350d05c803910f7571d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Pose-Anim.png": {
+    "before": 4188,
+    "after": 3754,
+    "originalSize": [
+      120,
+      320
+    ],
+    "size": [
+      120,
+      320
+    ],
+    "outputHash": "a5ce7afc40d4298bb854fd016d1e3329f44adf477bd78e3355be060702c907b5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Rotate-Anim.png": {
+    "before": 7656,
+    "after": 6215,
+    "originalSize": [
+      216,
+      256
+    ],
+    "size": [
+      216,
+      256
+    ],
+    "outputHash": "654761eacc1147720d0cecd5ca629aa9cf972ea5256b7a6ec47ad52edcbb74ff",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Shoot-Anim.png": {
+    "before": 11258,
+    "after": 10742,
+    "originalSize": [
+      256,
+      320
+    ],
+    "size": [
+      256,
+      320
+    ],
+    "outputHash": "e0370cf814a4dca98af5e9f1f3efbf0c0f774f085af26ce67a6f894a69cfa8eb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Sleep-Anim.png": {
+    "before": 804,
+    "after": 784,
+    "originalSize": [
+      64,
+      24
+    ],
+    "size": [
+      64,
+      24
+    ],
+    "outputHash": "613712ecc720962cd10f016c66a3db5acec75001768c31287a6d7ac3eb1fa4aa",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Wake-Anim.png": {
+    "before": 6019,
+    "after": 5313,
+    "originalSize": [
+      192,
+      256
+    ],
+    "size": [
+      192,
+      256
+    ],
+    "outputHash": "bfe85fa2997a1f422cbdbb7aaf986b27f0612a84db28c9941f9049dedfcc35b6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0133A0/sprites/Walk-Anim.png": {
+    "before": 14849,
+    "after": 13930,
+    "originalSize": [
+      280,
+      384
+    ],
+    "size": [
+      280,
+      384
+    ],
+    "outputHash": "e67cdc71d512053f3da73729b4bc7f9a9ce88db1c9ccb006952f0c854172720f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/portraits/Angry.png": {
+    "before": 2124,
+    "after": 2064,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6c6ad076c5b5b13920b35fb95397c0e41fecd88fb7bec80e81951131e04f91bc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/portraits/Sigh.png": {
+    "before": 2039,
+    "after": 1980,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f2a0e832187f5be931e32bc85ef62cb50049bb13d1b8b5e6cf140039c8024f57",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/portraits/Surprised.png": {
+    "before": 2072,
+    "after": 2012,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "99517e52e05ec89b9b82eefdebdf08203370d266154c4f6d7a4a783ee6fb0917",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/portraits/Worried.png": {
+    "before": 2061,
+    "after": 2019,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4492d9aa1a16a1083f0da69896a706e15cea7d52a4f85bbf45f4f85918db0ebc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Hop-Anim.png": {
+    "before": 30801,
+    "after": 27623,
+    "originalSize": [
+      560,
+      832
+    ],
+    "size": [
+      560,
+      832
+    ],
+    "outputHash": "a64bbf6a7f26890f496e2c15e98199c23c4200c99fb07208889787cc4415ff2e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Hurt-Anim.png": {
+    "before": 6088,
+    "after": 5761,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "5b9dc31ab2f2766ecd3d4bb9b876982a7b81c482dca5e60e235ec8f223ff5560",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Idle-Anim.png": {
+    "before": 6620,
+    "after": 6247,
+    "originalSize": [
+      80,
+      448
+    ],
+    "size": [
+      80,
+      448
+    ],
+    "outputHash": "10d1750285c4a30e006a41da64c5b014b7dab3f6fd79fbc99ebf74516646e6c8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Rotate-Anim.png": {
+    "before": 30143,
+    "after": 28790,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "bfa1c1ccd6cfff9c6e7647eba8ab04f183fdd588721db1f23677d0bccb8f2d99",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Shoot-Anim.png": {
+    "before": 25078,
+    "after": 22902,
+    "originalSize": [
+      672,
+      576
+    ],
+    "size": [
+      672,
+      576
+    ],
+    "outputHash": "d2c7e17ed1c91e722ff4ef3fb4a765b8128102e06b45e4930620df65f4d60287",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Sleep-Anim.png": {
+    "before": 934,
+    "after": 914,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "2bddc3469bd568f07596f1590755a3eb091c2d7ce7396e8e153d66aae6f73e71",
+    "losslessPixels": true
+  },
+  "assets/pmd/0134A0/sprites/Walk-Anim.png": {
+    "before": 10180,
+    "after": 9648,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "92aa19244152eff8c2a55592aef4f03bbae533142a1c9db51123185171a8df59",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Cringe-Anim.png": {
+    "before": 850,
+    "after": 848,
+    "originalSize": [
+      80,
+      56
+    ],
+    "size": [
+      80,
+      56
+    ],
+    "outputHash": "6cf234b2a5910a1f8d89f9d7c3203e8acedb2592b4b739bc07d18cdafb4b9d64",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Faint-Anim.png": {
+    "before": 3145,
+    "after": 2898,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "fffb069625af9ed77f4cec692c449f2db1d69cc09dcb2df7a11e0fcf1f25814c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/HitGround-Anim.png": {
+    "before": 1101,
+    "after": 1092,
+    "originalSize": [
+      224,
+      48
+    ],
+    "size": [
+      224,
+      48
+    ],
+    "outputHash": "e3262066c239fe0e9afb4bdf729b5492293ab3549165a90007705ec3e1c012c6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Hop-Anim.png": {
+    "before": 15807,
+    "after": 14777,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "42355a1648107aa6246384a725d2a4290f51c1a0b0bea51075a2575a97109eef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Hurt-Anim.png": {
+    "before": 5781,
+    "after": 5712,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "f68398c139b5f947b1073e00340ac4298a04bf9eb250e70e6b8bea19c16e2f24",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Idle-Anim.png": {
+    "before": 4854,
+    "after": 4810,
+    "originalSize": [
+      64,
+      320
+    ],
+    "size": [
+      64,
+      320
+    ],
+    "outputHash": "966095eb940f41f48c4a35b1577760fc9889c0f18346dd0f57a01a1a4bf2abc7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Laying-Anim.png": {
+    "before": 807,
+    "after": 779,
+    "originalSize": [
+      32,
+      192
+    ],
+    "size": [
+      32,
+      192
+    ],
+    "outputHash": "4ef017b62ca27a3c8c018ab7169fbe52a59cde72f4635cee81c88d0a664b7873",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Nod-Anim.png": {
+    "before": 3253,
+    "after": 3128,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "4f952be4d8e6da636ab57c880392996c22ca718dd6cde5a728fa74f7810031be",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Pain-Anim.png": {
+    "before": 11339,
+    "after": 10838,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "ae7277035d69b761d3e63183504d6f0a475de20f6f9eced77821734b7ae400ff",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Pose-Anim.png": {
+    "before": 5135,
+    "after": 4543,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "753416358acec5feda5cb31a2835bb828dfb407c4b3ab5675ed9ff23050864ad",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Rotate-Anim.png": {
+    "before": 17351,
+    "after": 16893,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "3e8c8dedfcd92bf0af3165a5e6338a14dc9c0e0134a07edaac732ffac3b8c059",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Shoot-Anim.png": {
+    "before": 13503,
+    "after": 13122,
+    "originalSize": [
+      480,
+      448
+    ],
+    "size": [
+      480,
+      448
+    ],
+    "outputHash": "49c6c3f891de61b34d7625b185a75f1a41ce09ebccf71dec922f780271e2ce71",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Sleep-Anim.png": {
+    "before": 548,
+    "after": 544,
+    "originalSize": [
+      64,
+      32
+    ],
+    "size": [
+      64,
+      32
+    ],
+    "outputHash": "6a95cb917915cc7c3624cc7b93973a35e133b00256b7b71e796e190d3a48493b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Wake-Anim.png": {
+    "before": 5312,
+    "after": 4389,
+    "originalSize": [
+      192,
+      320
+    ],
+    "size": [
+      192,
+      320
+    ],
+    "outputHash": "8ac27229eaaebbd65d0e59231aec7508644652e6f7cfff26a9d841332e65f882",
+    "losslessPixels": true
+  },
+  "assets/pmd/0135A0/sprites/Walk-Anim.png": {
+    "before": 7057,
+    "after": 6923,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "59febb9a5c1719dd68ace6d581f54d0896e116a3d23344e4bed76e1326ec0ead",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Happy.png": {
+    "before": 2116,
+    "after": 2064,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "fc18817060093a1bc97eb270f0747b6b236a59d8ee82980a31b29a77b935fddb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Joyous.png": {
+    "before": 1963,
+    "after": 1942,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "d4c4a5e2f771bc24839c30bfbed57698a66b0a58fd9caec12961f13e80b8c37d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Normal.png": {
+    "before": 2024,
+    "after": 1957,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e09a3da606bb9ec61c5d9fd39e88a4c1ed2c090d7d48bb759e482bbaf3f56be1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Sigh.png": {
+    "before": 1833,
+    "after": 1787,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "5d4079c6d9d5cf65bcae04c20a97e9475a13ac244c05ca4df9af32d55509380d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Surprised.png": {
+    "before": 2134,
+    "after": 2056,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "27b798cba9032cc7a92bfa10e9b99147e5d957aab170819d65dcdce883647ce3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/portraits/Worried.png": {
+    "before": 1853,
+    "after": 1787,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f24a6787bb047d53de6978c884b13688707c84185cbd8797e6d60f46e1810927",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Eat-Anim.png": {
+    "before": 1111,
+    "after": 1104,
+    "originalSize": [
+      96,
+      40
+    ],
+    "size": [
+      96,
+      40
+    ],
+    "outputHash": "1e630f53e33dbb094652422c17f30bf6f0a01204c02356bee4ab314aeab6c786",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Faint-Anim.png": {
+    "before": 4222,
+    "after": 3940,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "c1d7373f0193ecd1073344e7b0b6689d08a0ff6530e96c4a9fa686988b3303eb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/HitGround-Anim.png": {
+    "before": 2023,
+    "after": 1957,
+    "originalSize": [
+      256,
+      40
+    ],
+    "size": [
+      256,
+      40
+    ],
+    "outputHash": "23794aaeb823cb8a6e42c0e7c87c4c6b3da8e43d41b1bd0ea27008ba05c4ecb4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Hop-Anim.png": {
+    "before": 20045,
+    "after": 19146,
+    "originalSize": [
+      320,
+      640
+    ],
+    "size": [
+      320,
+      640
+    ],
+    "outputHash": "342a6f327596a380acc34a8b4a7dc10cf7b42f91ff0fb7a129649242f4ec2f76",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Hurt-Anim.png": {
+    "before": 5644,
+    "after": 5489,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "74dc7fa2d1227e80e2a6c3d6daccd7a8f3428523d2b79481739fee07920b0a99",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Idle-Anim.png": {
+    "before": 6759,
+    "after": 6717,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "5c9e68ee3ddb797568f3f275e871db470e2fbd1a447020199118b4c004066588",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Laying-Anim.png": {
+    "before": 1049,
+    "after": 970,
+    "originalSize": [
+      40,
+      128
+    ],
+    "size": [
+      40,
+      128
+    ],
+    "outputHash": "ae9bd38adebffe088b53279aecf12ca3638f69b02b525e5987007d1931fcf411",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Nod-Anim.png": {
+    "before": 3655,
+    "after": 3552,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "f231a1d1a376fa7b6fcbd54cfb77704adbb63cfa231c72ff2e2d115677550f71",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Pain-Anim.png": {
+    "before": 18860,
+    "after": 18539,
+    "originalSize": [
+      480,
+      384
+    ],
+    "size": [
+      480,
+      384
+    ],
+    "outputHash": "8eb3aaff4581bdf97a9ca3b2504128b45564ba9c4878cbee9cbe94b583a9398f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Pose-Anim.png": {
+    "before": 4517,
+    "after": 4217,
+    "originalSize": [
+      120,
+      384
+    ],
+    "size": [
+      120,
+      384
+    ],
+    "outputHash": "32e51c10b774921248518d9b20a91faadb1748f0e406906ad5e3a7fa15ca8da9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Rotate-Anim.png": {
+    "before": 21176,
+    "after": 21052,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "28c0019e7b1c74dbdb12aaca41d43d885242fb212f855233f7fa6e672c8ca6fd",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Shoot-Anim.png": {
+    "before": 9764,
+    "after": 9638,
+    "originalSize": [
+      320,
+      320
+    ],
+    "size": [
+      320,
+      320
+    ],
+    "outputHash": "2b5510875aceb3444eb0764101f827e0042cf43a3bf9db404a9020d66270e3e3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Wake-Anim.png": {
+    "before": 15660,
+    "after": 15308,
+    "originalSize": [
+      240,
+      320
+    ],
+    "size": [
+      240,
+      320
+    ],
+    "outputHash": "4a1e447583a4679c096d9beeb1163febf017d967c35b1724ee3f38b69bd4b51a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0136A0/sprites/Walk-Anim.png": {
+    "before": 7642,
+    "after": 7548,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "10c2ed529d4696db9ddcb559a7c7e7b2d3727d2d941968f26b1fab4a48727751",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/portraits/Angry.png": {
+    "before": 1460,
+    "after": 1390,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e41d8bc58785b4e900acadec99084da19c26f129ebb6406b38c6d2942c79a0f8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/portraits/Happy.png": {
+    "before": 1342,
+    "after": 1314,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a6cde3128b089469db4f68734ab82bed6357b037518e36d4925fe9346199637a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/portraits/Joyous.png": {
+    "before": 1469,
+    "after": 1429,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "5098670dcd7e416e8ea60ca51d837bb399146f2a2b71f43d65c39f945b0b703a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/portraits/Sigh.png": {
+    "before": 1386,
+    "after": 1323,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "17202e1affa5e71d465f7ddda256cfb12530baec9b1ea2ec1944fd32f2a219c3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Hop-Anim.png": {
+    "before": 21801,
+    "after": 20103,
+    "originalSize": [
+      320,
+      768
+    ],
+    "size": [
+      320,
+      768
+    ],
+    "outputHash": "a9bdde0cbf024ad76f88f5ea88300ee16af0278d0313f52e64b3b6b8ddf675c3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Hurt-Anim.png": {
+    "before": 6289,
+    "after": 5791,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "c5bdcace7c83db85adbf0e6cffcd46634856e1c73353782c88fa91c3c0af883f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Idle-Anim.png": {
+    "before": 12874,
+    "after": 11812,
+    "originalSize": [
+      192,
+      512
+    ],
+    "size": [
+      192,
+      512
+    ],
+    "outputHash": "e91d1d499deb88af452791989d6ab8395b9261017885ea2e18bad693f74a5e57",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Rotate-Anim.png": {
+    "before": 22680,
+    "after": 21386,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "38778e7bfc020b8c22764a12197e0469494489839eb21ff71b003d3f3526dd3e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Shoot-Anim.png": {
+    "before": 19152,
+    "after": 16773,
+    "originalSize": [
+      480,
+      448
+    ],
+    "size": [
+      480,
+      448
+    ],
+    "outputHash": "1e38e525706e0bb1dec0d633c3b2b3fe77b3bca580b4d1507a1fa9c337217545",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Sleep-Anim.png": {
+    "before": 835,
+    "after": 817,
+    "originalSize": [
+      80,
+      24
+    ],
+    "size": [
+      80,
+      24
+    ],
+    "outputHash": "e54adf6d1877274b1f3443742e123c5d4698b933ba74ddb78e4698a9eecff019",
+    "losslessPixels": true
+  },
+  "assets/pmd/0143A0/sprites/Walk-Anim.png": {
+    "before": 8608,
+    "after": 7910,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "bebbc15c3965b1f721a9ed897940054d19e8d84f45838f55a524fb4e3afcb6ab",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Angry.png": {
+    "before": 1624,
+    "after": 1588,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9a0a66dd7b4b692416a11c85e6417bcb539e90c98d16ce7cc53eb47b0d200904",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Happy.png": {
+    "before": 1552,
+    "after": 1487,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "808d2f3e91c21ac70d3c1d8064c3170e7748cd7617e7ed582e348fe680cf881d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Joyous.png": {
+    "before": 1627,
+    "after": 1558,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "b4a00b082d9f9926f48ab15208e6ca31be9cd34fdefe2cb184d4eb789a43184e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Normal.png": {
+    "before": 1592,
+    "after": 1573,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f3e34808671c5bf5247938d91e60bf42491a87bcd807a283237e21bc0bd73453",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Pain.png": {
+    "before": 1519,
+    "after": 1434,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6470b0b45e124392a7bba45edc6b98c57398fdc14cb5c0c49270dbf111e56720",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Sad.png": {
+    "before": 1470,
+    "after": 1403,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4027f302a0df1c4b4a9f8f216bf8e4cc668e68cdffe6efed18f801f9b0123a33",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Sigh.png": {
+    "before": 1512,
+    "after": 1421,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "1b5a9ceafa20c18f03b51afabfaac0434539134aec315b79ef50159163dd0a6d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Surprised.png": {
+    "before": 1705,
+    "after": 1664,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "5c3dbe2da829a7f1eea19c9ff9b518d6880d10138aa9deacff5133d7cdb7474b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/portraits/Worried.png": {
+    "before": 1559,
+    "after": 1489,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2ec6fda6a172173b96f4fc5d9daaa097ef0a347cb1c4357e4314ee5fddc3128f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Faint-Anim.png": {
+    "before": 3043,
+    "after": 2752,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "9009d13ee850f8cd9b32180b3935ed54b96d3a6729ac59570a2011a2c95998a7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/HitGround-Anim.png": {
+    "before": 1297,
+    "after": 1279,
+    "originalSize": [
+      256,
+      48
+    ],
+    "size": [
+      256,
+      48
+    ],
+    "outputHash": "b3ba18ddcad581cb0be541e648aac02c2fd8e5c3a3e40362cfce00bd1b75ac22",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Hop-Anim.png": {
+    "before": 14183,
+    "after": 13562,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "b8d4c49d5d6973fbc5c07b9027d95f8ad675c2fa18536ab57af5d4e1b341d092",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Hurt-Anim.png": {
+    "before": 3617,
+    "after": 3556,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "68276c5c1cff171df27a7d996077cf8e2f6f8e9b7369adac5fa906c784f26dcf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Idle-Anim.png": {
+    "before": 5466,
+    "after": 5309,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "a070c0aaef3a6c349984ae445acc65e2bbd6ffd8af01806ed58fb14305f5ebd1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Laying-Anim.png": {
+    "before": 769,
+    "after": 734,
+    "originalSize": [
+      32,
+      192
+    ],
+    "size": [
+      32,
+      192
+    ],
+    "outputHash": "bbd8f8720be6da51673840366039b22423cd50d5feb518b4a9a4009bcb6189a9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Nod-Anim.png": {
+    "before": 2622,
+    "after": 2526,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "221fc4a8548318db5fcec0e9bef35fe4b9804333812a37449d88ef44a7413c26",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Pain-Anim.png": {
+    "before": 11563,
+    "after": 11216,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "6d400dc3e0216dadfecd8f76f965b636acf2f0f4c41794508a9e958f9a10043e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Pose-Anim.png": {
+    "before": 3845,
+    "after": 3371,
+    "originalSize": [
+      120,
+      384
+    ],
+    "size": [
+      120,
+      384
+    ],
+    "outputHash": "d5e7a64fabb9757ab2a33df0ed94d9228f1f0ce157a6138e94ac0c824f9bf401",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Rotate-Anim.png": {
+    "before": 12079,
+    "after": 11922,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "d719be7882f31ba9f4ab2244c182a780a33e1ed04ec721c8de55e92104a9120a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Wake-Anim.png": {
+    "before": 4010,
+    "after": 3704,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "aa38542b0bac7e084ad845dc729adcdb2cad370fadcc5e97ab340a50ffe20ede",
+    "losslessPixels": true
+  },
+  "assets/pmd/0172A0/sprites/Walk-Anim.png": {
+    "before": 9180,
+    "after": 8899,
+    "originalSize": [
+      256,
+      384
+    ],
+    "size": [
+      256,
+      384
+    ],
+    "outputHash": "cae1044660325e51c4d0f3d995a22f741c9fa25a8aa7537f020c6261d2cb704a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/portraits/Angry.png": {
+    "before": 1411,
+    "after": 1409,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "0e504c7eacbbfcf556f479dde5239cad9e566c0ec86f1530acca798dffe49648",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/portraits/Joyous.png": {
+    "before": 1537,
+    "after": 1533,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "d20194bf014ee1047fb147b3d4cc50517af1f9269bd1c319f45801ef2677acb6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Hop-Anim.png": {
+    "before": 13333,
+    "after": 12331,
+    "originalSize": [
+      240,
+      640
+    ],
+    "size": [
+      240,
+      640
+    ],
+    "outputHash": "b334f6fc66a2e5fee7fed11fec36d3b4f5f317b72d9ca5c8466ea3d7d620c22e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Hurt-Anim.png": {
+    "before": 5120,
+    "after": 4794,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "0cd897816d31fafc3f533ee03353f400534466685da8eb4a15fb3ef7108e9579",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Idle-Anim.png": {
+    "before": 3536,
+    "after": 3323,
+    "originalSize": [
+      48,
+      256
+    ],
+    "size": [
+      48,
+      256
+    ],
+    "outputHash": "e39bd69b4d9b60304e1ace2bb8e16aecc10156a20c96fec3f59d1c8e67c21c66",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Rotate-Anim.png": {
+    "before": 5561,
+    "after": 4333,
+    "originalSize": [
+      216,
+      256
+    ],
+    "size": [
+      216,
+      256
+    ],
+    "outputHash": "a810c8a3ddb6638d03f965f137b6fb782fd863fcde010e1b32562e237eb34c8f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Shoot-Anim.png": {
+    "before": 8010,
+    "after": 7143,
+    "originalSize": [
+      216,
+      256
+    ],
+    "size": [
+      216,
+      256
+    ],
+    "outputHash": "7e72fed2249da0c8ea3226fea788c8c8f6891380b8c134599bfbcf3ef737d3bd",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Sleep-Anim.png": {
+    "before": 586,
+    "after": 581,
+    "originalSize": [
+      48,
+      24
+    ],
+    "size": [
+      48,
+      24
+    ],
+    "outputHash": "e9038e7fb71e9543a1d0693612b04aaeb2ee0337b01068eadbdd7a921a2057ea",
+    "losslessPixels": true
+  },
+  "assets/pmd/0173A0/sprites/Walk-Anim.png": {
+    "before": 9567,
+    "after": 8761,
+    "originalSize": [
+      256,
+      256
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "outputHash": "9e60919ceeee70b0936eeec629130626c91a74d83670357d24a129ffc4cf938a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Angry.png": {
+    "before": 1501,
+    "after": 1452,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "493d9a3a55bf1e794efb1537d2dd5a5607924c28dfcf20b7ba7a52100e6dda8e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Happy.png": {
+    "before": 1233,
+    "after": 1181,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ffa41a748c67a9aa33dc05628bc919588e73cb7a81f3e9bdad94529d31d6523c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Normal.png": {
+    "before": 1292,
+    "after": 1263,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "02ba25386df4d7cb51bbab74582d8b48f6b3cb0787a1568306109491de06fe4e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Pain.png": {
+    "before": 1337,
+    "after": 1285,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e7bc370a57bd2d8ea136e474f9ddf6f329367d814e566abd8000636969ee4632",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Sad.png": {
+    "before": 1233,
+    "after": 1189,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "b7b87079b32e929547ac9d52a4c57704a49b982012530ff453a233f0f6f92d59",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Sigh.png": {
+    "before": 1260,
+    "after": 1215,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "cf4efdb1217263cd232d3bac7118b5048828ace584c765effc32a0030588e053",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/portraits/Worried.png": {
+    "before": 1250,
+    "after": 1203,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "1bab385a34d6af28162b560a46d05e8ae48fcfe41c4841b65673c34eec5bac88",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Hop-Anim.png": {
+    "before": 11576,
+    "after": 10953,
+    "originalSize": [
+      240,
+      576
+    ],
+    "size": [
+      240,
+      576
+    ],
+    "outputHash": "a65dfcea9fcb2e99120538a527a6ad63d3934718fb504d7e4f22b1cc982c3d99",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Hurt-Anim.png": {
+    "before": 3470,
+    "after": 3233,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "1180f44cfc8bf623bf94f58747f41338292a9f5dbd6e27c8a69af1501669c8b7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Idle-Anim.png": {
+    "before": 2500,
+    "after": 2344,
+    "originalSize": [
+      48,
+      192
+    ],
+    "size": [
+      48,
+      192
+    ],
+    "outputHash": "d82fdb6cdbbe0333383036764162fbf4f4574eb8a2d70478376a513b37432176",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Rotate-Anim.png": {
+    "before": 4198,
+    "after": 3230,
+    "originalSize": [
+      216,
+      192
+    ],
+    "size": [
+      216,
+      192
+    ],
+    "outputHash": "f4b879be4114d49ad8758b003c69550f13323b0780d156cc8b524ed933136b1a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Shoot-Anim.png": {
+    "before": 6014,
+    "after": 5334,
+    "originalSize": [
+      216,
+      192
+    ],
+    "size": [
+      216,
+      192
+    ],
+    "outputHash": "75fe56d7772485e77098b36f82b3caa2e603751e5cb069f3a54d27e4124458c6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Sleep-Anim.png": {
+    "before": 482,
+    "after": 470,
+    "originalSize": [
+      48,
+      24
+    ],
+    "size": [
+      48,
+      24
+    ],
+    "outputHash": "2ee2cad3e033737a38313c47fdae85b349a2fd33deb2e295f575c6c93b2e7eac",
+    "losslessPixels": true
+  },
+  "assets/pmd/0174A0/sprites/Walk-Anim.png": {
+    "before": 5548,
+    "after": 5178,
+    "originalSize": [
+      120,
+      256
+    ],
+    "size": [
+      120,
+      256
+    ],
+    "outputHash": "a61eaad50159098ef29bef1ec7110938fa27481fd3f41c3f560c7b8ed6da1dad",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Angry.png": {
+    "before": 1726,
+    "after": 1692,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6b36613fff974a5a8cb8ef1088542e9fbab1b2c42fc2e67778a0a786133eacb2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Happy.png": {
+    "before": 1710,
+    "after": 1666,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "0c9d554e333df300fc292a6836f455c7b6129b9996ea297a8daf16546a7a65ef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Joyous.png": {
+    "before": 1835,
+    "after": 1801,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3b9b2c9b607a83ca88f0b42a937e3c659340b2727b16f84400cfe96deae3e973",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Normal.png": {
+    "before": 1668,
+    "after": 1644,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "62b51d235690f2a2758ce164afdf75b8fc8d39f36b873981575178e61cd4ce28",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Pain.png": {
+    "before": 1525,
+    "after": 1482,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "60cac98a84c0c41b16c655151f17aedc038bb7cd34212f7dea6d996b3d2648e5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Sigh.png": {
+    "before": 1651,
+    "after": 1609,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "bdc2a44cb61d2e5aec7768d024c41efed385abff4fcaf2e9992024319fbe733a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Surprised.png": {
+    "before": 1812,
+    "after": 1781,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "722267e90fd6a4ed3c756e03c157361c2276d6e7b2eb1420370c61cafc14e8d3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/portraits/Worried.png": {
+    "before": 1653,
+    "after": 1621,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7217c5b172cc06fdb82179c31dfb0c07dc826d0bf4787a73fea141a93cf9d446",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Hop-Anim.png": {
+    "before": 13009,
+    "after": 12129,
+    "originalSize": [
+      240,
+      576
+    ],
+    "size": [
+      240,
+      576
+    ],
+    "outputHash": "c13f77555cf9c6e3a20e32c4ffb042c7bc9390cce43cd00472e81f02a9fc3d94",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Hurt-Anim.png": {
+    "before": 4561,
+    "after": 4310,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "605d611ec3a5fd125c4af9fbcc9b5755ec6afa7d1d87e37b6e2e05e12356b8c1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Idle-Anim.png": {
+    "before": 4434,
+    "after": 4180,
+    "originalSize": [
+      96,
+      256
+    ],
+    "size": [
+      96,
+      256
+    ],
+    "outputHash": "1e1e9fd65fd7e682e6a0d0e0ef551497c1e82ba09c06c69f1f698a1ad5d0f489",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Rotate-Anim.png": {
+    "before": 4680,
+    "after": 3516,
+    "originalSize": [
+      216,
+      192
+    ],
+    "size": [
+      216,
+      192
+    ],
+    "outputHash": "6b61bceb0ca30381ba793337dd92746ce5926ed61cee8a39aeb56e3d2cab3f4d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Sleep-Anim.png": {
+    "before": 694,
+    "after": 681,
+    "originalSize": [
+      48,
+      24
+    ],
+    "size": [
+      48,
+      24
+    ],
+    "outputHash": "3a750452cab193490e0ca50334f665708e711e1be8a4ae721284dd0756a8c7ef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0175A0/sprites/Walk-Anim.png": {
+    "before": 8172,
+    "after": 7638,
+    "originalSize": [
+      144,
+      256
+    ],
+    "size": [
+      144,
+      256
+    ],
+    "outputHash": "bf2c4635d474151c932056c17706d307cc9e028dc39ba06b24e42c7609f51741",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Happy.png": {
+    "before": 1448,
+    "after": 1419,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "af5e2e038adaf304ef401a8d71087cd1fd8c1f695b9df93f7e92edd8083e49df",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Normal.png": {
+    "before": 1511,
+    "after": 1502,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "421af67c4c35e4f484af17be5f4178696801a6857ca96fb592f77d9eadd8ed50",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Pain.png": {
+    "before": 1609,
+    "after": 1556,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "5fda5726159186618a92ec713656659fe17c38be1b2b89cce8e5677cda458d54",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Sigh.png": {
+    "before": 1504,
+    "after": 1446,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "c816ecc89cfb7730e381883b8bc55332363658b6b87a0bde61d79c9319ec6947",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Surprised.png": {
+    "before": 1963,
+    "after": 1959,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3735c054753883f0d1696e7ec6c420ef40b932f36341c7c04358eabcc7a83a64",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/portraits/Worried.png": {
+    "before": 1491,
+    "after": 1438,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "822f8f5dae3e394b66c22cdbb59425497c60bdcb30a752f2517cd5f275cd1898",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Faint-Anim.png": {
+    "before": 3443,
+    "after": 3365,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "95d183ac11e8411fde483964926cd465c6fc757f96c7a400d60fa681d26e8426",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Hop-Anim.png": {
+    "before": 14294,
+    "after": 13111,
+    "originalSize": [
+      240,
+      704
+    ],
+    "size": [
+      240,
+      704
+    ],
+    "outputHash": "5664e5322832438a0de567bed5a4b244df797a675ed829902b1c224473aaeae0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Hurt-Anim.png": {
+    "before": 4874,
+    "after": 4575,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "4773ff29e3204fab96eac211cecbf6913b5598a2e18286ad849e4dc276b5d268",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Idle-Anim.png": {
+    "before": 8471,
+    "after": 7850,
+    "originalSize": [
+      144,
+      384
+    ],
+    "size": [
+      144,
+      384
+    ],
+    "outputHash": "9c589f2679480553cf55017d62d629f4e0dd2691149d9e2dfde9901f3b684810",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Laying-Anim.png": {
+    "before": 704,
+    "after": 699,
+    "originalSize": [
+      32,
+      128
+    ],
+    "size": [
+      32,
+      128
+    ],
+    "outputHash": "d4dde581fb8cf7762620d0ae6eee399b08e8804abc6b9e204257bcb05daf2b01",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Nod-Anim.png": {
+    "before": 2636,
+    "after": 2587,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "1e4ab74756bfdaa3f5371ae1686d7cd27deef24e30dfe3b317c9ca8f42dc787e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Pain-Anim.png": {
+    "before": 9680,
+    "after": 9567,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "b228f7f9cd536fe8362e2bff7afd468c299dd999f42437f662605477e918de93",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Pose-Anim.png": {
+    "before": 2121,
+    "after": 1947,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "664ec692d5c4d2596f522eade1b54b2abb73f4fecd419eba6c051515d723cfaa",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Rotate-Anim.png": {
+    "before": 16512,
+    "after": 15837,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "47eed4a94a8fae5dd4c5d326bfc7cd88972cf9945b2b1de607f59fb6337687ea",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Sleep-Anim.png": {
+    "before": 567,
+    "after": 549,
+    "originalSize": [
+      48,
+      32
+    ],
+    "size": [
+      48,
+      32
+    ],
+    "outputHash": "adc06333d755351b480f91b0d767720fd0cbbfdb470de7b5301017aab4b1f02d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Wake-Anim.png": {
+    "before": 4256,
+    "after": 4037,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "fb3de49e547875b90f2991ae4ea26304054366d05c705a25dda41943438e8b03",
+    "losslessPixels": true
+  },
+  "assets/pmd/0176A0/sprites/Walk-Anim.png": {
+    "before": 5786,
+    "after": 5430,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "02e3cfd7989c3f333e1df20688b47f959b37d19f54828b192b2cdc0a2990c12b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Angry.png": {
+    "before": 1589,
+    "after": 1544,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "855d9c75d111d608bb3c24168ffa30c10f8f0ed5717d246695f5014e2a43c044",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Happy.png": {
+    "before": 1494,
+    "after": 1458,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "633231633a19f8a7762d82da18f3b75c3ae6eebb14ecfb12dd6b8f85626c80c0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Joyous.png": {
+    "before": 1531,
+    "after": 1502,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "51508026de418deb4b3bf01ab602ffcfd72b36bf3acf4badcd12ff08c3fe4b96",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Pain.png": {
+    "before": 1541,
+    "after": 1499,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9fd3ec07d5c75d96b7922cc47c5d010106ecc4f877a2afd711e2edd331ad2c4c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Sad.png": {
+    "before": 1587,
+    "after": 1536,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e63a6f66b6a70f87f9373951182da9f116edf2bad4cf769a12dc607506c4a67d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Sigh.png": {
+    "before": 1448,
+    "after": 1408,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "c3836a4eae992f0068400d704534f9c870af8cf023bffb0795495b959ae5a22a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Surprised.png": {
+    "before": 1637,
+    "after": 1594,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "99676b328242f06badaafbcf1b4b5fbd97fa4fbae92560311245fd3e6885b3f3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/portraits/Worried.png": {
+    "before": 1589,
+    "after": 1565,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3b66011ac88bfe5a1fbf8a2399629cf7770361412978e318399ddfbe86565cd7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Faint-Anim.png": {
+    "before": 3473,
+    "after": 3244,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "ce7f03c293d5fdcd4d597e16849970fc51814c7eadca72bb0142ec8edad0a50d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Hop-Anim.png": {
+    "before": 18663,
+    "after": 18195,
+    "originalSize": [
+      400,
+      768
+    ],
+    "size": [
+      400,
+      768
+    ],
+    "outputHash": "32973a5f1fbcbf2a05ec08b44840282b0cbb20c0a47e146c168d15934d4e0341",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Hurt-Anim.png": {
+    "before": 4814,
+    "after": 4808,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "da94386f9b322dbf24a4ae0b92977497846ee7c5d5197d398105a1dc11fc6ee7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Nod-Anim.png": {
+    "before": 3224,
+    "after": 3143,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "14b62303b88c6fd7ee91a50f7a5a43374d92ff422055d6fdb98f40beb0cd52d2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Pose-Anim.png": {
+    "before": 2077,
+    "after": 1910,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "6571cd18d7409d90f23f66206a6fec40fca02651ad66dfec41a267d6ce16a26c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Shoot-Anim.png": {
+    "before": 12162,
+    "after": 11774,
+    "originalSize": [
+      440,
+      384
+    ],
+    "size": [
+      440,
+      384
+    ],
+    "outputHash": "a1712d0f62ac7c0a646933f0759f3325d48ff3a09caf889653a053e6cd1b905b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0183A0/sprites/Wake-Anim.png": {
+    "before": 4899,
+    "after": 4734,
+    "originalSize": [
+      160,
+      256
+    ],
+    "size": [
+      160,
+      256
+    ],
+    "outputHash": "e61ee4d683cf8cc2cf38f692ec7d9706821351500d4ce9b67204889092ee48a6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/portraits/Normal.png": {
+    "before": 1648,
+    "after": 1576,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "864af97bad81835313d1a4c62e7f2fa468c829f82106b65eefbdfadac4a2318e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/portraits/Pain.png": {
+    "before": 1608,
+    "after": 1548,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3179ccc4f59dc3f0c87862d4c1afbb2bba72b65d7c410db9cef9c25534039286",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/portraits/Sad.png": {
+    "before": 1584,
+    "after": 1533,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7bc7fc270c0247d31520b116dfe589397d516e4a2f1dc3b29febf9dd654bbb49",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/portraits/Sigh.png": {
+    "before": 1596,
+    "after": 1538,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "20b1b6cd774ef50d653c724881776123ddf3b039522ed4135ed6c594a0e14355",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/portraits/Worried.png": {
+    "before": 1712,
+    "after": 1628,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "cefd1b9652051fbb3d6736e5605d1710f60d6ae9769148595e8d280ce9a8522f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Hop-Anim.png": {
+    "before": 23516,
+    "after": 21905,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "77c216b28170f4661148f28052d6451ee63253266109a8289efdd2e0a0df91c9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Hurt-Anim.png": {
+    "before": 5232,
+    "after": 4979,
+    "originalSize": [
+      80,
+      384
+    ],
+    "size": [
+      80,
+      384
+    ],
+    "outputHash": "42e454c62f2aaa5ea415fe3a42cf74b0d7962e5427a4f9530d8419e7a0fd0727",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Idle-Anim.png": {
+    "before": 7921,
+    "after": 7443,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "a3a4215cf9964338074e4264e08f0628b350439f47872b3f02d71f85b2366c8e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Rotate-Anim.png": {
+    "before": 21879,
+    "after": 20618,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "6f3305ca67abb2b7dfecdc741407874c2186813b26999ea2e42ed34b94fbf807",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Shoot-Anim.png": {
+    "before": 19208,
+    "after": 17101,
+    "originalSize": [
+      480,
+      384
+    ],
+    "size": [
+      480,
+      384
+    ],
+    "outputHash": "5c2429556c77a59b265b387c51a62eac0f95e3cf11a374b4d2acd3c0ef5f6ea4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Sleep-Anim.png": {
+    "before": 838,
+    "after": 798,
+    "originalSize": [
+      64,
+      32
+    ],
+    "size": [
+      64,
+      32
+    ],
+    "outputHash": "7c404cb0980c492a4d5718b7095a37f7fab27dc3ca0b153a98f4209cc8e431f6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0184A0/sprites/Walk-Anim.png": {
+    "before": 8007,
+    "after": 7518,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "98b26ac2191e97707e8a9d55437b3002b746d519083c9bf2dbfaf84034566e5a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/portraits/Angry.png": {
+    "before": 1724,
+    "after": 1702,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "fa4c4f1688dfa5ff5ff992b2513da1c82c61f906fcf8a6f0e6b2c8b1f909f203",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/portraits/Joyous.png": {
+    "before": 1806,
+    "after": 1788,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ce3d95b76e73298a408e11a9e65dd63dccd3086841bfdecde6e5cfd10d34233e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/portraits/Sigh.png": {
+    "before": 1472,
+    "after": 1413,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "b3810cd3b1eec3daf99d25d44d3128d3f3b25e62eb94b346207883cf1322018c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Hop-Anim.png": {
+    "before": 19884,
+    "after": 17922,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "09a8533b2770403ad6d6c79d4a8e97fd6fad3dc7f8c88f1d54120bf1d4e6c434",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Hurt-Anim.png": {
+    "before": 5925,
+    "after": 5534,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "8b09cc6b5ed5176debdc564c09c318d0acdb68fe7b011f740c11d9bbf4bc7efc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Idle-Anim.png": {
+    "before": 6521,
+    "after": 6282,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "d10caa433af3790b0df7f896ffbdf6ff46e7edfaf4913355e4aed6340b98d015",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Rotate-Anim.png": {
+    "before": 26111,
+    "after": 24532,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "4556e1ded69d328f657d0d19f4bf96685c9b7f1f0f1a363ccaaaed9abc6a7bc3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Shoot-Anim.png": {
+    "before": 17272,
+    "after": 15740,
+    "originalSize": [
+      576,
+      384
+    ],
+    "size": [
+      576,
+      384
+    ],
+    "outputHash": "f87ceb965226633fff551d9998d6c842d8a41b43664cc93da28f71d2d4454169",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Sleep-Anim.png": {
+    "before": 846,
+    "after": 829,
+    "originalSize": [
+      64,
+      32
+    ],
+    "size": [
+      64,
+      32
+    ],
+    "outputHash": "5c091fb268646aa97e4e7ea6db1e67efbcbb57d9c581090f33478967d1c3ca07",
+    "losslessPixels": true
+  },
+  "assets/pmd/0196A0/sprites/Walk-Anim.png": {
+    "before": 9534,
+    "after": 8817,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "2efd6ee3138d8a08d07e010d2f9d7d1278d0cf1a0e59afc6867559a0569cac28",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Angry.png": {
+    "before": 1674,
+    "after": 1631,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6220d8f795d7eac2ccf468ab052882a3fe61df1d85ee2e77460029615b185a91",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Happy.png": {
+    "before": 1409,
+    "after": 1366,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7b39d6c2240dcdb94f31f63cbc5ccaccb9c36e797ce48b7f2c746f4b15dc3989",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Joyous.png": {
+    "before": 1593,
+    "after": 1543,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3d324616b40dd184d515c98a66c5f8f4dff6c45f92fd8880d94ce69ea929e4cf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Normal.png": {
+    "before": 1632,
+    "after": 1585,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9746b34549bea580b39799803ad251c3a4e5d42d38b50728121e38140190f7f4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Sad.png": {
+    "before": 1306,
+    "after": 1280,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4919accc93aa6d3f8f93904ac675c37f2b712491be06ec8d7a310c1bb1ba1da5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Sigh.png": {
+    "before": 1509,
+    "after": 1473,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "fc06a444a8e429ba089c9062e9c1773847da28999535256379cca10642d877e5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/portraits/Worried.png": {
+    "before": 1494,
+    "after": 1460,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ad94b07c6f0bea9f104cad6999370100d369c04e46c98054a4d321b34b9777c1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Faint-Anim.png": {
+    "before": 3832,
+    "after": 3557,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "b4e72887c0cd5b1644eea0b033bf87b76225afb1a1dd13a6d83dbf511931a6f6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Hop-Anim.png": {
+    "before": 18268,
+    "after": 17744,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "4c10eb524dbd3a033479d4b93b7e8587694d18e06e159143bd4451907bf210b5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Hurt-Anim.png": {
+    "before": 5826,
+    "after": 5764,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "b78ca6cde725a2028d72c0e5e85be32081638a1a89bf7af9d2de21f577630f10",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Laying-Anim.png": {
+    "before": 861,
+    "after": 844,
+    "originalSize": [
+      24,
+      192
+    ],
+    "size": [
+      24,
+      192
+    ],
+    "outputHash": "a93c881c2a3e2007810540fd2c348a8e3b8f4ef1f27b689fc5de45b09d9e11b2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Nod-Anim.png": {
+    "before": 2949,
+    "after": 2895,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "3af4d447e129db12c23f426c32a4d0cd01c833c1998d95bc4312d8071810a578",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Pain-Anim.png": {
+    "before": 16554,
+    "after": 16168,
+    "originalSize": [
+      384,
+      320
+    ],
+    "size": [
+      384,
+      320
+    ],
+    "outputHash": "cbd4e7776b048ec5ffc7188e8d561eda7aa6f0303d9c5a877a4a549718f2753d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Pose-Anim.png": {
+    "before": 4617,
+    "after": 4260,
+    "originalSize": [
+      120,
+      320
+    ],
+    "size": [
+      120,
+      320
+    ],
+    "outputHash": "3ae0371c996a777a1bc5e30ac1909996fc29e26ce0a1d33ce4dda2e9bebb5f2c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Rotate-Anim.png": {
+    "before": 18865,
+    "after": 18831,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "b807a80ec1906c8d9ad34c29c827018562d1e8706c4eafa593d96c4cf145a794",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Shoot-Anim.png": {
+    "before": 12891,
+    "after": 12817,
+    "originalSize": [
+      352,
+      384
+    ],
+    "size": [
+      352,
+      384
+    ],
+    "outputHash": "3a7364f4c39fb7bc230e5fbfb347668d9d2ce998cdf2385d2e2003ef52893c3c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0197A0/sprites/Wake-Anim.png": {
+    "before": 4901,
+    "after": 4589,
+    "originalSize": [
+      192,
+      320
+    ],
+    "size": [
+      192,
+      320
+    ],
+    "outputHash": "eb210bcbbaa35c5fd777888453b1e9c99fb7c5e7fc5fa4dccc3f9d76883cab08",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/portraits/Normal.png": {
+    "before": 1674,
+    "after": 1659,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "bbd235ec8166d10b79795f1e6441feb4341e5681ca46dc85e4e7101334884b15",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/portraits/Sad.png": {
+    "before": 1605,
+    "after": 1559,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "d8e7aa3409af2623bda4e83dd4eef7732ee7dba36a2c650d3d652cf949d4e5e1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/portraits/Surprised.png": {
+    "before": 1752,
+    "after": 1709,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a53d150db08e828127fad1904ee8e2b85daf6eb981f1ae4d63cf61d060b86b0d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/portraits/Worried.png": {
+    "before": 1759,
+    "after": 1691,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "d4a489e6eae10cd985b66a5760f5ec78cdf140f87979946cfe6d290733743b2f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Hop-Anim.png": {
+    "before": 33501,
+    "after": 30718,
+    "originalSize": [
+      640,
+      896
+    ],
+    "size": [
+      640,
+      896
+    ],
+    "outputHash": "658eb41af4ff3d2c63d1d1086716acc028ede2f780dd2554080afcd6b2bff2f8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Hurt-Anim.png": {
+    "before": 10836,
+    "after": 9856,
+    "originalSize": [
+      160,
+      768
+    ],
+    "size": [
+      160,
+      768
+    ],
+    "outputHash": "ae6c4346492ad4cee0e96f6f4bc9666f2760209f137df2cdcdf231d1871a4e63",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Idle-Anim.png": {
+    "before": 22767,
+    "after": 20387,
+    "originalSize": [
+      512,
+      576
+    ],
+    "size": [
+      512,
+      576
+    ],
+    "outputHash": "9b9d712cb498d416057596a7399773c32ae4f6fd5e6bd980d4927ec228ee4418",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Rotate-Anim.png": {
+    "before": 38792,
+    "after": 36253,
+    "originalSize": [
+      576,
+      576
+    ],
+    "size": [
+      576,
+      576
+    ],
+    "outputHash": "95ab0ac94d73b8707e6e7b046a08be2e6949e290d24fc8bc2e804b01f85512e7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Shoot-Anim.png": {
+    "before": 33403,
+    "after": 29160,
+    "originalSize": [
+      1008,
+      640
+    ],
+    "size": [
+      1008,
+      640
+    ],
+    "outputHash": "1934d7b9f744e4fbf8d003373de7301f87f062a456852c41692c8a3b9b967e95",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Sleep-Anim.png": {
+    "before": 1962,
+    "after": 1754,
+    "originalSize": [
+      288,
+      48
+    ],
+    "size": [
+      288,
+      48
+    ],
+    "outputHash": "df753883d76e8b82600ad7af97ccdef04166bb0cf25a9b33421975072255e758",
+    "losslessPixels": true
+  },
+  "assets/pmd/0226A0/sprites/Walk-Anim.png": {
+    "before": 25449,
+    "after": 22649,
+    "originalSize": [
+      640,
+      576
+    ],
+    "size": [
+      640,
+      576
+    ],
+    "outputHash": "6fbddb04ce52562563073606abbe759917a5257169f2d373bc2155a24eb102d8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Angry.png": {
+    "before": 1915,
+    "after": 1836,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a78cccf5c220ac2c78cbfca45f9255c5eca724b11b4fd200919f2cfd0bec6a78",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Happy.png": {
+    "before": 1509,
+    "after": 1443,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ca20837daf8db21f445c57794a5bdad15b6414b3c3ac40f5f5b1be8d0050b171",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Joyous.png": {
+    "before": 1945,
+    "after": 1877,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "05af8e43ff04920df9ac401f90afb66cd2a33a8f6506acdbac8ade1a0a0d1131",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Normal.png": {
+    "before": 1533,
+    "after": 1442,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f145ae9df0f21b0ceb58cc60061d7c60b8322e3e95a280e4cee936077335ccf7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Pain.png": {
+    "before": 1626,
+    "after": 1553,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ea8acaf4213814b0c270505926c880cb7dac226dc4a52c97bb595ca7ca203f12",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Sad.png": {
+    "before": 1503,
+    "after": 1428,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "cd3db5665e0617ab314901d46647e022f321baf7a9b57f50a7139293d3bf1c67",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Sigh.png": {
+    "before": 1579,
+    "after": 1499,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "da3677c92693ad75aa13fcd188bb7e3d41245f5f9eca8b7e6c91e175c12fd785",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Surprised.png": {
+    "before": 1816,
+    "after": 1721,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "83ec0e85a543f313bf110fcacc0b291d6aa9f6f055faf1c32dea6a5715a4941e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/portraits/Worried.png": {
+    "before": 1590,
+    "after": 1508,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3f87ba6ce70a3d34a6ba163382fc78c997c2b5a220d7c3ff801da05a5293ec26",
+    "losslessPixels": true
+  },
+  "assets/pmd/0236A0/sprites/Hop-Anim.png": {
+    "before": 19279,
+    "after": 19226,
+    "originalSize": [
+      240,
+      704
+    ],
+    "size": [
+      240,
+      704
+    ],
+    "outputHash": "04bc379056251895c7f19ae09fb48e4ef5be6a20739049d3fd69b7a909cc28cb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/portraits/Happy.png": {
+    "before": 1509,
+    "after": 1485,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "20f657cea8e1a4e4cd07fd8ee24f083609926910beb527b1904a5e438dce8304",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/portraits/Normal.png": {
+    "before": 1619,
+    "after": 1588,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "10e34b179b2a7a7d07a66ff12809493a4f33ae8fbccaa5ca3ee27a66d00b9802",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Hop-Anim.png": {
+    "before": 20144,
+    "after": 18673,
+    "originalSize": [
+      240,
+      640
+    ],
+    "size": [
+      240,
+      640
+    ],
+    "outputHash": "81bb7deff1ddf6267242b4bdb7ea43028b54c6559f599ce48fb504c4578d10a1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Hurt-Anim.png": {
+    "before": 5992,
+    "after": 5560,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "f70ff76f2ed3280ddb1abf851a01ad3816c08c7a237fa119e66c19aa6dd3e27c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Idle-Anim.png": {
+    "before": 14875,
+    "after": 13780,
+    "originalSize": [
+      192,
+      448
+    ],
+    "size": [
+      192,
+      448
+    ],
+    "outputHash": "17a282997edae6318acdbc67d63d9f6ccee409ad3c48be236391c952d52f23ab",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Rotate-Anim.png": {
+    "before": 18243,
+    "after": 17390,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "ca56f7ed46cb3ce6499656d9b863b83e970cb8d0c05c82a3f21be4599215a928",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Shoot-Anim.png": {
+    "before": 28047,
+    "after": 26296,
+    "originalSize": [
+      480,
+      512
+    ],
+    "size": [
+      480,
+      512
+    ],
+    "outputHash": "9fa2ebfff6f25145b3c7fab4baa4cc82974b19391cd6d92d58d0357e518b6819",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Sleep-Anim.png": {
+    "before": 833,
+    "after": 804,
+    "originalSize": [
+      48,
+      32
+    ],
+    "size": [
+      48,
+      32
+    ],
+    "outputHash": "63f35827c81ccf420ab5c4f0ff27109721c46412e341131dec378354255c5957",
+    "losslessPixels": true
+  },
+  "assets/pmd/0237A0/sprites/Walk-Anim.png": {
+    "before": 7209,
+    "after": 6781,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "420c2c41ec9ea1030e828f232f288674e3c85846d18b6a0a0e1f9252dc15d255",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Angry.png": {
+    "before": 1314,
+    "after": 1263,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2021940a561343400aba164dd9beef8f4dde2ec72992034fe990ceef0b07ab07",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Happy.png": {
+    "before": 1575,
+    "after": 1511,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3930df11aa463f5e31a03ab498425cb2b569e5c2f9d42596d2faf75e87f5b146",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Joyous.png": {
+    "before": 1577,
+    "after": 1527,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6fd252cf3bbe50c9f64021d282a79a275bfbdc5e61eef7526ea3dc4c1afcd5a4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Normal.png": {
+    "before": 1453,
+    "after": 1407,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "aac019ce316b42ff96c8719da025e582106377ac3bb2ed99b2dbca24c35e148f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Pain.png": {
+    "before": 1245,
+    "after": 1193,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "74100b51fc25af75942e6a72b3b6947d4b0f0e2ddf0fa06eddcd89e68e16408a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Sad.png": {
+    "before": 1304,
+    "after": 1264,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "1cb93e1029c94268050baade2f0a36c02c15ba3def5353496fa54a8ce6ba340f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Sigh.png": {
+    "before": 1383,
+    "after": 1341,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ab0f74d24fb725b2c10a70d99f3a9dbfc9c8af87bacb85ac0b90856c586e6116",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Surprised.png": {
+    "before": 1557,
+    "after": 1513,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "74531e5709c66aa2e51d4834f9441791b09d64dc81373d72d1c2e115a67d998d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/portraits/Worried.png": {
+    "before": 1458,
+    "after": 1399,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "98db10f5377b39609af148987a69d2c4e8a74cd66fbb973b6f8040b123027574",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Hop-Anim.png": {
+    "before": 17429,
+    "after": 14729,
+    "originalSize": [
+      320,
+      768
+    ],
+    "size": [
+      320,
+      768
+    ],
+    "outputHash": "86cf0aa539b1f234a74004c417e7ec9a3812a4c78636c16c01bd003284f1d65d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Hurt-Anim.png": {
+    "before": 5425,
+    "after": 5094,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "546401f5a96c2ae48256e47bd70add6691715e4cc7f448ed0d3b26e2491dba5d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Idle-Anim.png": {
+    "before": 7940,
+    "after": 7314,
+    "originalSize": [
+      128,
+      448
+    ],
+    "size": [
+      128,
+      448
+    ],
+    "outputHash": "19842a530ce294739a937e29ea0a6064264ff293c5b2092ead12a0c2011733e5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Rotate-Anim.png": {
+    "before": 18622,
+    "after": 17538,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "575d4d36fa6ecc4cfc637e50348df0c9abf40699a1b83cf86dea429d4c9db9bb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Shoot-Anim.png": {
+    "before": 11093,
+    "after": 9231,
+    "originalSize": [
+      400,
+      448
+    ],
+    "size": [
+      400,
+      448
+    ],
+    "outputHash": "17a7983326411219c3bc3b826b6e4f1dc20a090133f7030ee697d75a9bd7b408",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Sleep-Anim.png": {
+    "before": 738,
+    "after": 708,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "43bf2fb6c9b6b60f2e8df123d83fbd6062e05a9b7688bf1b42d1e69759d91992",
+    "losslessPixels": true
+  },
+  "assets/pmd/0239A0/sprites/Walk-Anim.png": {
+    "before": 9043,
+    "after": 8401,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "f049284c6e41acb09ee1e29cb132bdc8b146f28aa5ae07e9c80ab2dcbd5b6400",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Angry.png": {
+    "before": 1674,
+    "after": 1623,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f6086431bb82b5f80d92b694baae56e06a7ce7efad0438e537ca8671ef3ebcea",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Happy.png": {
+    "before": 1466,
+    "after": 1420,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a02d91c169b39e02e4e484ba5911c501554ac6c1a766d65f5a38282e780321a9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Joyous.png": {
+    "before": 1637,
+    "after": 1593,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "28b2cbd8c6c38412cfd24a5c419f044672a5a59d29541d48d138729e8bfd756c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Pain.png": {
+    "before": 1585,
+    "after": 1548,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "144ca81f15df444e587487923f8ac738af314e37f4a0f55c322a78b7b3794a18",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Sad.png": {
+    "before": 1627,
+    "after": 1582,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2c3712683b7dac5841f67a52234a077ff6354829bfb7a94db73a5dd17d091202",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Sigh.png": {
+    "before": 1452,
+    "after": 1420,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3bf14e43467fc636c1e538c290c94a3c09cfcb2ec165e55dc4aa6f57d83af6dc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Surprised.png": {
+    "before": 1717,
+    "after": 1650,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "6793c00a8d5b4c2d7496bb37ba7acbe4bb220972ea3b0fe39e79af3c8d2fa249",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/portraits/Worried.png": {
+    "before": 1619,
+    "after": 1574,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "5dfaa12bd25d012030754d3f853f78889a7fe61fa1e6043ad6399102ff8b438e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Faint-Anim.png": {
+    "before": 3624,
+    "after": 3281,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "707f9f03fcd43028910dd6dcad93fec65f63a642d9776fa4bf76425319b1be2f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/HitGround-Anim.png": {
+    "before": 1622,
+    "after": 1579,
+    "originalSize": [
+      256,
+      40
+    ],
+    "size": [
+      256,
+      40
+    ],
+    "outputHash": "e2d6d2d8336d539e7ca49116c11891d6ae539089aa03fedd9a68f310a66a7054",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Hop-Anim.png": {
+    "before": 18178,
+    "after": 16294,
+    "originalSize": [
+      240,
+      704
+    ],
+    "size": [
+      240,
+      704
+    ],
+    "outputHash": "f1051f1a5d89df99d391c6f06ceb502e40289387b252276b560c11682745686e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Hurt-Anim.png": {
+    "before": 5344,
+    "after": 4918,
+    "originalSize": [
+      96,
+      448
+    ],
+    "size": [
+      96,
+      448
+    ],
+    "outputHash": "435a4db95e58e035bafadfbd87a1d49d60b13b6df069100fae853af5c9a282b7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Idle-Anim.png": {
+    "before": 8620,
+    "after": 7869,
+    "originalSize": [
+      144,
+      384
+    ],
+    "size": [
+      144,
+      384
+    ],
+    "outputHash": "49248227bd6745b7eb7aa2613e175c37b8bbc74db7e93b19eb56809a33033df9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Laying-Anim.png": {
+    "before": 795,
+    "after": 766,
+    "originalSize": [
+      24,
+      192
+    ],
+    "size": [
+      24,
+      192
+    ],
+    "outputHash": "482095eff22c3bd35557b5bf453c02e4480a129845eca776deffcd2093f2f560",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Nod-Anim.png": {
+    "before": 2657,
+    "after": 2517,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "0312e5929efa24e27b582e93b1b761e386b3268f4182fd106297932256eb17b5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Pain-Anim.png": {
+    "before": 13607,
+    "after": 13135,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "dc71199b017219ec2ba874f450ef9c61177b8f6a408547ae4aebf8280064f922",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Pose-Anim.png": {
+    "before": 1927,
+    "after": 1783,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "bd6cde454eba691d5ad7d5a2446cc9b984bc95f3b6a9c6ad963387810c2c3774",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Rotate-Anim.png": {
+    "before": 15486,
+    "after": 14614,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "19f9684f80a345e5d3044313a6257b17bd5e4dc9fcbb147d90f69a0ab8e37b5b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Shoot-Anim.png": {
+    "before": 13017,
+    "after": 12011,
+    "originalSize": [
+      352,
+      384
+    ],
+    "size": [
+      352,
+      384
+    ],
+    "outputHash": "37e620572667f4b01bf0e0c6d8ca772f33eb59e6717c179041cb0e24fa524d39",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Sleep-Anim.png": {
+    "before": 558,
+    "after": 541,
+    "originalSize": [
+      48,
+      32
+    ],
+    "size": [
+      48,
+      32
+    ],
+    "outputHash": "a426affd406091d4c278f8ecbf013a5f726ce22aadad0b865d5b021c6b5a6796",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Wake-Anim.png": {
+    "before": 4605,
+    "after": 4071,
+    "originalSize": [
+      120,
+      320
+    ],
+    "size": [
+      120,
+      320
+    ],
+    "outputHash": "45a5e204a6eabf37b8f8a09faea34015d1989eb0277c0714e6c556339d90d3ce",
+    "losslessPixels": true
+  },
+  "assets/pmd/0240A0/sprites/Walk-Anim.png": {
+    "before": 5653,
+    "after": 5170,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "8c3601a1acfa71a0e0783e89b38f256cf43f151fd76a15792c0f5e5bfcf9c2ba",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/portraits/Sigh.png": {
+    "before": 1882,
+    "after": 1875,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e9bf14dde6549ade038f2dc9e2b6adfdebca8fd4a54a26b3f50109065fba931e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/portraits/Surprised.png": {
+    "before": 1881,
+    "after": 1825,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a7dbf9527cf890e7306057670a7e7aee40667bad8ae3fdc5ed9ab9cb93110ecb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Hop-Anim.png": {
+    "before": 18905,
+    "after": 17378,
+    "originalSize": [
+      480,
+      704
+    ],
+    "size": [
+      480,
+      704
+    ],
+    "outputHash": "76682e6b53842616d26525832732faa4540ceb98bee7ef80e397b1f5b5c8dead",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Hurt-Anim.png": {
+    "before": 5146,
+    "after": 4738,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "37f6c8376892899c9b5642b5657b070dbfb51a9a7b725957589693d38e42160b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Idle-Anim.png": {
+    "before": 5735,
+    "after": 5397,
+    "originalSize": [
+      96,
+      256
+    ],
+    "size": [
+      96,
+      256
+    ],
+    "outputHash": "c07633763aad85e1e52fe4d380a8a63395a07d93504d6323d74f851b20bca78a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Rotate-Anim.png": {
+    "before": 18029,
+    "after": 16908,
+    "originalSize": [
+      360,
+      256
+    ],
+    "size": [
+      360,
+      256
+    ],
+    "outputHash": "b07ceb2afcc4c064ed064c736baa8024613951d48216d1d962228401128d30b7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Shoot-Anim.png": {
+    "before": 13026,
+    "after": 11536,
+    "originalSize": [
+      400,
+      512
+    ],
+    "size": [
+      400,
+      512
+    ],
+    "outputHash": "b7eb4e69f097a9cb59dde22cf4537bec838e091caf3d4808c92bfd8e98a54d9b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Sleep-Anim.png": {
+    "before": 677,
+    "after": 656,
+    "originalSize": [
+      64,
+      24
+    ],
+    "size": [
+      64,
+      24
+    ],
+    "outputHash": "30e8439ce850bd9e42ae17692503b7a4b38d5d10b0e4faa6b4d9d201f268a81e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0298A0/sprites/Walk-Anim.png": {
+    "before": 11019,
+    "after": 10048,
+    "originalSize": [
+      280,
+      320
+    ],
+    "size": [
+      280,
+      320
+    ],
+    "outputHash": "3549f9bbf04aa5f0026f49bc077f1cc7db19d69bf2006605a43f3c23875e9c52",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Cringe-Anim.png": {
+    "before": 892,
+    "after": 871,
+    "originalSize": [
+      48,
+      56
+    ],
+    "size": [
+      48,
+      56
+    ],
+    "outputHash": "6bdd628a547806e4bea7b689b6e22495ad2c3d9ac2353610fd8984b4d5afcfc6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Eat-Anim.png": {
+    "before": 1341,
+    "after": 1310,
+    "originalSize": [
+      96,
+      32
+    ],
+    "size": [
+      96,
+      32
+    ],
+    "outputHash": "c81d4f6524844514fe9b4e3a633be82fa622e8e6a89de7516ebd222ce6fcdaa0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Faint-Anim.png": {
+    "before": 4626,
+    "after": 4174,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "cc929e2cf247504284dbefdd0e650f67e92ad8cc7d657776400f36fcc5388804",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/HitGround-Anim.png": {
+    "before": 2084,
+    "after": 1965,
+    "originalSize": [
+      256,
+      48
+    ],
+    "size": [
+      256,
+      48
+    ],
+    "outputHash": "1ef4b7d3f354b43f923d2836e4929f41d0fd27ef6210688b15de6789d1878088",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Hop-Anim.png": {
+    "before": 19803,
+    "after": 18272,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "663e6d88deb30d9dd4aa4edef107efe454814c9e813478b361200df11c4a0569",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Hurt-Anim.png": {
+    "before": 5631,
+    "after": 5297,
+    "originalSize": [
+      80,
+      448
+    ],
+    "size": [
+      80,
+      448
+    ],
+    "outputHash": "6261b18454327d9486d9698b1743baa1de9707c00573e00522b2556fbc10d210",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Idle-Anim.png": {
+    "before": 5529,
+    "after": 5129,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "f09e4376118a429b8697abd024e0638a366f4c61d1cd66e179d1cae487d6c88c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Nod-Anim.png": {
+    "before": 3762,
+    "after": 3488,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "77d79b5064ecc5e344920532cae41f339fc858c794113eff2cc1c4f5ad0b0a70",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Pain-Anim.png": {
+    "before": 18312,
+    "after": 17090,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "84337a86fba181d17aaac7e1f703f0fcb81041140b13fc870c6d304eeb9bd3be",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Pose-Anim.png": {
+    "before": 4985,
+    "after": 4435,
+    "originalSize": [
+      120,
+      384
+    ],
+    "size": [
+      120,
+      384
+    ],
+    "outputHash": "337b41d7989e95877ab7f2dc9f16da8dc2353c45fa76d4e6167ba1c19c03ea22",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Rotate-Anim.png": {
+    "before": 17981,
+    "after": 17249,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "cb96db45537d7a3bb7c60fe45e5a2f19c5d55dbcc3aafff60f3295840c928e77",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Shoot-Anim.png": {
+    "before": 13613,
+    "after": 12553,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "f97124470cb8d970212618e5be23c53822b1c2cc13bbd033ffe11f4586ce943a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Sleep-Anim.png": {
+    "before": 798,
+    "after": 775,
+    "originalSize": [
+      48,
+      40
+    ],
+    "size": [
+      48,
+      40
+    ],
+    "outputHash": "5aa9fa2d0637c300d227e4cda185811848a098735a00dd97a0a5551539752a03",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Wake-Anim.png": {
+    "before": 5142,
+    "after": 4888,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "d30f7a20e97fc427d13a34dd6ca2f6c5d8aa0eb4b121f6f2ef37a1ca2a783e9a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0446A0/sprites/Walk-Anim.png": {
+    "before": 6413,
+    "after": 6005,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "7598670b66c9f48e8087e1e540251b2c49014f508ed2ec8883d66bd5fa68f6f1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/portraits/Angry.png": {
+    "before": 1371,
+    "after": 1331,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "acab965cdbce923c5be2a980f2701842a44c45ce697ed3ccfb2703405b165620",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/portraits/Happy.png": {
+    "before": 1192,
+    "after": 1163,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "757ea4a602babeab7737a333b4cdf34998f54330ea23fbb41f280a0e47b6a05d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/portraits/Sad.png": {
+    "before": 1110,
+    "after": 1079,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "adfa685175d92dc939a024273c8b8c44ffd010a22a92b76a0d7e882d5421fcef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/portraits/Sigh.png": {
+    "before": 1152,
+    "after": 1118,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ad4d92db0e6c433efed47f29e6cb7fb56488359237f2779180014f613cfd3cb1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Cringe-Anim.png": {
+    "before": 786,
+    "after": 768,
+    "originalSize": [
+      48,
+      56
+    ],
+    "size": [
+      48,
+      56
+    ],
+    "outputHash": "e33c7c16222f00fb97eaf9769217f5aab1633fb7545d659f225de659ded8fa3d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Eat-Anim.png": {
+    "before": 1094,
+    "after": 1057,
+    "originalSize": [
+      96,
+      40
+    ],
+    "size": [
+      96,
+      40
+    ],
+    "outputHash": "666ea59fee803bc38a29fe0d2c32755f192781958f1263e0565c93440fb45062",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Faint-Anim.png": {
+    "before": 3568,
+    "after": 3218,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "14f20e789399f584f77fe816aab0c4f402c53e32b34a479b5a812bcee7c203b7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/HitGround-Anim.png": {
+    "before": 1667,
+    "after": 1553,
+    "originalSize": [
+      256,
+      32
+    ],
+    "size": [
+      256,
+      32
+    ],
+    "outputHash": "0816fb8728923fcd74fa906adbd4e6e8e36390250a63fd26340fa11b60f2c4d0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Hop-Anim.png": {
+    "before": 18857,
+    "after": 17607,
+    "originalSize": [
+      240,
+      704
+    ],
+    "size": [
+      240,
+      704
+    ],
+    "outputHash": "942008426f3da87df6ceff2de5e3d3d9574ab4d31de38065523e933ffc022c03",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Hurt-Anim.png": {
+    "before": 4519,
+    "after": 4255,
+    "originalSize": [
+      80,
+      448
+    ],
+    "size": [
+      80,
+      448
+    ],
+    "outputHash": "8713a116eeb2c8dcfd904a35ecb35d11234492b003b2bedfaf0494941171622a",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Idle-Anim.png": {
+    "before": 5615,
+    "after": 5267,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "c69ca2a5bd9a891f18007f5b714bd25c02d174739dcafdd41e5ef9499d445ebe",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Laying-Anim.png": {
+    "before": 940,
+    "after": 885,
+    "originalSize": [
+      24,
+      192
+    ],
+    "size": [
+      24,
+      192
+    ],
+    "outputHash": "387adc7cdc2d8156fae41fad64bb716b219203afda4a8454cd6d78f2bd3635f7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Nod-Anim.png": {
+    "before": 2980,
+    "after": 2799,
+    "originalSize": [
+      72,
+      320
+    ],
+    "size": [
+      72,
+      320
+    ],
+    "outputHash": "12b2328e8eba81ab63df00eca3b2460e0e09bf9742cbdb0827c0fe1494a83514",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Pain-Anim.png": {
+    "before": 15784,
+    "after": 14907,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "344369d22f5598605a0677053c90e0ab981966843c0324f93de5cfcf6901c237",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Pose-Anim.png": {
+    "before": 4156,
+    "after": 3620,
+    "originalSize": [
+      120,
+      320
+    ],
+    "size": [
+      120,
+      320
+    ],
+    "outputHash": "e25c46b08095f00504c6875efeeac4fa11befcf2663b6100ab0e86777c310a2b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Rotate-Anim.png": {
+    "before": 15225,
+    "after": 14420,
+    "originalSize": [
+      216,
+      320
+    ],
+    "size": [
+      216,
+      320
+    ],
+    "outputHash": "3a0deadbc8f51699537b999f1053a7c9c1fe7b61b23a5be4390d0064f8b31475",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Sleep-Anim.png": {
+    "before": 658,
+    "after": 634,
+    "originalSize": [
+      48,
+      32
+    ],
+    "size": [
+      48,
+      32
+    ],
+    "outputHash": "d33e906185b00ccfe1dfeed770b4ba5903de5a926fe8604c080dadf409893241",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Wake-Anim.png": {
+    "before": 3785,
+    "after": 3160,
+    "originalSize": [
+      120,
+      320
+    ],
+    "size": [
+      120,
+      320
+    ],
+    "outputHash": "84feeb6275815836bbddb836c7b776f8fbbe5fe03d5fe9b05b36f44f75da350d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0447A0/sprites/Walk-Anim.png": {
+    "before": 6460,
+    "after": 6190,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "18267d9aba85a3eedbff3dde825fd669b39ea991b9ee85792ad3a9048ba00322",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/portraits/Happy.png": {
+    "before": 1456,
+    "after": 1421,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "98edb44349d96529e7180af6d70cd74907cd77879c9b9b4a9c0b57dd6ab8ca00",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/portraits/Joyous.png": {
+    "before": 1665,
+    "after": 1595,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "3dbc12d17bb1ca5959376022961c6d98c605e2513180cb0b9bc43eeae84166e5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/portraits/Surprised.png": {
+    "before": 1862,
+    "after": 1833,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4647c035dd011ee1213df21c8eefe53bc5f5cd9f0be5bcdd8df86eb4c51b9420",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Faint-Anim.png": {
+    "before": 4219,
+    "after": 4043,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "228589dc5eb6045fc423781bc9a5897852ded5383695237e729e2a95bd19d9cc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/HitGround-Anim.png": {
+    "before": 2248,
+    "after": 2225,
+    "originalSize": [
+      256,
+      48
+    ],
+    "size": [
+      256,
+      48
+    ],
+    "outputHash": "a407271aae49016f8c9f0167028ed56e807469f329cda347b4eb27d5f2869bc3",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Hop-Anim.png": {
+    "before": 25390,
+    "after": 25002,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "d65929e937b6e32ced00a53b1d141e719f649d38fceebfbdc2506e4e15ea795b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Laying-Anim.png": {
+    "before": 1294,
+    "after": 1227,
+    "originalSize": [
+      40,
+      192
+    ],
+    "size": [
+      40,
+      192
+    ],
+    "outputHash": "b69af7fea7e4099083f82a8d55eda0182cdaa45fc284701e89e962da1822348c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Nod-Anim.png": {
+    "before": 3733,
+    "after": 3704,
+    "originalSize": [
+      96,
+      384
+    ],
+    "size": [
+      96,
+      384
+    ],
+    "outputHash": "bd42f6c8a795ec7973f61e8f7e8f138ee73e6407f9c33f65ca64fbc3dbbf3009",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Pain-Anim.png": {
+    "before": 19020,
+    "after": 19011,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "448166554bb6e927ef14ee745d1fdcdeb487a44129b00c52460550abf36793e4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Pose-Anim.png": {
+    "before": 2720,
+    "after": 2606,
+    "originalSize": [
+      72,
+      384
+    ],
+    "size": [
+      72,
+      384
+    ],
+    "outputHash": "8c19b9a9e06bff1432f566ac10003600896982afa3289505b9d17d25f1137f4e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0448A0/sprites/Wake-Anim.png": {
+    "before": 14663,
+    "after": 14515,
+    "originalSize": [
+      200,
+      384
+    ],
+    "size": [
+      200,
+      384
+    ],
+    "outputHash": "94b8a51e12957e9bc7c6d407d24f881295d5c9f5341601f419085348f077d603",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/portraits/Joyous.png": {
+    "before": 1469,
+    "after": 1412,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "db86098f4669c53563434c5da1b74775c09c85f56ae90a0882dddf1c95d430ef",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/portraits/Surprised.png": {
+    "before": 1557,
+    "after": 1488,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2ec23c5e58120ff0e7a9a81b83ff27cd3ed8d9b97bdbe348625acfe46bb0d91b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Hop-Anim.png": {
+    "before": 21343,
+    "after": 19907,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "cfc85bd489a4830c629c683831f53721f8fcc3b46c569fa6b50b72d82a19990e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Hurt-Anim.png": {
+    "before": 5420,
+    "after": 5161,
+    "originalSize": [
+      80,
+      448
+    ],
+    "size": [
+      80,
+      448
+    ],
+    "outputHash": "2822fafe554495a1f30404719e290b920e64d99277af0ff3cb37cfeb77848256",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Idle-Anim.png": {
+    "before": 10153,
+    "after": 9422,
+    "originalSize": [
+      224,
+      384
+    ],
+    "size": [
+      224,
+      384
+    ],
+    "outputHash": "85e09df4a16cea7a214ef2f00dcb1757655a3e4579ec4564c915c2a280096ba8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Rotate-Anim.png": {
+    "before": 21732,
+    "after": 20422,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "6dc6aec4b61524e4a037dd039693cc47d0f7bedddaa3665d36c3135678313fc2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Shoot-Anim.png": {
+    "before": 12623,
+    "after": 11735,
+    "originalSize": [
+      384,
+      384
+    ],
+    "size": [
+      384,
+      384
+    ],
+    "outputHash": "bd4f94d0228ed1922cb58dc64a6ec8de2548f127616f248ca71df5fa4bcb4cc1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Sleep-Anim.png": {
+    "before": 1396,
+    "after": 1291,
+    "originalSize": [
+      256,
+      40
+    ],
+    "size": [
+      256,
+      40
+    ],
+    "outputHash": "9c5ecdc9aca28bceab722ba24c33e8bfda0440c5b48f1a14a419be0234b3c8b1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0458A0/sprites/Walk-Anim.png": {
+    "before": 13996,
+    "after": 12967,
+    "originalSize": [
+      320,
+      448
+    ],
+    "size": [
+      320,
+      448
+    ],
+    "outputHash": "6643c8fcdb0ae241489017e42b3316c16511af8c2190605aa3b4e5f6983ee5c2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/portraits/Pain.png": {
+    "before": 2061,
+    "after": 2011,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "067aaeca9c6be38b7da7f7f323d1a200c80c74e724b48c6c3064c70d9b8158d1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Hop-Anim.png": {
+    "before": 29572,
+    "after": 23863,
+    "originalSize": [
+      480,
+      768
+    ],
+    "size": [
+      480,
+      768
+    ],
+    "outputHash": "789a72865c579616c797e757c362cd1e718645142aa2cb48f168cc8551cd6274",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Hurt-Anim.png": {
+    "before": 6936,
+    "after": 6382,
+    "originalSize": [
+      112,
+      512
+    ],
+    "size": [
+      112,
+      512
+    ],
+    "outputHash": "8a05843e63680ebf7271356117b3aef3ce4f58b679aa09ad8be9251c952052f2",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Idle-Anim.png": {
+    "before": 17554,
+    "after": 15507,
+    "originalSize": [
+      336,
+      448
+    ],
+    "size": [
+      336,
+      448
+    ],
+    "outputHash": "50c1d1fd7e9d3a42aa818d3e4409613d532bc2cc5023dee1711e10d6000e912c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Rotate-Anim.png": {
+    "before": 29016,
+    "after": 26990,
+    "originalSize": [
+      360,
+      384
+    ],
+    "size": [
+      360,
+      384
+    ],
+    "outputHash": "7e9ceee1ed8d4de492cd9cb5d2e09d6546da87244126c76bac01ae0c8ed32616",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Shoot-Anim.png": {
+    "before": 19223,
+    "after": 16562,
+    "originalSize": [
+      672,
+      448
+    ],
+    "size": [
+      672,
+      448
+    ],
+    "outputHash": "e64fd4809484835435aa848a0abc03e083550bb1780450aa01fd3d4daf33859c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Sleep-Anim.png": {
+    "before": 984,
+    "after": 941,
+    "originalSize": [
+      80,
+      40
+    ],
+    "size": [
+      80,
+      40
+    ],
+    "outputHash": "3ae3c0c2b6b9053e2c8c411ef0fddac2ac84cc40ddf0bf9a3cc0f9a141efb5a7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0466A0/sprites/Walk-Anim.png": {
+    "before": 11550,
+    "after": 10598,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "dfd3ae4b158481217b18c6fdc4e5357bced8cc2b72497507aebbb95585b75580",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/portraits/Normal.png": {
+    "before": 1314,
+    "after": 1260,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9dc0a7e3b27c0098987f1ebb717edccbf4b231f3820b9d97829915f81c5f8228",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Hop-Anim.png": {
+    "before": 37151,
+    "after": 34915,
+    "originalSize": [
+      400,
+      832
+    ],
+    "size": [
+      400,
+      832
+    ],
+    "outputHash": "a383293dadde65e6d66198c6bafa3c44bab02c27e6d56ffa80805d89b1c2e6a6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Hurt-Anim.png": {
+    "before": 9169,
+    "after": 8714,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "e254a68450319b1bfd4b0b24f39a1dbfc502d057e29bc30837ccd4a1593308c4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Idle-Anim.png": {
+    "before": 11095,
+    "after": 10585,
+    "originalSize": [
+      120,
+      384
+    ],
+    "size": [
+      120,
+      384
+    ],
+    "outputHash": "469c346b94b7a4b945a7e95551d9e65c80a5b61378b172bdcf9bf60faf5192d8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Rotate-Anim.png": {
+    "before": 37184,
+    "after": 35546,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "ff0813ae0dbfafa437603cc75cfab58dae596495c978ca62c6d735c5ffe1e007",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Shoot-Anim.png": {
+    "before": 25712,
+    "after": 22774,
+    "originalSize": [
+      624,
+      512
+    ],
+    "size": [
+      624,
+      512
+    ],
+    "outputHash": "db7df65b39aff950f8042d5443f3e6bf55c428b1a917aa42b8928dcd4d60ba2f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Sleep-Anim.png": {
+    "before": 1244,
+    "after": 1188,
+    "originalSize": [
+      64,
+      40
+    ],
+    "size": [
+      64,
+      40
+    ],
+    "outputHash": "54e6b86619080ca6f176c3c3facec8bc6c229185ec6eb20c2078ac82a034f388",
+    "losslessPixels": true
+  },
+  "assets/pmd/0467A0/sprites/Walk-Anim.png": {
+    "before": 13819,
+    "after": 13232,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "ccc693d11a51c0b4957a0b3148cb4a59a0fd460d582a2d7f584d93550ca2826b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/portraits/Angry.png": {
+    "before": 1605,
+    "after": 1565,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "acd0a9e6fd6dfaf0b7ca1568bdfdb2e24de58eac69aa0755b4d6dc4b2ecdc43e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/portraits/Happy.png": {
+    "before": 1518,
+    "after": 1494,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e1d65498b9f02abb23868c41faf63f22dfde301895625a651582693e590a11de",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/portraits/Joyous.png": {
+    "before": 1616,
+    "after": 1590,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "ac46db5358227376d8608763cf151808f27e2312b5213add4cb4cc7969a97045",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/portraits/Sigh.png": {
+    "before": 1559,
+    "after": 1520,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2a37aa458b0c370df2cdb642802103124f05cd4d39b9ab03e8689a677b5b6f44",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/portraits/Surprised.png": {
+    "before": 1590,
+    "after": 1551,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2cf2de37e9c8481f1357a8d9f38523bbbed7626a5fb2bb0cc61eb544f251f350",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Hop-Anim.png": {
+    "before": 16949,
+    "after": 14751,
+    "originalSize": [
+      400,
+      704
+    ],
+    "size": [
+      400,
+      704
+    ],
+    "outputHash": "b8b48150c862afba8f4e4cdec743498860b251e9584d04175e980ed22aa2e578",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Hurt-Anim.png": {
+    "before": 4768,
+    "after": 4469,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "5c4c538f597d8006f97e501c346a9b59678db03d6bd3e3ec622b9765e151ea4c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Idle-Anim.png": {
+    "before": 8810,
+    "after": 7860,
+    "originalSize": [
+      256,
+      384
+    ],
+    "size": [
+      256,
+      384
+    ],
+    "outputHash": "63bd0c8297c445160053052b7b7a3c436207a8954dbcff6ef52fbe786a54d621",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Rotate-Anim.png": {
+    "before": 16855,
+    "after": 15449,
+    "originalSize": [
+      288,
+      320
+    ],
+    "size": [
+      288,
+      320
+    ],
+    "outputHash": "232917786d71da6900d6d32e00f1cf8747a1ff75ea3e079b027cb4c5d48a521c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Shoot-Anim.png": {
+    "before": 10585,
+    "after": 9002,
+    "originalSize": [
+      480,
+      384
+    ],
+    "size": [
+      480,
+      384
+    ],
+    "outputHash": "1f4be05ee4cbb396eb625800a5a4c849d3a3377f15c7ab3ee6fb84faf87ef4c0",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Sleep-Anim.png": {
+    "before": 683,
+    "after": 666,
+    "originalSize": [
+      48,
+      40
+    ],
+    "size": [
+      48,
+      40
+    ],
+    "outputHash": "e1dbe5b27085f3735233e57031d7c9becfbf3a37d8a604f6a0c23758625766c9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0468A0/sprites/Walk-Anim.png": {
+    "before": 8693,
+    "after": 7633,
+    "originalSize": [
+      256,
+      384
+    ],
+    "size": [
+      256,
+      384
+    ],
+    "outputHash": "e6983061a9887e3d6ecd993638fe4174960e0135f9418543bf68a4c8324d579e",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/portraits/Normal.png": {
+    "before": 1922,
+    "after": 1862,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "4a3a8adc09f215dd633093295353d03d5d9b8e5b1245ebb92381db3656e68cee",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/sprites/Faint-Anim.png": {
+    "before": 4898,
+    "after": 4638,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "9b218517a206c5dfb34d24e13195adaffda70f95d99b4d72dc1f84712e853f97",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/sprites/Hop-Anim.png": {
+    "before": 21251,
+    "after": 21025,
+    "originalSize": [
+      320,
+      768
+    ],
+    "size": [
+      320,
+      768
+    ],
+    "outputHash": "a0c372a8c4adfdc96b0803e3b9c03bccb0eb050d1de854d27cbe4f2b498380f7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/sprites/Laying-Anim.png": {
+    "before": 1208,
+    "after": 1184,
+    "originalSize": [
+      32,
+      192
+    ],
+    "size": [
+      32,
+      192
+    ],
+    "outputHash": "ebf60591c2a052f9bccbd302cb77c1c32295502fa44fd4734257e44b1f476974",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/sprites/Pose-Anim.png": {
+    "before": 5562,
+    "after": 5470,
+    "originalSize": [
+      160,
+      384
+    ],
+    "size": [
+      160,
+      384
+    ],
+    "outputHash": "e729fdbb8bb4b6c37c63bcdd924622fd3dff14a517cbae0891c875ada467d296",
+    "losslessPixels": true
+  },
+  "assets/pmd/0470A0/sprites/Wake-Anim.png": {
+    "before": 5795,
+    "after": 5480,
+    "originalSize": [
+      160,
+      320
+    ],
+    "size": [
+      160,
+      320
+    ],
+    "outputHash": "e1199e4aef1cfb01e6570dbae6a6fbbd959c266885a4a4e58b9e1f44727c5899",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/portraits/Sad.png": {
+    "before": 1438,
+    "after": 1363,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "40c30affa586805872ad22877d4ad2c862f8be76a5c1c98a79e6689d77ec3e57",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/Faint-Anim.png": {
+    "before": 4064,
+    "after": 3921,
+    "originalSize": [
+      128,
+      320
+    ],
+    "size": [
+      128,
+      320
+    ],
+    "outputHash": "9007c758a1ac6d5a428ac95b91a1381b5d6654d0b1acf1ee11156927ac9b583d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/HitGround-Anim.png": {
+    "before": 2038,
+    "after": 2012,
+    "originalSize": [
+      320,
+      48
+    ],
+    "size": [
+      320,
+      48
+    ],
+    "outputHash": "a37920b825b64a2b87199815c7a20708ed9093fba99a5692638e61901b493f5d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/Hop-Anim.png": {
+    "before": 19284,
+    "after": 19016,
+    "originalSize": [
+      320,
+      704
+    ],
+    "size": [
+      320,
+      704
+    ],
+    "outputHash": "1585b2a2300fc533e90ecda7284a4b4715be12d9e51d86f175790cae3924b8cf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/Hurt-Anim.png": {
+    "before": 5505,
+    "after": 5482,
+    "originalSize": [
+      96,
+      512
+    ],
+    "size": [
+      96,
+      512
+    ],
+    "outputHash": "33541971efc9b16ec7033a090091ba7d0c783e4a60a0812a5bad0ef4cfb91edc",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/Pose-Anim.png": {
+    "before": 2350,
+    "after": 2312,
+    "originalSize": [
+      96,
+      320
+    ],
+    "size": [
+      96,
+      320
+    ],
+    "outputHash": "8886b28ed705558f5c77a3f85cb3bf2e1177cc1c325175f4a6c71f80b5ade52c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0471A0/sprites/Wake-Anim.png": {
+    "before": 6283,
+    "after": 5755,
+    "originalSize": [
+      200,
+      320
+    ],
+    "size": [
+      200,
+      320
+    ],
+    "outputHash": "3896f666e750d4e1888d28361b06898e48f1bb8f672dcba8d1a9fc8567ab577c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Angry.png": {
+    "before": 1946,
+    "after": 1917,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "04bf1cd512ec432ae511fd0ab29bea42f4debf952954d5df1421487d5be46efb",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Happy.png": {
+    "before": 1784,
+    "after": 1732,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "c9bf28617a860ee3f2cc1e8fec7dca62486676ae341cc0c95b4d4ff4e0947646",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Joyous.png": {
+    "before": 1942,
+    "after": 1868,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "40d87fe7b4d89e5beb99d8179dd44748923436fcc6ac5bb178788d2fb080b9c1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Normal.png": {
+    "before": 1922,
+    "after": 1842,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "faf9a696056fce071660a1356139b25da2c1893f6710fe37cc451bb9a5cc3ccf",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Pain.png": {
+    "before": 1868,
+    "after": 1852,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "7ce98e85e69887cde65d0dacebf61f066a2e168717aa750f4302569c615bb2c6",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Sad.png": {
+    "before": 1967,
+    "after": 1962,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "8db0769cd025bfaa5478c83ae712f2025e68019bf71e9a5801b3fc372fa47ad9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Sigh.png": {
+    "before": 1878,
+    "after": 1856,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "d04509513af1f85bb11883fd186cab0efffd89bb439b270119a7c2af011bf32f",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Surprised.png": {
+    "before": 2051,
+    "after": 1983,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "0ea5c549ff38fece3e4d1e33f02aed0c84227120402c59ce8b06c8d2a6fb9bb1",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/portraits/Worried.png": {
+    "before": 1923,
+    "after": 1835,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "e393dc908aa275f5ea34165cfc75ad4418c7d6724c853bd32068f1473cecf366",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Hop-Anim.png": {
+    "before": 29615,
+    "after": 27613,
+    "originalSize": [
+      320,
+      768
+    ],
+    "size": [
+      320,
+      768
+    ],
+    "outputHash": "1da4096d9790d25b1e17ef7de072f9379e011cf690773d7a5f41ca9c30d78fa4",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Hurt-Anim.png": {
+    "before": 7406,
+    "after": 7055,
+    "originalSize": [
+      80,
+      512
+    ],
+    "size": [
+      80,
+      512
+    ],
+    "outputHash": "d7953565a59a8d813e8a41f8ce5a4051ed4f8edcab1cbd7bbb1e0d11b8030eb8",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Idle-Anim.png": {
+    "before": 12596,
+    "after": 11750,
+    "originalSize": [
+      256,
+      384
+    ],
+    "size": [
+      256,
+      384
+    ],
+    "outputHash": "e7dbdc0dd84281f5094fbb1f8d89be3977c40a2213a7e59002d47ffa55101c49",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Rotate-Anim.png": {
+    "before": 36106,
+    "after": 34180,
+    "originalSize": [
+      288,
+      384
+    ],
+    "size": [
+      288,
+      384
+    ],
+    "outputHash": "fc2b19f8b2bad52523f9db7fc916ce6a6713a73b6e044b659edc17af192c7201",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Shoot-Anim.png": {
+    "before": 20486,
+    "after": 18383,
+    "originalSize": [
+      480,
+      448
+    ],
+    "size": [
+      480,
+      448
+    ],
+    "outputHash": "be3b139f2317ac9d20ecf5c7212ea67f4ff6403f7079f8a2a961fec2262e3a9d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Sleep-Anim.png": {
+    "before": 1135,
+    "after": 1106,
+    "originalSize": [
+      64,
+      24
+    ],
+    "size": [
+      64,
+      24
+    ],
+    "outputHash": "afce35b66801af81d5c3891ce34387dc0d30a50877957a570e5be118bcadc7f7",
+    "losslessPixels": true
+  },
+  "assets/pmd/0700A0/sprites/Walk-Anim.png": {
+    "before": 11896,
+    "after": 11175,
+    "originalSize": [
+      128,
+      384
+    ],
+    "size": [
+      128,
+      384
+    ],
+    "outputHash": "44d41c5aa4b113606ed423db246a80cb426dd5648b07fde80c52356f61bcf393",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849A0/portraits/Happy.png": {
+    "before": 1674,
+    "after": 1647,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "c11b660b7f8e6f8ab0431c4a6b170162788fbea1d049b0a105a96709039096f9",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849A0/portraits/Joyous.png": {
+    "before": 1645,
+    "after": 1582,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "2c90887dff5a4d6ea5ad7c037d3e3f968e8862727f3dba8f3fabf9a6efb610a5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849A0/portraits/Normal.png": {
+    "before": 1705,
+    "after": 1609,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "b07e36911bff684600cfa977c5a4a50ac090a7e748ff327356eea273e51e1f6c",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849A0/portraits/Sad.png": {
+    "before": 1757,
+    "after": 1717,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "1a4a5587717f37794f1dafa7d67c0c5be686db2acf4abbb22bc433054bf8338d",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849A0/portraits/Surprised.png": {
+    "before": 1806,
+    "after": 1767,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "687639392051e5eb5f1bcbb725a72761053189c3c273dad8fd7364c5905ca202",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849B0/portraits/Angry.png": {
+    "before": 4397,
+    "after": 4317,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "a6c786cfab66ae24bc29c4755134402542972b84697533c1855e3cb36ae7004b",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849B0/portraits/Joyous.png": {
+    "before": 4241,
+    "after": 4178,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "9cd3f1fc2d1356189c1d737f0bf9b29903d3a060d05eeb5666c6c841ecbd84b5",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849B0/portraits/Sad.png": {
+    "before": 4167,
+    "after": 4105,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "f27f547160d51b7b1f2f5807c93ec75187f77def7902e042038931574af67d09",
+    "losslessPixels": true
+  },
+  "assets/pmd/0849B0/portraits/Surprised.png": {
+    "before": 4396,
+    "after": 4324,
+    "originalSize": [
+      40,
+      40
+    ],
+    "size": [
+      40,
+      40
+    ],
+    "outputHash": "62b4ed0defe2c257695f22f6763511646dfe08b82cc1fc56fde15b21972a68af",
+    "losslessPixels": true
+  },
+  "assets/pokemon_logo.png": {
+    "before": 115378,
+    "after": 2084,
+    "originalSize": [
+      2640,
+      1040
+    ],
+    "size": [
+      264,
+      104
+    ],
+    "outputHash": "1b7e02542845f5bb7e3c3f8be785c719085f78c043e963b6f9392b446d7b0867",
+    "losslessPixels": false
+  }
+}

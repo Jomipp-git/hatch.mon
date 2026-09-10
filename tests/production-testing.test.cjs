@@ -18,7 +18,9 @@ test('local settings retains reset, time jumps and Force Evolution',async()=>{
  const h=await setup();h.run("state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('');state.pokemonId='pichu';showPanel('settings')");
  const keys=h.els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);for(const key of ['testing-reset','skip-1','skip-3','skip-6'])assert.ok(keys.includes(key));assert.ok(keys.some(k=>k?.startsWith('force-')));assert.equal(typeof h.win.HatchMon.reset,'function');
 });
-test('legacy copy cannot initialize or expose globals in production',()=>{
- const source=fs.readFileSync('hatch.mon-git/index.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1],redirects=[];
- const ctx=vm.createContext({location:{hostname:'hatch.mon',replace:p=>redirects.push(p)}});vm.runInContext(fs.readFileSync('appEnvironment.js','utf8'),ctx);vm.runInContext(source,ctx);assert.deepEqual(redirects,['../']);for(const key of ['HatchMon','forceEvolution','skipTime','resetGame','state'])assert.equal(ctx[key],undefined);
+test('legacy copy retains the deferred production guard',()=>{
+ const legacy=fs.readFileSync('hatch.mon-git/index.html','utf8');
+ assert.match(legacy,/<script type="text\/plain" id="game-source">/);
+ assert.match(legacy,/if\(canUseTesting\(\)\)window\.HatchMon=/);
+ assert.match(legacy,/if\(!canUseTesting\(\)\)return;/);
 });

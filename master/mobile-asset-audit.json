@@ -1,0 +1,8009 @@
+{
+  "summary": {
+    "pngCount": 799,
+    "pngBefore": 8903183,
+    "pngAfter": 6454167,
+    "runtimeBytes": 7538059,
+    "files": 837,
+    "resized": [
+      "assets/eggs/egg_phase_1.png",
+      "assets/eggs/egg_phase_2.png",
+      "assets/eggs/egg_phase_3.png",
+      "assets/eggs/egg_phase_4.png",
+      "assets/eggs/egg_phase_5.png",
+      "assets/pokemon_logo.png"
+    ]
+  },
+  "assets": [
+    {
+      "path": "assets/eggs/egg_phase_1.png",
+      "before": 716232,
+      "after": 344607,
+      "size": [
+        832,
+        832
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/eggs/egg_phase_2.png",
+      "before": 742341,
+      "after": 358076,
+      "size": [
+        832,
+        832
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/eggs/egg_phase_3.png",
+      "before": 783315,
+      "after": 377210,
+      "size": [
+        832,
+        832
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/eggs/egg_phase_4.png",
+      "before": 786598,
+      "after": 378397,
+      "size": [
+        832,
+        832
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/eggs/egg_phase_5.png",
+      "before": 1019781,
+      "after": 492742,
+      "size": [
+        832,
+        832
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Angry.png",
+      "before": 1382,
+      "after": 1382,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Happy.png",
+      "before": 1272,
+      "after": 1248,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Joyous.png",
+      "before": 1432,
+      "after": 1432,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Normal.png",
+      "before": 1165,
+      "after": 1120,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Pain.png",
+      "before": 1217,
+      "after": 1172,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Sad.png",
+      "before": 1180,
+      "after": 1174,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Sigh.png",
+      "before": 1208,
+      "after": 1155,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Surprised.png",
+      "before": 1383,
+      "after": 1383,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/portraits/Worried.png",
+      "before": 1120,
+      "after": 1077,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Cringe-Anim.png",
+      "before": 698,
+      "after": 675,
+      "size": [
+        48,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Eat-Anim.png",
+      "before": 988,
+      "after": 931,
+      "size": [
+        96,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Faint-Anim.png",
+      "before": 4658,
+      "after": 3357,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/HitGround-Anim.png",
+      "before": 1463,
+      "after": 1358,
+      "size": [
+        320,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Hop-Anim.png",
+      "before": 15300,
+      "after": 13573,
+      "size": [
+        400,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Hurt-Anim.png",
+      "before": 4577,
+      "after": 4259,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Idle-Anim.png",
+      "before": 8301,
+      "after": 7084,
+      "size": [
+        240,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Laying-Anim.png",
+      "before": 871,
+      "after": 765,
+      "size": [
+        24,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Nod-Anim.png",
+      "before": 3246,
+      "after": 2745,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Pain-Anim.png",
+      "before": 13950,
+      "after": 12055,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Pose-Anim.png",
+      "before": 2715,
+      "after": 2030,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Rotate-Anim.png",
+      "before": 15128,
+      "after": 14094,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Shoot-Anim.png",
+      "before": 11534,
+      "after": 9711,
+      "size": [
+        440,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Sleep-Anim.png",
+      "before": 672,
+      "after": 644,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Wake-Anim.png",
+      "before": 7270,
+      "after": 4030,
+      "size": [
+        200,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0025A0/sprites/Walk-Anim.png",
+      "before": 6437,
+      "after": 5898,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Angry.png",
+      "before": 1844,
+      "after": 1809,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Happy.png",
+      "before": 1614,
+      "after": 1602,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Joyous.png",
+      "before": 1709,
+      "after": 1644,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Normal.png",
+      "before": 1478,
+      "after": 1427,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Pain.png",
+      "before": 1572,
+      "after": 1495,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Sad.png",
+      "before": 1476,
+      "after": 1407,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Sigh.png",
+      "before": 1642,
+      "after": 1583,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Surprised.png",
+      "before": 1756,
+      "after": 1671,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/portraits/Worried.png",
+      "before": 1397,
+      "after": 1322,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Cringe-Anim.png",
+      "before": 982,
+      "after": 982,
+      "size": [
+        80,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Eat-Anim.png",
+      "before": 1542,
+      "after": 1542,
+      "size": [
+        128,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Faint-Anim.png",
+      "before": 5049,
+      "after": 4821,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/HitGround-Anim.png",
+      "before": 2388,
+      "after": 2353,
+      "size": [
+        320,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Hop-Anim.png",
+      "before": 26292,
+      "after": 25431,
+      "size": [
+        400,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Hurt-Anim.png",
+      "before": 6695,
+      "after": 6637,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Idle-Anim.png",
+      "before": 16242,
+      "after": 15948,
+      "size": [
+        240,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Laying-Anim.png",
+      "before": 1299,
+      "after": 1247,
+      "size": [
+        32,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Nod-Anim.png",
+      "before": 4626,
+      "after": 4524,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Pain-Anim.png",
+      "before": 26086,
+      "after": 25765,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Pose-Anim.png",
+      "before": 4483,
+      "after": 4258,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Rotate-Anim.png",
+      "before": 28937,
+      "after": 28937,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Shoot-Anim.png",
+      "before": 16855,
+      "after": 16659,
+      "size": [
+        440,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Sleep-Anim.png",
+      "before": 970,
+      "after": 970,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Wake-Anim.png",
+      "before": 16590,
+      "after": 16344,
+      "size": [
+        200,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026A0/sprites/Walk-Anim.png",
+      "before": 10731,
+      "after": 10676,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Angry.png",
+      "before": 1669,
+      "after": 1669,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Happy.png",
+      "before": 1486,
+      "after": 1486,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Joyous.png",
+      "before": 1694,
+      "after": 1694,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Normal.png",
+      "before": 1498,
+      "after": 1498,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Pain.png",
+      "before": 1480,
+      "after": 1480,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Sad.png",
+      "before": 1453,
+      "after": 1453,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Sigh.png",
+      "before": 1513,
+      "after": 1513,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Surprised.png",
+      "before": 1797,
+      "after": 1758,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/portraits/Worried.png",
+      "before": 1377,
+      "after": 1337,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Hop-Anim.png",
+      "before": 37315,
+      "after": 37315,
+      "size": [
+        400,
+        960
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Hurt-Anim.png",
+      "before": 8503,
+      "after": 8503,
+      "size": [
+        96,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Idle-Anim.png",
+      "before": 13906,
+      "after": 13906,
+      "size": [
+        280,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Pose-Anim.png",
+      "before": 5937,
+      "after": 5937,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Rotate-Anim.png",
+      "before": 34389,
+      "after": 34389,
+      "size": [
+        288,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Shoot-Anim.png",
+      "before": 19418,
+      "after": 19418,
+      "size": [
+        480,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Sleep-Anim.png",
+      "before": 1812,
+      "after": 1812,
+      "size": [
+        256,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0026L0/sprites/Walk-Anim.png",
+      "before": 14002,
+      "after": 13936,
+      "size": [
+        256,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Angry.png",
+      "before": 2196,
+      "after": 2196,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Happy.png",
+      "before": 2088,
+      "after": 2088,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Joyous.png",
+      "before": 2114,
+      "after": 2114,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Normal.png",
+      "before": 703,
+      "after": 703,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Pain.png",
+      "before": 1938,
+      "after": 1938,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Sad.png",
+      "before": 1964,
+      "after": 1938,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Sigh.png",
+      "before": 2020,
+      "after": 2020,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Surprised.png",
+      "before": 2158,
+      "after": 2158,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/portraits/Worried.png",
+      "before": 1886,
+      "after": 1846,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Hop-Anim.png",
+      "before": 16682,
+      "after": 15389,
+      "size": [
+        240,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Hurt-Anim.png",
+      "before": 5473,
+      "after": 5090,
+      "size": [
+        112,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Idle-Anim.png",
+      "before": 11298,
+      "after": 10466,
+      "size": [
+        192,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Rotate-Anim.png",
+      "before": 6881,
+      "after": 5326,
+      "size": [
+        216,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Sleep-Anim.png",
+      "before": 645,
+      "after": 636,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0035A0/sprites/Walk-Anim.png",
+      "before": 11404,
+      "after": 10579,
+      "size": [
+        192,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Angry.png",
+      "before": 1239,
+      "after": 1239,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Happy.png",
+      "before": 1143,
+      "after": 1143,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Joyous.png",
+      "before": 1252,
+      "after": 1252,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Normal.png",
+      "before": 1177,
+      "after": 1148,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Pain.png",
+      "before": 1397,
+      "after": 1397,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Sad.png",
+      "before": 1194,
+      "after": 1194,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Sigh.png",
+      "before": 1434,
+      "after": 1434,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Surprised.png",
+      "before": 1285,
+      "after": 1285,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/portraits/Worried.png",
+      "before": 1331,
+      "after": 1331,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Hop-Anim.png",
+      "before": 16714,
+      "after": 15369,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Hurt-Anim.png",
+      "before": 5750,
+      "after": 5354,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Idle-Anim.png",
+      "before": 13767,
+      "after": 12907,
+      "size": [
+        192,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Rotate-Anim.png",
+      "before": 21913,
+      "after": 20851,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Sleep-Anim.png",
+      "before": 871,
+      "after": 841,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0036A0/sprites/Walk-Anim.png",
+      "before": 14960,
+      "after": 13926,
+      "size": [
+        256,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Angry.png",
+      "before": 1388,
+      "after": 1388,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Happy.png",
+      "before": 1103,
+      "after": 1070,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Joyous.png",
+      "before": 1256,
+      "after": 1240,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Normal.png",
+      "before": 1342,
+      "after": 1313,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Pain.png",
+      "before": 1382,
+      "after": 1382,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Sad.png",
+      "before": 1293,
+      "after": 1253,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Sigh.png",
+      "before": 1209,
+      "after": 1172,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Surprised.png",
+      "before": 1747,
+      "after": 1692,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/portraits/Worried.png",
+      "before": 1293,
+      "after": 1272,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Cringe-Anim.png",
+      "before": 613,
+      "after": 613,
+      "size": [
+        48,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Eat-Anim.png",
+      "before": 929,
+      "after": 929,
+      "size": [
+        96,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Faint-Anim.png",
+      "before": 3207,
+      "after": 3021,
+      "size": [
+        128,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/HitGround-Anim.png",
+      "before": 1353,
+      "after": 1353,
+      "size": [
+        192,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Hop-Anim.png",
+      "before": 14677,
+      "after": 14262,
+      "size": [
+        240,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Hurt-Anim.png",
+      "before": 3481,
+      "after": 3425,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Idle-Anim.png",
+      "before": 4663,
+      "after": 4606,
+      "size": [
+        120,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Laying-Anim.png",
+      "before": 626,
+      "after": 601,
+      "size": [
+        32,
+        128
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Nod-Anim.png",
+      "before": 2455,
+      "after": 2434,
+      "size": [
+        72,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Pain-Anim.png",
+      "before": 12014,
+      "after": 12014,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Pose-Anim.png",
+      "before": 1710,
+      "after": 1566,
+      "size": [
+        72,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Rotate-Anim.png",
+      "before": 5310,
+      "after": 4395,
+      "size": [
+        216,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Shoot-Anim.png",
+      "before": 13455,
+      "after": 13188,
+      "size": [
+        384,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Sleep-Anim.png",
+      "before": 558,
+      "after": 558,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Wake-Anim.png",
+      "before": 4211,
+      "after": 4001,
+      "size": [
+        160,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0039A0/sprites/Walk-Anim.png",
+      "before": 8208,
+      "after": 7962,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Angry.png",
+      "before": 1915,
+      "after": 1915,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Happy.png",
+      "before": 1599,
+      "after": 1582,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Joyous.png",
+      "before": 1541,
+      "after": 1476,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Normal.png",
+      "before": 1529,
+      "after": 1466,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Pain.png",
+      "before": 1522,
+      "after": 1522,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Sad.png",
+      "before": 1550,
+      "after": 1550,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Sigh.png",
+      "before": 1742,
+      "after": 1685,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Surprised.png",
+      "before": 1519,
+      "after": 1518,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/portraits/Worried.png",
+      "before": 1428,
+      "after": 1428,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Hop-Anim.png",
+      "before": 19426,
+      "after": 18191,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Hurt-Anim.png",
+      "before": 5923,
+      "after": 5566,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Idle-Anim.png",
+      "before": 8628,
+      "after": 7917,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Rotate-Anim.png",
+      "before": 20286,
+      "after": 19226,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Shoot-Anim.png",
+      "before": 18687,
+      "after": 16451,
+      "size": [
+        520,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Sleep-Anim.png",
+      "before": 728,
+      "after": 709,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0040A0/sprites/Walk-Anim.png",
+      "before": 8512,
+      "after": 7953,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Angry.png",
+      "before": 1680,
+      "after": 1680,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Happy.png",
+      "before": 1456,
+      "after": 1395,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Joyous.png",
+      "before": 1696,
+      "after": 1634,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Normal.png",
+      "before": 1487,
+      "after": 1429,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Pain.png",
+      "before": 1704,
+      "after": 1704,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Sad.png",
+      "before": 1523,
+      "after": 1450,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Sigh.png",
+      "before": 1429,
+      "after": 1429,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Surprised.png",
+      "before": 1588,
+      "after": 1524,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/portraits/Worried.png",
+      "before": 1626,
+      "after": 1536,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Charge-Anim.png",
+      "before": 8939,
+      "after": 7426,
+      "size": [
+        400,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Hop-Anim.png",
+      "before": 28600,
+      "after": 26725,
+      "size": [
+        400,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Hurt-Anim.png",
+      "before": 6970,
+      "after": 6519,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Idle-Anim.png",
+      "before": 6921,
+      "after": 6575,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Rotate-Anim.png",
+      "before": 27719,
+      "after": 26005,
+      "size": [
+        360,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Sleep-Anim.png",
+      "before": 1104,
+      "after": 1070,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0106A0/sprites/Walk-Anim.png",
+      "before": 10344,
+      "after": 9634,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/portraits/Normal.png",
+      "before": 681,
+      "after": 681,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Charge-Anim.png",
+      "before": 6669,
+      "after": 6119,
+      "size": [
+        240,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Hop-Anim.png",
+      "before": 20800,
+      "after": 19296,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Hurt-Anim.png",
+      "before": 5431,
+      "after": 5170,
+      "size": [
+        64,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Idle-Anim.png",
+      "before": 9178,
+      "after": 8642,
+      "size": [
+        192,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Rotate-Anim.png",
+      "before": 21673,
+      "after": 20458,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Sleep-Anim.png",
+      "before": 802,
+      "after": 782,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0107A0/sprites/Walk-Anim.png",
+      "before": 8798,
+      "after": 8243,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Angry.png",
+      "before": 2164,
+      "after": 2101,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Happy.png",
+      "before": 2231,
+      "after": 2231,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Joyous.png",
+      "before": 2025,
+      "after": 2025,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Normal.png",
+      "before": 2298,
+      "after": 2298,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Pain.png",
+      "before": 2079,
+      "after": 2052,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Sad.png",
+      "before": 2071,
+      "after": 2016,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Sigh.png",
+      "before": 2252,
+      "after": 2252,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Surprised.png",
+      "before": 2267,
+      "after": 2267,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/portraits/Worried.png",
+      "before": 1872,
+      "after": 1872,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Hop-Anim.png",
+      "before": 21284,
+      "after": 17163,
+      "size": [
+        400,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Hurt-Anim.png",
+      "before": 5468,
+      "after": 5089,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Idle-Anim.png",
+      "before": 9248,
+      "after": 8598,
+      "size": [
+        160,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Rotate-Anim.png",
+      "before": 22631,
+      "after": 20629,
+      "size": [
+        360,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Shoot-Anim.png",
+      "before": 16224,
+      "after": 14418,
+      "size": [
+        528,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Sleep-Anim.png",
+      "before": 766,
+      "after": 746,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0125A0/sprites/Walk-Anim.png",
+      "before": 9248,
+      "after": 8598,
+      "size": [
+        160,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/portraits/Normal.png",
+      "before": 1983,
+      "after": 1945,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/portraits/Worried.png",
+      "before": 1726,
+      "after": 1674,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Hop-Anim.png",
+      "before": 25712,
+      "after": 23256,
+      "size": [
+        400,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Hurt-Anim.png",
+      "before": 7327,
+      "after": 6933,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Idle-Anim.png",
+      "before": 7779,
+      "after": 7347,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Rotate-Anim.png",
+      "before": 25344,
+      "after": 24098,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Shoot-Anim.png",
+      "before": 18329,
+      "after": 16240,
+      "size": [
+        480,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Sleep-Anim.png",
+      "before": 859,
+      "after": 826,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0126A0/sprites/Walk-Anim.png",
+      "before": 10126,
+      "after": 9522,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Angry.png",
+      "before": 674,
+      "after": 674,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Happy.png",
+      "before": 647,
+      "after": 647,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Joyous.png",
+      "before": 663,
+      "after": 663,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Normal.png",
+      "before": 675,
+      "after": 675,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Pain.png",
+      "before": 619,
+      "after": 619,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Sad.png",
+      "before": 622,
+      "after": 622,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Sigh.png",
+      "before": 626,
+      "after": 626,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Surprised.png",
+      "before": 684,
+      "after": 684,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/portraits/Worried.png",
+      "before": 663,
+      "after": 663,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Cringe-Anim.png",
+      "before": 903,
+      "after": 872,
+      "size": [
+        64,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Eat-Anim.png",
+      "before": 1130,
+      "after": 1088,
+      "size": [
+        96,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Faint-Anim.png",
+      "before": 4165,
+      "after": 3841,
+      "size": [
+        160,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/HitGround-Anim.png",
+      "before": 2084,
+      "after": 1971,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Hop-Anim.png",
+      "before": 18602,
+      "after": 17303,
+      "size": [
+        320,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Hurt-Anim.png",
+      "before": 5554,
+      "after": 5400,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Idle-Anim.png",
+      "before": 3926,
+      "after": 3922,
+      "size": [
+        48,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Laying-Anim.png",
+      "before": 886,
+      "after": 823,
+      "size": [
+        24,
+        128
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Nod-Anim.png",
+      "before": 3554,
+      "after": 3297,
+      "size": [
+        96,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Pain-Anim.png",
+      "before": 16732,
+      "after": 15787,
+      "size": [
+        384,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Pose-Anim.png",
+      "before": 4188,
+      "after": 3754,
+      "size": [
+        120,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Rotate-Anim.png",
+      "before": 7656,
+      "after": 6215,
+      "size": [
+        216,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Shoot-Anim.png",
+      "before": 11258,
+      "after": 10742,
+      "size": [
+        256,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Sleep-Anim.png",
+      "before": 804,
+      "after": 784,
+      "size": [
+        64,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Wake-Anim.png",
+      "before": 6019,
+      "after": 5313,
+      "size": [
+        192,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0133A0/sprites/Walk-Anim.png",
+      "before": 14849,
+      "after": 13930,
+      "size": [
+        280,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Angry.png",
+      "before": 2124,
+      "after": 2064,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Happy.png",
+      "before": 2017,
+      "after": 2017,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Joyous.png",
+      "before": 2131,
+      "after": 2131,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Normal.png",
+      "before": 2071,
+      "after": 2071,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Pain.png",
+      "before": 1990,
+      "after": 1990,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Sad.png",
+      "before": 1928,
+      "after": 1928,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Sigh.png",
+      "before": 2039,
+      "after": 1980,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Surprised.png",
+      "before": 2072,
+      "after": 2012,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/portraits/Worried.png",
+      "before": 2061,
+      "after": 2019,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Hop-Anim.png",
+      "before": 30801,
+      "after": 27623,
+      "size": [
+        560,
+        832
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Hurt-Anim.png",
+      "before": 6088,
+      "after": 5761,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Idle-Anim.png",
+      "before": 6620,
+      "after": 6247,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Rotate-Anim.png",
+      "before": 30143,
+      "after": 28790,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Shoot-Anim.png",
+      "before": 25078,
+      "after": 22902,
+      "size": [
+        672,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Sleep-Anim.png",
+      "before": 934,
+      "after": 914,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0134A0/sprites/Walk-Anim.png",
+      "before": 10180,
+      "after": 9648,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Angry.png",
+      "before": 2371,
+      "after": 2371,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Happy.png",
+      "before": 2288,
+      "after": 2288,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Joyous.png",
+      "before": 2274,
+      "after": 2274,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Normal.png",
+      "before": 2080,
+      "after": 2080,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Pain.png",
+      "before": 1963,
+      "after": 1963,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Sad.png",
+      "before": 1961,
+      "after": 1961,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Sigh.png",
+      "before": 2039,
+      "after": 2039,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Surprised.png",
+      "before": 2353,
+      "after": 2353,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/portraits/Worried.png",
+      "before": 2007,
+      "after": 2007,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Cringe-Anim.png",
+      "before": 850,
+      "after": 848,
+      "size": [
+        80,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Eat-Anim.png",
+      "before": 1090,
+      "after": 1090,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Faint-Anim.png",
+      "before": 3145,
+      "after": 2898,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/HitGround-Anim.png",
+      "before": 1101,
+      "after": 1092,
+      "size": [
+        224,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Hop-Anim.png",
+      "before": 15807,
+      "after": 14777,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Hurt-Anim.png",
+      "before": 5781,
+      "after": 5712,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Idle-Anim.png",
+      "before": 4854,
+      "after": 4810,
+      "size": [
+        64,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Laying-Anim.png",
+      "before": 807,
+      "after": 779,
+      "size": [
+        32,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Nod-Anim.png",
+      "before": 3253,
+      "after": 3128,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Pain-Anim.png",
+      "before": 11339,
+      "after": 10838,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Pose-Anim.png",
+      "before": 5135,
+      "after": 4543,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Rotate-Anim.png",
+      "before": 17351,
+      "after": 16893,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Shoot-Anim.png",
+      "before": 13503,
+      "after": 13122,
+      "size": [
+        480,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Sleep-Anim.png",
+      "before": 548,
+      "after": 544,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Wake-Anim.png",
+      "before": 5312,
+      "after": 4389,
+      "size": [
+        192,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0135A0/sprites/Walk-Anim.png",
+      "before": 7057,
+      "after": 6923,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Angry.png",
+      "before": 1856,
+      "after": 1856,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Happy.png",
+      "before": 2116,
+      "after": 2064,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Joyous.png",
+      "before": 1963,
+      "after": 1942,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Normal.png",
+      "before": 2024,
+      "after": 1957,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Pain.png",
+      "before": 1769,
+      "after": 1769,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Sad.png",
+      "before": 1799,
+      "after": 1799,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Sigh.png",
+      "before": 1833,
+      "after": 1787,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Surprised.png",
+      "before": 2134,
+      "after": 2056,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/portraits/Worried.png",
+      "before": 1853,
+      "after": 1787,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Cringe-Anim.png",
+      "before": 834,
+      "after": 834,
+      "size": [
+        48,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Eat-Anim.png",
+      "before": 1111,
+      "after": 1104,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Faint-Anim.png",
+      "before": 4222,
+      "after": 3940,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/HitGround-Anim.png",
+      "before": 2023,
+      "after": 1957,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Hop-Anim.png",
+      "before": 20045,
+      "after": 19146,
+      "size": [
+        320,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Hurt-Anim.png",
+      "before": 5644,
+      "after": 5489,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Idle-Anim.png",
+      "before": 6759,
+      "after": 6717,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Laying-Anim.png",
+      "before": 1049,
+      "after": 970,
+      "size": [
+        40,
+        128
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Nod-Anim.png",
+      "before": 3655,
+      "after": 3552,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Pain-Anim.png",
+      "before": 18860,
+      "after": 18539,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Pose-Anim.png",
+      "before": 4517,
+      "after": 4217,
+      "size": [
+        120,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Rotate-Anim.png",
+      "before": 21176,
+      "after": 21052,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Shoot-Anim.png",
+      "before": 9764,
+      "after": 9638,
+      "size": [
+        320,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Sleep-Anim.png",
+      "before": 771,
+      "after": 771,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Wake-Anim.png",
+      "before": 15660,
+      "after": 15308,
+      "size": [
+        240,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0136A0/sprites/Walk-Anim.png",
+      "before": 7642,
+      "after": 7548,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Angry.png",
+      "before": 1460,
+      "after": 1390,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Happy.png",
+      "before": 1342,
+      "after": 1314,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Joyous.png",
+      "before": 1469,
+      "after": 1429,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Normal.png",
+      "before": 1378,
+      "after": 1378,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Pain.png",
+      "before": 1387,
+      "after": 1387,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Sad.png",
+      "before": 1365,
+      "after": 1365,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Sigh.png",
+      "before": 1386,
+      "after": 1323,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Surprised.png",
+      "before": 1469,
+      "after": 1469,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/portraits/Worried.png",
+      "before": 1385,
+      "after": 1385,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Hop-Anim.png",
+      "before": 21801,
+      "after": 20103,
+      "size": [
+        320,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Hurt-Anim.png",
+      "before": 6289,
+      "after": 5791,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Idle-Anim.png",
+      "before": 12874,
+      "after": 11812,
+      "size": [
+        192,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Rotate-Anim.png",
+      "before": 22680,
+      "after": 21386,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Shoot-Anim.png",
+      "before": 19152,
+      "after": 16773,
+      "size": [
+        480,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Sleep-Anim.png",
+      "before": 835,
+      "after": 817,
+      "size": [
+        80,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0143A0/sprites/Walk-Anim.png",
+      "before": 8608,
+      "after": 7910,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Angry.png",
+      "before": 1624,
+      "after": 1588,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Happy.png",
+      "before": 1552,
+      "after": 1487,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Joyous.png",
+      "before": 1627,
+      "after": 1558,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Normal.png",
+      "before": 1592,
+      "after": 1573,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Pain.png",
+      "before": 1519,
+      "after": 1434,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Sad.png",
+      "before": 1470,
+      "after": 1403,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Sigh.png",
+      "before": 1512,
+      "after": 1421,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Surprised.png",
+      "before": 1705,
+      "after": 1664,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/portraits/Worried.png",
+      "before": 1559,
+      "after": 1489,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Cringe-Anim.png",
+      "before": 677,
+      "after": 677,
+      "size": [
+        64,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Eat-Anim.png",
+      "before": 801,
+      "after": 801,
+      "size": [
+        96,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Faint-Anim.png",
+      "before": 3043,
+      "after": 2752,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/HitGround-Anim.png",
+      "before": 1297,
+      "after": 1279,
+      "size": [
+        256,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Hop-Anim.png",
+      "before": 14183,
+      "after": 13562,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Hurt-Anim.png",
+      "before": 3617,
+      "after": 3556,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Idle-Anim.png",
+      "before": 5466,
+      "after": 5309,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Laying-Anim.png",
+      "before": 769,
+      "after": 734,
+      "size": [
+        32,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Nod-Anim.png",
+      "before": 2622,
+      "after": 2526,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Pain-Anim.png",
+      "before": 11563,
+      "after": 11216,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Pose-Anim.png",
+      "before": 3845,
+      "after": 3371,
+      "size": [
+        120,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Rotate-Anim.png",
+      "before": 12079,
+      "after": 11922,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Sleep-Anim.png",
+      "before": 512,
+      "after": 512,
+      "size": [
+        48,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Wake-Anim.png",
+      "before": 4010,
+      "after": 3704,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0172A0/sprites/Walk-Anim.png",
+      "before": 9180,
+      "after": 8899,
+      "size": [
+        256,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Angry.png",
+      "before": 1411,
+      "after": 1409,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Happy.png",
+      "before": 1528,
+      "after": 1528,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Joyous.png",
+      "before": 1537,
+      "after": 1533,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Normal.png",
+      "before": 1419,
+      "after": 1419,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Pain.png",
+      "before": 1456,
+      "after": 1456,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Sad.png",
+      "before": 1393,
+      "after": 1393,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Sigh.png",
+      "before": 1392,
+      "after": 1392,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Surprised.png",
+      "before": 1738,
+      "after": 1738,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/portraits/Worried.png",
+      "before": 1454,
+      "after": 1454,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Hop-Anim.png",
+      "before": 13333,
+      "after": 12331,
+      "size": [
+        240,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Hurt-Anim.png",
+      "before": 5120,
+      "after": 4794,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Idle-Anim.png",
+      "before": 3536,
+      "after": 3323,
+      "size": [
+        48,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Rotate-Anim.png",
+      "before": 5561,
+      "after": 4333,
+      "size": [
+        216,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Shoot-Anim.png",
+      "before": 8010,
+      "after": 7143,
+      "size": [
+        216,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Sleep-Anim.png",
+      "before": 586,
+      "after": 581,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0173A0/sprites/Walk-Anim.png",
+      "before": 9567,
+      "after": 8761,
+      "size": [
+        256,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Angry.png",
+      "before": 1501,
+      "after": 1452,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Happy.png",
+      "before": 1233,
+      "after": 1181,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Joyous.png",
+      "before": 1371,
+      "after": 1371,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Normal.png",
+      "before": 1292,
+      "after": 1263,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Pain.png",
+      "before": 1337,
+      "after": 1285,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Sad.png",
+      "before": 1233,
+      "after": 1189,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Sigh.png",
+      "before": 1260,
+      "after": 1215,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Surprised.png",
+      "before": 1444,
+      "after": 1444,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/portraits/Worried.png",
+      "before": 1250,
+      "after": 1203,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Hop-Anim.png",
+      "before": 11576,
+      "after": 10953,
+      "size": [
+        240,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Hurt-Anim.png",
+      "before": 3470,
+      "after": 3233,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Idle-Anim.png",
+      "before": 2500,
+      "after": 2344,
+      "size": [
+        48,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Rotate-Anim.png",
+      "before": 4198,
+      "after": 3230,
+      "size": [
+        216,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Shoot-Anim.png",
+      "before": 6014,
+      "after": 5334,
+      "size": [
+        216,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Sleep-Anim.png",
+      "before": 482,
+      "after": 470,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0174A0/sprites/Walk-Anim.png",
+      "before": 5548,
+      "after": 5178,
+      "size": [
+        120,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Angry.png",
+      "before": 1726,
+      "after": 1692,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Happy.png",
+      "before": 1710,
+      "after": 1666,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Joyous.png",
+      "before": 1835,
+      "after": 1801,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Normal.png",
+      "before": 1668,
+      "after": 1644,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Pain.png",
+      "before": 1525,
+      "after": 1482,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Sad.png",
+      "before": 1729,
+      "after": 1729,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Sigh.png",
+      "before": 1651,
+      "after": 1609,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Surprised.png",
+      "before": 1812,
+      "after": 1781,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/portraits/Worried.png",
+      "before": 1653,
+      "after": 1621,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Hop-Anim.png",
+      "before": 13009,
+      "after": 12129,
+      "size": [
+        240,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Hurt-Anim.png",
+      "before": 4561,
+      "after": 4310,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Idle-Anim.png",
+      "before": 4434,
+      "after": 4180,
+      "size": [
+        96,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Rotate-Anim.png",
+      "before": 4680,
+      "after": 3516,
+      "size": [
+        216,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Sleep-Anim.png",
+      "before": 694,
+      "after": 681,
+      "size": [
+        48,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0175A0/sprites/Walk-Anim.png",
+      "before": 8172,
+      "after": 7638,
+      "size": [
+        144,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Angry.png",
+      "before": 1677,
+      "after": 1677,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Happy.png",
+      "before": 1448,
+      "after": 1419,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Joyous.png",
+      "before": 1844,
+      "after": 1844,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Normal.png",
+      "before": 1511,
+      "after": 1502,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Pain.png",
+      "before": 1609,
+      "after": 1556,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Sad.png",
+      "before": 1463,
+      "after": 1463,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Sigh.png",
+      "before": 1504,
+      "after": 1446,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Surprised.png",
+      "before": 1963,
+      "after": 1959,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/portraits/Worried.png",
+      "before": 1491,
+      "after": 1438,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Cringe-Anim.png",
+      "before": 589,
+      "after": 589,
+      "size": [
+        48,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Eat-Anim.png",
+      "before": 821,
+      "after": 821,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Faint-Anim.png",
+      "before": 3443,
+      "after": 3365,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/HitGround-Anim.png",
+      "before": 1678,
+      "after": 1678,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Hop-Anim.png",
+      "before": 14294,
+      "after": 13111,
+      "size": [
+        240,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Hurt-Anim.png",
+      "before": 4874,
+      "after": 4575,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Idle-Anim.png",
+      "before": 8471,
+      "after": 7850,
+      "size": [
+        144,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Laying-Anim.png",
+      "before": 704,
+      "after": 699,
+      "size": [
+        32,
+        128
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Nod-Anim.png",
+      "before": 2636,
+      "after": 2587,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Pain-Anim.png",
+      "before": 9680,
+      "after": 9567,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Pose-Anim.png",
+      "before": 2121,
+      "after": 1947,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Rotate-Anim.png",
+      "before": 16512,
+      "after": 15837,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Sleep-Anim.png",
+      "before": 567,
+      "after": 549,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Wake-Anim.png",
+      "before": 4256,
+      "after": 4037,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0176A0/sprites/Walk-Anim.png",
+      "before": 5786,
+      "after": 5430,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Angry.png",
+      "before": 1589,
+      "after": 1544,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Happy.png",
+      "before": 1494,
+      "after": 1458,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Joyous.png",
+      "before": 1531,
+      "after": 1502,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Normal.png",
+      "before": 1553,
+      "after": 1553,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Pain.png",
+      "before": 1541,
+      "after": 1499,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Sad.png",
+      "before": 1587,
+      "after": 1536,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Sigh.png",
+      "before": 1448,
+      "after": 1408,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Surprised.png",
+      "before": 1637,
+      "after": 1594,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/portraits/Worried.png",
+      "before": 1589,
+      "after": 1565,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Cringe-Anim.png",
+      "before": 860,
+      "after": 860,
+      "size": [
+        64,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Eat-Anim.png",
+      "before": 1050,
+      "after": 1050,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Faint-Anim.png",
+      "before": 3473,
+      "after": 3244,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/HitGround-Anim.png",
+      "before": 1707,
+      "after": 1707,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Hop-Anim.png",
+      "before": 18663,
+      "after": 18195,
+      "size": [
+        400,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Hurt-Anim.png",
+      "before": 4814,
+      "after": 4808,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Idle-Anim.png",
+      "before": 4331,
+      "after": 4331,
+      "size": [
+        64,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Laying-Anim.png",
+      "before": 802,
+      "after": 802,
+      "size": [
+        24,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Nod-Anim.png",
+      "before": 3224,
+      "after": 3143,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Pain-Anim.png",
+      "before": 17599,
+      "after": 17599,
+      "size": [
+        480,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Pose-Anim.png",
+      "before": 2077,
+      "after": 1910,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Rotate-Anim.png",
+      "before": 17191,
+      "after": 17191,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Shoot-Anim.png",
+      "before": 12162,
+      "after": 11774,
+      "size": [
+        440,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Sleep-Anim.png",
+      "before": 627,
+      "after": 627,
+      "size": [
+        80,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Wake-Anim.png",
+      "before": 4899,
+      "after": 4734,
+      "size": [
+        160,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0183A0/sprites/Walk-Anim.png",
+      "before": 6292,
+      "after": 6292,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Angry.png",
+      "before": 1733,
+      "after": 1733,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Happy.png",
+      "before": 1704,
+      "after": 1704,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Joyous.png",
+      "before": 1905,
+      "after": 1905,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Normal.png",
+      "before": 1648,
+      "after": 1576,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Pain.png",
+      "before": 1608,
+      "after": 1548,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Sad.png",
+      "before": 1584,
+      "after": 1533,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Sigh.png",
+      "before": 1596,
+      "after": 1538,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Surprised.png",
+      "before": 1962,
+      "after": 1962,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/portraits/Worried.png",
+      "before": 1712,
+      "after": 1628,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Hop-Anim.png",
+      "before": 23516,
+      "after": 21905,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Hurt-Anim.png",
+      "before": 5232,
+      "after": 4979,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Idle-Anim.png",
+      "before": 7921,
+      "after": 7443,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Rotate-Anim.png",
+      "before": 21879,
+      "after": 20618,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Shoot-Anim.png",
+      "before": 19208,
+      "after": 17101,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Sleep-Anim.png",
+      "before": 838,
+      "after": 798,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0184A0/sprites/Walk-Anim.png",
+      "before": 8007,
+      "after": 7518,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Angry.png",
+      "before": 1724,
+      "after": 1702,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Happy.png",
+      "before": 1682,
+      "after": 1682,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Joyous.png",
+      "before": 1806,
+      "after": 1788,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Normal.png",
+      "before": 1638,
+      "after": 1638,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Pain.png",
+      "before": 1379,
+      "after": 1379,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Sad.png",
+      "before": 1488,
+      "after": 1488,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Sigh.png",
+      "before": 1472,
+      "after": 1413,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Surprised.png",
+      "before": 1900,
+      "after": 1900,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/portraits/Worried.png",
+      "before": 1615,
+      "after": 1615,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Hop-Anim.png",
+      "before": 19884,
+      "after": 17922,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Hurt-Anim.png",
+      "before": 5925,
+      "after": 5534,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Idle-Anim.png",
+      "before": 6521,
+      "after": 6282,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Rotate-Anim.png",
+      "before": 26111,
+      "after": 24532,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Shoot-Anim.png",
+      "before": 17272,
+      "after": 15740,
+      "size": [
+        576,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Sleep-Anim.png",
+      "before": 846,
+      "after": 829,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0196A0/sprites/Walk-Anim.png",
+      "before": 9534,
+      "after": 8817,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Angry.png",
+      "before": 1674,
+      "after": 1631,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Happy.png",
+      "before": 1409,
+      "after": 1366,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Joyous.png",
+      "before": 1593,
+      "after": 1543,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Normal.png",
+      "before": 1632,
+      "after": 1585,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Pain.png",
+      "before": 1327,
+      "after": 1327,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Sad.png",
+      "before": 1306,
+      "after": 1280,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Sigh.png",
+      "before": 1509,
+      "after": 1473,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Surprised.png",
+      "before": 1588,
+      "after": 1588,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/portraits/Worried.png",
+      "before": 1494,
+      "after": 1460,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Cringe-Anim.png",
+      "before": 769,
+      "after": 769,
+      "size": [
+        64,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Eat-Anim.png",
+      "before": 1059,
+      "after": 1059,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Faint-Anim.png",
+      "before": 3832,
+      "after": 3557,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/HitGround-Anim.png",
+      "before": 1526,
+      "after": 1526,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Hop-Anim.png",
+      "before": 18268,
+      "after": 17744,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Hurt-Anim.png",
+      "before": 5826,
+      "after": 5764,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Idle-Anim.png",
+      "before": 7940,
+      "after": 7940,
+      "size": [
+        336,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Laying-Anim.png",
+      "before": 861,
+      "after": 844,
+      "size": [
+        24,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Nod-Anim.png",
+      "before": 2949,
+      "after": 2895,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Pain-Anim.png",
+      "before": 16554,
+      "after": 16168,
+      "size": [
+        384,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Pose-Anim.png",
+      "before": 4617,
+      "after": 4260,
+      "size": [
+        120,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Rotate-Anim.png",
+      "before": 18865,
+      "after": 18831,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Shoot-Anim.png",
+      "before": 12891,
+      "after": 12817,
+      "size": [
+        352,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Sleep-Anim.png",
+      "before": 757,
+      "after": 757,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Wake-Anim.png",
+      "before": 4901,
+      "after": 4589,
+      "size": [
+        192,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0197A0/sprites/Walk-Anim.png",
+      "before": 7258,
+      "after": 7258,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Angry.png",
+      "before": 1789,
+      "after": 1789,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Happy.png",
+      "before": 1457,
+      "after": 1457,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Joyous.png",
+      "before": 1666,
+      "after": 1666,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Normal.png",
+      "before": 1674,
+      "after": 1659,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Pain.png",
+      "before": 1378,
+      "after": 1378,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Sad.png",
+      "before": 1605,
+      "after": 1559,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Sigh.png",
+      "before": 1607,
+      "after": 1607,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Surprised.png",
+      "before": 1752,
+      "after": 1709,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/portraits/Worried.png",
+      "before": 1759,
+      "after": 1691,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Hop-Anim.png",
+      "before": 33501,
+      "after": 30718,
+      "size": [
+        640,
+        896
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Hurt-Anim.png",
+      "before": 10836,
+      "after": 9856,
+      "size": [
+        160,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Idle-Anim.png",
+      "before": 22767,
+      "after": 20387,
+      "size": [
+        512,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Rotate-Anim.png",
+      "before": 38792,
+      "after": 36253,
+      "size": [
+        576,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Shoot-Anim.png",
+      "before": 33403,
+      "after": 29160,
+      "size": [
+        1008,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Sleep-Anim.png",
+      "before": 1962,
+      "after": 1754,
+      "size": [
+        288,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0226A0/sprites/Walk-Anim.png",
+      "before": 25449,
+      "after": 22649,
+      "size": [
+        640,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Angry.png",
+      "before": 1915,
+      "after": 1836,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Happy.png",
+      "before": 1509,
+      "after": 1443,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Joyous.png",
+      "before": 1945,
+      "after": 1877,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Normal.png",
+      "before": 1533,
+      "after": 1442,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Pain.png",
+      "before": 1626,
+      "after": 1553,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Sad.png",
+      "before": 1503,
+      "after": 1428,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Sigh.png",
+      "before": 1579,
+      "after": 1499,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Surprised.png",
+      "before": 1816,
+      "after": 1721,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/portraits/Worried.png",
+      "before": 1590,
+      "after": 1508,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Eat-Anim.png",
+      "before": 993,
+      "after": 993,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Hop-Anim.png",
+      "before": 19279,
+      "after": 19226,
+      "size": [
+        240,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Hurt-Anim.png",
+      "before": 4840,
+      "after": 4840,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Idle-Anim.png",
+      "before": 10487,
+      "after": 10487,
+      "size": [
+        168,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Rotate-Anim.png",
+      "before": 14806,
+      "after": 14806,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Shoot-Anim.png",
+      "before": 14513,
+      "after": 14513,
+      "size": [
+        288,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Sleep-Anim.png",
+      "before": 659,
+      "after": 659,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0236A0/sprites/Walk-Anim.png",
+      "before": 6206,
+      "after": 6206,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/portraits/Happy.png",
+      "before": 1509,
+      "after": 1485,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/portraits/Normal.png",
+      "before": 1619,
+      "after": 1588,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Hop-Anim.png",
+      "before": 20144,
+      "after": 18673,
+      "size": [
+        240,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Hurt-Anim.png",
+      "before": 5992,
+      "after": 5560,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Idle-Anim.png",
+      "before": 14875,
+      "after": 13780,
+      "size": [
+        192,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Rotate-Anim.png",
+      "before": 18243,
+      "after": 17390,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Shoot-Anim.png",
+      "before": 28047,
+      "after": 26296,
+      "size": [
+        480,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Sleep-Anim.png",
+      "before": 833,
+      "after": 804,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0237A0/sprites/Walk-Anim.png",
+      "before": 7209,
+      "after": 6781,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Angry.png",
+      "before": 1314,
+      "after": 1263,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Happy.png",
+      "before": 1575,
+      "after": 1511,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Joyous.png",
+      "before": 1577,
+      "after": 1527,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Normal.png",
+      "before": 1453,
+      "after": 1407,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Pain.png",
+      "before": 1245,
+      "after": 1193,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Sad.png",
+      "before": 1304,
+      "after": 1264,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Sigh.png",
+      "before": 1383,
+      "after": 1341,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Surprised.png",
+      "before": 1557,
+      "after": 1513,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/portraits/Worried.png",
+      "before": 1458,
+      "after": 1399,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Hop-Anim.png",
+      "before": 17429,
+      "after": 14729,
+      "size": [
+        320,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Hurt-Anim.png",
+      "before": 5425,
+      "after": 5094,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Idle-Anim.png",
+      "before": 7940,
+      "after": 7314,
+      "size": [
+        128,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Rotate-Anim.png",
+      "before": 18622,
+      "after": 17538,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Shoot-Anim.png",
+      "before": 11093,
+      "after": 9231,
+      "size": [
+        400,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Sleep-Anim.png",
+      "before": 738,
+      "after": 708,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0239A0/sprites/Walk-Anim.png",
+      "before": 9043,
+      "after": 8401,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Angry.png",
+      "before": 1674,
+      "after": 1623,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Happy.png",
+      "before": 1466,
+      "after": 1420,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Joyous.png",
+      "before": 1637,
+      "after": 1593,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Normal.png",
+      "before": 634,
+      "after": 634,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Pain.png",
+      "before": 1585,
+      "after": 1548,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Sad.png",
+      "before": 1627,
+      "after": 1582,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Sigh.png",
+      "before": 1452,
+      "after": 1420,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Surprised.png",
+      "before": 1717,
+      "after": 1650,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/portraits/Worried.png",
+      "before": 1619,
+      "after": 1574,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Cringe-Anim.png",
+      "before": 704,
+      "after": 704,
+      "size": [
+        48,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Eat-Anim.png",
+      "before": 1007,
+      "after": 1007,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Faint-Anim.png",
+      "before": 3624,
+      "after": 3281,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/HitGround-Anim.png",
+      "before": 1622,
+      "after": 1579,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Hop-Anim.png",
+      "before": 18178,
+      "after": 16294,
+      "size": [
+        240,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Hurt-Anim.png",
+      "before": 5344,
+      "after": 4918,
+      "size": [
+        96,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Idle-Anim.png",
+      "before": 8620,
+      "after": 7869,
+      "size": [
+        144,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Laying-Anim.png",
+      "before": 795,
+      "after": 766,
+      "size": [
+        24,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Nod-Anim.png",
+      "before": 2657,
+      "after": 2517,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Pain-Anim.png",
+      "before": 13607,
+      "after": 13135,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Pose-Anim.png",
+      "before": 1927,
+      "after": 1783,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Rotate-Anim.png",
+      "before": 15486,
+      "after": 14614,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Shoot-Anim.png",
+      "before": 13017,
+      "after": 12011,
+      "size": [
+        352,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Sleep-Anim.png",
+      "before": 558,
+      "after": 541,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Wake-Anim.png",
+      "before": 4605,
+      "after": 4071,
+      "size": [
+        120,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0240A0/sprites/Walk-Anim.png",
+      "before": 5653,
+      "after": 5170,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Angry.png",
+      "before": 1867,
+      "after": 1867,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Happy.png",
+      "before": 1940,
+      "after": 1940,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Joyous.png",
+      "before": 2003,
+      "after": 2003,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Normal.png",
+      "before": 2018,
+      "after": 2018,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Pain.png",
+      "before": 1852,
+      "after": 1852,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Sad.png",
+      "before": 1895,
+      "after": 1895,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Sigh.png",
+      "before": 1882,
+      "after": 1875,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Surprised.png",
+      "before": 1881,
+      "after": 1825,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/portraits/Worried.png",
+      "before": 1876,
+      "after": 1876,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Hop-Anim.png",
+      "before": 18905,
+      "after": 17378,
+      "size": [
+        480,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Hurt-Anim.png",
+      "before": 5146,
+      "after": 4738,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Idle-Anim.png",
+      "before": 5735,
+      "after": 5397,
+      "size": [
+        96,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Rotate-Anim.png",
+      "before": 18029,
+      "after": 16908,
+      "size": [
+        360,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Shoot-Anim.png",
+      "before": 13026,
+      "after": 11536,
+      "size": [
+        400,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Sleep-Anim.png",
+      "before": 677,
+      "after": 656,
+      "size": [
+        64,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0298A0/sprites/Walk-Anim.png",
+      "before": 11019,
+      "after": 10048,
+      "size": [
+        280,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Angry.png",
+      "before": 586,
+      "after": 586,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Happy.png",
+      "before": 598,
+      "after": 598,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Joyous.png",
+      "before": 661,
+      "after": 661,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Normal.png",
+      "before": 643,
+      "after": 643,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Pain.png",
+      "before": 595,
+      "after": 595,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Sad.png",
+      "before": 588,
+      "after": 588,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Sigh.png",
+      "before": 614,
+      "after": 614,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Surprised.png",
+      "before": 670,
+      "after": 670,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/portraits/Worried.png",
+      "before": 641,
+      "after": 641,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Cringe-Anim.png",
+      "before": 892,
+      "after": 871,
+      "size": [
+        48,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Eat-Anim.png",
+      "before": 1341,
+      "after": 1310,
+      "size": [
+        96,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Faint-Anim.png",
+      "before": 4626,
+      "after": 4174,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/HitGround-Anim.png",
+      "before": 2084,
+      "after": 1965,
+      "size": [
+        256,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Hop-Anim.png",
+      "before": 19803,
+      "after": 18272,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Hurt-Anim.png",
+      "before": 5631,
+      "after": 5297,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Idle-Anim.png",
+      "before": 5529,
+      "after": 5129,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Laying-Anim.png",
+      "before": 1142,
+      "after": 1142,
+      "size": [
+        32,
+        128
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Nod-Anim.png",
+      "before": 3762,
+      "after": 3488,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Pain-Anim.png",
+      "before": 18312,
+      "after": 17090,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Pose-Anim.png",
+      "before": 4985,
+      "after": 4435,
+      "size": [
+        120,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Rotate-Anim.png",
+      "before": 17981,
+      "after": 17249,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Shoot-Anim.png",
+      "before": 13613,
+      "after": 12553,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Sleep-Anim.png",
+      "before": 798,
+      "after": 775,
+      "size": [
+        48,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Wake-Anim.png",
+      "before": 5142,
+      "after": 4888,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0446A0/sprites/Walk-Anim.png",
+      "before": 6413,
+      "after": 6005,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Angry.png",
+      "before": 1371,
+      "after": 1331,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Happy.png",
+      "before": 1192,
+      "after": 1163,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Joyous.png",
+      "before": 1255,
+      "after": 1255,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Normal.png",
+      "before": 1192,
+      "after": 1192,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Pain.png",
+      "before": 1133,
+      "after": 1133,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Sad.png",
+      "before": 1110,
+      "after": 1079,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Sigh.png",
+      "before": 1152,
+      "after": 1118,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Surprised.png",
+      "before": 1342,
+      "after": 1342,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/portraits/Worried.png",
+      "before": 1238,
+      "after": 1238,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Cringe-Anim.png",
+      "before": 786,
+      "after": 768,
+      "size": [
+        48,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Eat-Anim.png",
+      "before": 1094,
+      "after": 1057,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Faint-Anim.png",
+      "before": 3568,
+      "after": 3218,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/HitGround-Anim.png",
+      "before": 1667,
+      "after": 1553,
+      "size": [
+        256,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Hop-Anim.png",
+      "before": 18857,
+      "after": 17607,
+      "size": [
+        240,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Hurt-Anim.png",
+      "before": 4519,
+      "after": 4255,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Idle-Anim.png",
+      "before": 5615,
+      "after": 5267,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Laying-Anim.png",
+      "before": 940,
+      "after": 885,
+      "size": [
+        24,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Nod-Anim.png",
+      "before": 2980,
+      "after": 2799,
+      "size": [
+        72,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Pain-Anim.png",
+      "before": 15784,
+      "after": 14907,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Pose-Anim.png",
+      "before": 4156,
+      "after": 3620,
+      "size": [
+        120,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Rotate-Anim.png",
+      "before": 15225,
+      "after": 14420,
+      "size": [
+        216,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Sleep-Anim.png",
+      "before": 658,
+      "after": 634,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Wake-Anim.png",
+      "before": 3785,
+      "after": 3160,
+      "size": [
+        120,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0447A0/sprites/Walk-Anim.png",
+      "before": 6460,
+      "after": 6190,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Angry.png",
+      "before": 1758,
+      "after": 1758,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Happy.png",
+      "before": 1456,
+      "after": 1421,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Joyous.png",
+      "before": 1665,
+      "after": 1595,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Normal.png",
+      "before": 1568,
+      "after": 1568,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Pain.png",
+      "before": 1420,
+      "after": 1420,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Sad.png",
+      "before": 1448,
+      "after": 1448,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Sigh.png",
+      "before": 1445,
+      "after": 1445,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Surprised.png",
+      "before": 1862,
+      "after": 1833,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/portraits/Worried.png",
+      "before": 1602,
+      "after": 1602,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Cringe-Anim.png",
+      "before": 919,
+      "after": 919,
+      "size": [
+        48,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Eat-Anim.png",
+      "before": 1317,
+      "after": 1317,
+      "size": [
+        128,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Faint-Anim.png",
+      "before": 4219,
+      "after": 4043,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/HitGround-Anim.png",
+      "before": 2248,
+      "after": 2225,
+      "size": [
+        256,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Hop-Anim.png",
+      "before": 25390,
+      "after": 25002,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Hurt-Anim.png",
+      "before": 5557,
+      "after": 5557,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Idle-Anim.png",
+      "before": 14478,
+      "after": 14478,
+      "size": [
+        192,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Laying-Anim.png",
+      "before": 1294,
+      "after": 1227,
+      "size": [
+        40,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Nod-Anim.png",
+      "before": 3733,
+      "after": 3704,
+      "size": [
+        96,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Pain-Anim.png",
+      "before": 19020,
+      "after": 19011,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Pose-Anim.png",
+      "before": 2720,
+      "after": 2606,
+      "size": [
+        72,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Rotate-Anim.png",
+      "before": 22621,
+      "after": 22621,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Sleep-Anim.png",
+      "before": 753,
+      "after": 753,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Wake-Anim.png",
+      "before": 14663,
+      "after": 14515,
+      "size": [
+        200,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0448A0/sprites/Walk-Anim.png",
+      "before": 8714,
+      "after": 8714,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/portraits/Happy.png",
+      "before": 1585,
+      "after": 1585,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/portraits/Joyous.png",
+      "before": 1469,
+      "after": 1412,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/portraits/Normal.png",
+      "before": 1679,
+      "after": 1679,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/portraits/Surprised.png",
+      "before": 1557,
+      "after": 1488,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Hop-Anim.png",
+      "before": 21343,
+      "after": 19907,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Hurt-Anim.png",
+      "before": 5420,
+      "after": 5161,
+      "size": [
+        80,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Idle-Anim.png",
+      "before": 10153,
+      "after": 9422,
+      "size": [
+        224,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Rotate-Anim.png",
+      "before": 21732,
+      "after": 20422,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Shoot-Anim.png",
+      "before": 12623,
+      "after": 11735,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Sleep-Anim.png",
+      "before": 1396,
+      "after": 1291,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0458A0/sprites/Walk-Anim.png",
+      "before": 13996,
+      "after": 12967,
+      "size": [
+        320,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/portraits/Happy.png",
+      "before": 2071,
+      "after": 2071,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/portraits/Normal.png",
+      "before": 2063,
+      "after": 2063,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/portraits/Pain.png",
+      "before": 2061,
+      "after": 2011,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Hop-Anim.png",
+      "before": 29572,
+      "after": 23863,
+      "size": [
+        480,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Hurt-Anim.png",
+      "before": 6936,
+      "after": 6382,
+      "size": [
+        112,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Idle-Anim.png",
+      "before": 17554,
+      "after": 15507,
+      "size": [
+        336,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Rotate-Anim.png",
+      "before": 29016,
+      "after": 26990,
+      "size": [
+        360,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Shoot-Anim.png",
+      "before": 19223,
+      "after": 16562,
+      "size": [
+        672,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Sleep-Anim.png",
+      "before": 984,
+      "after": 941,
+      "size": [
+        80,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0466A0/sprites/Walk-Anim.png",
+      "before": 11550,
+      "after": 10598,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/portraits/Normal.png",
+      "before": 1314,
+      "after": 1260,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/portraits/Surprised.png",
+      "before": 1589,
+      "after": 1589,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Hop-Anim.png",
+      "before": 37151,
+      "after": 34915,
+      "size": [
+        400,
+        832
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Hurt-Anim.png",
+      "before": 9169,
+      "after": 8714,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Idle-Anim.png",
+      "before": 11095,
+      "after": 10585,
+      "size": [
+        120,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Rotate-Anim.png",
+      "before": 37184,
+      "after": 35546,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Shoot-Anim.png",
+      "before": 25712,
+      "after": 22774,
+      "size": [
+        624,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Sleep-Anim.png",
+      "before": 1244,
+      "after": 1188,
+      "size": [
+        64,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0467A0/sprites/Walk-Anim.png",
+      "before": 13819,
+      "after": 13232,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Angry.png",
+      "before": 1605,
+      "after": 1565,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Happy.png",
+      "before": 1518,
+      "after": 1494,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Joyous.png",
+      "before": 1616,
+      "after": 1590,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Normal.png",
+      "before": 587,
+      "after": 587,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Pain.png",
+      "before": 1553,
+      "after": 1553,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Sad.png",
+      "before": 1564,
+      "after": 1564,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Sigh.png",
+      "before": 1559,
+      "after": 1520,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Surprised.png",
+      "before": 1590,
+      "after": 1551,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/portraits/Worried.png",
+      "before": 1531,
+      "after": 1531,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Hop-Anim.png",
+      "before": 16949,
+      "after": 14751,
+      "size": [
+        400,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Hurt-Anim.png",
+      "before": 4768,
+      "after": 4469,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Idle-Anim.png",
+      "before": 8810,
+      "after": 7860,
+      "size": [
+        256,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Rotate-Anim.png",
+      "before": 16855,
+      "after": 15449,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Shoot-Anim.png",
+      "before": 10585,
+      "after": 9002,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Sleep-Anim.png",
+      "before": 683,
+      "after": 666,
+      "size": [
+        48,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0468A0/sprites/Walk-Anim.png",
+      "before": 8693,
+      "after": 7633,
+      "size": [
+        256,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Angry.png",
+      "before": 2158,
+      "after": 2158,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Happy.png",
+      "before": 1904,
+      "after": 1904,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Joyous.png",
+      "before": 1938,
+      "after": 1938,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Normal.png",
+      "before": 1922,
+      "after": 1862,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Pain.png",
+      "before": 2071,
+      "after": 2071,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Sad.png",
+      "before": 1980,
+      "after": 1980,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Sigh.png",
+      "before": 2102,
+      "after": 2102,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Surprised.png",
+      "before": 2282,
+      "after": 2282,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/portraits/Worried.png",
+      "before": 1886,
+      "after": 1886,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Cringe-Anim.png",
+      "before": 927,
+      "after": 927,
+      "size": [
+        80,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Eat-Anim.png",
+      "before": 1350,
+      "after": 1350,
+      "size": [
+        96,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Faint-Anim.png",
+      "before": 4898,
+      "after": 4638,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/HitGround-Anim.png",
+      "before": 1605,
+      "after": 1605,
+      "size": [
+        256,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Hop-Anim.png",
+      "before": 21251,
+      "after": 21025,
+      "size": [
+        320,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Hurt-Anim.png",
+      "before": 5537,
+      "after": 5537,
+      "size": [
+        64,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Idle-Anim.png",
+      "before": 7474,
+      "after": 7474,
+      "size": [
+        192,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Laying-Anim.png",
+      "before": 1208,
+      "after": 1184,
+      "size": [
+        32,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Nod-Anim.png",
+      "before": 4587,
+      "after": 4587,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Pain-Anim.png",
+      "before": 16964,
+      "after": 16964,
+      "size": [
+        384,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Pose-Anim.png",
+      "before": 5562,
+      "after": 5470,
+      "size": [
+        160,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Rotate-Anim.png",
+      "before": 24201,
+      "after": 24201,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Shoot-Anim.png",
+      "before": 13628,
+      "after": 13628,
+      "size": [
+        480,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Sleep-Anim.png",
+      "before": 756,
+      "after": 756,
+      "size": [
+        64,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Wake-Anim.png",
+      "before": 5795,
+      "after": 5480,
+      "size": [
+        160,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0470A0/sprites/Walk-Anim.png",
+      "before": 9086,
+      "after": 9086,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Angry.png",
+      "before": 1810,
+      "after": 1810,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Happy.png",
+      "before": 1522,
+      "after": 1522,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Joyous.png",
+      "before": 1617,
+      "after": 1617,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Normal.png",
+      "before": 1702,
+      "after": 1702,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Pain.png",
+      "before": 1711,
+      "after": 1711,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Sad.png",
+      "before": 1438,
+      "after": 1363,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Sigh.png",
+      "before": 1570,
+      "after": 1570,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Surprised.png",
+      "before": 1871,
+      "after": 1871,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/portraits/Worried.png",
+      "before": 1521,
+      "after": 1521,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Cringe-Anim.png",
+      "before": 886,
+      "after": 886,
+      "size": [
+        64,
+        64
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Eat-Anim.png",
+      "before": 1184,
+      "after": 1184,
+      "size": [
+        128,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Faint-Anim.png",
+      "before": 4064,
+      "after": 3921,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/HitGround-Anim.png",
+      "before": 2038,
+      "after": 2012,
+      "size": [
+        320,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Hop-Anim.png",
+      "before": 19284,
+      "after": 19016,
+      "size": [
+        320,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Hurt-Anim.png",
+      "before": 5505,
+      "after": 5482,
+      "size": [
+        96,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Idle-Anim.png",
+      "before": 6437,
+      "after": 6437,
+      "size": [
+        192,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Laying-Anim.png",
+      "before": 1116,
+      "after": 1116,
+      "size": [
+        32,
+        192
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Nod-Anim.png",
+      "before": 3486,
+      "after": 3486,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Pain-Anim.png",
+      "before": 16351,
+      "after": 16351,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Pose-Anim.png",
+      "before": 2350,
+      "after": 2312,
+      "size": [
+        96,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Rotate-Anim.png",
+      "before": 21631,
+      "after": 21631,
+      "size": [
+        288,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Shoot-Anim.png",
+      "before": 12690,
+      "after": 12690,
+      "size": [
+        480,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Sleep-Anim.png",
+      "before": 539,
+      "after": 539,
+      "size": [
+        64,
+        16
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Wake-Anim.png",
+      "before": 6283,
+      "after": 5755,
+      "size": [
+        200,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0471A0/sprites/Walk-Anim.png",
+      "before": 7024,
+      "after": 7024,
+      "size": [
+        128,
+        320
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Angry.png",
+      "before": 1946,
+      "after": 1917,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Happy.png",
+      "before": 1784,
+      "after": 1732,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Joyous.png",
+      "before": 1942,
+      "after": 1868,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Normal.png",
+      "before": 1922,
+      "after": 1842,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Pain.png",
+      "before": 1868,
+      "after": 1852,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Sad.png",
+      "before": 1967,
+      "after": 1962,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Sigh.png",
+      "before": 1878,
+      "after": 1856,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Surprised.png",
+      "before": 2051,
+      "after": 1983,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/portraits/Worried.png",
+      "before": 1923,
+      "after": 1835,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Hop-Anim.png",
+      "before": 29615,
+      "after": 27613,
+      "size": [
+        320,
+        768
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Hurt-Anim.png",
+      "before": 7406,
+      "after": 7055,
+      "size": [
+        80,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Idle-Anim.png",
+      "before": 12596,
+      "after": 11750,
+      "size": [
+        256,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Rotate-Anim.png",
+      "before": 36106,
+      "after": 34180,
+      "size": [
+        288,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Shoot-Anim.png",
+      "before": 20486,
+      "after": 18383,
+      "size": [
+        480,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Sleep-Anim.png",
+      "before": 1135,
+      "after": 1106,
+      "size": [
+        64,
+        24
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0700A0/sprites/Walk-Anim.png",
+      "before": 11896,
+      "after": 11175,
+      "size": [
+        128,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/portraits/Normal.png",
+      "before": 1671,
+      "after": 1671,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Hop-Anim.png",
+      "before": 17446,
+      "after": 17446,
+      "size": [
+        240,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Hurt-Anim.png",
+      "before": 4820,
+      "after": 4820,
+      "size": [
+        80,
+        384
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Idle-Anim.png",
+      "before": 3414,
+      "after": 3414,
+      "size": [
+        64,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Rotate-Anim.png",
+      "before": 17105,
+      "after": 17105,
+      "size": [
+        288,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Shoot-Anim.png",
+      "before": 14554,
+      "after": 14554,
+      "size": [
+        440,
+        448
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Sleep-Anim.png",
+      "before": 700,
+      "after": 700,
+      "size": [
+        48,
+        32
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0848A0/sprites/Walk-Anim.png",
+      "before": 5454,
+      "after": 5454,
+      "size": [
+        96,
+        256
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Angry.png",
+      "before": 1770,
+      "after": 1770,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Happy.png",
+      "before": 1674,
+      "after": 1647,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Joyous.png",
+      "before": 1645,
+      "after": 1582,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Normal.png",
+      "before": 1705,
+      "after": 1609,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Pain.png",
+      "before": 1858,
+      "after": 1858,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Sad.png",
+      "before": 1757,
+      "after": 1717,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Sigh.png",
+      "before": 1740,
+      "after": 1740,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Surprised.png",
+      "before": 1806,
+      "after": 1767,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/portraits/Worried.png",
+      "before": 1697,
+      "after": 1697,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Hop-Anim.png",
+      "before": 32913,
+      "after": 32913,
+      "size": [
+        320,
+        896
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Hurt-Anim.png",
+      "before": 10659,
+      "after": 10659,
+      "size": [
+        128,
+        640
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Idle-Anim.png",
+      "before": 14468,
+      "after": 14468,
+      "size": [
+        320,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Rotate-Anim.png",
+      "before": 35934,
+      "after": 35934,
+      "size": [
+        216,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Shoot-Anim.png",
+      "before": 18371,
+      "after": 18371,
+      "size": [
+        320,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Sleep-Anim.png",
+      "before": 1076,
+      "after": 1076,
+      "size": [
+        64,
+        56
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849A0/sprites/Walk-Anim.png",
+      "before": 13705,
+      "after": 13705,
+      "size": [
+        128,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Angry.png",
+      "before": 4397,
+      "after": 4317,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Happy.png",
+      "before": 4218,
+      "after": 4218,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Joyous.png",
+      "before": 4241,
+      "after": 4178,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Normal.png",
+      "before": 4190,
+      "after": 4190,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Sad.png",
+      "before": 4167,
+      "after": 4105,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/portraits/Surprised.png",
+      "before": 4396,
+      "after": 4324,
+      "size": [
+        40,
+        40
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Hop-Anim.png",
+      "before": 33249,
+      "after": 33249,
+      "size": [
+        320,
+        896
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Hurt-Anim.png",
+      "before": 10504,
+      "after": 10504,
+      "size": [
+        128,
+        704
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Idle-Anim.png",
+      "before": 13209,
+      "after": 13209,
+      "size": [
+        320,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Rotate-Anim.png",
+      "before": 33905,
+      "after": 33905,
+      "size": [
+        216,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Shoot-Anim.png",
+      "before": 18085,
+      "after": 18085,
+      "size": [
+        320,
+        576
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Sleep-Anim.png",
+      "before": 1033,
+      "after": 1033,
+      "size": [
+        64,
+        48
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pmd/0849B0/sprites/Walk-Anim.png",
+      "before": 11193,
+      "after": 11193,
+      "size": [
+        128,
+        512
+      ],
+      "resized": false
+    },
+    {
+      "path": "assets/pokemon_logo.png",
+      "before": 115378,
+      "after": 2084,
+      "size": [
+        264,
+        104
+      ],
+      "resized": true
+    },
+    {
+      "path": "assets/ui/professor_oak.png",
+      "before": 2117,
+      "after": 2117,
+      "size": [
+        96,
+        96
+      ],
+      "resized": false
+    }
+  ]
+}

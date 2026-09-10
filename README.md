@@ -112,6 +112,16 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 `TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad identificación y Estilo trazado mediante `styleTracing.js`. Costes y requisitos permanecen en el motor de entrenamiento.
 
+## Rendimiento móvil y build de runtime
+
+Fuerza actualiza su marcador con `requestAnimationFrame` y puntúa el valor que se ha dibujado, tomado en `pointerdown`; no espera al `click`. La zona central visible y perfecta es exactamente 40–60 % del recorrido. Cinco rondas dentro de esa zona producen +5, independientemente de que el dispositivo repinte a 60, 90 o 120 Hz. Los timers visuales se cancelan al cerrar, cancelar u ocultar el minijuego.
+
+Mientras un minijuego está abierto, la fisiología y el guardado siguen usando timestamps, pero se pausan el renderer PMD, el huevo, toasts y repintados de la escena que queda detrás del diálogo. Al cerrarlo se sincroniza y se pinta una sola vez. Estilo conserva todas las muestras coalescidas del puntero, pero limita el canvas a un repintado por frame; Amabilidad mantiene la misma tanda mientras haya un puntero activo.
+
+El renderer PMD cachea cada URL cargada y precarga de forma diferida Idle, Sleep, Hurt, Eat, Hop y reacciones cercanas del compañero activo. El huevo carga su fase actual y la siguiente, no las cinco hojas al iniciar. `tools/buildMobileRuntime.py --optimize` conserva originales en `master/asset-originals/`, aplica PNG sin pérdida a los assets del runtime y genera `dist/` mediante allowlist. No incluye `assets/pmd/source/tracker.json`, metadata de sincronización, herramientas, tests ni el master. El informe reproducible queda en `master/mobile-asset-audit.json`.
+
+Las hojas de huevo se sirven a 832×832 px (208 px por celda, suficiente para el viewport de 104 CSS px a DPR 2) con reescalado nearest-neighbor; logo a 264×104 px. Los PNG PMD, portraits e iconos ya estaban por debajo de su tamaño útil de pantalla y solo se recomprimen sin alterar píxeles. No se cambian saves, escala visual del Pokémon ni la geometría de sus animaciones.
+
 ## Evolución y testing
 
 `MinMood` y `MinBond` son columnas independientes y opcionales: Ánimo **actual** (0–100) y Vínculo **acumulado** (MinBond expresado en 0–5 corazones). Vacío/null/ausente significa sin requisito; si hay ambos, se exigen ambos. El motor rechaza valores fuera de rango. Oak los presenta por separado y Force Evolution prepara ambos mínimos sin reducir valores.

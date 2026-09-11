@@ -1,5 +1,5 @@
 {
-  "total": 61,
+  "total": 75,
   "egg": [
     {
       "id": "pichu",
@@ -76,6 +76,30 @@
     {
       "id": "growlithe",
       "name": "Growlithe"
+    },
+    {
+      "id": "chingling",
+      "name": "Chingling"
+    },
+    {
+      "id": "budew",
+      "name": "Budew"
+    },
+    {
+      "id": "wynaut",
+      "name": "Wynaut"
+    },
+    {
+      "id": "bonsly",
+      "name": "Bonsly"
+    },
+    {
+      "id": "mimejr",
+      "name": "Mime Jr."
+    },
+    {
+      "id": "happiny",
+      "name": "Happiny"
     }
   ],
   "evolutionOnly": [
@@ -196,6 +220,30 @@
       "name": "Arcanine"
     },
     {
+      "id": "chimecho",
+      "name": "Chimecho"
+    },
+    {
+      "id": "roselia",
+      "name": "Roselia"
+    },
+    {
+      "id": "wobbuffet",
+      "name": "Wobbuffet"
+    },
+    {
+      "id": "sudowoodo",
+      "name": "Sudowoodo"
+    },
+    {
+      "id": "mrmime",
+      "name": "Mr. Mime"
+    },
+    {
+      "id": "chansey",
+      "name": "Chansey"
+    },
+    {
       "id": "raichu",
       "name": "Raichu"
     },
@@ -246,6 +294,14 @@
     {
       "id": "alakazam",
       "name": "Alakazam"
+    },
+    {
+      "id": "roserade",
+      "name": "Roserade"
+    },
+    {
+      "id": "blissey",
+      "name": "Blissey"
     }
   ],
   "excluded": [],
@@ -458,6 +514,46 @@
     {
       "from": "growlithe",
       "to": "arcanine",
+      "enabled": true
+    },
+    {
+      "from": "chingling",
+      "to": "chimecho",
+      "enabled": true
+    },
+    {
+      "from": "budew",
+      "to": "roselia",
+      "enabled": true
+    },
+    {
+      "from": "roselia",
+      "to": "roserade",
+      "enabled": true
+    },
+    {
+      "from": "wynaut",
+      "to": "wobbuffet",
+      "enabled": true
+    },
+    {
+      "from": "bonsly",
+      "to": "sudowoodo",
+      "enabled": true
+    },
+    {
+      "from": "mimejr",
+      "to": "mrmime",
+      "enabled": true
+    },
+    {
+      "from": "happiny",
+      "to": "chansey",
+      "enabled": true
+    },
+    {
+      "from": "chansey",
+      "to": "blissey",
       "enabled": true
     }
   ]

@@ -109,5 +109,12 @@ const evolutionTable = {
   squirtle:{nombre:'Squirtle',emoji:'',etapa:'Kid',evoluciones:[]},wartortle:{nombre:'Wartortle',emoji:'',etapa:'Teen',evoluciones:[]},blastoise:{nombre:'Blastoise',emoji:'',etapa:'Adult',evoluciones:[]},
   dratini:{nombre:'Dratini',emoji:'',etapa:'Kid',evoluciones:[]},dragonair:{nombre:'Dragonair',emoji:'',etapa:'Teen',evoluciones:[]},dragonite:{nombre:'Dragonite',emoji:'',etapa:'Adult',evoluciones:[]},
   abra:{nombre:'Abra',emoji:'',etapa:'Kid',evoluciones:[]},kadabra:{nombre:'Kadabra',emoji:'',etapa:'Teen',evoluciones:[]},alakazam:{nombre:'Alakazam',emoji:'',etapa:'Adult',evoluciones:[]},
-  growlithe:{nombre:'Growlithe',emoji:'',etapa:'Kid',evoluciones:[]},arcanine:{nombre:'Arcanine',emoji:'',etapa:'Adult',evoluciones:[]}
+  growlithe:{nombre:'Growlithe',emoji:'',etapa:'Kid',evoluciones:[]},arcanine:{nombre:'Arcanine',emoji:'',etapa:'Adult',evoluciones:[]},
+  // Alias del repertorio; fichas y reglas se leen de la fuente canónica.
+  chingling:{nombre:'Chingling'},chimecho:{nombre:'Chimecho'},
+  budew:{nombre:'Budew'},roselia:{nombre:'Roselia'},roserade:{nombre:'Roserade'},
+  wynaut:{nombre:'Wynaut'},wobbuffet:{nombre:'Wobbuffet'},
+  bonsly:{nombre:'Bonsly'},sudowoodo:{nombre:'Sudowoodo'},
+  mimejr:{nombre:'Mime Jr.'},mrmime:{nombre:'Mr. Mime'},
+  happiny:{nombre:'Happiny'},chansey:{nombre:'Chansey'},blissey:{nombre:'Blissey'},
 };

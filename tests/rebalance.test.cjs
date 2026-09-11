@@ -7,7 +7,7 @@ const approx=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,`${a} != ${b}`);
 for(const asleep of [false,true]){
  born();run(`state.lightsOff=${asleep};var difficulty=Vital.difficulty(state.pokemonId).decay;Vital.tick(state)`);
  approx(run('state.care.hambre'),100-(asleep?3.6:8)/60*run('difficulty'));
- approx(run('state.care.higiene'),100-5/60*run('difficulty'));
+ approx(run('state.care.higiene'),100-(asleep?2:5)/60*run('difficulty'));
  approx(run('state.care.felicidad'),100-(asleep?.8:4)/60);
  approx(run('state.care.energia'),50+(asleep?24:-2)/60);
 }

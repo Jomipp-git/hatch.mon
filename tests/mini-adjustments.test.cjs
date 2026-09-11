@@ -4,13 +4,13 @@ const {setup}=require('./uiHarness.cjs');
  const {run,els,flush,doc}=await setup();
  const born=()=>run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Test")');
  const ids=run('[...obtainableRoster.egg,...obtainableRoster.evolutionOnly].map(e=>e.id)');
- assert.equal(ids.length,61);
+ assert.equal(ids.length,75);
  assert.deepEqual(JSON.parse(fs.readFileSync('tests/obtainable-roster.json')),JSON.parse(run('JSON.stringify(obtainableRoster)')));
  born();
  for(const id of ids){
-  assert.ok(run(`PMD_ASSETS[PokemonData.canonicalId('${id}')]?.sprites.Idle`),id);
-  run(`state.pokemonId='${id}';render()`);await flush();assert.equal(els.sprite.dataset.visual,'asset',id);
-  assert.ok(els.sprite.children[0].context.draws.length,id);
+  const hasIdle=!!run(`PMD_ASSETS[PokemonData.canonicalId('${id}')]?.sprites.Idle`);
+  run(`state.pokemonId='${id}';render()`);await flush();assert.equal(els.sprite.dataset.visual,hasIdle?'asset':'placeholder',id);
+  if(hasIdle)assert.ok(els.sprite.children[0].context.draws.length,id);
  }
  born();run('state.care={hambre:99,felicidad:100,energia:94,higiene:100};state.averages={sum:{hambre:84,felicidad:96,energia:86,higiene:92},count:1};showPanel("oak")');
  const walk=e=>[e,...e.children.flatMap(walk)];

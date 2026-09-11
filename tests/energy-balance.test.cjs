@@ -28,3 +28,51 @@ test('petting costs no Energy and naps start at fatigue 40 while preserving slee
  born(h);h.run(`state.personality="sleepy";state.sleep.fatigue=0;Vital.sleepTick(state,${day})`);near(h.run('state.sleep.fatigue'),5/60*1.15);
  born(h);h.run(`state.lightsOff=true;state.care.energia=50;Vital.tick(state);Vital.sleepTick(state,${night})`);near(h.run('state.care.energia'),50+24/60);
 });
+
+test('A/B: twelve awake hours plus two or three play/training pairs',async()=>{
+ const h=await setup();
+ for(const [count,expected] of [[2,50],[3,37]]){
+  born(h);
+  for(let i=0;i<count;i++){
+   assert.equal(h.run('careAction("jugar",()=>1)'),true);
+   assert.equal(h.run('train("iq",1)'),true);
+  }
+  // Isolate base Energy from illness, care emergencies and night auto-sleep.
+  h.run('state.vital.dirt=0;for(let i=0;i<720;i++)Vital.tick(state)');
+  assert.equal(h.run('state.pokerus'),false);near(h.run('state.care.energia'),expected);
+ }
+});
+
+test('C/D/E/H: fatigue and exhaustion share a continuous 90-minute daytime nap budget',async()=>{
+ const h=await setup();
+ for(const [fatigue,energy,allowed] of [[39,100,false],[40,100,true],[0,25,true],[0,26,false]]){
+  born(h);h.run(`Date.now=()=>${day};state.sleep.fatigue=${fatigue};state.care.energia=${energy}`);
+  assert.equal(h.run('careAction("luz")'),allowed);
+  assert.equal(h.run('state.sleep.napping'),allowed);
+  if(!allowed)continue;
+  h.run(`minuteStep(${day}+${MINUTE})`);
+  assert.equal(h.run('state.lightsOff'),true);assert.equal(h.run('state.sleep.napMinutes'),1);
+  near(h.run('state.care.energia'),Math.min(100,energy+24/60));
+  h.run(`for(let i=2;i<=89;i++)minuteStep(${day}+i*${MINUTE})`);
+  assert.equal(h.run('state.lightsOff'),true);assert.equal(h.run('state.sleep.napMinutes'),89);
+  assert.ok(h.run('state.care.energia')>25);assert.ok(h.run('state.sleep.fatigue')<40);
+  h.run(`minuteStep(${day}+90*${MINUTE});state.sleep.fatigue=40;state.care.energia=25`);
+  assert.equal(h.run('state.lightsOff'),false);assert.equal(h.run('state.sleep.napMinutes'),90);
+  assert.equal(h.run('Vital.sleepPermission(state).reason'),'napLimit');
+ }
+});
+
+test('F/G: twelve hours asleep preserve base hygiene and stage/sickness recovery modifiers',async()=>{
+ const h=await setup();born(h);
+ const id=h.run('Object.keys(evolutionConfig).find(id=>PokemonData.get(id).CareDifficulty===1)');assert.ok(id);
+ h.run(`state.pokemonId='${id}';state.lightsOff=true;for(let i=0;i<720;i++)Vital.tick(state)`);
+ near(h.run('state.care.higiene'),76);
+ for(const [age,recovery] of [[.1,1.15],[.3,1],[.6,1],[.9,.85]])for(const sick of [false,true]){
+  born(h);h.run(`state.age=state.vital.lifespan*${age};state.pokerus=${sick};state.lightsOff=true;state.care.energia=20;Vital.tick(state)`);
+  near(h.run('state.care.energia'),20+24/60*recovery*(sick?.8:1));
+ }
+ assert.deepEqual(JSON.parse(h.run('JSON.stringify(CARE_CONFIG.sleepDecay)')),{hambre:3.6,felicidad:.8,energia:0,higiene:2});
+ assert.deepEqual(JSON.parse(h.run('JSON.stringify(CARE_CONFIG.decay)')),{hambre:8,felicidad:4,energia:2,higiene:5});
+ assert.equal(h.run('SICKNESS_CONFIG.energyThreshold'),8);assert.equal(h.run('SICKNESS_CONFIG.hygieneThreshold'),20);
+ assert.equal(h.run('SICKNESS_CONFIG.exposureMinutes'),120);assert.equal(h.run('SICKNESS_CONFIG.riskPerHour'),.08);assert.equal(h.run('SICKNESS_CONFIG.maxRiskPerHour'),.18);
+});

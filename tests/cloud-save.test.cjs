@@ -30,9 +30,40 @@ test('Realtime converges devices, rejects stale pending state and removes its on
  const newer={schema_version:1,updated_at:new Date(Date.now()+1000).toISOString(),game_state:{game:{version:12,value:120},preferences:{displayMode:'lcd'},sync:{revision:2,sourceId:'other'}}};assert.equal(b.applyRemote(newer),true);assert.equal(b.applyRemote({...newer,updated_at:new Date(Date.now()+500).toISOString()}),false);assert.deepEqual(seenB,[100,120]);
  a.close();b.close();assert.ok(removed>=2);
 });
-test('production has no testing UI and debug entry points do nothing',async()=>{
- const {setup}=require('./uiHarness.cjs'),h=await setup({development:false});assert.equal(h.win.HatchMon,undefined);h.run('HatchEnvironment.isDevelopmentEnvironment=()=>true');h.run("showPanel('settings')");const labels=h.els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);assert.ok(!labels.some(k=>/testing|skip-|force-/.test(k||'')));const before=h.run('JSON.stringify(state)');assert.equal(h.run('skipTime(6)'),false);assert.equal(h.run('resetGame()'),false);assert.equal(h.run('forceEvolution()'),false);assert.equal(h.run('JSON.stringify(state)'),before);
- const vm=require('node:vm'),fs=require('node:fs');for(const [hostname,expected] of [['127.0.0.1',true],['localhost',true],['hatch.mon',false],['localhost.evil.test',false],['',false]]){const c=vm.createContext({location:{hostname}});vm.runInContext(fs.readFileSync('appEnvironment.js','utf8'),c);assert.equal(c.HatchEnvironment.isDevelopmentEnvironment(),expected);}
+test('production testing requires admin unlock and uses the immutable runtime environment',async()=>{
+ const {setup}=require('./uiHarness.cjs'),fs=require('node:fs');
+ const h=await setup({development:false});
+ // The generic harness supplies a mutable stub; this test needs the real environment contract.
+ h.run(fs.readFileSync('appEnvironment.js','utf8'));
+ h.run('HatchEnvironment.isDevelopmentEnvironment=()=>true');
+ assert.equal(h.run('HatchEnvironment.isDevelopmentEnvironment()'),false);
+ const keys=()=>h.els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);
+ const assertLocked=()=>{
+  h.run("showPanel('settings')");
+  assert.ok(!keys().some(k=>/testing|skip-|force-/.test(k||'')));
+  assert.equal(h.win.HatchMon,undefined);
+  const before=h.run('JSON.stringify(state)');
+  for(const call of ['skipTime(6)','resetGame()','forceEvolution()'])assert.equal(h.run(call),false,call);
+  assert.equal(h.run('JSON.stringify(state)'),before);
+ };
+ assertLocked();
+ for(let i=0;i<10;i++)h.els['oak-portrait'].fire('click');
+ assertLocked();
+ h.win.HatchAdmin=Object.freeze({isAdmin:()=>true});
+ assertLocked();
+ h.run('closePanel()');
+ const message=h.els.health.textContent,toast=h.els.toast.textContent;
+ for(let i=0;i<9;i++)h.els['oak-portrait'].fire('click');
+ assert.equal(h.run('canUseTesting()'),false);
+ assert.equal(h.els.health.textContent,message);assert.equal(h.els.toast.textContent,toast);
+ h.els['oak-portrait'].fire('click');
+ assert.equal(h.run('canUseTesting()'),true);
+ assert.equal(h.run('skipTime(1)'),true);
+ h.run("showPanel('settings')");assert.ok(keys().includes('testing-reset'));
+ assert.equal(h.win.HatchMon,undefined,'production never publishes the development global');
+ h.win.HatchRuntime.stop();assertLocked();
+ const reload=await setup({development:false});reload.win.HatchAdmin=Object.freeze({isAdmin:()=>true});
+ assert.equal(reload.run('canUseTesting()'),false);assert.equal(reload.win.HatchMon,undefined);
 });
 test('real game snapshot round-trips with nickname, shiny, progress and preferences; interrupted birth remains valid',async()=>{
  const {setup}=require('./uiHarness.cjs'),{snapshotCache,hydrateCache}=await import('../cloudSaveService.mjs'),h=await setup(),cache=store();

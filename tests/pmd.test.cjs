@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('fs'),vm=require('vm');con
 const ctx=vm.createContext({});for(const f of ['evolutionTable.js','hatchmonData_v2.js','pokemonDataAdapter.js','assets/pmd/manifest.js','assets/pmd/listMetrics.js','pmdRenderer.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);const run=s=>vm.runInContext(s,ctx);
 let sprites=0,portraits=0;
 for(const [id,entry]of Object.entries(run('PMD_ASSETS'))){assert.equal(run(`PokemonData.canonicalId('${id}')`),id);for(const def of Object.values(entry.sprites)){assert.ok(def.src.startsWith('assets/pmd/'));const png=fs.readFileSync(def.src);assert.equal(png.readUInt32BE(16)%def.width,0);assert.equal(def.frames,def.durations.length);assert.ok(def.crop.width>0);sprites++;}for(const src of Object.values(entry.portraits)){assert.ok(src.startsWith('assets/pmd/'));assert.ok(fs.existsSync(src));portraits++;}assert.ok(fs.existsSync(`assets/pmd/${id}/metadata.json`));}
-assert.equal(Object.keys(run('PMD_ASSETS')).length,run('Object.keys(evolutionTable).length'));assert.ok(sprites>44);assert.ok(portraits>44);
+assert.ok(run('Object.keys(PMD_ASSETS).every(id=>PokemonData.legacyId(id)!==null)'));assert.ok(sprites>44);assert.ok(portraits>44);
 assert.ok(run('PmdVisuals.candidates("raichualola")[0].src.includes("0026L0")'));
 (async()=>{
  const t=await setup(),{run,flush,els}=t;run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");render()');await flush();

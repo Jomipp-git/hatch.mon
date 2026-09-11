@@ -7,6 +7,6 @@
 - Conserva las responsabilidades del mapa. Evita refactorizaciones masivas; propone extracciones solo si reducen un acoplamiento o una dificultad real de edición.
 - Antes de añadir una constante, mapping, regla, mensaje o validación, busca su fuente existente y reutilízala. Usa nombres descriptivos y comentarios solo para lógica no obvia.
 - Prefiere fixtures mínimos y representativos. Ejecuta las pruebas afectadas; amplía la verificación si hay cambios transversales, fallos o riesgos concretos. No repitas pruebas aprobadas sin motivo nuevo.
-- En auditorías, muestra primero cantidades y anomalías. Guarda inventarios largos en un artefacto; no vuelques catálogos ni cientos de rutas al contexto. No releas completo `tests/sprite-audit.json` para obtener un resumen.
+- En auditorías, muestra primero cantidades y anomalías. Guarda inventarios largos en un artefacto; no vuelques catálogos ni cientos de rutas al contexto.
 - README describe el estado vigente, sin cronología redundante ni copias de configuraciones completas. Actualiza la sección existente antes de añadir otra.
 - Responde con cambios, decisiones relevantes, pruebas y pendientes. No repitas decisiones consolidadas. Distingue pruebas DOM/CSS de inspección visual real.

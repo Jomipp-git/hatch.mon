@@ -25,6 +25,12 @@ test('cloud loaded before script and game, logout flushes and reloads, account s
  await h.window.HatchAccount.logout();assert.equal(h.el('game-root').hidden,true);assert.ok(h.calls.indexOf('flush')<h.calls.indexOf('logout'));assert.deepEqual(h.history,['/index.html']);
  const b=await boot({user:{id:'A'}});b.listener('SIGNED_IN',{user:{id:'B'}});assert.equal(b.el('game-root').hidden,true);assert.ok(b.calls.includes('close'));
 });
+test('authenticated UID is the sole source of admin access',async()=>{
+ const admin=await boot({user:{id:'a81c13f7-a9d6-46d5-aa5c-66512b25ed68'}});
+ const user=await boot({user:{id:'another-user'}});
+ assert.equal(admin.window.HatchAdmin.isAdmin(),true);
+ assert.equal(user.window.HatchAdmin.isAdmin(),false);
+});
 test('failed cloud cannot start game, recovery callback does not start game',async()=>{
  const h=await boot({user:{id:'A'}},{fail:true});assert.ok(!h.calls.includes('game'));assert.equal(h.el('game-root').hidden,true);assert.equal(h.el('auth-retry').hidden,false);
  const r=await boot({user:{id:'A'}},{search:'?recovery=1'});assert.deepEqual(r.calls,[]);await r.el('auth-form').events.submit({preventDefault(){}});assert.ok(r.calls.includes('update'));

@@ -197,7 +197,7 @@
     </div>
     </div>
   </section></div>
-  <div id="message-strip" class="message-strip" data-i18n-aria="oak.statusLabel"><span class="oak-plate" aria-hidden="true"><img src="assets/ui/professor_oak.png" width="96" height="96" alt=""></span>
+  <div id="message-strip" class="message-strip" data-i18n-aria="oak.statusLabel"><span class="oak-plate" aria-hidden="true"><img id="oak-portrait" src="assets/ui/professor_oak.png" width="96" height="96" alt=""></span>
     <p id="health" role="status" hidden></p>
     <div id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
   </div>
@@ -251,7 +251,22 @@
 'use strict';
 const gameStorage=globalThis.window?.HatchStorage||globalThis.localStorage;
 const I18n=globalThis.HatchI18n;const t=(key,vars)=>I18n?.t(key,vars)||key;
-const canUseTesting=(()=>{const enabled=globalThis.HatchEnvironment?.isDevelopmentEnvironment()===true;return()=>enabled;})();
+const isDevelopment=()=>globalThis.HatchEnvironment?.isDevelopmentEnvironment()===true;
+const isAdmin=()=>window.HatchAdmin?.isAdmin?.()===true;
+let adminCheatsUnlocked=false,adminOakClicks=0,adminOakLastClickAt=0;
+const canUseTesting=()=>isDevelopment()||(isAdmin()&&adminCheatsUnlocked);
+function lockAdminCheats(){adminCheatsUnlocked=false;adminOakClicks=0;adminOakLastClickAt=0;}
+function unlockAdminCheats(now=Date.now()){
+ if(isDevelopment())return false;
+ if(!isAdmin()){lockAdminCheats();return false;}
+ if(now-adminOakLastClickAt>5000)adminOakClicks=0;
+ adminOakLastClickAt=now;
+ adminOakClicks++;
+ if(adminOakClicks<10)return false;
+ adminCheatsUnlocked=true;adminOakClicks=0;adminOakLastClickAt=0;
+ if(dialog?.open&&panelName==='settings')renderPanel();
+ return true;
+}
 let runtimeStopped=false;
 // Hatch.mon: configuración y motor independientes de la interfaz.
 // Datos Pokémon y condiciones: hatchmonData_v2.js, sin rellenar desde la tabla anterior.
@@ -1124,6 +1139,7 @@ for(const k of CARE)$(k).addEventListener('animationend',()=>$(k).classList.remo
 document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>dispatch(()=>careAction(b.dataset.action),(b.dataset.action==='luz'?(state.lightsOff?'normal':'sleep'):({alimentar:'eat',jugar:'play',limpiar:'clean'})[b.dataset.action]))));
 document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
 $('close-panel').addEventListener('click',closePanel);dialog.addEventListener('close',()=>{disposeMemorialSprites();stopSocialCamera();panelName=null;});
+$('oak-portrait').addEventListener('click',()=>unlockAdminCheats());
 function resetGame(){
   if(!canUseTesting())return false;
   TrainingActivities.cancel();
@@ -1145,7 +1161,7 @@ window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivit
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
 document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
 restore();
-window.HatchRuntime={save,applyCloudSave(game,preferences={}){try{game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;}catch{return false;}state=game;savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
+window.HatchRuntime={save,applyCloudSave(game,preferences={}){try{game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;}catch{return false;}state=game;savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;lockAdminCheats();clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
 save();lastMessage=state.message;render();startTimer();
 </script>
 <script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent=globalThis.HatchI18n?.t('errors.network')||'errors.network';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>

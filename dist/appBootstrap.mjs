@@ -1,8 +1,13 @@
 import {client,auth,humanError} from './authService.mjs';
 import {createCloudSaveService,userStorage,snapshotCache} from './cloudSaveService.mjs';
 const $=id=>document.getElementById(id),t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key,gate=$('auth-gate'),game=$('game-root'),message=$('auth-message');
+const ADMIN_UID='a81c13f7-a9d6-46d5-aa5c-66512b25ed68';
 let started=false,starting=false,userId=null,service=null,recovery=new URLSearchParams(location.search).has('recovery'),mode=recovery?'update':'login',busy=false,leaving=false;
 const notify=text=>{const node=$('cloud-status');if(node){node.textContent=text;node.hidden=!text;}};
+function installAdminAccess(session){
+ const allowed=session?.user?.id===ADMIN_UID;
+ Object.defineProperty(window,'HatchAdmin',{value:Object.freeze({isAdmin:()=>allowed}),configurable:false,writable:false});
+}
 delete message.dataset.i18n;
 const formKeys={login:['auth.title.login','auth.signIn'],signup:['auth.title.signup','auth.signUp'],recover:['auth.title.recover','auth.sendRecovery'],update:['auth.title.update','auth.savePassword']};
 function formMode(next){
@@ -13,7 +18,7 @@ async function scripts(){for(const tag of document.querySelectorAll('script[data
 async function start(session){
  if(started||starting||leaving||recovery)return;starting=true;message.textContent=t('auth.loadingCompanion');$('auth-form').hidden=true;
  try{
-  userId=session.user.id;const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
+  userId=session.user.id;installAdminAccess(session);const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
   service=createCloudSaveService({client,session,cache,notify,onRemote:(game,preferences)=>window.HatchRuntime?.applyCloudSave(game,preferences)});
   try{await service.load();}catch(error){
    if(['unsupported-save','invalid-save'].includes(error.message))throw error;let cached;try{cached=snapshotCache(cache);}catch{throw Error('invalid-save');}if(!cached?.game)throw error;

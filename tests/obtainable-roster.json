@@ -1,5 +1,5 @@
 {
-  "total": 44,
+  "total": 61,
   "egg": [
     {
       "id": "pichu",
@@ -52,6 +52,30 @@
     {
       "id": "magby",
       "name": "Magby"
+    },
+    {
+      "id": "bulbasaur",
+      "name": "Bulbasaur"
+    },
+    {
+      "id": "charmander",
+      "name": "Charmander"
+    },
+    {
+      "id": "squirtle",
+      "name": "Squirtle"
+    },
+    {
+      "id": "dratini",
+      "name": "Dratini"
+    },
+    {
+      "id": "abra",
+      "name": "Abra"
+    },
+    {
+      "id": "growlithe",
+      "name": "Growlithe"
     }
   ],
   "evolutionOnly": [
@@ -148,6 +172,30 @@
       "name": "Magmar"
     },
     {
+      "id": "ivysaur",
+      "name": "Ivysaur"
+    },
+    {
+      "id": "charmeleon",
+      "name": "Charmeleon"
+    },
+    {
+      "id": "wartortle",
+      "name": "Wartortle"
+    },
+    {
+      "id": "dragonair",
+      "name": "Dragonair"
+    },
+    {
+      "id": "kadabra",
+      "name": "Kadabra"
+    },
+    {
+      "id": "arcanine",
+      "name": "Arcanine"
+    },
+    {
       "id": "raichu",
       "name": "Raichu"
     },
@@ -178,6 +226,26 @@
     {
       "id": "magmortar",
       "name": "Magmortar"
+    },
+    {
+      "id": "venusaur",
+      "name": "Venusaur"
+    },
+    {
+      "id": "charizard",
+      "name": "Charizard"
+    },
+    {
+      "id": "blastoise",
+      "name": "Blastoise"
+    },
+    {
+      "id": "dragonite",
+      "name": "Dragonite"
+    },
+    {
+      "id": "alakazam",
+      "name": "Alakazam"
     }
   ],
   "excluded": [],
@@ -335,6 +403,61 @@
     {
       "from": "magmar",
       "to": "magmortar",
+      "enabled": true
+    },
+    {
+      "from": "bulbasaur",
+      "to": "ivysaur",
+      "enabled": true
+    },
+    {
+      "from": "ivysaur",
+      "to": "venusaur",
+      "enabled": true
+    },
+    {
+      "from": "charmander",
+      "to": "charmeleon",
+      "enabled": true
+    },
+    {
+      "from": "charmeleon",
+      "to": "charizard",
+      "enabled": true
+    },
+    {
+      "from": "squirtle",
+      "to": "wartortle",
+      "enabled": true
+    },
+    {
+      "from": "wartortle",
+      "to": "blastoise",
+      "enabled": true
+    },
+    {
+      "from": "dratini",
+      "to": "dragonair",
+      "enabled": true
+    },
+    {
+      "from": "dragonair",
+      "to": "dragonite",
+      "enabled": true
+    },
+    {
+      "from": "abra",
+      "to": "kadabra",
+      "enabled": true
+    },
+    {
+      "from": "kadabra",
+      "to": "alakazam",
+      "enabled": true
+    },
+    {
+      "from": "growlithe",
+      "to": "arcanine",
       "enabled": true
     }
   ]

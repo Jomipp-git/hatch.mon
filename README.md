@@ -45,7 +45,7 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 
 La incubación activa dura 0,1 día (2 h 24 min). Cada clic resta 5 minutos y produce una reacción visual discreta y feedback breve en la franja inferior. Oak explica que tocarlo puede acelerar la eclosión, aunque esperar sigue siendo válido. Los huevos no tienen estadísticas ni edad vital. Las cinco hojas de incubación se mantienen: phase 4 a 4,5 fps y hatch a 5,5 fps, sin loop y con pausa final de 250 ms. Al nacer se ofrece mote; el género usa ratios canónicos.
 
-Las monedas empiezan en 0 y persisten dentro de la partida. Completar un minijuego concede 2, 4, 7, 11 o 16 monedas según el resultado +1 a +5. SHOP aparece bajo Configuración y ofrece tres objetos distintos por día local; la selección determinista usa la fecha y no cambia al recargar. Bayas cuestan 35, bayas de atributo 75, medicina 70, Piedra Oval 130, objetos de evolución de especie 170, piedras evolutivas 180–190 y recuerdos regionales 210.
+Las monedas empiezan en 0 y persisten dentro de la partida. Completar un minijuego concede 2, 4, 7, 11 o 16 monedas según el resultado +1 a +5. SHOP aparece bajo Configuración y ofrece tres objetos distintos por día local; la selección determinista usa la fecha y no cambia al recargar. Bayas cuestan 35, bayas de atributo 75, medicina 70, objetos de evolución de especie 170 y piedras evolutivas 180–190.
 
 Los cuidados mantienen decimales. El motor usa la misma simulación por minutos para actividad, ausencia y saltos de tiempo; las siguientes son tasas **base**, antes de dificultad canónica, etapa vital, enfermedad y suciedad:
 
@@ -56,7 +56,7 @@ Los cuidados mantienen decimales. El motor usa la misma simulación por minutos 
 | Energía | −4 | +24 |
 | Higiene | −5 | −5 |
 
-La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar cuesta 1 AP; jugar 2; entrenar 2. Completar entrenamiento aporta de +1 a +5 al atributo, −10 energía, −4 hambre y +3 suciedad. Bayas de atributo aportan +1. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
+La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar, jugar, limpiar, curar y entrenar cuestan 1 AP; auxiliar cuesta 1 AP por paso. Luz y objetos evolutivos cuestan 0 AP; bayas y medicina, 1 AP. Completar entrenamiento aporta de +1 a +5 al atributo, −10 energía, −4 hambre y +3 suciedad. Bayas de atributo aportan +5, con máximo 100. Los IDs retirados `alola`, `galar`, `dawn` y `oval` se descartan del inventario al cargar; su historial de consumo se admite para preservar Memorias y saves antiguos. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
 
 Las deposiciones mantienen su aspecto aprobado y un máximo de tres. Sus multiplicadores de desgaste de higiene son 1 / 1,25 / 1,6 / 2. Alcanzar hambre 100 no penaliza. Comidas o bayas adicionales a saciedad añaden una unidad a `recentFeedingLoad`, que disminuye 0,75/h. Riesgo por ingesta extra: 0 / 0 / 15 / 30 / 50%, techo 50%; se usa el nivel entero superior de la carga restante. Una tirada por ingesta, nunca tiradas pasivas de sobrealimentación; los riesgos de varias ingestas se acumulan probabilísticamente.
 
@@ -133,7 +133,7 @@ Las hojas de huevo se sirven a 832×832 px (208 px por celda, suficiente para el
 
 La evolución ordinaria usa solo `evolutionRules` canónico: edad, atributos, acciones, cuidados sostenidos y objetos. No se completan reglas ausentes con la tabla legacy. Las medias de cuidados se muestrean por etapa; las condiciones sostenidas requieren continuidad. Atributos de entrenamiento son valores fijos.
 
-Oak ofrece pistas. Configuración concentra +1/+3/+6 horas, Force Evolution y reinicio total; `HatchMon.reset()` también reinicia. Los saltos horarios sí simulan fisiología y pueden causar muerte.
+Oak muestra los cuidados actuales de `state.care`, igual que Main; las medias de etapa se conservan internamente para evolución. Oak ofrece pistas. Configuración concentra +1/+3/+6 horas, Force Evolution y reinicio total; `HatchMon.reset()` también reinicia. Los saltos horarios sí simulan fisiología y pueden causar muerte.
 
 **Forzar evolución C.2** permite elegir una ruta canónica. Aumenta edad al mínimo requerido (nunca la reduce), eleva solo atributos necesarios y completa contadores mínimos sin reducir los existentes. Prepara evidencia histórica de cuidados sostenidos exclusivamente para esa llamada de testing: duración y valor mínimo comprobados por `conditionsMet`. La evidencia sostenida no cambia las barras actuales; un requisito explícito MinMood sí eleva Ánimo hasta su mínimo. MinBond eleva Vínculo hasta su mínimo convertido a puntos. La recompensa de evolución existente (+5 puntos) se aplica después. Ninguno reduce valores ni altera los otros cuidados. El hito registra la evidencia y `testing:true`; no se trata de cuidado real realizado por el jugador.
 

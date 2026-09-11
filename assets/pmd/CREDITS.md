@@ -27,7 +27,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0026L0 · Raichu (Alolan Form)
 Source path: 0026/0001
-sprite: baronessfaron 
+sprite: baronessfaron
 Files/states: Hop, Hurt, Idle, Pose, Rotate, Shoot, Sleep, Walk
 portrait: Emmuffin https://twitter.com/Ernmuffin
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
@@ -43,54 +43,54 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0134
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0135A0 · Jolteon
 Source path: 0135
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, dmDash 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, dmDash
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , ShyStarryRain , "motherhenna(Helen)" <@!543717476421074945>, Morei https://bsky.app/profile/murpia57.bsky.social, Vynnyal <https://vynnyal.tumblr.com/>
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0136A0 · Flareon
 Source path: 0136
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Ginnie , JFain 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Ginnie , JFain
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Vynnyal <https://vynnyal.tumblr.com/>, ShyStarryRain , LegendaryPhoenix , baronessfaron 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Vynnyal <https://vynnyal.tumblr.com/>, ShyStarryRain , LegendaryPhoenix , baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0196A0 · Espeon
 Source path: 0196
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/, baronessfaron 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/, baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0197A0 · Umbreon
 Source path: 0197
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JFain 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JFain
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Mojo 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Mojo
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0470A0 · Leafeon
 Source path: 0470
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0471A0 · Glaceon
 Source path: 0471
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0700A0 · Sylveon
 Source path: 0700
-sprite: baronessfaron 
+sprite: baronessfaron
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
 portrait: Emmuffin https://twitter.com/Ernmuffin,  , NeonCityRain https://neoncityrain.tumblr.com/
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
@@ -99,7 +99,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0236
 sprite: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
 Files/states: Eat, Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0106A0 · Hitmonlee
@@ -134,14 +134,14 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0143
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, NOLASMOR , Emboarger 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, NOLASMOR , Emboarger
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0447A0 · Riolu
 Source path: 0447
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0448A0 · Lucario
@@ -153,21 +153,21 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0848A0 · Toxel
 Source path: 0848
-sprite: baronessfaron 
+sprite: baronessfaron
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: EzerArt https://twitter.com/EzerArt_, Emmuffin https://twitter.com/Ernmuffin, Waffluffe https://twitter.com/waffluffe, Emboarger 
+portrait: EzerArt https://twitter.com/EzerArt_, Emmuffin https://twitter.com/Ernmuffin, Waffluffe https://twitter.com/waffluffe, Emboarger
 Files/states: Normal
 
 ## 0849A0 · Toxtricity (Amped Form)
 Source path: 0849
-sprite: baronessfaron 
+sprite: baronessfaron
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
 portrait: Emmuffin https://twitter.com/Ernmuffin, Noo https://artfight.net/~NooNoo_Skidoo, Precascer https://twitter.com/Precascer
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0849B0 · Toxtricity (Low Key Form)
 Source path: 0849/0001
-sprite: JFain 
+sprite: JFain
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
 portrait: Noo https://artfight.net/~NooNoo_Skidoo
 Files/states: Normal, Happy, Joyous, Angry, Sad, Surprised
@@ -176,7 +176,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Surprised
 Source path: 0173
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deleca7755 <https://www.deviantart.com/deleca-7755>, baronessfaron , JFain 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deleca7755 <https://www.deviantart.com/deleca-7755>, baronessfaron , JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0035A0 · Clefairy
@@ -202,9 +202,9 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0039A0 · Jigglypuff
 Source path: 0039
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo , Emboarger 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo , Emboarger
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0040A0 · Wigglytuff
@@ -218,12 +218,12 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0175
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0176A0 · Togetic
 Source path: 0176
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, XModxGodX 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, XModxGodX
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
@@ -232,7 +232,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0468
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/,  
+portrait: CHUNSOFT https://www.spike-chunsoft.com/,
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0298A0 · Azurill
@@ -244,7 +244,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0183A0 · Marill
 Source path: 0183
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit , Jarleypeño https://www.deviantart.com/applecone413
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
@@ -253,7 +253,7 @@ Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 Source path: 0184
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, ShyStarryRain 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, ShyStarryRain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0458A0 · Mantyke
@@ -293,9 +293,9 @@ Files/states: Normal, Happy, Pain
 
 ## 0240A0 · Magby
 Source path: 0240
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger 
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger
 Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Shoot, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain 
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0126A0 · Magmar
@@ -311,4 +311,123 @@ sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Shoot, Sleep, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Normal, Surprised
+
+## 0001A0 · Bulbasaur
+Source path: 0001
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0002A0 · Ivysaur
+Source path: 0002
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0003A0 · Venusaur
+Source path: 0003
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/,  , G〜 https://bsky.app/profile/justtr4sh.pmd.social
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0004A0 · Charmander
+Source path: 0004
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , Emboarger
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0005A0 · Charmeleon
+Source path: 0005
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, bwappi https://bsky.app/profile/bwappi.bsky.social, Grimlin https://twitter.com/Griimlin,
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0006A0 · Charizard
+Source path: 0006
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger
+Files/states: Faint, Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0007A0 · Squirtle
+Source path: 0007
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0008A0 · Wartortle
+Source path: 0008
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0009A0 · Blastoise
+Source path: 0009
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Top_Kec @topkec.bsky.social
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0147A0 · Dratini
+Source path: 0147
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Hop, Hurt, Idle, Laying, Pain, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__, frostibirb https://twitter.com/frostibirb
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0148A0 · Dragonair
+Source path: 0148
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0149A0 · Dragonite
+Source path: 0149
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, SethY https://linktr.ee/sethyuikora, Deeshura https://bsky.app/profile/deeshura.bsky.social
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger , AlexGroeger , "motherhenna(Helen)" <@!543717476421074945>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0063A0 · Abra
+Source path: 0063
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain , cosmosully https://twitter.com/cosmosully
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0064A0 · Kadabra
+Source path: 0064
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0065A0 · Alakazam
+Source path: 0065
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0058A0 · Growlithe
+Source path: 0058
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JustAGunk <@1377429093997477928>
+Files/states: Cringe, Eat, Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deltex12 /u/Deltex12, LT https://twitter.com/eLTehH
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0059A0 · Arcanine
+Source path: 0059
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 

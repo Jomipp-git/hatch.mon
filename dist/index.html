@@ -273,12 +273,12 @@ const EGG_SPRITES={columns:4,rows:4,phases:{
   5:{url:'assets/eggs/egg_phase_5.png',frames:16,fps:5.5,pause:null,revealPauseMs:250,sequence:Array.from({length:16},(_,i)=>i)}
 }};
 const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
+const RETIRED_ITEM_IDS=Object.freeze(['alola','galar','dawn','oval']);
 const itemCatalog={
   thunder:{get name(){return t('item.thunder');},icon:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',price:180},
   leaf:{get name(){return t('item.leaf');},icon:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',price:185},
-  shiny:{get name(){return t('item.shiny');},icon:'light',price:190},dawn:{get name(){return t('item.dawn');},icon:'light',price:190},oval:{get name(){return t('item.oval');},icon:'egg',price:130},
+  shiny:{get name(){return t('item.shiny');},icon:'light',price:190},
   electirizer:{get name(){return t('item.electirizer');},icon:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',price:170},
-  alola:{get name(){return t('item.alola');},icon:'stone',price:210},galar:{get name(){return t('item.galar');},icon:'stone',price:210},
   berry:{get name(){return t('item.berry');},icon:'food',food:true,price:35},
   berryStrength:{get name(){return t('item.berryStrength');},icon:'food',food:true,attribute:'strength',price:75},
   berryIQ:{get name(){return t('item.berryIQ');},icon:'food',food:true,attribute:'iq',price:75},
@@ -495,8 +495,9 @@ function train(k,gain=CARE_CONFIG.training.gain){
   state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
   const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=t('training.reward',{stat:LABELS[k],gain,coins});updateSustained();checkHealth();checkEvolution();return true;
 }
+function itemAPCost(id){const item=itemCatalog[id];return item&&(item.food||item.care||item.heal)?CARE_CONFIG.itemAP:CARE_CONFIG.evolutionItemAP;}
 function itemUsable(id){
-  if(!Object.hasOwn(itemCatalog,id)||state.phase!=='alive'||!canSpend(CARE_CONFIG.itemAP)||!(state.inventory[id]>0))return false;
+  if(!Object.hasOwn(itemCatalog,id)||state.phase!=='alive'||!canSpend(itemAPCost(id))||!(state.inventory[id]>0))return false;
   const item=itemCatalog[id];
   if(state.lightsOff&&!item.heal)return false;
   if(item.heal)return state.pokerus;
@@ -508,7 +509,7 @@ function useItem(id,destination=null){
   if(!itemUsable(id))return false;
   const item=itemCatalog[id];
   if(item.care||item.heal||item.food){
-    spend(CARE_CONFIG.itemAP);state.inventory[id]--;state.consumed.push({item:id,age:state.age});
+    spend(itemAPCost(id));state.inventory[id]--;state.consumed.push({item:id,age:state.age});
     if(item.heal){heal();Relationship.reward(state,'cure');}if(item.care)for(const[k,v]of Object.entries(item.care))state.care[k]=clamp(state.care[k]+v);
     state.message=t('item.used',{name:itemLabel(id)});
     if(item.food){if(state.care.hambre<100)Relationship.reward(state,'care');state.message=Vital.eat(state,CARE_CONFIG.berry);if(item.attribute){state.training[item.attribute]=clamp(state.training[item.attribute]+CARE_CONFIG.berry.attribute);state.message=t('item.statReward',{message:state.message,stat:LABELS[item.attribute],gain:CARE_CONFIG.berry.attribute});}}
@@ -517,7 +518,7 @@ function useItem(id,destination=null){
   const candidates=current().rules.filter(r=>r.item===id&&conditionsMet(r));
   const chosen=destination?candidates.find(r=>r.to===destination):candidates.length===1?candidates[0]:null;
   if(!chosen){state.message=t('evolution.chooseRoute');return false;}
-  spend(CARE_CONFIG.itemAP);return evolve(chosen,id);
+  spend(itemAPCost(id));return evolve(chosen,id);
 }
 function buyShopItem(id){
   const item=itemCatalog[id];if(!item||!dailyShop().includes(id)||state.coins<item.price)return false;
@@ -587,7 +588,7 @@ function validSnapshot(s,e){
   if(s.birthScene||s.nicknamePending||s.foundItem!==null)return false;
   if(s.phase==='alive'&&(s.care.hambre<=0||s.care.higiene<=0))return false;
   if(!s.milestones.every(m=>m&&Object.hasOwn(evolutionConfig,m.from)&&Object.hasOwn(evolutionConfig,m.to)&&Number.isFinite(m.age)))return false;
-  if(!s.consumed.every(c=>c&&Object.hasOwn(itemCatalog,c.item)&&Number.isFinite(c.age)))return false;
+  if(!s.consumed.every(c=>c&&(Object.hasOwn(itemCatalog,c.item)||RETIRED_ITEM_IDS.includes(c.item))&&Number.isFinite(c.age)))return false;
   return true;
 }
 function validSave(s){return s?.version===12&&Pokedex.valid(s.pokedex)&&(s.phase==='egg'?s.relationship===null:Relationship.valid(s.relationship))&&(s.phase==='egg'?s.vital===null:Vital.valid(s.vital,s.age))&&validGameSave({...s,version:12})&&HatchMonSocial.validStore(s.social,validSnapshot)&&Array.isArray(s.social.bredIds)&&s.social.bredIds.every(id=>typeof id==='string')&&new Set(s.social.bredIds).size===s.social.bredIds.length&&Array.isArray(s.social.memorials)&&s.social.memorials.every(e=>HatchMonSocial.entityOK(e,validSnapshot)&&e.snapshot.phase==='dead'&&Number.isFinite(e.bond)&&e.bond>=0&&e.bond<=RELATIONSHIP_CONFIG.max&&Number.isSafeInteger(e.diedAt)&&e.diedAt>=0)&&new Set(s.social.memorials.map(e=>e.id)).size===s.social.memorials.length&&s.social.eggs.every(e=>e.snapshot.incubationRemaining===INCUBATION_MS&&e.snapshot.remainder===0&&!s.social.memorials.some(m=>m.id===e.id))&&
@@ -666,6 +667,10 @@ function save({immediate=false}={}){
 function migrateSave(data){
   if(!data||typeof data!=='object')return data;
   if(!Number.isSafeInteger(data.coins)||data.coins<0)data.coins=0;
+  for(const id of RETIRED_ITEM_IDS){
+    if(data.inventory&&typeof data.inventory==='object')delete data.inventory[id];
+    if(data.foundItem===id)data.foundItem=null;
+  }
   return data;
 }
 function restore(){
@@ -729,7 +734,7 @@ function renderPanel(){
   if(panelName==='inventory'){
     content.append(row(t('ui.inventory.collection'),t('ui.inventory.collectionDetail'),socialButton(t('consult'),()=>{panelName='pokedex';renderPanel();})));
     content.append(row(t('ui.inventory.storedEggs'),t('ui.inventory.storedEggsDetail',{count:state.social.eggs.length}),socialEntryButton()));
-    content.append(el('p',t('ui.inventory.itemCost'), 'panel-note'));
+    content.append(el('p',t('ui.inventory.itemCost',{care:CARE_CONFIG.itemAP,evolution:CARE_CONFIG.evolutionItemAP}), 'panel-note'));
     const entries=Object.entries(state.inventory).filter(([,n])=>n>0);
     if(!entries.length)content.append(el('p',t('ui.inventory.empty')));
     for(const[id,n]of entries){
@@ -781,7 +786,7 @@ function renderPanel(){
     if(state.phase==='egg'){content.append(el('p',t(state.heat<3?'oak.eggEarly':'oak.eggLate')));return;}
     const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=state.vital.hasProducedEgg?t('oak.breedingDone'):Vital.breedingReason(state)?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
     for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
-    const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=mean(k),cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',t('oak.average',{stat:stat(k)}));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
+    const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=state.care[k],cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',stat(k));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
     for(const r of current().rules){const section=el('details',undefined,'evolution-detail');section.append(el('summary',evolutionConfig[r.to].name));const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
       req(state.age>=r.ageMs,t('oak.requirement.age',{days:r.ageMs/DAY}));if(r.minMood!=null)req(state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
       for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,t('oak.requirement.average',{stat:stat(k),value:v}));for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,t('oak.requirement.stat',{stat:stat(k),value:v}));for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,t('oak.requirement.sustained',{stat:stat(c.estadistica),value:c.minimo,hours:c.duracionMs/HOUR,elapsed:(elapsed/HOUR).toFixed(1)}));}if(r.action)req((state.actions[r.action]||0)>=r.repetitions,t('oak.requirement.action',{action:evolutionActionLabel(r.action),current:state.actions[r.action]||0,required:r.repetitions}));if(r.item)req(false,t('oak.requirement.item',{item:itemLabel(r.item),count:state.inventory[r.item]||0}));section.append(list);content.append(section);}

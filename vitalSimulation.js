@@ -9,10 +9,10 @@ const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays
 const CARE_CONFIG={hour:3600000,minute:60000,max:100,
   decay:{hambre:8,felicidad:4,energia:4,higiene:5},sleepDecay:{hambre:8,felicidad:3,energia:0,higiene:5},sleepRecovery:24,
   difficulty:{baseline:1,minFactor:.9,maxDecay:1.20,maxRisk:1.30,decayWeight:.10,riskWeight:.15},
-  feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:1},
+  feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:5},
   play:{happiness:20,energy:8,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
-  training:{gain:5,energy:10,hunger:4,dirt:3,ap:2},itemAP:1,trainerMax:6,trainerRecoveryPerMinute:.1,
-  costs:{alimentar:1,jugar:2,luz:0,limpiar:1,curar:2,auxiliar:1},dropChance:.10,
+  training:{gain:5,energy:10,hunger:4,dirt:3,ap:1},itemAP:1,evolutionItemAP:0,trainerMax:6,trainerRecoveryPerMinute:.1,
+  costs:{alimentar:1,jugar:1,luz:0,limpiar:1,curar:1,auxiliar:1},dropChance:.10,
   aid:{steps:3,restore:40},cure:{restore:40},epsilon:1e-8};
 const DIGESTION_CONFIG={max:6,maxPoops:3,minDelayMinutes:45,maxDelayMinutes:120,
   perPoop:1,dirtPerPoop:4,hygieneFactors:[1,1.25,1.6,2],dirtMaxPenalty:.35,

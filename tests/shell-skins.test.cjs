@@ -1,5 +1,7 @@
 const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
 (async()=>{const {run,storage,els}=await setup();
+const missingThemes=run('Object.keys(evolutionTable).map(id=>PokemonData.canonicalId(id)).filter(id=>!Object.hasOwn(SHELL_THEMES,id))');
+assert.equal(missingThemes.length,0,`Runtime forms without Shell Theme: ${missingThemes.join(', ')}`);
 assert.equal(run('ShellSkins.list().length'),0);run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="togetic"');assert.equal(run('ShellSkins.observe(state)'),false);
 run('state.age=state.vital.lifespan*.5');assert.equal(run('ShellSkins.observe(state)'),true);assert.equal(run('ShellSkins.observe(state)'),false);
 const id=run('PokemonData.canonicalId("togetic")');run(`ShellSkins.select('${id}',document.getElementById('display-root'))`);assert.equal(els['display-root'].dataset.shell,id);

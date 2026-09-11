@@ -32,6 +32,7 @@
   .message-strip{height:56px;min-width:0;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:7px;padding:5px 8px;background:#c8d2c3;border:3px double #657260;border-radius:5px;overflow:hidden;text-align:center}
   .oak-plate{width:44px;height:42px;display:grid;place-items:end center;overflow:hidden;padding:2px 2px 0;background:#b1c1ad;border:1px solid #657260;box-shadow:inset 0 0 0 1px #dce5d7}.oak-plate img{display:block;width:38px;height:38px;object-fit:contain;object-position:center bottom;image-rendering:pixelated}
   .message-strip #health,.message-strip #toast{grid-area:1/2;margin:0;width:100%;font-size:13.5px;line-height:18px;max-height:36px;overflow:hidden;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .message-strip #health[data-attention="needsAttention"]{color:#52694a}.message-strip #health[data-attention="serious"]{color:#263b30;font-weight:bold}
   .message-strip:has(#toast:not([hidden])) #health{visibility:hidden}
   .trainer-energy{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;letter-spacing:.01em}.trainer-energy:hover{background:transparent}.trainer-energy:focus-visible{outline:2px solid #466a4e;outline-offset:3px}.action-pips{display:inline-flex;gap:2px}.action-pip{width:7px;height:7px;border:1px solid #657260;background:transparent}.action-pip.filled{background:#46654c}.trainer-recharge{color:#657260;font-size:.62rem;white-space:nowrap}
   #toast{opacity:0;transition:opacity .18s ease;pointer-events:none}#toast.visible{opacity:1}#toast[data-kind="event"]{font-weight:bold}#save-note{font-size:10px;margin:0;text-align:center;overflow:auto}
@@ -119,6 +120,7 @@
   .pixel-icon[data-icon="settings"]{--pixels:0em .25em currentColor,.125em .25em currentColor,.25em .125em currentColor,.25em .25em currentColor,.25em .375em currentColor,.375em .25em currentColor,.5em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,0em .625em currentColor,.125em .625em currentColor,.25em .625em currentColor,.375em .625em currentColor,.5em .5em currentColor,.5em .625em currentColor,.5em .75em currentColor,.625em .625em currentColor,.75em .625em currentColor}
   .pixel-icon[data-icon="shop"]{--pixels:.25em 0em currentColor,.375em 0em currentColor,.5em 0em currentColor,.625em 0em currentColor,.125em .125em currentColor,.25em .125em currentColor,.375em .125em currentColor,.5em .125em currentColor,.625em .125em currentColor,.75em .125em currentColor,.125em .25em currentColor,.375em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,.125em .375em currentColor,.25em .375em currentColor,.375em .375em currentColor,.5em .375em currentColor,.625em .375em currentColor,.75em .375em currentColor,.125em .5em currentColor,.75em .5em currentColor,.125em .625em currentColor,.375em .625em currentColor,.5em .625em currentColor,.75em .625em currentColor,.125em .75em currentColor,.375em .75em currentColor,.5em .75em currentColor,.75em .75em currentColor,.125em .875em currentColor,.25em .875em currentColor,.375em .875em currentColor,.5em .875em currentColor,.625em .875em currentColor,.75em .875em currentColor}
   [data-display-mode="lcd"] .screen,[data-display-mode="lcd"] .message-strip,[data-display-mode="lcd"] .memory-sprite,[data-display-mode="lcd"] .memory-hearts,[data-display-mode="lcd"] #panel[data-lcd-surface="true"]{filter:url(#lcd-palette)}
+  [data-display-mode="lcd"] #bond .pixel-icon{color:#bed09a}
   [data-display-mode="lcd"] .screen .empty{opacity:.55}
   .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a}
   .minigame-field button{touch-action:manipulation;min-height:56px;font-weight:bold;border-radius:3px}.minigame-field button.lit{background:#52694a;color:#fff;box-shadow:inset 0 0 0 3px #263b30}.minigame-field button:active{background:#91a477}
@@ -230,6 +232,7 @@
 <script type="text/plain" data-game-src="pokemonDataAdapter.js"></script>
 <script type="text/plain" data-game-src="vitalSimulation.js"></script>
 <script type="text/plain" data-game-src="relationship.js"></script>
+<script type="text/plain" data-game-src="attentionEngine.js"></script>
 <script type="text/plain" data-game-src="pokedex.js"></script>
 <script type="text/plain" data-game-src="shiny.js"></script>
 <script type="text/plain" data-game-src="assets/skins/themes.js"></script>
@@ -342,7 +345,7 @@ const obtainableRoster=Pokedex.roster(evolutionConfig,STARTERS);
 const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{nameKey:'minigame.strength.activity',icon:'train'},kindness:{nameKey:'minigame.kindness.activity',icon:'kindness'},style:{nameKey:'minigame.style.activity',icon:'style'}};
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
-    gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,
+    gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
     averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
     trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('heatHint')};
 }
@@ -419,21 +422,23 @@ function checkHealth(){
   if(state.phase!=='critical'&&(state.care.hambre<=0||state.care.higiene<=0)){state.phase='critical';state.aid=0;state.message=t('care.critical');}
 }
 // Una única simulación por minutos para actividad, ausencia y saltos de pruebas.
-function minuteStep(){
+function minuteStep(clock=Date.now()){
   if(!alive())return;
   state.age+=MINUTE;state.stageAge+=MINUTE;
   state.trainer.energy=Math.min(MAX_AP,state.trainer.energy+CARE_CONFIG.trainerRecoveryPerMinute);
-  const before={...state.care};Vital.tick(state);Relationship.tick(state);
+  const before={...state.care};Vital.tick(state);Vital.sleepTick(state,clock);Relationship.tick(state);
   for(const k of CARE)state.averages.sum[k]+=state.care[k];
-  state.averages.count++;updateSustained(MINUTE,before);checkHealth();
+  state.averages.count++;updateSustained(MINUTE,before);checkHealth();Attention.evaluate(state,clock);
   if(alive()){ShellSkins.observe(state);checkEvolution();}
 }
 function sync(now=Date.now()){
   const elapsed=Math.max(0,now-state.lastSync);state.lastSync=Math.max(state.lastSync,now);
-  advanceGameTime(elapsed*TIME_SCALE);
+  advanceGameTime(elapsed*TIME_SCALE,now);deliverAttention(now);
 }
 // Tiempo de juego, sin modificar el reloj real ni multiplicar los saltos de pruebas.
-function advanceGameTime(milliseconds){
+function advanceGameTime(milliseconds,endClock){
+  // Calls without a wall-clock endpoint (tests and Oak time skips) advance the same logical clock.
+  if(!Number.isFinite(endClock))endClock=(state.attentionMeta?.lastEvaluatedAt||Date.now())+milliseconds;
   let remaining=milliseconds;
   if(state.phase==='egg'){
     const spent=Math.min(remaining,state.incubationRemaining);
@@ -444,7 +449,8 @@ function advanceGameTime(milliseconds){
   }
   if(!alive()){state.remainder=0;return;}
   state.remainder+=remaining;
-  while(state.remainder>=MINUTE&&alive()){state.remainder-=MINUTE;minuteStep();}
+  const steps=Math.floor(state.remainder/MINUTE);
+  for(let step=steps;step>0&&alive();step--){state.remainder-=MINUTE;minuteStep(endClock-(step-1)*MINUTE);}
   if(!alive())state.remainder=0;
 }
 function skipTime(hours){
@@ -466,7 +472,12 @@ function allowed(action){
 function careAction(action,rng=Math.random){
   if(!Object.hasOwn(COST,action))return false;
   if(!allowed(action)){if(alive())denied();return false;}
-  if(action==='luz'){state.lightsOff=!state.lightsOff;state.message=state.lightsOff?t('care.lightsOff'):t('care.lightsOn');return true;}
+  if(action==='luz'){
+    if(state.lightsOff){state.lightsOff=false;state.sleep.napping=false;state.message=t('care.lightsOn');return true;}
+    const permission=Vital.sleepPermission(state);
+    if(!permission.ok){state.message=t(`sleep.${permission.reason}`,{name:current().name});return false;}
+    state.lightsOff=true;state.sleep.napping=permission.napping;state.message=t('care.lightsOff');return true;
+  }
   const usefulCare=action==='alimentar'?state.care.hambre<100:action==='limpiar'?(state.care.higiene<100||state.vital.dirt>0||state.vital.poops.length>0):true;
   spend(COST[action]);
   if(action==='alimentar')state.message=Vital.eat(state,CARE_CONFIG.feed);
@@ -481,7 +492,7 @@ function careAction(action,rng=Math.random){
     if(state.aid===CARE_CONFIG.aid.steps){for(const k of CARE)state.care[k]=Math.max(CARE_CONFIG.aid.restore,state.care[k]);state.phase='alive';state.aid=0;state.message=state.pokerus?t('care.stableVirus'):t('care.stable');}
   }
   state.actions[action]=(state.actions[action]||0)+1;if(usefulCare)Relationship.reward(state,({alimentar:'care',limpiar:'care',jugar:'play',curar:'cure'})[action]);
-  updateSustained();checkHealth();checkEvolution();return true;
+  if(action==='jugar')Attention.markInteraction(state);updateSustained();checkHealth();Attention.evaluate(state);checkEvolution();return true;
 }
 function heal(){state.pokerus=false;state.vital.illnessCause=null;state.vital.exposure={hygiene:0,energy:0};state.care.higiene=Math.max(CARE_CONFIG.cure.restore,state.care.higiene);state.care.energia=Math.max(CARE_CONFIG.cure.restore,state.care.energia);}
 function train(k,gain=CARE_CONFIG.training.gain){
@@ -513,7 +524,7 @@ function useItem(id,destination=null){
     if(item.heal){heal();Relationship.reward(state,'cure');}if(item.care)for(const[k,v]of Object.entries(item.care))state.care[k]=clamp(state.care[k]+v);
     state.message=t('item.used',{name:itemLabel(id)});
     if(item.food){if(state.care.hambre<100)Relationship.reward(state,'care');state.message=Vital.eat(state,CARE_CONFIG.berry);if(item.attribute){state.training[item.attribute]=clamp(state.training[item.attribute]+CARE_CONFIG.berry.attribute);state.message=t('item.statReward',{message:state.message,stat:LABELS[item.attribute],gain:CARE_CONFIG.berry.attribute});}}
-    updateSustained();checkHealth();checkEvolution();return true;
+    updateSustained();checkHealth();Attention.evaluate(state);checkEvolution();return true;
   }
   const candidates=current().rules.filter(r=>r.item===id&&conditionsMet(r));
   const chosen=destination?candidates.find(r=>r.to===destination):candidates.length===1?candidates[0]:null;
@@ -532,7 +543,7 @@ function hatch(rng=Math.random){
   state.training=Object.fromEntries(TRAIN.map(k=>[k,0]));
   state.averages={sum:zeroCare(),count:0};state.age=0;state.stageAge=0;state.remainder=0;
   state.social.active.isShiny=Shiny.enabled?Shiny.roll(state.pokemonId,rng):false;
-  state.gender=PokemonData.gender(state.pokemonId,rng);state.vital=Vital.fresh(state.social.active.id);state.relationship=Relationship.fresh();
+  state.gender=PokemonData.gender(state.pokemonId,rng);state.personality=Vital.personalityFor(rng);Vital.ensureSleep(state);state.vital=Vital.fresh(state.social.active.id);state.relationship=Relationship.fresh();
   Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);
   state.birthScene=true;state.nicknamePending=false;state.message=t('egg.hatchStart');return true;
 }
@@ -568,19 +579,20 @@ function validGameSave(s){
     s.sustained&&Object.values(s.sustained).every(n=>finite(n))&&s.actions&&Object.values(s.actions).every(n=>Number.isInteger(n)&&finite(n))&&
     s.inventory&&typeof s.inventory==='object'&&Object.entries(s.inventory).every(([id,n])=>Object.hasOwn(itemCatalog,id)&&Number.isInteger(n)&&finite(n))&&Number.isSafeInteger(s.coins)&&s.coins>=0&&
     (s.phase==='egg'?s.gender===null:PokemonData.validGender(s.pokemonId,s.gender))&&typeof s.nickname==='string'&&s.nickname.length<=20&&
-    typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
+    typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&Attention.valid(s)&&
+    (s.phase==='egg'?s.personality===null:Object.hasOwn(PERSONALITY_CONFIG,s.personality))&&s.sleep&&finite(s.sleep.fatigue,0,100)&&typeof s.sleep.napDay==='string'&&s.sleep.napDay.length<=20&&Number.isInteger(s.sleep.napMinutes)&&finite(s.sleep.napMinutes,0,SLEEP_CONFIG.napLimitMinutes)&&typeof s.sleep.napping==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
     s.trainer&&finite(s.trainer.energy,0,MAX_AP)&&finite(s.lastSync)&&finite(s.remainder,0,MINUTE)&&
     typeof s.pokerus==='boolean'&&Number.isInteger(s.heat)&&finite(s.heat,0,29)&&Number.isInteger(s.aid)&&finite(s.aid,0,2)&&Array.isArray(s.milestones)&&Array.isArray(s.consumed)&&typeof s.message==='string';
 }
 // Reserva de huevos, memorias y perfiles de crianza. Identidad y origen pertenecen a la
 // criatura; mochila de objetos y AP siguen perteneciendo a esta partida.
-const SNAPSHOT_FIELDS=['phase','pokemonId','incubationRemaining','care','training','age','stageAge','stage','gender','nickname','birthScene','nicknamePending','foundItem','lightsOff','averages','sustained','actions','consumed','milestones','pokerus','heat','aid','remainder','vital'];
+const SNAPSHOT_FIELDS=['phase','pokemonId','incubationRemaining','care','training','age','stageAge','stage','gender','nickname','birthScene','nicknamePending','foundItem','lightsOff','personality','sleep','averages','sustained','actions','consumed','milestones','pokerus','heat','aid','remainder','vital'];
 function snapshotOf(s=state){return HatchMonSocial.copy(Object.fromEntries(SNAPSHOT_FIELDS.map(k=>[k,s[k]])));}
 function activeEntity(){const {isShiny,...identity}=HatchMonSocial.copy(state.social.active);return {...identity,kind:state.phase==='egg'?'egg':'creature',speciesId:state.phase==='egg'?state.social.active.offspring:state.pokemonId,snapshot:snapshotOf()};}
 function validSnapshot(s,e){
   if(!s||Object.keys(s).length!==SNAPSHOT_FIELDS.length||!SNAPSHOT_FIELDS.every(k=>Object.hasOwn(s,k)))return false;
   for(const key of ['sustained','actions'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
-  const base={...s,version:12,inventory:{},coins:0,trainer:{energy:MAX_AP},lastSync:0,message:''};
+  const base={...s,version:12,inventory:{},coins:0,trainer:{energy:MAX_AP},lastSync:0,message:'',attentionEvent:null,attentionMeta:Attention.freshMeta(0),attentionSettings:Attention.freshSettings()};
   if(!validGameSave(base)||(s.phase==='egg'?s.vital!==null:!Vital.valid(s.vital,s.age))||s.stage>10||s.stageAge>s.age||s.age>100*365*DAY)return false;
   if(e.kind==='egg'?(e.speciesId!==e.offspring||e.offspring!==null&&!STARTERS.includes(e.offspring)):e.speciesId!==s.pokemonId)return false;
   if(e.offspring!==null&&!STARTERS.includes(e.offspring))return false;
@@ -653,13 +665,14 @@ function incubateStoredEgg(id){
   rememberDeath();state.social.eggs.splice(index,1);
   if(state.phase==='egg')state.social.eggs.push({...activeEntity(),snapshot:snapshotOf(freshState())});
   Object.assign(state,HatchMonSocial.copy(entity.snapshot));state.relationship=null;
+  state.attentionEvent=null;state.attentionMeta=Attention.freshMeta();Attention.ensure(state);
   state.social.active={id:entity.id,createdAt:entity.createdAt,parents:HatchMonSocial.copy(entity.parents),offspring:entity.offspring};
   state.lastSync=Date.now();state.message=t('connect.eggIncubating');return state.message;
 }
 let storageWarning='';
 let savedImportantState=null;
 function save({immediate=false}={}){
-  const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones]);
+  const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones,state.attentionEvent,state.attentionMeta,state.attentionSettings]);
   immediate=immediate||important!==savedImportantState;
   try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
   catch{storageWarning=t('system.localSaveFailed');}
@@ -671,6 +684,15 @@ function migrateSave(data){
     if(data.inventory&&typeof data.inventory==='object')delete data.inventory[id];
     if(data.foundItem===id)data.foundItem=null;
   }
+  const migrateIndividual=s=>{
+    if(!s||typeof s!=='object')return;
+    if(s.phase==='egg')s.personality=null;
+    else if(!Object.hasOwn(PERSONALITY_CONFIG,s.personality))s.personality=Vital.personalityFor();
+    Vital.ensureSleep(s);
+  };
+  migrateIndividual(data);
+  Attention.ensure(data,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
+  for(const entity of [...(data.social?.eggs||[]),...(data.social?.memorials||[])])migrateIndividual(entity?.snapshot);
   return data;
 }
 function restore(){
@@ -693,6 +715,21 @@ function hideToast(immediate=true){
   else toastFadeTimer=setTimeout(finish,FEEDBACK_CONFIG.fadeMs);
 }
 const EGG_TOUCH_FEEDBACK=['egg.touch.1','egg.touch.2','egg.touch.3','egg.touch.4','egg.touch.5'];
+const notificationApi=()=>globalThis.Notification||window.Notification||null;
+const notificationPermission=()=>{const api=notificationApi();return !api?'unavailable':api.permission||'default';};
+function attentionMessage(){const event=state.attentionEvent;return event?.active?t(Attention.messageKey(event),{name:state.nickname||current().name}):'';}
+function deliverAttention(now=Date.now()){
+  const event=state.attentionEvent;if(!event?.active||!Attention.notificationDue(state,now)||document.hidden===false)return false;
+  const api=notificationApi();if(!api||api.permission!=='granted')return false;
+  try{new api('Hatch.mon',{body:attentionMessage(),tag:'hatchmon-attention'});Attention.markNotified(state,now);save({immediate:true});return true;}catch{return false;}
+}
+async function requestAttentionNotifications(){
+  const api=notificationApi(),permission=notificationPermission();
+  if(!api){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.unavailable');return false;}
+  if(permission==='denied'){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.denied');return false;}
+  const result=permission==='granted'?'granted':await api.requestPermission();state.attentionSettings.notificationsEnabled=result==='granted';state.message=t(result==='granted'?'attention.notifications.enabled':'attention.notifications.denied');return result==='granted';
+}
+function disableAttentionNotifications(){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.disabled');return true;}
 function showToast(message,important=false,eggInteraction=false){message=I18n?.localize(message)??message;
   if((state.phase==='egg'&&!eggInteraction)||!message||interactionLocked())return;
   hideToast();const toast=$('toast');toast.dataset.kind=important?'event':'ordinary';toast.textContent=String(message).replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();toast.hidden=false;
@@ -765,6 +802,7 @@ function renderPanel(){
     const modes=el('div',undefined,'dialog-actions');
     for(const [mode,label]of [['color','colorMode'],['lcd','lcdMode']]){const button=el('button',t(label));button.type='button';button.dataset.key='display-'+mode;button.setAttribute('aria-pressed',String(displayMode===mode));button.addEventListener('click',()=>window.setDisplayMode(mode));modes.append(button);}content.append(modes,el('h3',t('ui.shell')));
     const shells=el('div',undefined,'shell-options');for(const id of ['default',...ShellSkins.list()]){const theme=ShellSkins.theme(id),b=el('button',id==='default'?'Hatch.mon':theme.name);b.type='button';b.dataset.key='shell-'+id;b.style.background=theme.shellBase;b.style.color=theme.shellDark;b.setAttribute('aria-pressed',String(ShellSkins.selected()===id));b.addEventListener('click',()=>{ShellSkins.select(id,$('display-root'));renderPanel();});shells.append(b);}content.append(shells);
+    const permission=notificationPermission(),notifications=el('button',t(state.attentionSettings.notificationsEnabled?'attention.notifications.disable':'attention.notifications.enable'));notifications.type='button';notifications.dataset.key='attention-notifications';notifications.disabled=permission==='unavailable'||permission==='denied';notifications.addEventListener('click',async()=>{if(state.attentionSettings.notificationsEnabled)disableAttentionNotifications();else await requestAttentionNotifications();save({immediate:true});render(true);renderPanel();});content.append(el('h3',t('attention.title')),row(t('attention.notifications.title'),t(permission==='unavailable'?'attention.notifications.unavailable':permission==='denied'?'attention.notifications.denied':state.attentionSettings.notificationsEnabled?'attention.notifications.enabled':'attention.notifications.help'),notifications),el('p',t('attention.quietHours',{start:state.attentionSettings.quietStart,end:state.attentionSettings.quietEnd}),'panel-note'));
     if(!canUseTesting())return;
     content.append(el('h3',t('testing.title')));
     const resetButton=el('button',t('testing.reset'));resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
@@ -785,7 +823,7 @@ function renderPanel(){
     content.append(row(t('oak.exchange'),t('oak.exchangeDetail'),socialEntryButton()));
     if(state.phase==='egg'){content.append(el('p',t(state.heat<3?'oak.eggEarly':'oak.eggLate')));return;}
     const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=state.vital.hasProducedEgg?t('oak.breedingDone'):Vital.breedingReason(state)?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
-    for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
+    for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.personality'),t(PERSONALITY_CONFIG[state.personality].labelKey)],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
     const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=state.care[k],cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',stat(k));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
     for(const r of current().rules){const section=el('details',undefined,'evolution-detail');section.append(el('summary',evolutionConfig[r.to].name));const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
       req(state.age>=r.ageMs,t('oak.requirement.age',{days:r.ageMs/DAY}));if(r.minMood!=null)req(state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
@@ -973,10 +1011,10 @@ function render(forceFeedback=false){
   $('identity').classList.toggle('has-nickname',!egg&&!birth&&!!state.nickname);
   $('nickname').textContent=state.nickname;$('nickname').hidden=egg||birth||!state.nickname;
   const hint=$('egg-hint');hint.hidden=!egg;if(egg&&hint.textContent!==eggStage().message)hint.textContent=eggStage().message;
-  const health=companionStatus();
+  const attention=attentionMessage(),health=attention||companionStatus();
   const poopLayer=$('poop-layer');poopLayer.replaceChildren();poopLayer.hidden=egg||birth||dead;
   if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label',t('ui.poopAria'));poopLayer.append(node);}
-  $('health').textContent=health;$('health').hidden=!health;
+  $('health').textContent=health;$('health').hidden=!health;$('health').dataset.attention=attention?state.attentionEvent.severity:'';
   if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
   document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));}});
   document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
@@ -1022,7 +1060,7 @@ function petReaction(kind){
   $('sprite').dataset.reaction=kind;
   reactionTimer=setTimeout(()=>{clearPetReaction();if(state.phase!=='egg')renderCreature();},kind==='faint'?1100:1700);
 }
-function interactWithPokemon(){const response=Relationship.interact(state);if(!response)return false;state.message=response.message;updateSustained();checkHealth();save();render(true);petReaction(response.kind);return true;}
+function interactWithPokemon(){const response=Relationship.interact(state);if(!response)return false;Attention.markInteraction(state);Attention.evaluate(state);state.message=response.message;updateSustained();checkHealth();save();render(true);petReaction(response.kind);return true;}
 let dexVariant='normal';
 let collectionTab='pokedex',memorialRenderers=[];
 function disposeMemorialSprites(){for(const renderer of memorialRenderers)renderer.stop();memorialRenderers=[];}
@@ -1065,7 +1103,7 @@ function renderPokedex(){
 }
 $('sprite').addEventListener('animationend',()=>{delete $('sprite').dataset.reaction;});
 $('trainer-energy').addEventListener('click',()=>showToast(t('ui.actionsHelp')));
-function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();save({immediate:!!result});render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
+function dispatch(callback,reaction=null){sync();const wasSick=state.pokerus,priorEvolution=evolutionSerial;const result=callback();Attention.evaluate(state);deliverAttention();save({immediate:!!result});render(true);if(result&&reaction&&evolutionSerial===priorEvolution&&!(state.pokerus&&!wasSick))petReaction(reaction);if(dialog.open)renderPanel();startTimer();}
 $('nickname-form').addEventListener('submit',event=>{event.preventDefault();dispatch(()=>setNickname($('nickname-input').value));});
 $('skip-nickname').addEventListener('click',()=>dispatch(()=>setNickname('')));
 $('nickname-dialog').addEventListener('cancel',event=>{event.preventDefault();dispatch(()=>setNickname(''));});

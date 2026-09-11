@@ -15,7 +15,8 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `vitalSimulation.js` | Balance, cuidados, fisiología, lifespan, LifeStage y requisitos vitales de crianza | `pokemonDataAdapter.js` |
 | `pokemonRenderer.js` | Render canvas, reproducción visual del huevo y fallback retro | Adapter, PmdVisuals, assets locales |
 | `pmdRenderer.js` | Resolución de animaciones, cadencia y validación visual de Eat | Adapter, `assets/pmd/manifest.js` |
-| `relationship.js` | Vínculo, atención e interacción directa | Estado de partida; sin assets |
+| `relationship.js` | Vínculo e interacción directa | Estado de partida; sin assets |
+| `attentionEngine.js` | Prioridad, persistencia y entrega web de avisos de atención | Estado de partida, personalidad y `vitalSimulation.js` |
 | `pokedex.js` | Progreso normal/shiny, roster alcanzable y selección ponderada | Adapter |
 | `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
 | `shiny.js` | Política shiny preparada, activación pendiente de assets | Rareza canónica vía adapter |

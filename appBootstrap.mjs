@@ -28,7 +28,7 @@ async function start(session){
   const {data:{session:latest}}=await client.auth.getSession();if(latest?.user.id!==userId)throw Error('session-changed');
   window.HatchCloud={queue:options=>service.queue(options),notify};
   window.HatchAccount={email:session.user.email||t('auth.accountFallback'),hasBackup:()=>!!cache.getItem('cloud-backup'),downloadBackup:()=>{const raw=cache.getItem('cloud-backup');if(!raw)return;const url=URL.createObjectURL(new Blob([raw],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='hatchmon-copia-pendiente.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},logout:async()=>{
-   if(leaving)return;leaving=true;lock();window.HatchRuntime?.save();await service.flush();
+   if(leaving)return;leaving=true;game.hidden=true;gate.hidden=false;window.HatchRuntime?.save();await service.flush();lock();
    const {error}=await auth.logout();if(error){message.textContent=humanError(error);$('auth-retry').hidden=false;return;}
    service.close();location.replace(location.pathname);
   }};

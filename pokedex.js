@@ -18,7 +18,8 @@ globalThis.Pokedex=(()=>{
   });
  }
  function choose(pool,dex,rng=Math.random){const w=weights(pool,dex),sum=w.reduce((a,b)=>a+b,0);let roll=Math.max(0,Math.min(.999999999,rng()))*sum;for(let i=0;i<pool.length;i++){roll-=w[i];if(roll<0)return pool[i];}return pool.at(-1);}
- function valid(dex){return dex&&typeof dex==='object'&&!Array.isArray(dex)&&Object.entries(dex).every(([id,e])=>PokemonData.canonicalId(id)===id&&e&&typeof e.seen==='boolean'&&Array.isArray(e.ownedIds)&&e.ownedIds.every(id=>typeof id==='string')&&new Set(e.ownedIds).size===e.ownedIds.length&&['evolved','bred','received'].every(k=>typeof e[k]==='boolean'));}
+ function validEntry(e){return !!e&&typeof e==='object'&&!Array.isArray(e)&&typeof e.seen==='boolean'&&Array.isArray(e.ownedIds)&&e.ownedIds.every(id=>typeof id==='string')&&new Set(e.ownedIds).size===e.ownedIds.length&&['evolved','bred','received'].every(k=>typeof e[k]==='boolean');}
+ function valid(dex){return dex&&typeof dex==='object'&&!Array.isArray(dex)&&Object.entries(dex).every(([id,e])=>PokemonData.canonicalId(id)===id&&validEntry(e)&&(!Object.hasOwn(e,'shiny')||validEntry(e.shiny)));}
  function roster(config,roots){
   const reachable=new Set(roots),edges=[];let changed=true;
   while(changed){changed=false;for(const from of [...reachable])for(const r of config[from]?.rules||[])if(r.enabled!==false&&config[r.to]){if(!reachable.has(r.to)){reachable.add(r.to);changed=true;}}}

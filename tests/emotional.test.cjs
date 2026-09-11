@@ -14,6 +14,16 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  run('var beforeLife=JSON.stringify(state.vital);var beforeCare=JSON.stringify(state.care);forceEvolution("pikachu")');assert.equal(run('JSON.stringify(state.vital)===beforeLife'),true);assert.equal(run('JSON.stringify(state.care)===beforeCare'),true);assert.ok(run('state.pokedex[PokemonData.canonicalId("pikachu")].evolved'));
  run('var individual=state.social.active.id;var finalBond=state.relationship.points;die("natural");render()');await flush();assert.equal(els.sprite.dataset.visualState,'faint');advance(1101);await flush();assert.equal(els.sprite.dataset.visual,'memorial');assert.equal(run('state.social.memorials[0].bond'),run('finalBond'));
  run('startNewBeginning()');assert.equal(run('state.relationship'),null);assert.equal(run('state.pokedex[PokemonData.canonicalId("pichu")].ownedIds[0]'),run('individual'));assert.equal(run('state.social.memorials.length'),1);assert.equal(run('validSave(state)'),true);
+ // Both post-death choices retain trainer resources outside the creature snapshot.
+ const resources=[];
+ for(const stored of [false,true]){
+  born();run('var eggState=freshState();state.social.eggs.push({...eggState.social.active,kind:"egg",speciesId:null,snapshot:snapshotOf(eggState)});die("natural");state.coins=123;state.inventory.tea=2;state.trainer.energy=2.5;state.attentionSettings.enabled=false');
+  const before=run('JSON.stringify([state.coins,state.inventory,state.trainer,state.attentionSettings])');
+  run(stored?'startNewBeginning(state.social.eggs[0].id)':'startNewBeginning()');
+  resources.push(run('JSON.stringify([state.coins,state.inventory,state.trainer,state.attentionSettings])'));
+  assert.equal(resources.at(-1),before);assert.equal(run('state.phase'),'egg');assert.equal(run('validSave(state)'),true);
+ }
+ assert.equal(resources[0],resources[1]);
  // No historical species list fixture: use the real root pool, adjusting only progress.
  run('var pool=STARTERS;var dex={};var first=pool[0];Pokedex.record(dex,first,"owned","a");var weights=Pokedex.weights(pool,dex);var fresh=Pokedex.weights(pool,{})');assert.equal(run('weights[0]/fresh[0]'),1/8);
  run('Pokedex.record(dex,first,"owned","b")');assert.equal(run('Pokedex.weights(pool,dex)[0]/fresh[0]'),.2/8);

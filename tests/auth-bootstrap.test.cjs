@@ -51,3 +51,18 @@ test('actual bootstrap identifies invalid save separately from connection failur
  const h=await boot({user:{id:'A'}},{runtimeHarness:runtime});assert.equal(h.el('game-root').hidden,true);assert.equal(h.el('auth-message').textContent,'system.incompatibleSave');
  assert.equal(runtime.storage.get('hatch.mon.v3'),JSON.stringify(bad));assert.ok(!h.calls.includes('queue'));
 });
+
+test('logout saves current runtime before flush and stop, while hiding game and preventing duplicate logout',async()=>{
+ const {setup}=require('./uiHarness.cjs'),runtime=await setup({runtimeSource:''});
+ const h=await boot({user:{id:'A'}},{runtimeHarness:runtime});
+ const current=JSON.parse(runtime.storage.get('hatch.mon.v3'));current.coins=137;current.trainer.energy=2;
+ assert.equal(h.window.HatchRuntime.applyCloudSave(current),true);
+ const api=h.window.HatchRuntime,save=api.save,stop=api.stop;
+ api.save=()=>{h.calls.push('save');assert.equal(h.el('game-root').hidden,true);save();};
+ api.stop=()=>{h.calls.push('stop');stop();};
+ h.calls.length=0;
+ await Promise.all([h.window.HatchAccount.logout(),h.window.HatchAccount.logout()]);
+ const order=h.calls.filter(c=>['save','flush','stop','logout'].includes(c));
+ assert.deepEqual(order,['save','flush','stop','logout']);
+ const saved=JSON.parse(runtime.storage.get('hatch.mon.v3'));assert.equal(saved.coins,137);assert.equal(saved.trainer.energy,2);
+});

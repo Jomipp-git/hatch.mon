@@ -2,6 +2,14 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
 (async()=>{const {run,els,flush}=await setup();for(let rarity=1;rarity<=5;rarity++)assert.equal(run(`Shiny.probability(${rarity})`),1/(10*rarity));
 assert.equal(run('Shiny.enabled'),false);assert.equal(run('obtainableRoster.total'),75);assert.equal(run('obtainableRoster.egg.length'),25);assert.equal(run('obtainableRoster.excluded.length'),0);
 run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.social.active.isShiny=true;state.pokedex=Pokedex.fresh();Pokedex.record(state.pokedex,state.pokemonId,"owned",state.social.active.id,true);save()');
+assert.equal(run('Pokedex.valid(state.pokedex)'),true);
+const dex=JSON.parse(run('JSON.stringify(state.pokedex)')),key=Object.keys(dex)[0];
+const legacy=structuredClone(dex);delete legacy[key].shiny;
+assert.equal(run(`Pokedex.valid(${JSON.stringify(legacy)})`),true);
+for(const shiny of [null,[],true,{}, {...dex[key].shiny,seen:1},{...dex[key].shiny,ownedIds:'bad'},{...dex[key].shiny,ownedIds:[1]},{...dex[key].shiny,ownedIds:['a','a']},...['evolved','bred','received'].map(k=>({...dex[key].shiny,[k]:null}))]){
+ const malformed=structuredClone(dex);malformed[key].shiny=shiny;
+ assert.equal(run(`Pokedex.valid(${JSON.stringify(malformed)})`),false,JSON.stringify(shiny));
+}
 const saved=JSON.parse(run('JSON.stringify(state)'));const restored=await setup({initialSave:saved});assert.equal(restored.run('state.social.active.isShiny'),true);
 run('Shiny.roll=()=>{throw Error("No reroll")};forceEvolution("pikachu")');assert.equal(run('state.social.active.isShiny'),true);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].seen'),false);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].shiny.seen'),true);
 assert.equal(run('Object.hasOwn(activeEntity(),"isShiny")'),false);

@@ -941,7 +941,7 @@ function renderSocialPanel(){
   content.append(el('p',t('connect.offlineNotice'),'panel-note'));
 }
 function startNewBeginning(eggId=null){
-  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.pokedex=state.pokedex;state=next;}
+  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.coins=state.coins;next.trainer=state.trainer;next.attentionSettings=state.attentionSettings;next.pokedex=state.pokedex;state=next;}
   cancelBirthAnimation();hideToast();clearPetReaction();if(dialog.open)closePanel();save();render();startTimer();
 }
 function renderBeginningChoices(){

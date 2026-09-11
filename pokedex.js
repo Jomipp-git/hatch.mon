@@ -11,8 +11,8 @@ globalThis.Pokedex=(()=>{
   if(['evolved','bred','received'].includes(event))entry[event]=true;
  }
  function weights(pool,dex){
-  const allKnown=pool.every(id=>dex[PokemonData.canonicalId(id)]?.seen===true);
-  return pool.map(id=>{const count=dex[PokemonData.canonicalId(id)]?.ownedIds.length||0,rarity=PokemonData.get(id)?.Rarity;
+  const allKnown=pool.every(id=>{const entry=dex[PokemonData.canonicalId(id)];return entry?.seen===true||entry?.shiny?.seen===true;});
+  return pool.map(id=>{const entry=dex[PokemonData.canonicalId(id)],count=new Set([...(entry?.ownedIds||[]),...(entry?.shiny?.ownedIds||[])]).size,rarity=PokemonData.get(id)?.Rarity;
    const base=Number.isFinite(rarity)&&rarity>0?1/Math.pow(rarity,ENCOUNTER_CONFIG.rarityPower):1;
    return base*(allKnown?ENCOUNTER_CONFIG.allOwned:count===0?ENCOUNTER_CONFIG.unowned:count===1?ENCOUNTER_CONFIG.ownedOnce:ENCOUNTER_CONFIG.ownedMany);
   });

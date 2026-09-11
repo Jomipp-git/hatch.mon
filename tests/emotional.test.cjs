@@ -11,9 +11,9 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  born();run('state.relationship.points=60;interactWithPokemon()');await flush();assert.equal(run('Relationship.hearts(state)'),3);assert.equal(els.bond.children.length,5);
  const p=run('state.relationship.points');run('state.trainer.energy=6;train("iq")');assert.equal(run('state.relationship.points'),p+1.5);assert.equal(run('state.training.iq'),5);
  run('var calls=0;TrainingActivities.register("iq",({complete})=>{complete();return complete()});TrainingActivities.launch("iq",{commit:()=>{calls++;return true}})');assert.equal(run('calls'),1);
- run('var beforeLife=JSON.stringify(state.vital);var beforeCare=JSON.stringify(state.care);forceEvolution("pikachu")');assert.equal(run('JSON.stringify(state.vital)===beforeLife'),true);assert.equal(run('JSON.stringify(state.care)===beforeCare'),true);assert.ok(run('state.pokedex[PokemonData.canonicalId("pikachu")].evolved'));
- run('var individual=state.social.active.id;var finalBond=state.relationship.points;die("natural");render()');await flush();assert.equal(els.sprite.dataset.visualState,'faint');advance(1101);await flush();assert.equal(els.sprite.dataset.visual,'memorial');assert.equal(run('state.social.memorials[0].bond'),run('finalBond'));
- run('startNewBeginning()');assert.equal(run('state.relationship'),null);assert.equal(run('state.pokedex[PokemonData.canonicalId("pichu")].ownedIds[0]'),run('individual'));assert.equal(run('state.social.memorials.length'),1);assert.equal(run('validSave(state)'),true);
+ run('var beforeLife=JSON.stringify(state.vital);var beforeCare=JSON.stringify(state.care);forceEvolution("pikachu")');assert.equal(run('JSON.stringify(state.vital)===beforeLife'),true);assert.equal(run('JSON.stringify(state.care)===beforeCare'),true);assert.ok(run('(state.social.active.isShiny?state.pokedex[PokemonData.canonicalId("pikachu")].shiny:state.pokedex[PokemonData.canonicalId("pikachu")]).evolved'));
+ run('var individual=state.social.active.id;var individualIsShiny=state.social.active.isShiny;var finalBond=state.relationship.points;die("natural");render()');await flush();assert.equal(els.sprite.dataset.visualState,'faint');advance(1101);await flush();assert.equal(els.sprite.dataset.visual,'memorial');assert.equal(run('state.social.memorials[0].bond'),run('finalBond'));
+ run('startNewBeginning()');assert.equal(run('state.relationship'),null);assert.equal(run('(individualIsShiny?state.pokedex[PokemonData.canonicalId("pichu")].shiny:state.pokedex[PokemonData.canonicalId("pichu")]).ownedIds[0]'),run('individual'));assert.equal(run('state.social.memorials.length'),1);assert.equal(run('validSave(state)'),true);
  // Both post-death choices retain trainer resources outside the creature snapshot.
  const resources=[];
  for(const stored of [false,true]){
@@ -26,6 +26,10 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  assert.equal(resources[0],resources[1]);
  // No historical species list fixture: use the real root pool, adjusting only progress.
  run('var pool=STARTERS;var dex={};var first=pool[0];Pokedex.record(dex,first,"owned","a");var weights=Pokedex.weights(pool,dex);var fresh=Pokedex.weights(pool,{})');assert.equal(run('weights[0]/fresh[0]'),1/8);
+ run('var shinyDex={};Pokedex.record(shinyDex,first,"owned","a",true)');assert.equal(run('Pokedex.weights(pool,shinyDex)[0]'),run('weights[0]'));
+ run('Pokedex.record(shinyDex,first,"owned","a")');assert.equal(run('Pokedex.weights(pool,shinyDex)[0]'),run('weights[0]'));
+ run('Pokedex.record(shinyDex,first,"owned","b",true)');assert.equal(run('Pokedex.weights(pool,shinyDex)[0]/fresh[0]'),.2/8);
+ run('var shinySeenDex={};for(const id of pool)Pokedex.record(shinySeenDex,id,"seen",null,true)');assert.equal(run('Pokedex.weights(pool,shinySeenDex)[0]/fresh[0]'),1/8);
  run('Pokedex.record(dex,first,"owned","b")');assert.equal(run('Pokedex.weights(pool,dex)[0]/fresh[0]'),.2/8);
  run('for(const id of pool)Pokedex.record(dex,id,"seen")');assert.equal(run('Pokedex.weights(pool,dex)[0]/fresh[0]'),1/8);
  run('var choices=new Set();for(let i=0;i<10000;i++)choices.add(Pokedex.choose(pool,dex,()=>i/10000))');assert.equal(run('choices.size'),run('pool.length'));

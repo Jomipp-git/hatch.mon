@@ -11,7 +11,7 @@ globalThis.Relationship=(()=>{
   if(!s.relationship||!['alive','critical'].includes(s.phase)||s.birthScene||s.nicknamePending||s.foundItem!==null)return null;
   const r=s.relationship;r.attention=Math.min(RELATIONSHIP_CONFIG.attentionMax,r.attention+1);
   const penalty=()=>{if(r.lastPenaltyAge===null||s.age-r.lastPenaltyAge>=RELATIONSHIP_CONFIG.penaltyCooldownMs){s.care.felicidad=Math.max(0,s.care.felicidad-1);r.lastPenaltyAge=s.age;}};
-  if(s.lightsOff){s.lightsOff=false;penalty();return {kind:'wake',message:t('relationship.message.0')};}
+  if(s.lightsOff){s.lightsOff=false;if(s.sleep)s.sleep.napping=false;penalty();return {kind:'wake',message:t('relationship.message.0')};}
   if(s.pokerus||s.phase==='critical')return {kind:'sick',message:t('relationship.message.1')};
   if(s.care.energia<20)return {kind:'tired',message:t('relationship.message.2')};
   if(r.attention>RELATIONSHIP_CONFIG.positiveTapLimit){penalty();return {kind:'startled',message:t('relationship.message.3')};}

@@ -113,14 +113,16 @@
   #name,#nickname{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0!important}#name{font-size:.9rem}
   #egg-hint{grid-row:2;margin:0;text-align:center;font-size:12px;line-height:18px;align-self:start;overflow-wrap:anywhere}
   #stats{grid-row:2;margin:0;padding-top:8px;gap:6px 12px;min-width:0}
-  .message-strip{grid-row:3}.care{grid-row:4;margin:0;grid-template-columns:repeat(4,minmax(0,1fr));min-width:0}.care button{min-width:0;font-size:.7rem;padding:6px 1px}
-  .trainer{grid-row:5;margin:0}.emergency,#restart{grid-row:6;grid-column:1;margin:0;height:44px}.emergency:has(button:not([hidden])){z-index:1}#save-note{grid-row:7}
+  .message-strip{grid-row:3}.care{grid-row:4;margin:0;position:relative;top:2px;grid-template-columns:repeat(4,minmax(0,1fr));min-width:0}.care button{min-width:0;font-size:.7rem;padding:6px 1px}
+  .trainer{grid-row:5;margin:0;position:relative;top:4px}.emergency,#restart{grid-row:6;grid-column:1;margin:0;height:44px}.emergency:has(button:not([hidden])){z-index:1}#save-note{grid-row:7}
   @media(max-width:370px){.console{padding:16px;height:668px}.screen{padding:16px 12px}.care{grid-template-columns:repeat(4,minmax(0,1fr))}}
   .screen-tools.settings-tool{left:auto;right:10px;top:22px}
   .pixel-icon[data-icon="settings"]{--pixels:0em .25em currentColor,.125em .25em currentColor,.25em .125em currentColor,.25em .25em currentColor,.25em .375em currentColor,.375em .25em currentColor,.5em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,0em .625em currentColor,.125em .625em currentColor,.25em .625em currentColor,.375em .625em currentColor,.5em .5em currentColor,.5em .625em currentColor,.5em .75em currentColor,.625em .625em currentColor,.75em .625em currentColor}
   .pixel-icon[data-icon="shop"]{--pixels:.25em 0em currentColor,.375em 0em currentColor,.5em 0em currentColor,.625em 0em currentColor,.125em .125em currentColor,.25em .125em currentColor,.375em .125em currentColor,.5em .125em currentColor,.625em .125em currentColor,.75em .125em currentColor,.125em .25em currentColor,.375em .25em currentColor,.625em .25em currentColor,.75em .25em currentColor,.125em .375em currentColor,.25em .375em currentColor,.375em .375em currentColor,.5em .375em currentColor,.625em .375em currentColor,.75em .375em currentColor,.125em .5em currentColor,.75em .5em currentColor,.125em .625em currentColor,.375em .625em currentColor,.5em .625em currentColor,.75em .625em currentColor,.125em .75em currentColor,.375em .75em currentColor,.5em .75em currentColor,.75em .75em currentColor,.125em .875em currentColor,.25em .875em currentColor,.375em .875em currentColor,.5em .875em currentColor,.625em .875em currentColor,.75em .875em currentColor}
   [data-display-mode="lcd"] .screen,[data-display-mode="lcd"] .message-strip,[data-display-mode="lcd"] .memory-sprite,[data-display-mode="lcd"] .memory-hearts,[data-display-mode="lcd"] #panel[data-lcd-surface="true"]{filter:url(#lcd-palette)}
-  [data-display-mode="lcd"] #bond .pixel-icon{color:#bed09a}
+  .screen.lights-off #bond .pixel-icon{color:#dce8d0}.screen.lights-off #bond .empty{color:#8ca394;opacity:.45}
+  [data-display-mode="lcd"] .screen:not(.lights-off) #bond .pixel-icon{color:#365943}[data-display-mode="lcd"] .screen:not(.lights-off) #bond .empty{color:#7d9a77;opacity:1}
+  [data-display-mode="lcd"] .screen.lights-off #bond .pixel-icon{color:#bed09a}[data-display-mode="lcd"] .screen.lights-off #bond .empty{opacity:.55}
   [data-display-mode="lcd"] .screen .empty{opacity:.55}
   .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a}
   .minigame-field button{touch-action:manipulation;min-height:56px;font-weight:bold;border-radius:3px}.minigame-field button.lit{background:#52694a;color:#fff;box-shadow:inset 0 0 0 3px #263b30}.minigame-field button:active{background:#91a477}
@@ -286,7 +288,8 @@ const itemCatalog={
   berryStrength:{get name(){return t('item.berryStrength');},icon:'food',food:true,attribute:'strength',price:75},
   berryIQ:{get name(){return t('item.berryIQ');},icon:'food',food:true,attribute:'iq',price:75},
   berryKindness:{get name(){return t('item.berryKindness');},icon:'food',food:true,attribute:'kindness',price:75},
-  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',heal:true,price:70}
+  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',heal:true,price:70},
+  tea:{get name(){return t('item.tea');},icon:'food',care:{energia:50},price:50}
 };
 const COIN_REWARDS=Object.freeze([0,2,4,7,11,16]);
 const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))];
@@ -672,7 +675,8 @@ function incubateStoredEgg(id){
 let storageWarning='';
 let savedImportantState=null;
 function save({immediate=false}={}){
-  const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones,state.attentionEvent,state.attentionMeta,state.attentionSettings]);
+  if(runtimeStopped)return;
+  const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones,state.attentionEvent,state.attentionSettings]);
   immediate=immediate||important!==savedImportantState;
   try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
   catch{storageWarning=t('system.localSaveFailed');}
@@ -688,7 +692,7 @@ function migrateSave(data){
     if(!s||typeof s!=='object')return;
     if(s.phase==='egg')s.personality=null;
     else if(!Object.hasOwn(PERSONALITY_CONFIG,s.personality))s.personality=Vital.personalityFor();
-    Vital.ensureSleep(s);
+    Vital.ensureSleep(s,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   };
   migrateIndividual(data);
   Attention.ensure(data,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
@@ -696,11 +700,13 @@ function migrateSave(data){
   return data;
 }
 function restore(){
+  let raw,data;
+  try{raw=gameStorage.getItem(SAVE_KEY);}catch(error){runtimeStopped=true;window.HatchLoadError='save-read-failed';throw Error('save-read-failed',{cause:error});}
+  if(!raw)return;
   try{
-    const raw=gameStorage.getItem(SAVE_KEY);
-    if(raw){const data=migrateSave(JSON.parse(raw));if(validSave(data)){state=data;state.message='';sync();}
-      else{gameStorage.removeItem(SAVE_KEY);storageWarning=t('system.incompatibleSave');}}
-  }catch{storageWarning=t('system.storageUnavailable');}
+    data=migrateSave(JSON.parse(raw));if(!validSave(data))throw Error('invalid-save');
+  }catch(error){runtimeStopped=true;window.HatchLoadError='invalid-save';throw Error('invalid-save',{cause:error});}
+  state=data;state.message='';sync();
 }
 // UI: la pantalla principal solo muestra el compañero y sus necesidades.
 const $=id=>document.getElementById(id);
@@ -727,7 +733,8 @@ async function requestAttentionNotifications(){
   const api=notificationApi(),permission=notificationPermission();
   if(!api){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.unavailable');return false;}
   if(permission==='denied'){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.denied');return false;}
-  const result=permission==='granted'?'granted':await api.requestPermission();state.attentionSettings.notificationsEnabled=result==='granted';state.message=t(result==='granted'?'attention.notifications.enabled':'attention.notifications.denied');return result==='granted';
+  try{const result=permission==='granted'?'granted':await api.requestPermission();state.attentionSettings.notificationsEnabled=result==='granted';state.message=t(result==='granted'?'attention.notifications.enabled':'attention.notifications.denied');return result==='granted';}
+  catch{state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.unavailable');return false;}
 }
 function disableAttentionNotifications(){state.attentionSettings.notificationsEnabled=false;state.message=t('attention.notifications.disabled');return true;}
 function showToast(message,important=false,eggInteraction=false){message=I18n?.localize(message)??message;
@@ -776,7 +783,7 @@ function renderPanel(){
     if(!entries.length)content.append(el('p',t('ui.inventory.empty')));
     for(const[id,n]of entries){
       const item=itemCatalog[id],routes=current()?.rules.filter(r=>r.item===id)||[];
-      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):item.care?t('ui.inventory.food'):item.heal?t('ui.inventory.medicine'):t('ui.inventory.evolution'));
+      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),id==='tea'?t('ui.inventory.tea'):item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):item.care?t('ui.inventory.food'):item.heal?t('ui.inventory.medicine'):t('ui.inventory.evolution'));
       content.append(entry);
       if(item.care||item.heal||item.food)entry.append(panelButton(t('use'),()=>useItem(id),!itemUsable(id),id));
       for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton(t('evolve'),()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`)));
@@ -790,7 +797,7 @@ function renderPanel(){
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
     for(const id of dailyShop()){
-      const item=itemCatalog[id],description=item.heal?t('ui.shop.heal'):item.food?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):t('ui.shop.evolutionItem');
+      const item=itemCatalog[id],description=id==='tea'?t('ui.shop.tea'):item.heal?t('ui.shop.heal'):item.food?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):t('ui.shop.evolutionItem');
       content.append(row(iconLabel(item.icon,t('ui.shop.item',{name:itemLabel(id),price:item.price})),description,panelButton(t('buy'),()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
     }
   }
@@ -802,7 +809,7 @@ function renderPanel(){
     const modes=el('div',undefined,'dialog-actions');
     for(const [mode,label]of [['color','colorMode'],['lcd','lcdMode']]){const button=el('button',t(label));button.type='button';button.dataset.key='display-'+mode;button.setAttribute('aria-pressed',String(displayMode===mode));button.addEventListener('click',()=>window.setDisplayMode(mode));modes.append(button);}content.append(modes,el('h3',t('ui.shell')));
     const shells=el('div',undefined,'shell-options');for(const id of ['default',...ShellSkins.list()]){const theme=ShellSkins.theme(id),b=el('button',id==='default'?'Hatch.mon':theme.name);b.type='button';b.dataset.key='shell-'+id;b.style.background=theme.shellBase;b.style.color=theme.shellDark;b.setAttribute('aria-pressed',String(ShellSkins.selected()===id));b.addEventListener('click',()=>{ShellSkins.select(id,$('display-root'));renderPanel();});shells.append(b);}content.append(shells);
-    const permission=notificationPermission(),notifications=el('button',t(state.attentionSettings.notificationsEnabled?'attention.notifications.disable':'attention.notifications.enable'));notifications.type='button';notifications.dataset.key='attention-notifications';notifications.disabled=permission==='unavailable'||permission==='denied';notifications.addEventListener('click',async()=>{if(state.attentionSettings.notificationsEnabled)disableAttentionNotifications();else await requestAttentionNotifications();save({immediate:true});render(true);renderPanel();});content.append(el('h3',t('attention.title')),row(t('attention.notifications.title'),t(permission==='unavailable'?'attention.notifications.unavailable':permission==='denied'?'attention.notifications.denied':state.attentionSettings.notificationsEnabled?'attention.notifications.enabled':'attention.notifications.help'),notifications),el('p',t('attention.quietHours',{start:state.attentionSettings.quietStart,end:state.attentionSettings.quietEnd}),'panel-note'));
+    const permission=notificationPermission(),notifications=el('button',t(state.attentionSettings.notificationsEnabled?'attention.notifications.disable':'attention.notifications.enable'));notifications.type='button';notifications.dataset.key='attention-notifications';notifications.disabled=!state.attentionSettings.notificationsEnabled&&(permission==='unavailable'||permission==='denied');notifications.addEventListener('click',async()=>{if(state.attentionSettings.notificationsEnabled)disableAttentionNotifications();else await requestAttentionNotifications();save({immediate:true});render(true);renderPanel();});content.append(el('h3',t('attention.title')),row(t('attention.notifications.title'),t(permission==='unavailable'?'attention.notifications.unavailable':permission==='denied'?'attention.notifications.denied':state.attentionSettings.notificationsEnabled?'attention.notifications.enabled':'attention.notifications.help'),notifications),el('p',t('attention.quietHours',{start:state.attentionSettings.quietStart,end:state.attentionSettings.quietEnd}),'panel-note'));
     if(!canUseTesting())return;
     content.append(el('h3',t('testing.title')));
     const resetButton=el('button',t('testing.reset'));resetButton.type='button';resetButton.dataset.key='testing-reset';resetButton.addEventListener('click',resetGame);
@@ -1137,9 +1144,9 @@ $('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(sta
 window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
 document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
-if(window.HatchCloud&&gameStorage.getItem(SAVE_KEY)&&!validSave(migrateSave(JSON.parse(gameStorage.getItem(SAVE_KEY)))))throw Error('invalid-cloud-save');
-window.HatchRuntime={save,applyCloudSave(game,preferences={}){game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;state=game;state.lastSync=Date.now();savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
-restore();save();lastMessage=state.message;render();startTimer();
+restore();
+window.HatchRuntime={save,applyCloudSave(game,preferences={}){try{game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;}catch{return false;}state=game;savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
+save();lastMessage=state.message;render();startTimer();
 </script>
 <script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent=globalThis.HatchI18n?.t('errors.network')||'errors.network';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>
 </body>

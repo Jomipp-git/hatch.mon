@@ -16,7 +16,7 @@ async function start(session){
   userId=session.user.id;const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
   service=createCloudSaveService({client,session,cache,notify,onRemote:(game,preferences)=>window.HatchRuntime?.applyCloudSave(game,preferences)});
   try{await service.load();}catch(error){
-   if(error.message==='unsupported-save')throw error;const cached=snapshotCache(cache);if(!cached?.game)throw error;
+   if(['unsupported-save','invalid-save'].includes(error.message))throw error;let cached;try{cached=snapshotCache(cache);}catch{throw Error('invalid-save');}if(!cached?.game)throw error;
    service.block();notify(t('system.offlineLocal'));
   }
   globalThis.HatchI18n?.setLanguage?.(cache.getItem('hatch.mon.language'));
@@ -30,9 +30,10 @@ async function start(session){
   await scripts();
   const {data:{session:verified}}=await client.auth.getSession();if(verified?.user.id!==userId)throw Error('session-changed');
   const source=$('game-source').textContent,script=document.createElement('script');script.textContent='(()=>{\n'+source+'\n})();';document.head.append(script);
+  if(window.HatchLoadError)throw Error(window.HatchLoadError);
   if(!window.HatchRuntime)throw Error('game-start-failed');
   started=true;gate.hidden=true;game.hidden=false;service.startRealtime?.();service.queue();
- }catch(error){service?.close();lock();message.textContent=error.message==='unsupported-save'?t('auth.unsupportedSave'):t('auth.companionLoadFailed');$('auth-form').hidden=true;$('auth-google').hidden=true;$('auth-retry').hidden=false;}
+ }catch(error){service?.close();lock();message.textContent=t(error.message==='save-read-failed'?'system.storageUnavailable':error.message==='game-start-failed'?'auth.runtimeStartFailed':error.message==='invalid-save'?'system.incompatibleSave':error.message==='unsupported-save'?'auth.unsupportedSave':error.message==='session-changed'?'auth.sessionExpired':'auth.companionLoadFailed');$('auth-form').hidden=true;$('auth-google').hidden=true;$('auth-retry').hidden=false;}
  finally{starting=false;}
 }
 client.auth.onAuthStateChange((event,session)=>{

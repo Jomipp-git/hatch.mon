@@ -15,7 +15,7 @@ test('cloud priority, full envelope, isolated users, batching, retry and session
 });
 test('new user cannot inherit cache; pending copy preserved; unsupported schema protected',async()=>{
  const {createCloudSaveService,userStorage}=await import('../cloudSaveService.mjs'),client=backend(),cache=userStorage(store(),'A');cache.setItem('hatch.mon.v3',JSON.stringify({version:12,phase:'egg'}));cache.setItem('cloud-dirty','1');
- const svc=createCloudSaveService({client,session:{user:{id:'A'}},cache});await svc.load();assert.equal(cache.getItem('hatch.mon.v3'),null);assert.ok(cache.getItem('cloud-backup'));
+ const svc=createCloudSaveService({client,session:{user:{id:'A'}},cache});await svc.load();assert.equal(JSON.parse(cache.getItem('hatch.mon.v3')).phase,'egg');assert.ok(cache.getItem('cloud-backup'));
  client.rows.set('A',{schema_version:99,game_state:{game:{version:12}}});await assert.rejects(svc.load(),/unsupported-save/);assert.equal(client.calls.length,0);svc.close();
 });
 test('Realtime converges devices, rejects stale pending state and removes its only subscription',async()=>{

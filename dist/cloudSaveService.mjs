@@ -39,21 +39,25 @@ export function createCloudSaveService({client,session,cache,notify=()=>{},delay
   if(!row?.game_state||row.schema_version!==CLOUD_SCHEMA)return false;
   const candidate={envelope:row.game_state,row};if(!allowOwn&&candidate.envelope?.sync?.sourceId===deviceId)return false;
   if(compareVersion(candidate,known())<=0)return false;
-  hydrateCache(cache,candidate.envelope);remember(candidate.envelope,row);pending=null;urgent=false;clearTimeout(timer);timer=null;cache.removeItem('cloud-dirty');onRemote(candidate.envelope.game,candidate.envelope.preferences||{});return true;
+  if(onRemote(candidate.envelope.game,candidate.envelope.preferences||{})===false){blocked=true;notify(systemText('system.incompatibleSave'));return false;}
+  hydrateCache(cache,candidate.envelope);remember(candidate.envelope,row);pending=null;urgent=false;clearTimeout(timer);timer=null;cache.removeItem('cloud-dirty');return true;
  }
  async function reconcile(){try{const row=await remoteRow();return applyRemote(row);}catch{return false;}}
  async function load(){
-  const data=await remoteRow(),dirty=cache.getItem('cloud-dirty')?snapshotCache(cache):null,remote=canonicalSnapshot(savePayload(data?.game_state));
+  const data=await remoteRow(),original=cache.getItem(CACHE_KEYS[0]);
+  if(original&&!cache.getItem('cloud-original-backup'))cache.setItem('cloud-original-backup',original);
+  let local;try{local=original?snapshotCache(cache):null;}catch{throw Error('invalid-save');}
+  const dirty=cache.getItem('cloud-dirty')?local:null,remote=canonicalSnapshot(savePayload(data?.game_state));
   if(dirty&&base()===remote){if(data&&data.schema_version!==CLOUD_SCHEMA)throw Error('unsupported-save');hydrateCache(cache,dirty);pending=dirty;if(data)remember(data.game_state,data);return data;}
   if(dirty)cache.setItem('cloud-backup',JSON.stringify(dirty));
-  if(data){if(data.schema_version!==CLOUD_SCHEMA)throw new Error('unsupported-save');hydrateCache(cache,data.game_state);remember(data.game_state,data);}else for(const key of [...CACHE_KEYS,REVISION_KEY,UPDATED_AT_KEY])cache.removeItem(key);
+  if(data){if(data.schema_version!==CLOUD_SCHEMA)throw new Error('unsupported-save');hydrateCache(cache,data.game_state);remember(data.game_state,data);}else if(local){pending=local;}else for(const key of [...CACHE_KEYS,REVISION_KEY,UPDATED_AT_KEY])cache.removeItem(key);
   cache.setItem('cloud-base',remote);cache.removeItem('cloud-dirty');if(cache.getItem('cloud-backup'))notify(systemText('system.backupPreserved'));return data;
  }
  async function flush({drain=true}={}){
   clearTimeout(timer);timer=null;if(closed||blocked)return false;if(inFlight){if(drain)urgent=true;return inFlight;}
   inFlight=(async()=>{while(pending&&!closed&&!blocked){const payload=pending;pending=null;urgent=false;try{
    const {data:{session:current}}=await client.auth.getSession();if(current?.user.id!==userId){blocked=true;throw Error('session-changed');}
-   const latest=await remoteRow();if(latest&&applyRemote(latest))continue;
+   const latest=await remoteRow();if(latest&&applyRemote(latest))continue;if(blocked)return false;
    const envelope={...payload,sync:{revision:Number(cache.getItem(REVISION_KEY)||0)+1,sourceId:deviceId}};
    const {data,error}=await client.from('game_saves').upsert({user_id:userId,game_state:envelope,schema_version:CLOUD_SCHEMA,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;
    remember(envelope,{game_state:envelope,updated_at:data?.updated_at||new Date().toISOString()});if(!pending)cache.removeItem('cloud-dirty');if(pending&&!urgent&&!drain)break;

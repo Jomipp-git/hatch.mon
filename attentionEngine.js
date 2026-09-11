@@ -22,7 +22,7 @@ globalThis.Attention=(()=>{
     if(!Number.isFinite(state.attentionMeta.lastNonCriticalNotificationAt))state.attentionMeta.lastNonCriticalNotificationAt=0;
     if(!state.attentionMeta.types||typeof state.attentionMeta.types!=='object')state.attentionMeta.types=typeMeta();
     for(const type of types){
-      const meta=state.attentionMeta.types[type]||{};state.attentionMeta.types[type]={
+      const meta=state.attentionMeta.types[type]||{};state.attentionMeta.types[type]={...meta,
         since:Number.isFinite(meta.since)?meta.since:null,lastNotifiedAt:Number.isFinite(meta.lastNotifiedAt)?meta.lastNotifiedAt:0,
         lastResolvedAt:Number.isFinite(meta.lastResolvedAt)?meta.lastResolvedAt:0,lastSeverity:severities.includes(meta.lastSeverity)?meta.lastSeverity:null};
     }
@@ -30,7 +30,7 @@ globalThis.Attention=(()=>{
     state.attentionSettings.notificationsEnabled=state.attentionSettings.notificationsEnabled===true;
     for(const key of ['quietStart','quietEnd'])if(!Number.isInteger(state.attentionSettings[key])||state.attentionSettings[key]<0||state.attentionSettings[key]>23)state.attentionSettings[key]=ATTENTION_CONFIG[key];
     if(!state.attentionEvent||typeof state.attentionEvent!=='object'||!types.includes(state.attentionEvent.type)||!severities.includes(state.attentionEvent.severity))state.attentionEvent=null;
-    else state.attentionEvent={type:state.attentionEvent.type,createdAt:Number.isFinite(state.attentionEvent.createdAt)?state.attentionEvent.createdAt:now,severity:state.attentionEvent.severity,notified:state.attentionEvent.notified===true,active:state.attentionEvent.active!==false,resolvedAt:Number.isFinite(state.attentionEvent.resolvedAt)?state.attentionEvent.resolvedAt:null,lastNotifiedAt:Number.isFinite(state.attentionEvent.lastNotifiedAt)?state.attentionEvent.lastNotifiedAt:0,context:typeof state.attentionEvent.context==='string'?state.attentionEvent.context:state.attentionEvent.type};
+    else state.attentionEvent={...state.attentionEvent,type:state.attentionEvent.type,createdAt:Number.isFinite(state.attentionEvent.createdAt)?state.attentionEvent.createdAt:now,severity:state.attentionEvent.severity,notified:state.attentionEvent.notified===true,active:state.attentionEvent.active!==false,resolvedAt:Number.isFinite(state.attentionEvent.resolvedAt)?state.attentionEvent.resolvedAt:null,lastNotifiedAt:Number.isFinite(state.attentionEvent.lastNotifiedAt)?state.attentionEvent.lastNotifiedAt:0,context:typeof state.attentionEvent.context==='string'?state.attentionEvent.context:state.attentionEvent.type};
     return state;
   }
   const isQuiet=(settings,timestamp=Date.now())=>{const hour=new Date(timestamp).getHours(),{quietStart,quietEnd}=settings;return quietStart===quietEnd?false:quietStart>quietEnd?(hour>=quietStart||hour<quietEnd):(hour>=quietStart&&hour<quietEnd);};
@@ -50,11 +50,11 @@ globalThis.Attention=(()=>{
   function resolve(state,event,now){if(!event)return;event.active=false;event.resolvedAt=now;state.attentionMeta.types[event.type].lastResolvedAt=now;}
   function evaluate(state,now=Date.now()){
     ensure(state,now);now=Math.max(now,state.attentionMeta.lastEvaluatedAt);const all=candidates(state,now),candidate=all[0]||null,active=state.attentionEvent?.active?state.attentionEvent:null;
-    for(const type of types){const current=all.find(entry=>entry.type===type),meta=state.attentionMeta.types[type];if(current){if(meta.since===null)meta.since=meta.lastResolvedAt||state.attentionMeta.lastEvaluatedAt||now;}else meta.since=null;}
+    for(const type of types){const current=all.find(entry=>entry.type===type),meta=state.attentionMeta.types[type];if(current){if(meta.since===null)meta.since=state.attentionMeta.lastEvaluatedAt||now;}else meta.since=null;}
     state.attentionMeta.lastEvaluatedAt=now;
     if(!candidate){if(active)resolve(state,active,now);return state.attentionEvent;}
     const meta=state.attentionMeta.types[candidate.type],wait=candidate.immediate?0:ATTENTION_CONFIG.persistenceMs[candidate.severity];
-    if(now-meta.since<wait){if(active&&active.type===candidate.type&&candidate.severity!==active.severity)active.severity=candidate.severity;return active;}
+    if(now-meta.since<wait){if(active&&!all.some(entry=>entry.type===active.type)){resolve(state,active,now);return null;}if(active&&active.type===candidate.type&&candidate.severity!==active.severity)active.severity=candidate.severity;return active;}
     if(active&&active.type===candidate.type){if(active.severity!==candidate.severity){active.severity=candidate.severity;active.notified=false;active.context=candidate.type;}return active;}
     if(active)resolve(state,active,now);
     state.attentionEvent={type:candidate.type,createdAt:now,severity:candidate.severity,notified:false,active:true,resolvedAt:null,lastNotifiedAt:0,context:candidate.type};

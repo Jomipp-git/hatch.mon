@@ -14,7 +14,7 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  run('state.pokemonId="pichu";render()');await flush();assert.equal(els.sprite.dataset.visual,'asset');
  const rows=run('Object.keys(evolutionConfig).map(id=>[id,PokemonRenderer.definition(id).type])');assert.equal(rows.filter(([,type])=>type==='sheet').length,44);assert.equal(rows.filter(([,type])=>type==='matrix').length,17);
  for(const [id,type] of rows){run(`state.pokemonId='${id}';render()`);await flush();assert.equal(els.sprite.dataset.visual,'asset',id);assert.equal(els.sprite.textContent,'');if(type==='sheet'){assert.ok(els.sprite.children[0].context.draws.length>0,id);assert.equal(els.sprite.children[0].width,run(`PokemonRenderer.geometry("${id}").width`));assert.equal(els.sprite.children[0].height,run(`PokemonRenderer.geometry("${id}").height`));}}
- const old=await setup({initialSave:{version:10}});assert.equal(old.run('state.version'),12);assert.equal(old.run('state.phase'),'egg');assert.equal(old.run('storageWarning'),old.run('HatchI18n.t("system.incompatibleSave")'));
+ await assert.rejects(setup({initialSave:{version:10}}),/invalid-save/);
  const checkpoint=JSON.parse(run('JSON.stringify(state)'));const restored=await setup({initialSave:checkpoint});assert.equal(restored.run('state.social.active.id'),checkpoint.social.active.id);
  const bad=await setup({missing:true});bad.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="marill";render()');await bad.flush();assert.equal(bad.els.sprite.dataset.visual,'placeholder');assert.equal(bad.els.sprite.children[0].tagName,'canvas');
  // Late image completions cannot replace an egg after reset.

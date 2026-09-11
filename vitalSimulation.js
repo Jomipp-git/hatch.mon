@@ -80,7 +80,11 @@ globalThis.Vital=(()=>{
   const sleepDay=(timestamp=Date.now())=>{const d=new Date(timestamp);return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;};
   const isNight=(timestamp=Date.now())=>{const hour=new Date(timestamp).getHours();return hour>=SLEEP_CONFIG.nightStart||hour<SLEEP_CONFIG.nightEnd;};
   function ensureSleep(s,timestamp=Date.now()){
-    if(!s.sleep||typeof s.sleep!=='object')s.sleep={fatigue:0,napDay:sleepDay(timestamp),napMinutes:0,napping:false};
+    if(!s.sleep||typeof s.sleep!=='object'||Array.isArray(s.sleep))s.sleep={};
+    s.sleep.fatigue=Number.isFinite(s.sleep.fatigue)?bound(s.sleep.fatigue):0;
+    s.sleep.napMinutes=Number.isFinite(s.sleep.napMinutes)?Math.floor(bound(s.sleep.napMinutes,0,SLEEP_CONFIG.napLimitMinutes)):0;
+    s.sleep.napping=s.sleep.napping===true;
+    if(typeof s.sleep.napDay!=='string'||!s.sleep.napDay)s.sleep.napDay=sleepDay(timestamp);
     if(s.sleep.napDay!==sleepDay(timestamp)){s.sleep.napDay=sleepDay(timestamp);s.sleep.napMinutes=0;s.sleep.napping=false;}
     return s.sleep;
   }
@@ -96,7 +100,9 @@ globalThis.Vital=(()=>{
     if(s.lightsOff){
       sleep.fatigue=bound(sleep.fatigue-SLEEP_CONFIG.recoveryPerMinute);
       if(isNight(timestamp))sleep.napping=false;
-      else if(sleep.napping){
+      else{
+        if(!sleep.napping&&sleep.fatigue<SLEEP_CONFIG.napThreshold){s.lightsOff=false;return;}
+        sleep.napping=true;
         sleep.napMinutes=Math.min(SLEEP_CONFIG.napLimitMinutes,sleep.napMinutes+1);
         if(sleep.napMinutes>=SLEEP_CONFIG.napLimitMinutes){s.lightsOff=false;sleep.napping=false;}
       }

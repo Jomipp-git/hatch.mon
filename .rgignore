@@ -1,0 +1,8 @@
+dist/
+master/asset-originals/
+assets/pmd/source/
+assets/pmd/**/sprites/
+assets/pmd/**/portraits/
+hatchmonData_v2.js
+master/hatchmonData_v2.json
+assets/pmd/manifest.js

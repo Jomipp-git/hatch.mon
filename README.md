@@ -19,14 +19,14 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `attentionEngine.js` | Prioridad, persistencia y entrega web de avisos de atención | Estado de partida, personalidad y `vitalSimulation.js` |
 | `pokedex.js` | Progreso normal/shiny, roster alcanzable y selección ponderada | Adapter |
 | `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
-| `shiny.js` | Política shiny preparada, activación pendiente de assets | Rareza canónica vía adapter |
+| `shiny.js` | Política shiny preparada, tiradas desactivadas | Rareza canónica vía adapter |
 | `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
 | `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callback de resultado a `train` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
 | `socialEngine.js` | HM1, validación, historial y compatibilidad offline | Adapter, Vital |
 | `pokemonDataAdapter.js` | Consulta canónica, alias de IDs y compatibilidad biológica | Datos v2, repertorio legacy |
 | `hatchmonData_v2.js` | Catálogo y reglas generados para runtime | Excel master, `tools/generateCanonicalData.py` |
-| `evolutionTable.js` | Repertorio histórico de 61 formas y nombres para resolver IDs | Consumido por adapter y orquestación |
+| `evolutionTable.js` | Repertorio runtime de 75 formas y nombres para resolver IDs | Consumido por adapter y orquestación |
 
 `assets/` contiene huevos, logo y sprites; `vendor/` contiene QR y licencia. `tests/` reúne verificaciones y el inventario de assets. `master/` conserva fuentes archivadas, sin uso en runtime. `AGENTS.md` define el flujo de trabajo para futuras modificaciones.
 
@@ -75,7 +75,7 @@ La pista de incubación permanece bajo el título del huevo dentro del LCD y cam
 
 `assets/pokemon_logo.png` sustituye al texto superior derecho. Caja de 30 px de alto y ancho responsivo 72,5–105 px, `object-fit:contain`, sin deformación.
 
-El renderer usa `assets/pmd/manifest.js` para 44 formas con estados corporales y portraits locales. Las 17 formas añadidas usan el fallback retro propio hasta disponer de assets PMD; nunca usan emojis. El inventario antiguo `tests/sprite-audit.json` solo describe ese paquete de reserva; la cobertura PMD actual la verifica `tests/pmd.test.cjs`.
+El renderer usa `assets/pmd/manifest.js` con cobertura PMD normal 75/75 y shiny 75/75 para las formas del runtime. La sincronización se realiza mediante `tools/syncPmdAssets.py`; `tests/pmd-runtime-coverage.test.cjs` verifica archivos y render de ambas variantes sin fallback.
 
 La resolución está centralizada en `PMD_STATE_FALLBACKS`: normal→Idle; juego→Walk/Pose/Idle; sueño→Sleep/Idle; despertar tocando→Wake/Pain/Hurt/Idle; encender luz con botón→Idle; comer→Eat validado/Idle con gesto propio; enfermedad→Hurt/Pain/Idle; cansancio→Laying/Sleep/Idle; sobresalto→Cringe/Idle; caricias→Pose/Nod/Rotate/Idle; limpieza→Nod/Pose/Idle; entrenamiento→Hop/Idle (único uso de Hop); muerte→Faint/HitGround/Hurt/Idle antes de la lápida. Si un archivo falla, intenta el siguiente; si todos fallan, usa el marcador retro propio. Gameplay nunca espera a una imagen.
 
@@ -92,7 +92,7 @@ python3 tools/syncPmdAssets.py
 python3 tools/syncPmdAssets.py --offline
 ```
 
-Sin IDs sincroniza el repertorio del adapter; no hay una segunda lista de especies. Verifica nombre exacto y subgrupo de tracker, con alias explícitos para Raichu Alola y Toxtricity Amped/Lowkey. Una forma nueva sin correspondencia verificable produce un error, no una suposición. Lee los estados del módulo visual, descarga solo las hojas necesarias y emociones seleccionadas. Guarda `assets/pmd/<PokemonId>/{sprites,portraits,metadata.json}` y genera `manifest.js`; el juego solo lee archivos locales, nunca hace hotlinking.
+Sin IDs sincroniza el repertorio del adapter; no hay una segunda lista de especies. Verifica nombre exacto y subgrupo de tracker, con alias explícitos para Raichu Alola y Toxtricity Amped/Lowkey. Una forma nueva sin correspondencia verificable produce un error, no una suposición. Lee los estados del módulo visual, descarga solo las hojas necesarias y emociones seleccionadas. Sincroniza normal y shiny, guarda `assets/pmd/<PokemonId>/{sprites,portraits,metadata.json}` y la variante shiny bajo `assets/pmd/<PokemonId>/shiny/`, y genera `manifest.js`; el juego solo lee archivos locales, nunca hace hotlinking.
 
 Los archivos existentes se reutilizan. `--refresh` vuelve a descargarlos; `--offline` reconstruye metadata/manifiesto/créditos usando lo ya disponible. Guarda XML, hashes SHA-256, índices y créditos de origen. No clona el repositorio. `assets/pmd/CREDITS.md` se genera con nombres/contactos del registro y logs de contribuciones de las animaciones incluidas; se conservan los logs completos por especie y `source/LICENSE.md`. PMDCollab publica su política de atribución y uso no comercial en su [repositorio oficial](https://github.com/PMDCollab/SpriteCollab#submission-and-use-policy).
 
@@ -177,7 +177,7 @@ Desde la raíz:
 node --test tests/*.test.cjs
 ```
 
-Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `node tests/sprites.audit.cjs` verifica por separado el paquete visual legacy. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
+Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
 
 ## Nota de Futuro
 
@@ -201,13 +201,13 @@ El coste habitual se aplica una sola vez al completar (atributos limitados a 100
 
 El criador de la banda inferior ofrece consejos breves según cuidados; no altera estadísticas. Entrenamiento muestra barras y los menús resumen costes y requisitos. Pokédex conserva tabs de especies y Memorias, con variantes NORMAL/SHINY separadas.
 
-`HatchMon.roster()` calcula alcance desde `PokemonData.roots()` por reglas activas del roster runtime. El roster contiene 61 formas, 19 raíces de huevo y 42 por evolución, sin formas desconectadas dentro del repertorio. No equivale a incorporar las 1.100 filas del catálogo canónico. El grafo verifica rutas configuradas, no garantiza cada condición mediante una partida completa.
+`HatchMon.roster()` calcula alcance desde `PokemonData.roots()` por reglas activas del roster runtime. El roster contiene 75 formas, 25 raíces de huevo y 50 por evolución, sin formas desconectadas dentro del repertorio. No equivale a incorporar las 1.100 filas del catálogo canónico. El grafo verifica rutas configuradas, no garantiza cada condición mediante una partida completa.
 
 ### Shiny: preparación, sin encuentros activados
 
 `shiny.js` contiene la probabilidad canónica `1/(10*Rarity)`, con activación deshabilitada. El tracker local identifica variantes para 43 formas; Raichu no está verificado. Falta sincronizar PNG shiny, comparar geometría/frameBounds/animaciones con normales y habilitar el selector de assets tras validar cobertura. No se inventan recolores.
 
-`social.active.isShiny` es identidad local opcional (ausente = normal), conservada al evolucionar y copiada a Memorias. El QR base no exporta este campo. `Pokedex.record(..., isShiny)` separa progreso shiny en la entrada; no implica descubrir la variante contraria. El renderer admite `isShiny` y selecciona `PMD_ASSETS[id].shiny` cuando exista, compartiendo escala normal; mientras falten esos assets muestra el normal. No hay tiradas activas ni herencia shiny.
+`social.active.isShiny` es identidad local opcional (ausente = normal), conservada al evolucionar y copiada a Memorias. El QR base no exporta este campo. `Pokedex.record(..., isShiny)` separa progreso shiny en la entrada; no implica descubrir la variante contraria. El renderer admite `isShiny` y selecciona `PMD_ASSETS[id].shiny` cuando exista, compartiendo escala normal; si faltan esos assets usa el marcador retro, sin sustituir shiny por normal. No hay tiradas activas ni herencia shiny.
 
 ## Carcasas y diagnóstico
 

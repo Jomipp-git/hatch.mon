@@ -7,5 +7,5 @@ run('Shiny.roll=()=>{throw Error("No reroll")};forceEvolution("pikachu")');asser
 assert.equal(run('Object.hasOwn(activeEntity(),"isShiny")'),false);
 run('die("natural")');assert.equal(run('state.social.memorials[0].isShiny'),true);
 run('collectionTab="memories";renderPokedex()');await flush();assert.ok(run('memorialRenderers.length')>0);
-console.log('PASS roster 44/13, shiny probability 1–5, prepared identity save/evolution/memories, separate dex and unchanged QR field shape.');
+console.log('PASS runtime roster, shiny probability 1–5, prepared identity save/evolution/memories, separate dex and unchanged QR field shape.');
 })().catch(e=>{console.error(e);process.exitCode=1});

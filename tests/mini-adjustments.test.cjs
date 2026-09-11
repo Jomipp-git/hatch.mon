@@ -39,5 +39,5 @@ const {setup}=require('./uiHarness.cjs');
  const legacy=JSON.parse(run('JSON.stringify(state)'));Object.assign(legacy.inventory,{alola:2,galar:3,dawn:1,oval:1});legacy.foundItem='alola';
  for(const cloud of [false,true]){const loaded=await setup({initialSave:legacy,cloud});assert.equal(loaded.run('validSave(state)'),true);assert.equal(loaded.run('state.care.hambre'),72);assert.equal(loaded.run('state.training.iq'),37);assert.equal(loaded.run('state.inventory.berry'),2);assert.equal(loaded.run('state.social.memorials.length'),1);assert.equal(loaded.run('state.foundItem'),null);assert.equal(loaded.run('JSON.stringify(migrateSave(migrateSave(state)))'),loaded.run('JSON.stringify(state)'));}
  for(const id of ['alola','galar','dawn','oval'])assert.equal(run(`Object.hasOwn(itemCatalog,'${id}')`),false);
- console.log('PASS mini adjustments: 61 PMD forms render, current Oak stats, AP, berries caps, retired items and local/cloud legacy memories.');
+ console.log('PASS mini adjustments: runtime PMD forms render, current Oak stats, AP, berries caps, retired items and local/cloud legacy memories.');
 })().catch(e=>{console.error(e);process.exitCode=1});

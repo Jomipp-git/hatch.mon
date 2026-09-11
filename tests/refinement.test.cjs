@@ -7,5 +7,5 @@ b.fire('pointerdown');advance(1800);assert.deepEqual(buttons.map(b=>b.textConten
 run('collectionTab="pokedex";renderPokedex()');const grid=els['panel-content'].children.find(e=>e.className==='dex-grid');assert.equal(grid.children.length,75);
 const mass=run(`['togepi','togetic','togekiss'].map(id=>{const g=PokemonRenderer.geometry(id,true),m=PMD_LIST_METRICS[PokemonData.canonicalId(id)];return m.opaqueArea*g.scale*g.scale})`);assert.ok(Math.max(...mass)/Math.min(...mass)<1.5);
 assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).patternType'),'triangles');
-console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, 44 collection slots, comparable trio mass and Togekiss triangles.');
+console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, collection slots, comparable trio mass and Togekiss triangles.');
 })().catch(e=>{console.error(e);process.exitCode=1});

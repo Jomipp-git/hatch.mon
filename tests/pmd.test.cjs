@@ -11,5 +11,5 @@ assert.ok(run('PmdVisuals.candidates("raichualola")[0].src.includes("0026L0")'))
  // Missing file falls through candidates, without tying a game action to asset success.
  run('PMD_ASSETS[canonical].sprites.Eat={...original.sprites.Idle,src:"assets/pmd/no-such.png"};clearPetReaction();render();petReaction("eat")');await flush();assert.ok(els.sprite.dataset.asset.endsWith('Idle-Anim.png'));
  const missing=await setup({missing:true});missing.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");render();petReaction("happy")');await missing.flush();assert.equal(missing.els.sprite.dataset.visual,'placeholder');assert.equal(missing.els.portrait,undefined);
- console.log(`PASS PMD: ${sprites} sprite states, ${portraits} portraits, 61 canonical mappings, local routes, fallback Idle/missing files/retro and optional portraits.`);
+ console.log(`PASS PMD: ${sprites} sprite states, ${portraits} portraits, canonical mappings, local routes, fallback Idle/missing files/retro and optional portraits.`);
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -245,103 +245,6 @@
         "height": 23
       }
     },
-    "Shoot": {
-      "type": "sheet",
-      "src": "assets/pmd/0848A0/sprites/Shoot-Anim.png",
-      "width": 40,
-      "height": 56,
-      "columns": 11,
-      "row": 0,
-      "frames": 11,
-      "durations": [
-        33.333,
-        33.333,
-        66.667,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333
-      ],
-      "scale": 3,
-      "frameBounds": [
-        [
-          11,
-          11,
-          29,
-          32
-        ],
-        [
-          11,
-          4,
-          29,
-          30
-        ],
-        [
-          11,
-          3,
-          29,
-          29
-        ],
-        [
-          11,
-          11,
-          29,
-          34
-        ],
-        [
-          11,
-          15,
-          29,
-          38
-        ],
-        [
-          12,
-          15,
-          30,
-          38
-        ],
-        [
-          11,
-          15,
-          29,
-          38
-        ],
-        [
-          12,
-          15,
-          30,
-          38
-        ],
-        [
-          11,
-          15,
-          29,
-          38
-        ],
-        [
-          12,
-          15,
-          30,
-          38
-        ],
-        [
-          11,
-          15,
-          29,
-          36
-        ]
-      ],
-      "crop": {
-        "x": 11,
-        "y": 3,
-        "width": 19,
-        "height": 35
-      }
-    },
     "Sleep": {
       "type": "sheet",
       "src": "assets/pmd/0848A0/sprites/Sleep-Anim.png",
@@ -443,6 +346,7 @@
     }
   },
   "files": {
+    ".DS_Store": "c40b310030ab193cd3e4229b56ac33fbddd5ba82215ca3e4ffd60f5ac8629e95",
     "credits-portrait.txt": "fead752fea0adb71241cb3a668f1123ebda86ddf6616ce7d1f3d6c44ed324a6b",
     "credits-sprite.txt": "53b58ad00c888361bc11b345d5927efa86de05ff8bef61c6ba3637aeb7b461bc",
     "portraits/Normal.png": "8124d791d3d234e9e89c2cfa5fc07e0cc65152a35e3c8d7ffbb0cf0198387483",

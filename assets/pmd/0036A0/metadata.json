@@ -419,15 +419,15 @@
     "portraits/Joyous.png": "573a45addcc706538dfce2e111086ac4ab2cb59d228c389a7abdb454dae269c3",
     "portraits/Sigh.png": "1f40bf741f24c25d7a48844525258f3fbf81eae3e84c8d9de492e663974975ca",
     "portraits/Angry.png": "2f408e0f86784e999d26fb187adef61befe112edbff90342796c28ddc501680c",
-    "portraits/Normal.png": "6a408c990e94ff43931b65bd6b586bd48356b5e06ec9f717bf7f3d480100bf90",
+    "portraits/Normal.png": "38d0419b5a15c1a92b444c1b3d20e3e032db5a635a249372d4a82f0e694e9f54",
     "portraits/Worried.png": "dcc2cb9fd705adf6371c4337b1a5eae3cb2166395a69c2b9cc2638879071b904",
     "portraits/Pain.png": "44832c41b338a9d95a30fb6a221b932376aaa7bd74f09a96a3f159e872ee22b4",
-    "sprites/Walk-Anim.png": "7e72c95984fc4eab6f8f016cc6ec446bba33e7c404569c800f4cef304ea38939",
-    "sprites/Hurt-Anim.png": "557cc6403144c47f776eac8cc765543f8627cff0eef5b9047390359b3df76ad6",
-    "sprites/Idle-Anim.png": "be0561ff0bfa38f5711e30bb0060ec03dfc65f8941971a853a592cf4e5e6a74b",
-    "sprites/Rotate-Anim.png": "877e97e3474a7e5a9ba3cf9d3a4030382293b2797bd18a9fd44f2f111aca4116",
+    "sprites/Walk-Anim.png": "e112acb10211afa36d72c9c0c76b85db4e72582c20400b4c689e44b8ad9ccecb",
+    "sprites/Hurt-Anim.png": "1027f626b230651498bee1d2fd5b01a33281f0b96d0bf4e1036a74696dbea6c9",
+    "sprites/Idle-Anim.png": "1c52757962047ba10d3749d078bd91afceb0b69494c5cdc99b2dee57305a9ed6",
+    "sprites/Rotate-Anim.png": "8e0f413734d42651e0199f8bc4bee2d82cdf6f8f33f342ea85c7d64fb6ff44ad",
     "sprites/AnimData.xml": "c10459146271fb67aedbc602b60d427e3d01d964ae36d0e53c7ffeb39e7f2a5d",
-    "sprites/Hop-Anim.png": "07c2ef1526017b8f1167756d309b121acb4d98bfdec7ccf617c3e9a7a3fa760e",
-    "sprites/Sleep-Anim.png": "0d1aa772c0553de72f798f3a4c95fb9665fc17188383615c75ba8407e63338df"
+    "sprites/Hop-Anim.png": "f5e7ec2812d032c75488b51eed62bcdd26d2657f7b0d63d7743b721449233072",
+    "sprites/Sleep-Anim.png": "baa9b906da6a846b424656b6de97a706563befe791cc30402760814f2cf42828"
   }
 }

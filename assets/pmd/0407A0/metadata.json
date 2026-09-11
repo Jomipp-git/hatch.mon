@@ -1,0 +1,576 @@
+{
+  "pokemonId": "0407A0",
+  "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/",
+  "route": "0407",
+  "name": "Roserade",
+  "sprites": {
+    "Cringe": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Cringe-Anim.png",
+      "width": 32,
+      "height": 56,
+      "columns": 2,
+      "row": 0,
+      "frames": 2,
+      "durations": [
+        33.333,
+        133.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          2,
+          28,
+          33
+        ],
+        [
+          3,
+          1,
+          28,
+          32
+        ]
+      ],
+      "crop": {
+        "x": 3,
+        "y": 1,
+        "width": 25,
+        "height": 32
+      }
+    },
+    "Eat": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Eat-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 4,
+      "row": 0,
+      "frames": 4,
+      "durations": [
+        100.0,
+        133.333,
+        100.0,
+        133.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          3,
+          29,
+          29
+        ],
+        [
+          6,
+          4,
+          29,
+          29
+        ],
+        [
+          3,
+          3,
+          29,
+          29
+        ],
+        [
+          3,
+          4,
+          28,
+          29
+        ]
+      ],
+      "crop": {
+        "x": 3,
+        "y": 3,
+        "width": 26,
+        "height": 26
+      }
+    },
+    "Hop": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Hop-Anim.png",
+      "width": 32,
+      "height": 96,
+      "columns": 10,
+      "row": 0,
+      "frames": 10,
+      "durations": [
+        33.333,
+        16.667,
+        33.333,
+        50.0,
+        66.667,
+        66.667,
+        50.0,
+        33.333,
+        16.667,
+        33.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          28,
+          29,
+          53
+        ],
+        [
+          6,
+          18,
+          26,
+          43
+        ],
+        [
+          6,
+          12,
+          26,
+          37
+        ],
+        [
+          6,
+          8,
+          26,
+          33
+        ],
+        [
+          6,
+          7,
+          26,
+          32
+        ],
+        [
+          3,
+          5,
+          29,
+          30
+        ],
+        [
+          2,
+          8,
+          30,
+          31
+        ],
+        [
+          2,
+          12,
+          30,
+          35
+        ],
+        [
+          2,
+          18,
+          30,
+          41
+        ],
+        [
+          2,
+          30,
+          30,
+          53
+        ]
+      ],
+      "crop": {
+        "x": 2,
+        "y": 5,
+        "width": 28,
+        "height": 48
+      }
+    },
+    "Hurt": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Hurt-Anim.png",
+      "width": 40,
+      "height": 56,
+      "columns": 2,
+      "row": 0,
+      "frames": 2,
+      "durations": [
+        33.333,
+        133.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          7,
+          2,
+          32,
+          33
+        ],
+        [
+          7,
+          1,
+          32,
+          32
+        ]
+      ],
+      "crop": {
+        "x": 7,
+        "y": 1,
+        "width": 25,
+        "height": 32
+      }
+    },
+    "Idle": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Idle-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 4,
+      "row": 0,
+      "frames": 4,
+      "durations": [
+        233.333,
+        266.667,
+        233.333,
+        666.667
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          4,
+          5,
+          28,
+          31
+        ],
+        [
+          2,
+          4,
+          30,
+          30
+        ],
+        [
+          4,
+          5,
+          28,
+          31
+        ],
+        [
+          2,
+          4,
+          30,
+          30
+        ]
+      ],
+      "crop": {
+        "x": 2,
+        "y": 4,
+        "width": 28,
+        "height": 27
+      }
+    },
+    "Nod": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Nod-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 3,
+      "row": 0,
+      "frames": 3,
+      "durations": [
+        100.0,
+        133.333,
+        100.0
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          4,
+          29,
+          29
+        ],
+        [
+          2,
+          6,
+          30,
+          31
+        ],
+        [
+          3,
+          4,
+          29,
+          29
+        ]
+      ],
+      "crop": {
+        "x": 2,
+        "y": 4,
+        "width": 28,
+        "height": 27
+      }
+    },
+    "Pose": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Pose-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 5,
+      "row": 0,
+      "frames": 5,
+      "durations": [
+        133.333,
+        16.667,
+        50.0,
+        33.333,
+        133.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          2,
+          6,
+          30,
+          29
+        ],
+        [
+          5,
+          2,
+          28,
+          28
+        ],
+        [
+          5,
+          1,
+          28,
+          27
+        ],
+        [
+          5,
+          3,
+          28,
+          29
+        ],
+        [
+          5,
+          4,
+          28,
+          30
+        ]
+      ],
+      "crop": {
+        "x": 2,
+        "y": 1,
+        "width": 28,
+        "height": 29
+      }
+    },
+    "Rotate": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Rotate-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 9,
+      "row": 0,
+      "frames": 9,
+      "durations": [
+        33.333,
+        33.333,
+        33.333,
+        33.333,
+        33.333,
+        33.333,
+        33.333,
+        33.333,
+        33.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          4,
+          29,
+          29
+        ],
+        [
+          4,
+          4,
+          26,
+          30
+        ],
+        [
+          7,
+          3,
+          24,
+          30
+        ],
+        [
+          5,
+          3,
+          25,
+          30
+        ],
+        [
+          3,
+          4,
+          28,
+          29
+        ],
+        [
+          6,
+          4,
+          26,
+          30
+        ],
+        [
+          7,
+          4,
+          24,
+          30
+        ],
+        [
+          5,
+          4,
+          27,
+          30
+        ],
+        [
+          3,
+          4,
+          29,
+          29
+        ]
+      ],
+      "crop": {
+        "x": 3,
+        "y": 3,
+        "width": 26,
+        "height": 27
+      }
+    },
+    "Sleep": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Sleep-Anim.png",
+      "width": 24,
+      "height": 32,
+      "columns": 2,
+      "row": 0,
+      "frames": 2,
+      "durations": [
+        500.0,
+        583.333
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          2,
+          21,
+          24
+        ],
+        [
+          3,
+          2,
+          21,
+          24
+        ]
+      ],
+      "crop": {
+        "x": 3,
+        "y": 2,
+        "width": 18,
+        "height": 22
+      }
+    },
+    "Walk": {
+      "type": "sheet",
+      "src": "assets/pmd/0407A0/sprites/Walk-Anim.png",
+      "width": 32,
+      "height": 48,
+      "columns": 4,
+      "row": 0,
+      "frames": 4,
+      "durations": [
+        166.667,
+        166.667,
+        166.667,
+        166.667
+      ],
+      "scale": 3,
+      "frameBounds": [
+        [
+          3,
+          4,
+          29,
+          29
+        ],
+        [
+          4,
+          5,
+          28,
+          31
+        ],
+        [
+          3,
+          4,
+          29,
+          29
+        ],
+        [
+          4,
+          5,
+          28,
+          31
+        ]
+      ],
+      "crop": {
+        "x": 3,
+        "y": 4,
+        "width": 26,
+        "height": 27
+      }
+    }
+  },
+  "portraits": {
+    "Normal": "assets/pmd/0407A0/portraits/Normal.png",
+    "Happy": "assets/pmd/0407A0/portraits/Happy.png",
+    "Joyous": "assets/pmd/0407A0/portraits/Joyous.png",
+    "Angry": "assets/pmd/0407A0/portraits/Angry.png",
+    "Sad": "assets/pmd/0407A0/portraits/Sad.png",
+    "Pain": "assets/pmd/0407A0/portraits/Pain.png",
+    "Surprised": "assets/pmd/0407A0/portraits/Surprised.png",
+    "Worried": "assets/pmd/0407A0/portraits/Worried.png",
+    "Sigh": "assets/pmd/0407A0/portraits/Sigh.png"
+  },
+  "credits": {
+    "sprite": {
+      "primary": "CHUNSOFT",
+      "secondary": [
+        "<@!702275233125630042>",
+        "<@!350050109741858829>"
+      ],
+      "total": 3
+    },
+    "portrait": {
+      "primary": "CHUNSOFT",
+      "secondary": [
+        "<@!544245909639397378>",
+        "<@!350050109741858829>"
+      ],
+      "total": 3
+    }
+  },
+  "files": {
+    "credits-portrait.txt": "465925b4ff2a848773a11c018399ebcad6bad011c8d2fa6baa7dd853d3f11591",
+    "credits-sprite.txt": "3fe4bc16d50ebe961d197f1dd107eed68290fec618b4b0a2a007d98d7ea36e28",
+    "portraits/Happy.png": "23e720d488af2a779f442193c8bf2700027853d003e25dd82fa498f67e6a5b3c",
+    "portraits/Sad.png": "fdb42ae191561d21c2b70f5d6cc3fd9a0355f446a2ba1ece5f7331ddb923d3b9",
+    "portraits/Surprised.png": "c3e350ac2f73126e60ce06208f8e69a2aaf68bc4ab93d8f25a0aa0dae80a6afc",
+    "portraits/Joyous.png": "30b889a5124ce46f9fa17905b0f1186dcfd5de17c652267c98835e3cca1aa409",
+    "portraits/Sigh.png": "32b10b9d43be0a6d3102f2f72ee94f8a7eb82072c8489c834b02ae01c1e26fd2",
+    "portraits/Angry.png": "4d656f1f01acd74020053b0719e9813fb51e1a322b3fe999098d70b64425e18d",
+    "portraits/Normal.png": "1157efa66f0b24f17aeabce7d0ee6b506da9e1cadfffd9af0bde238ed036abfe",
+    "portraits/Worried.png": "e4240e2676335e302cf5bbdfbd5f13eadf58550371f258d7b04bbf6186c253ab",
+    "portraits/Pain.png": "63ae090b6f719adb7a7f3a4b1124c5807f2f0875a47623e33039025773030261",
+    "sprites/Nod-Anim.png": "3f514c34e156145d240febd1361de3241b7dcc219f1a99e8afdfd1aea662a00f",
+    "sprites/Walk-Anim.png": "7c2269215bf3f1dc35ad0cf222fa420fc6a6cd20ffaed3588587dfa49ee26d10",
+    "sprites/Cringe-Anim.png": "96ee37555b2c1059b95fbaaa9df6989d806c63480098597846c81cfbb3cdd0d6",
+    "sprites/Hurt-Anim.png": "d4b8dde2984aa5ca85f61910e357e0ce44f88a4238ea6b4b20c19b9d5f192aec",
+    "sprites/Idle-Anim.png": "877ff5e03088d7bc626dccfcb10c2a3f654cd466d4f7c6e8f7f30d3054371144",
+    "sprites/Rotate-Anim.png": "90f508c81d94ccb4a52839d0a03fca23f8377996afbbc7e552c67ca22ea9d813",
+    "sprites/AnimData.xml": "3c7409af5bc787815bb187628b96955e917f509d373de305c6850d5e3391cc0d",
+    "sprites/Pose-Anim.png": "b6c71adf9c5dabd4322282b38b7c1e2b3a492cbf643b7d757e5ece2caf964118",
+    "sprites/Eat-Anim.png": "698a6bc36fdcce4d8c100d5dda4e1ffd43801319d3d75a865e3d5b6cc0fceb40",
+    "sprites/Hop-Anim.png": "49504ed42d605edf861459e79321ab2731968024b75176a41e688eda66bb74f8",
+    "sprites/Sleep-Anim.png": "ba4dffa5702e05c0e8efec58301a297c6dc0a40e026b168a0b79fab6d157bd81"
+  }
+}

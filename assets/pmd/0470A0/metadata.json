@@ -706,110 +706,6 @@
         "height": 29
       }
     },
-    "Shoot": {
-      "type": "sheet",
-      "src": "assets/pmd/0470A0/sprites/Shoot-Anim.png",
-      "width": 40,
-      "height": 56,
-      "columns": 12,
-      "row": 0,
-      "frames": 12,
-      "durations": [
-        16.667,
-        33.333,
-        100.0,
-        16.667,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333
-      ],
-      "scale": 3,
-      "frameBounds": [
-        [
-          10,
-          7,
-          31,
-          29
-        ],
-        [
-          10,
-          6,
-          31,
-          28
-        ],
-        [
-          10,
-          5,
-          31,
-          27
-        ],
-        [
-          10,
-          6,
-          31,
-          28
-        ],
-        [
-          10,
-          10,
-          31,
-          37
-        ],
-        [
-          11,
-          10,
-          32,
-          37
-        ],
-        [
-          10,
-          10,
-          31,
-          37
-        ],
-        [
-          11,
-          10,
-          32,
-          37
-        ],
-        [
-          10,
-          10,
-          31,
-          37
-        ],
-        [
-          11,
-          10,
-          32,
-          37
-        ],
-        [
-          10,
-          10,
-          31,
-          37
-        ],
-        [
-          11,
-          10,
-          32,
-          37
-        ]
-      ],
-      "crop": {
-        "x": 10,
-        "y": 5,
-        "width": 22,
-        "height": 32
-      }
-    },
     "Sleep": {
       "type": "sheet",
       "src": "assets/pmd/0470A0/sprites/Sleep-Anim.png",
@@ -984,7 +880,7 @@
     "portraits/Joyous.png": "be6efd2cf37393b241cca3a2a025c9c2731d2e95e91f0ea4e752fc67b30c52dc",
     "portraits/Sigh.png": "7622ad55d49e6338b0a41364826e52ade68a00deb8bc518e7ef482dd8ec2f1c7",
     "portraits/Angry.png": "0e088bde710b2a100c23760da81cbc11171d621b3061717535ea923a6aed69fb",
-    "portraits/Normal.png": "e717f6669ec67440f76c0c554c59a0bfd347d49ba4cc86b64a34b0f581f07578",
+    "portraits/Normal.png": "4a3a8adc09f215dd633093295353d03d5d9b8e5b1245ebb92381db3656e68cee",
     "portraits/Worried.png": "bdd4721ed551bff0ea8340d9f88d4aacf83e67f14cb2e323a5712e76c8fa623e",
     "portraits/Pain.png": "68bcde4e180d503bc35d0571405acc648cc362989047660a66dd792276e9a77d",
     "sprites/Sit-Anim.png": "8dea0f28ed0bfa58e27b9cc2976dadbb72e1b71433250dafe70641cdacc376de",
@@ -993,16 +889,16 @@
     "sprites/Cringe-Anim.png": "d7d329c27eceba0e4a4738fe2e2bde8295f10d26b272c00d295824e801e5b764",
     "sprites/Hurt-Anim.png": "8207f8acd1130d2c101bec139697f3c48c3c7511b6fe638169dc42140c283eb5",
     "sprites/HitGround-Anim.png": "0ede7d6db5172fe7959e207cff133df731997489934abe4f99b87357fbaab459",
-    "sprites/Faint-Anim.png": "a6638f9c745caf3293c61f0d52f40f3b70a9a65f1aa69594e42c39ee907ffc4b",
+    "sprites/Faint-Anim.png": "9b218517a206c5dfb34d24e13195adaffda70f95d99b4d72dc1f84712e853f97",
     "sprites/Idle-Anim.png": "b0daa7b5926c59d5ad81fa8bae5e8ad7102db121ec3d2feca9d22450d5323e19",
     "sprites/Rotate-Anim.png": "01c5a73a6b7bf30870903b611d796533596a5b2e19516be7e35dc55d095acbcc",
-    "sprites/Wake-Anim.png": "c6960561fd8886878ab43628f419937b62df06ae2fe5cf2f700e23b86fff0ab1",
+    "sprites/Wake-Anim.png": "e1199e4aef1cfb01e6570dbae6a6fbbd959c266885a4a4e58b9e1f44727c5899",
     "sprites/AnimData.xml": "d73dc26d07834f96881959b6941507eafa093db39fe567ed1f9d1d309b0bb3ff",
-    "sprites/Pose-Anim.png": "c21ffd2b79cc59ab3923b994812becd1e4159642c0fe76b9e008cab21b4df685",
+    "sprites/Pose-Anim.png": "e729fdbb8bb4b6c37c63bcdd924622fd3dff14a517cbae0891c875ada467d296",
     "sprites/Shoot-Anim.png": "5e680386b4f88ab7029a73ced0ccb4cdfb1a335d485ce61c01aaec8a3bf4acb2",
-    "sprites/Laying-Anim.png": "07fbbfb60d627fb2f2c694a4daa04d9317ef20a297b9ec3d4f10dc7b05fe5fa4",
+    "sprites/Laying-Anim.png": "ebf60591c2a052f9bccbd302cb77c1c32295502fa44fd4734257e44b1f476974",
     "sprites/Eat-Anim.png": "0e3d892524b7d254d5d9f0084d07efd33a196c51d3a9136b7269f2019478f368",
-    "sprites/Hop-Anim.png": "746b1094b88e2ab4a7851188880fa2cd98e211f81ee35489f947979e6b75075c",
+    "sprites/Hop-Anim.png": "a0c372a8c4adfdc96b0803e3b9c03bccb0eb050d1de854d27cbe4f2b498380f7",
     "sprites/Pain-Anim.png": "681273338fa3feb02d6818867a89ae22bc5edd0a49fffe92d0fbb58fed869b6a",
     "sprites/Sleep-Anim.png": "37595aabf7597704c2ac37a542a96296dc7be8084d6f080a9927094f9cf6e8a9"
   }

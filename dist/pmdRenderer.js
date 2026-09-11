@@ -8,7 +8,7 @@ const PMD_TIMING_CONFIG=Object.freeze({
 });
 globalThis.PmdVisuals=(()=>{
  const records=()=>typeof PMD_ASSETS==='undefined'?{}:PMD_ASSETS;
- function candidates(id,state='normal',isShiny=false){const normal=records()[PokemonData.canonicalId(id)],entry=isShiny&&normal?.shiny?normal.shiny:normal;return (PMD_STATE_FALLBACKS[state]||PMD_STATE_FALLBACKS.normal).filter(name=>entry?.sprites[name]).map(name=>({...entry.sprites[name],animationName:name}));}
+ function candidates(id,state='normal',isShiny=false){const normal=records()[PokemonData.canonicalId(id)],entry=isShiny?normal?.shiny:normal;return (PMD_STATE_FALLBACKS[state]||PMD_STATE_FALLBACKS.normal).filter(name=>entry?.sprites[name]).map(name=>({...entry.sprites[name],animationName:name}));}
  const EAT_VISUAL_LIMITS=Object.freeze({sizeTolerance:0.10,maxDrift:2});
  function stableEat(id,def){
   const idle=records()[PokemonData.canonicalId(id)]?.sprites.Idle;

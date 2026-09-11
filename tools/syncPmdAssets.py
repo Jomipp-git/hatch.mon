@@ -9,7 +9,7 @@ BASE='https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/'
 OUT=ROOT/'assets/pmd'
 EMOTIONS=['Normal','Happy','Joyous','Angry','Sad','Pain','Surprised','Worried','Sigh']
 # Verified tracker.json subgroup names, never inferred from display-name similarity.
-FORMS={'0026L0':('0026/0001','Raichu','Alola'),'0849A0':('0849','Toxtricity',None),'0849B0':('0849/0001','Toxtricity','Lowkey')}
+FORMS={'0439A0':('0439','Mime_Jr_',None),'0122A0':('0122','Mr_Mime',None),'0026L0':('0026/0001','Raichu','Alola'),'0849A0':('0849','Toxtricity',None),'0849B0':('0849/0001','Toxtricity','Lowkey')}
 def fetch(remote,path,args,optional=False):
  if path.exists() and not args.refresh:return True
  if args.offline:return path.exists()
@@ -20,14 +20,21 @@ def fetch(remote,path,args,optional=False):
   raise
  path.parent.mkdir(parents=True,exist_ok=True);temp=path.with_suffix(path.suffix+'.tmp');temp.write_bytes(data);temp.replace(path);return True
 
-def sync(row,tracker,args,states):
+def sync(row,tracker,args,states,shiny=False):
  pid=row['id'];route,baseName,form=FORMS.get(pid,(pid[:4],row['name'],None))
  if pid not in FORMS and not pid.endswith('A0'):raise ValueError('Explicit form mapping required: '+pid)
  node=tracker[route[:4]]
  if node['name']!=baseName:raise ValueError('Unverified identity: '+pid)
  for part in route.split('/')[1:]:node=node['subgroups'][part]
  if form and node['name']!=form:raise ValueError('Unverified form: '+pid)
- folder=OUT/pid;meta={'pokemonId':pid,'source':BASE,'route':route,'name':row['name'],'sprites':{},'portraits':{},'credits':{'sprite':node['sprite_credit'],'portrait':node['portrait_credit']},'files':{}}
+ if shiny:
+  parts=['0001'] if form else ['0000','0001']
+  for part in parts:
+   node=node.get('subgroups',{}).get(part)
+   if node is None:return pid,0,0
+   route+='/'+part
+  if node['name']!='Shiny':raise ValueError('Unverified shiny: '+pid)
+ folder=OUT/pid/('shiny' if shiny else '');meta={'pokemonId':pid,'source':BASE,'route':route,'name':row['name'],'sprites':{},'portraits':{},'credits':{'sprite':node['sprite_credit'],'portrait':node['portrait_credit']},'files':{}}
  xml=folder/'sprites/AnimData.xml'
  if fetch('sprite/'+route+'/AnimData.xml',xml,args,True):
   anims={a.findtext('Name'):a for a in ET.parse(xml).findall('./Anims/Anim')}
@@ -56,7 +63,7 @@ def sync(row,tracker,args,states):
  for kind in ['sprite','portrait']:
   fetch(kind+'/'+route+'/credits.txt',folder/('credits-'+kind+'.txt'),args,True)
  for file in folder.rglob('*'):
-  if file.is_file() and file.name!='metadata.json':meta['files'][file.relative_to(folder).as_posix()]=hashlib.sha256(file.read_bytes()).hexdigest()
+  if file.is_file() and file.name!='metadata.json' and (shiny or 'shiny' not in file.relative_to(folder).parts):meta['files'][file.relative_to(folder).as_posix()]=hashlib.sha256(file.read_bytes()).hexdigest()
  folder.mkdir(parents=True,exist_ok=True);(folder/'metadata.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  return pid,len(meta['sprites']),len(meta['portraits'])
 
@@ -71,7 +78,7 @@ def main():
  for file in ['tracker.json','credit_names.txt','LICENSE.md']:fetch(file,OUT/'source'/file,args)
  tracker=json.loads((OUT/'source/tracker.json').read_text())
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
-  results=list(pool.map(lambda row:sync(row,tracker,args,data['states']),[r for r in roster if r['id'] in wanted]))
+  results=list(pool.map(lambda pair:sync(pair[0],tracker,args,data['states'],pair[1]),[(r,shiny) for r in roster if r['id'] in wanted for shiny in [False,True]]))
  manifest={};credits=['# PMDCollab assets used by Hatch.mon','', 'Source: https://github.com/PMDCollab/SpriteCollab','Policy and attribution: source/LICENSE.md; author names and contacts: source/credit_names.txt.','Per-file credit logs are preserved alongside each species when provided. No entire repository is downloaded.','']
  names={}
  for line in (OUT/'source/credit_names.txt').read_text().splitlines():
@@ -81,6 +88,10 @@ def main():
   file=OUT/row['id']/'metadata.json'
   if not file.exists():continue
   m=json.loads(file.read_text());manifest[row['id']]={'sprites':m['sprites'],'portraits':m['portraits']}
+  shinyFile=OUT/row['id']/'shiny/metadata.json'
+  if shinyFile.exists():
+   shiny=json.loads(shinyFile.read_text());manifest[row['id']]['shiny']={'sprites':shiny['sprites'],'portraits':shiny['portraits']}
+   credits+=['## '+row['id']+' shiny', 'Source path: '+shiny['route'], 'Per-file attribution: '+row['id']+'/shiny/credits-sprite.txt and credits-portrait.txt', 'Sprite credits: '+json.dumps(shiny['credits']['sprite']), 'Portrait credits: '+json.dumps(shiny['credits']['portrait']), '']
   credits+=['## '+m['pokemonId']+' · '+m['name'], 'Source path: '+m['route']]
   for kind,key in [('sprite','sprites'),('portrait','portraits')]:
    if not m[key]:continue
@@ -94,5 +105,5 @@ def main():
   credits+=['']
  (OUT/'manifest.js').write_text('/* Generated by tools/syncPmdAssets.py. Local visual metadata only. */\nconst PMD_ASSETS='+json.dumps(manifest,ensure_ascii=False,separators=(',',':'))+';\n')
  (OUT/'CREDITS.md').write_text('\n'.join(line.rstrip() for line in credits)+'\n')
- print(json.dumps({'speciesSynced':len(results),'spriteStates':sum(r[1] for r in results),'portraits':sum(r[2] for r in results),'manifestSpecies':len(manifest)}))
+ print(json.dumps({'variantsSynced':len(results),'spriteStates':sum(r[1] for r in results),'portraits':sum(r[2] for r in results),'manifestSpecies':len(manifest)}))
 if __name__=='__main__':main()

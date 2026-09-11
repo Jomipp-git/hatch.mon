@@ -1071,11 +1071,11 @@ globalThis.PokemonRenderer=(()=>{
     if(geometryCache.has(key))return geometryCache.get(key);
     const base=definition(id),idle=(typeof PmdVisuals==='undefined'?null:PmdVisuals.candidates(id,'normal')[0])||base;
     const c=idle.crop||{width:16,height:16};
-    const animations=list?[idle]:['normal','sleep','eat','happy','sick','train','faint'].flatMap(state=>typeof PmdVisuals==='undefined'?[base]:PmdVisuals.candidates(id,state));
+    const animations=typeof PmdVisuals==='undefined'?[base]:[false,true].flatMap(shiny=>(list?['normal']:Object.keys(PMD_STATE_FALLBACKS)).flatMap(state=>PmdVisuals.candidates(id,state,shiny)));
     const sizes=animations.flatMap(d=>frameBounds(d).map(b=>[b[2]-b[0],b[3]-b[1]]));
     const target=84,limit=98;
     const metric=list&&typeof PMD_LIST_METRICS!=='undefined'?PMD_LIST_METRICS[id]:null;
-    const scale=metric?Math.min(Math.sqrt(2700/metric.opaqueArea),limit/metric.width,limit/metric.height):Math.min(target/c.height,limit/c.width,limit/Math.max(...sizes.map(b=>b[0])),limit/Math.max(...sizes.map(b=>b[1])));
+    const scale=metric?Math.min(Math.sqrt(2700/metric.opaqueArea),limit/metric.width,limit/metric.height,limit/Math.max(...sizes.map(b=>b[0])),limit/Math.max(...sizes.map(b=>b[1]))):Math.min(target/c.height,limit/c.width,limit/Math.max(...sizes.map(b=>b[0])),limit/Math.max(...sizes.map(b=>b[1])));
     const result=Object.freeze({scale,width:104,height:104,baseline:101});geometryCache.set(key,result);return result;
   }
   function create(host,{list=false}={}){
@@ -1096,7 +1096,7 @@ globalThis.PokemonRenderer=(()=>{
       canvas=document.createElement('canvas');canvas.className='pokemon-pixels';canvas.setAttribute('aria-hidden','true');host.append(canvas);
       const metrics=geometry(speciesId,list);canvas.width=metrics.width;canvas.height=metrics.height;canvas.style.width=`${metrics.width*1.3}px`;canvas.style.height=`${metrics.height*1.3}px`;
       const base=definition(speciesId),available=typeof PmdVisuals==='undefined'?[]:PmdVisuals.candidates(speciesId,visualState,isShiny);
-      const definitions=dead?[POKEMON_RENDER_CONFIG.memorial]:[...available,base,POKEMON_RENDER_CONFIG.placeholder];
+      const definitions=dead?[POKEMON_RENDER_CONFIG.memorial]:[...available,...(isShiny?[]:[base]),POKEMON_RENDER_CONFIG.placeholder];
       const seen=new Set();const candidates=definitions.filter(d=>{const key=d.src||d;if(seen.has(key))return false;seen.add(key);return true;});
       host.dataset.speciesId=PokemonData.canonicalId(speciesId)||'';host.classList.toggle('resting',resting&&!dead);
       function attempt(){

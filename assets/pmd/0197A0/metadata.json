@@ -762,103 +762,6 @@
         "height": 27
       }
     },
-    "Shoot": {
-      "type": "sheet",
-      "src": "assets/pmd/0197A0/sprites/Shoot-Anim.png",
-      "width": 32,
-      "height": 48,
-      "columns": 11,
-      "row": 0,
-      "frames": 11,
-      "durations": [
-        100.0,
-        33.333,
-        100.0,
-        66.667,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333,
-        33.333
-      ],
-      "scale": 3,
-      "frameBounds": [
-        [
-          8,
-          6,
-          25,
-          32
-        ],
-        [
-          8,
-          2,
-          25,
-          32
-        ],
-        [
-          8,
-          1,
-          25,
-          31
-        ],
-        [
-          8,
-          5,
-          25,
-          31
-        ],
-        [
-          6,
-          6,
-          25,
-          36
-        ],
-        [
-          7,
-          6,
-          26,
-          36
-        ],
-        [
-          6,
-          6,
-          25,
-          36
-        ],
-        [
-          7,
-          6,
-          26,
-          36
-        ],
-        [
-          6,
-          6,
-          25,
-          36
-        ],
-        [
-          7,
-          6,
-          26,
-          36
-        ],
-        [
-          6,
-          6,
-          25,
-          36
-        ]
-      ],
-      "crop": {
-        "x": 6,
-        "y": 1,
-        "width": 20,
-        "height": 35
-      }
-    },
     "Sleep": {
       "type": "sheet",
       "src": "assets/pmd/0197A0/sprites/Sleep-Anim.png",
@@ -1034,32 +937,32 @@
   "files": {
     "credits-portrait.txt": "8c8b9f2ee33e56f4f7f2f926b87dd04528e555b91504187422de22f0648b7122",
     "credits-sprite.txt": "aa0eef43b57c468b536fb43c70c3c14c8ed469c542e1ed6c5f5c78f71a3574c9",
-    "portraits/Happy.png": "cef84ec925774514d1b28451a7346680d9665d650c115ffec0c143c5648e7a10",
-    "portraits/Sad.png": "aac9f8ca5e8ef12e859ed1dc6793d83689a43444aa2e9765dd402bc3a6833428",
+    "portraits/Happy.png": "7b39d6c2240dcdb94f31f63cbc5ccaccb9c36e797ce48b7f2c746f4b15dc3989",
+    "portraits/Sad.png": "4919accc93aa6d3f8f93904ac675c37f2b712491be06ec8d7a310c1bb1ba1da5",
     "portraits/Surprised.png": "391dd001b163146fd584ef00d948670357a3af777cd0b6a455aa30a234f93321",
-    "portraits/Joyous.png": "2a2497e280573461d6a6a92f4ef3824e3e782e8672d9f571ca4fc92968c026b3",
-    "portraits/Sigh.png": "16ae8ee6f59193791dc33089c54063335dc9253ef51dfa4e1bda72a33c700723",
-    "portraits/Angry.png": "8515153a5d6ae5fae6d27390a3185d1826519adc77e8fc402dee704512f6ce55",
-    "portraits/Normal.png": "9724a3dc6bc19ec8f8af7fbbaf7dfa546c0d3d08857bdbb428d319f5548e0b19",
-    "portraits/Worried.png": "edaca8b1e683daf44100a81b21b4c83fd8a9900b87ea454788e197ab2801a5df",
+    "portraits/Joyous.png": "3d324616b40dd184d515c98a66c5f8f4dff6c45f92fd8880d94ce69ea929e4cf",
+    "portraits/Sigh.png": "fc06a444a8e429ba089c9062e9c1773847da28999535256379cca10642d877e5",
+    "portraits/Angry.png": "6220d8f795d7eac2ccf468ab052882a3fe61df1d85ee2e77460029615b185a91",
+    "portraits/Normal.png": "9746b34549bea580b39799803ad251c3a4e5d42d38b50728121e38140190f7f4",
+    "portraits/Worried.png": "ad94b07c6f0bea9f104cad6999370100d369c04e46c98054a4d321b34b9777c1",
     "portraits/Pain.png": "0e200e6b91503927a8af472f37536aca72f1a11a236f843ae28f837e6bcb7ed1",
     "sprites/Sit-Anim.png": "157e779861cc5da37f3b648bb1cd22dca3903b987a09887afe14cbabe560c340",
-    "sprites/Nod-Anim.png": "25a2455fbe6246982faeb3771a1cad4cea23ee2c1f4823854d7ae7902adb5162",
+    "sprites/Nod-Anim.png": "3af4d447e129db12c23f426c32a4d0cd01c833c1998d95bc4312d8071810a578",
     "sprites/Walk-Anim.png": "1364ba14e7e943f5ff5c167c8a1b0bff54cab7f91352a0cc940d23f68d5b64b3",
     "sprites/Cringe-Anim.png": "a279a564016ba97c0e65942bcc4aa454513dad8f4c26e0ebd4792b7e20ea24bf",
-    "sprites/Hurt-Anim.png": "7af6b41c34c56f1e981277b8f2e03647481def3621871cbb2bcdeaabb1ec56ac",
+    "sprites/Hurt-Anim.png": "b78ca6cde725a2028d72c0e5e85be32081638a1a89bf7af9d2de21f577630f10",
     "sprites/HitGround-Anim.png": "cfc2603444155b2499ebe4993165221eae13be3885175c8fe9d0578f55cefa7f",
-    "sprites/Faint-Anim.png": "7264e13b12d4a761b57b7ca1cf7cb92bc505f09a6605466733231fea7d1d723b",
+    "sprites/Faint-Anim.png": "b4e72887c0cd5b1644eea0b033bf87b76225afb1a1dd13a6d83dbf511931a6f6",
     "sprites/Idle-Anim.png": "89dfc5652ece0eddb053c937403d245c7162d6605858497389b247a2785d09fb",
-    "sprites/Rotate-Anim.png": "fdb91a26df1eff04fd2783734199706ea4f7783f4740d7149a4b6714b307e145",
-    "sprites/Wake-Anim.png": "7834be44da7fb7b6d5970b07b121330182f040d2ddca712ffab793815297a4ef",
+    "sprites/Rotate-Anim.png": "b807a80ec1906c8d9ad34c29c827018562d1e8706c4eafa593d96c4cf145a794",
+    "sprites/Wake-Anim.png": "eb210bcbbaa35c5fd777888453b1e9c99fb7c5e7fc5fa4dccc3f9d76883cab08",
     "sprites/AnimData.xml": "fb9e044bb3f5292e4d5b2b2d813f02660e6c5ce0f8896ad7f811ffb5be7516da",
-    "sprites/Pose-Anim.png": "edcb6e98ff768110c6bd0e3b89f94f7f912f82debb4bfc759817eb94cf4f5cca",
-    "sprites/Shoot-Anim.png": "544af145d8a01fe87df9ee755baff5f55c1aa5ada8478f6bded26906ae6805d1",
-    "sprites/Laying-Anim.png": "a395e6b27de721c69174e723d057b0ffc9020dd36a1b928a32321284e235e0e1",
+    "sprites/Pose-Anim.png": "3ae0371c996a777a1bc5e30ac1909996fc29e26ce0a1d33ce4dda2e9bebb5f2c",
+    "sprites/Shoot-Anim.png": "3a7364f4c39fb7bc230e5fbfb347668d9d2ce998cdf2385d2e2003ef52893c3c",
+    "sprites/Laying-Anim.png": "a93c881c2a3e2007810540fd2c348a8e3b8f4ef1f27b689fc5de45b09d9e11b2",
     "sprites/Eat-Anim.png": "2a56a2eaba9c338e81034770d05f3cd80099d0cdb28b2ea7d704639b6ddd93bf",
-    "sprites/Hop-Anim.png": "bb04033229a947d22b872d689bc6bf01e1c26203842ce332e132ce965b1c4384",
-    "sprites/Pain-Anim.png": "384ef8463dc69434a18431dfca4cbeec6aa6db9f0c510295aeed3c6603d8acfa",
+    "sprites/Hop-Anim.png": "4c10eb524dbd3a033479d4b93b7e8587694d18e06e159143bd4451907bf210b5",
+    "sprites/Pain-Anim.png": "cbd4e7776b048ec5ffc7188e8d561eda7aa6f0303d9c5a877a4a549718f2753d",
     "sprites/Sleep-Anim.png": "892c308957622779e6c0ad7fc7c986fa04ab6ab5d3ce30029cfba21045246dfe"
   }
 }

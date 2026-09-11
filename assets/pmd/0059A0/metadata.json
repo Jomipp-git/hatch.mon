@@ -358,12 +358,12 @@
     "portraits/Normal.png": "ca862c03cc8a13cdf649fdd9f0dcaf118b0d408153b18c8628072dc7ce0f8370",
     "portraits/Worried.png": "81f3bcfba8b60be2f8d59b029db0c98695204af3fbded6f971cb81b7201ced67",
     "portraits/Pain.png": "18fecd6ccd8ae6144f61056910fde130df54cd11b2e27ee4ec8a13a1bf357d79",
-    "sprites/Walk-Anim.png": "334750447c22099cf87fc6cf7804f4490bb47f87581c5134a05c0998aeb4537e",
-    "sprites/Hurt-Anim.png": "f54455e4e6c34b128abee8dcd85003d272e4371aec0a7017a5c44dc3dfa8070a",
-    "sprites/Idle-Anim.png": "c0adf6e40d44a363f2742667be42d8c1e4d900304bb8bba2d9e85e55289a0a22",
-    "sprites/Rotate-Anim.png": "0a521fda749a5da7be89d509b265121ad1fdf78e43cd15aed115bd557560481b",
+    "sprites/Walk-Anim.png": "22abb6cdf57ec6d1fda4ba7196fdfad1b37f80cfd02fed0b5bd72201542c928a",
+    "sprites/Hurt-Anim.png": "d55d49853d4eb3d837416c8d25a6b9a69ec68f8b958d2a7cbc3c05c419259e00",
+    "sprites/Idle-Anim.png": "4ce7de77bc73202c05a20fbddd4eedddaf3174b2ae9ac68258c940c7a026e91b",
+    "sprites/Rotate-Anim.png": "c962d92ae40c106448e0a3ce431d8a3ed75323182fbaf2e0c493dfee283ccaa9",
     "sprites/AnimData.xml": "7ecee62def3c8d555401a62db17f829e14b655bffa2ce7fea13acdabae0955a0",
-    "sprites/Hop-Anim.png": "e721647c8213ef613258542011132b1bbb9c9017b80817e9ea6d5f817378115a",
-    "sprites/Sleep-Anim.png": "ecfb9bfcfc7ae89cd85f1c9d63e1842188432fc5b315dee1161e806dc5dccc73"
+    "sprites/Hop-Anim.png": "e4955e047ffe6d4c374f0013f34ddd2175ac0c20fb8a4d41730f67964b25be95",
+    "sprites/Sleep-Anim.png": "b9deb8de5959d05990739a8ed7505b4068fc60eba225d402079aef51d64b9e7d"
   }
 }

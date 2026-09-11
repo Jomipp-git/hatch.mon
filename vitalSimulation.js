@@ -7,7 +7,7 @@ const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays
     {id:'MADURO',until:.80,hunger:1,hygiene:1,recovery:1,play:1,risk:1},
     {id:'SENIOR',until:Infinity,hunger:1.08,hygiene:1.10,recovery:.85,play:1,risk:1.15}]};
 const CARE_CONFIG={hour:3600000,minute:60000,max:100,
-  decay:{hambre:8,felicidad:4,energia:2,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:2},sleepRecovery:24,
+  decay:{hambre:8,felicidad:4,energia:0,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:2},sleepRecovery:24,awakeRecovery:2,restRecovery:8,
   difficulty:{baseline:1,minFactor:.9,maxDecay:1.20,maxRisk:1.30,decayWeight:.10,riskWeight:.15},
   feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:5},
   play:{happiness:20,energy:5,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
@@ -35,7 +35,7 @@ const PERSONALITY_CONFIG=Object.freeze({
   patient:{labelKey:'personality.patient',fatigueGain:1,socialDemand:.8,hungerPrompt:.8},
   complainer:{labelKey:'personality.complainer',fatigueGain:1,socialDemand:1.15,hungerPrompt:1.2}
 });
-const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,napLimitMinutes:90,napThreshold:40,napEnergyThreshold:25,autoSleepThreshold:75,fatiguePerMinute:5/60,recoveryPerMinute:20/60});
+const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,restStart:30,restEnd:50,napLimitMinutes:90,napThreshold:40,napEnergyThreshold:25,autoSleepThreshold:75,fatiguePerMinute:5/60,recoveryPerMinute:20/60});
 globalThis.Vital=(()=>{
   const vitalText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   const bound=(x,a=0,b=CARE_CONFIG.max)=>Math.min(b,Math.max(a,x));
@@ -84,35 +84,27 @@ globalThis.Vital=(()=>{
     s.sleep.fatigue=Number.isFinite(s.sleep.fatigue)?bound(s.sleep.fatigue):0;
     s.sleep.napMinutes=Number.isFinite(s.sleep.napMinutes)?Math.floor(bound(s.sleep.napMinutes,0,SLEEP_CONFIG.napLimitMinutes)):0;
     s.sleep.napping=s.sleep.napping===true;
+    s.sleep.energyResting=s.sleep.energyResting===true;
     if(typeof s.sleep.napDay!=='string'||!s.sleep.napDay)s.sleep.napDay=sleepDay(timestamp);
     if(s.sleep.napDay!==sleepDay(timestamp)){s.sleep.napDay=sleepDay(timestamp);s.sleep.napMinutes=0;s.sleep.napping=false;}
     return s.sleep;
   }
+  function energyResting(s){
+    const sleep=ensureSleep(s);
+    if(s.care.energia<=SLEEP_CONFIG.restStart)sleep.energyResting=true;
+    else if(s.care.energia>=SLEEP_CONFIG.restEnd)sleep.energyResting=false;
+    return sleep.energyResting;
+  }
   function sleepPermission(s,timestamp=Date.now()){
-    const sleep=ensureSleep(s,timestamp);
-    if(isNight(timestamp))return {ok:true,napping:false};
-    if(sleep.fatigue<SLEEP_CONFIG.napThreshold&&s.care.energia>SLEEP_CONFIG.napEnergyThreshold)return {ok:false,reason:'notSleepy'};
-    if(sleep.napMinutes>=SLEEP_CONFIG.napLimitMinutes)return {ok:false,reason:'napLimit'};
-    return {ok:true,napping:true};
+    return isNight(timestamp)||energyResting(s)?{ok:true,napping:false}:{ok:false,reason:'notSleepy'};
   }
   function sleepTick(s,timestamp=Date.now()){
-    const sleep=ensureSleep(s,timestamp),personality=PERSONALITY_CONFIG[s.personality]||PERSONALITY_CONFIG.sleepy;
-    if(s.lightsOff){
-      sleep.fatigue=bound(sleep.fatigue-SLEEP_CONFIG.recoveryPerMinute);
-      if(isNight(timestamp))sleep.napping=false;
-      else{
-        if(!sleep.napping&&sleep.fatigue<SLEEP_CONFIG.napThreshold){s.lightsOff=false;return;}
-        sleep.napping=true;
-        sleep.napMinutes=Math.min(SLEEP_CONFIG.napLimitMinutes,sleep.napMinutes+1);
-        if(sleep.napMinutes>=SLEEP_CONFIG.napLimitMinutes){s.lightsOff=false;sleep.napping=false;}
-      }
-    }else{
-      sleep.fatigue=bound(sleep.fatigue+SLEEP_CONFIG.fatiguePerMinute*personality.fatigueGain);
-      if(isNight(timestamp)&&sleep.fatigue>=SLEEP_CONFIG.autoSleepThreshold){s.lightsOff=true;sleep.napping=false;}
-    }
+    energyResting(s);
+    if(s.lightsOff&&!isNight(timestamp)&&!s.sleep.energyResting)s.lightsOff=false;
   }
   function tick(s){
     const v=s.vital,m=getLifeModifiers(s),d=difficulty(s.pokemonId),c=CARE_CONFIG,dc=DIGESTION_CONFIG;
+    const resting=energyResting(s);
     v.recentFeedingLoad=Math.max(0,v.recentFeedingLoad-dc.loadDecayPerHour/60);
     if(v.digestion>0&&v.poops.length<dc.maxPoops){
       if(v.nextPoopAt===null)schedule(s);
@@ -123,18 +115,18 @@ globalThis.Vital=(()=>{
       if(k==='hambre')rate*=m.hunger*d.decay;
       if(k==='higiene')rate*=m.hygiene*d.decay*dc.hygieneFactors[v.poops.length]*(1+v.dirt/100*dc.dirtMaxPenalty);
       if(s.pokerus)rate*=k==='felicidad'?SICKNESS_CONFIG.happinessDecay:SICKNESS_CONFIG.otherDecay;
-      if(k==='energia'&&s.lightsOff)rate=-c.sleepRecovery*m.recovery*(s.pokerus?SICKNESS_CONFIG.recovery:1);
+      if(k==='energia')rate=-(s.lightsOff?c.sleepRecovery:resting?c.restRecovery:c.awakeRecovery);
       s.care[k]=bound(s.care[k]-rate/60);if(s.care[k]<c.epsilon)s.care[k]=0;
     }
-    v.qualitySum+=Object.values(s.care).reduce((a,b)=>a+b,0)/Object.keys(c.decay).length;v.qualityMinutes++;
+    energyResting(s);
+    v.qualitySum+=(s.care.hambre+s.care.felicidad+s.care.higiene)/3;v.qualityMinutes++;
     const quality=v.qualitySum/v.qualityMinutes,normal=LIFE_CONFIG.normalQuality;
     const adjustment=quality<normal?(1-quality/normal)*LIFE_CONFIG.poorAdjustmentDays:
       (quality-normal)/(100-normal)*LIFE_CONFIG.excellentAdjustmentDays;
     v.lifespan=bound(v.baseLifespan+adjustment*LIFE_CONFIG.day,LIFE_CONFIG.minDays*LIFE_CONFIG.day,LIFE_CONFIG.maxDays*LIFE_CONFIG.day);
-    for(const [cause,key,threshold] of [['hygiene','higiene',SICKNESS_CONFIG.hygieneThreshold],['energy','energia',SICKNESS_CONFIG.energyThreshold]])
+    for(const [cause,key,threshold] of [['hygiene','higiene',SICKNESS_CONFIG.hygieneThreshold]])
       v.exposure[cause]=s.care[key]<threshold?v.exposure[cause]+1:0;
     const cause=v.exposure.hygiene>=SICKNESS_CONFIG.exposureMinutes?'hygiene':
-      v.exposure.energy>=SICKNESS_CONFIG.exposureMinutes?'energy':
       v.poops.filter(p=>s.age-p.createdAge>=SICKNESS_CONFIG.poopAgeMinutes*c.minute).length>=SICKNESS_CONFIG.poopCount?'poops':null;
     if(!s.pokerus&&cause){const hourly=Math.min(SICKNESS_CONFIG.maxRiskPerHour,SICKNESS_CONFIG.riskPerHour*m.risk*d.risk);if(random(v)<1-Math.pow(1-hourly,1/60))infect(s,cause);}
   }
@@ -154,5 +146,5 @@ globalThis.Vital=(()=>{
       (v.nextPoopAt===null||num(v.nextPoopAt))&&v.exposure&&num(v.exposure.hygiene)&&num(v.exposure.energy)&&typeof v.hasProducedEgg==='boolean'&&
       [null,...Object.keys(SICKNESS_CONFIG.messages)].includes(v.illnessCause)&&[null,'natural','neglect'].includes(v.deathCause);
   }
-  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,isNight});
+  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,energyResting,isNight});
 })();

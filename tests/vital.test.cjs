@@ -11,7 +11,7 @@ run('const due=state.vital.nextPoopAt;advanceGameTime(44*MINUTE)');assert.equal(
 run('state.vital.digestion=DIGESTION_CONFIG.max;advanceGameTime(8*HOUR)');assert.equal(run('state.vital.poops.length'),3);assert.equal(run('validSave(state)'),true);
 run('state.care.higiene=10;state.care.felicidad=50;state.trainer.energy=6;careAction("limpiar")');assert.equal(run('state.vital.poops.length'),0);assert.equal(run('state.vital.dirt'),0);assert.equal(run('state.care.higiene'),65);assert.equal(run('state.care.felicidad'),53);
 born();run('state.inventory.berryStrength=1;useItem("berryStrength")');assert.equal(run('state.training.strength'),5);assert.equal(run('state.vital.digestion'),.35);assert.equal(run('state.pokerus'),false);run('train("strength")');assert.equal(run('state.training.strength'),10);
-born();run('state.care.energia=20;careAction("luz");advanceGameTime(HOUR)');assert.ok(run('state.care.energia')>44);assert.equal(run('allowed("alimentar")'),false);assert.equal(run('allowed("limpiar")'),false);
+born();run('state.care.energia=20;careAction("luz");advanceGameTime(HOUR)');assert.ok(Math.abs(run('state.care.energia')-44)<1e-8);assert.equal(run('allowed("alimentar")'),false);assert.equal(run('allowed("limpiar")'),false);
 // Identical seed and state: batch, minute steps and restored state must match.
 born();run('careAction("alimentar");const checkpoint=JSON.stringify(state);advanceGameTime(8*HOUR);const batch=JSON.stringify(state);state=JSON.parse(checkpoint);for(let i=0;i<480;i++)advanceGameTime(MINUTE)');assert.equal(run('JSON.stringify(state)===batch'),true);
 run('state=JSON.parse(checkpoint);advanceGameTime(4*HOUR);state=JSON.parse(JSON.stringify(state));advanceGameTime(4*HOUR)');assert.equal(run('JSON.stringify(state)===batch'),true);

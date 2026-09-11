@@ -485,11 +485,11 @@ function allowed(action){
   if(action==='luz')return alive()&&!interactionLocked(); // Despertar nunca cuesta AP.
   return canSpend(COST[action])&&(!state.lightsOff||['curar','auxiliar'].includes(action))&&
     (action==='auxiliar'?state.phase==='critical':state.phase==='alive')&&
-    (action!=='curar'||state.pokerus)&&(action!=='jugar'||state.care.energia>=CARE_CONFIG.play.energy);
+    (action!=='curar'||state.pokerus)&&(action!=='jugar'||(!Vital.energyResting(state)&&state.care.energia>=CARE_CONFIG.play.energy));
 }
 function careAction(action,rng=Math.random){
   if(!Object.hasOwn(COST,action))return false;
-  if(!allowed(action)){if(alive())denied();return false;}
+  if(!allowed(action)){if(alive()){if(action==='jugar'&&Vital.energyResting(state))state.message=t('care.resting');else denied();}return false;}
   if(action==='luz'){
     if(state.lightsOff){state.lightsOff=false;state.sleep.napping=false;state.message=t('care.lightsOn');return true;}
     const permission=Vital.sleepPermission(state);
@@ -509,6 +509,7 @@ function careAction(action,rng=Math.random){
     state.aid++;state.message=t('care.aid',{current:state.aid,total:CARE_CONFIG.aid.steps});
     if(state.aid===CARE_CONFIG.aid.steps){for(const k of CARE)state.care[k]=Math.max(CARE_CONFIG.aid.restore,state.care[k]);state.phase='alive';state.aid=0;state.message=state.pokerus?t('care.stableVirus'):t('care.stable');}
   }
+  Vital.energyResting(state);
   state.actions[action]=(state.actions[action]||0)+1;if(usefulCare)Relationship.reward(state,({alimentar:'care',limpiar:'care',jugar:'play',curar:'cure'})[action]);
   if(action==='jugar')Attention.markInteraction(state);updateSustained();checkHealth();Attention.evaluate(state);checkEvolution();return true;
 }
@@ -516,12 +517,14 @@ function heal(){state.pokerus=false;state.vital.illnessCause=null;state.vital.ex
 function train(k,gain=CARE_CONFIG.training.gain){
   if(!Number.isInteger(gain)||gain<1||gain>5)return false;
   if(!TRAIN.includes(k)||state.phase!=='alive')return false;
+  if(Vital.energyResting(state)){state.message=t('care.resting');return false;}
   if(state.lightsOff){state.message=t('care.lightsTraining');return false;}
   if(state.care.energia<CARE_CONFIG.training.energy){state.message=t('care.lowEnergy');return false;}
   if(state.training[k]>=100){state.message=t('care.maxAttribute');return false;}
   if(!spend(CARE_CONFIG.training.ap)){denied();return false;}
   state.training[k]=clamp(state.training[k]+gain);state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
   state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
+  Vital.energyResting(state);
   const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=t('training.reward',{stat:LABELS[k],gain,coins});updateSustained();checkHealth();checkEvolution();return true;
 }
 function itemAPCost(id){const item=itemCatalog[id];return item&&(item.food||item.care||item.heal)?CARE_CONFIG.itemAP:CARE_CONFIG.evolutionItemAP;}
@@ -807,7 +810,7 @@ function renderPanel(){
   if(panelName==='training'){
     if(state.phase==='egg'){content.append(el('p',t('minigame.training.eggUnavailable')));return;}
     content.append(el('p',t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy}), 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||Vital.energyResting(state)||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
   }
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
@@ -998,6 +1001,7 @@ function companionStatus(){
   if(state.phase==='critical')return state.pokerus?t('ui.criticalVirus'):t('ui.critical');
   if(state.pokerus)return t('ui.treatment');
   if(state.care.hambre<35)return t('ui.hungry');
+  if(Vital.energyResting(state))return t('ui.sleeping');
   if(state.care.energia<30)return state.lightsOff?t('ui.sleeping'):t('ui.sleepy');
   if(state.care.higiene<40||state.vital.poops.length||state.vital.dirt>=BREEDING_CONFIG.maxDirt)return t('ui.cleaningNeeded');
   if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return t('ui.needsSpace');
@@ -1072,7 +1076,7 @@ function startTimer(){
 }
 let temporaryVisual=null,reactionTimer=null,lastDeathId=null;
 function renderCreature(){
-  const visualState=temporaryVisual||(state.lightsOff?'sleep':state.pokerus||state.phase==='critical'?'sick':state.care?.energia<20?'tired':'normal');
+  const visualState=temporaryVisual||(state.lightsOff||Vital.energyResting(state)?'sleep':state.pokerus||state.phase==='critical'?'sick':state.care?.energia<20?'tired':'normal');
   pokemonRenderer.renderPokemon(state.pokemonId,{dead:state.phase==='dead'&&temporaryVisual!=='faint',resting:state.lightsOff||state.phase==='critical',isShiny:state.social.active.isShiny===true,visualState});
 }
 function clearPetReaction(){clearTimeout(reactionTimer);reactionTimer=null;temporaryVisual=null;delete $('sprite').dataset.reaction;}

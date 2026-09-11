@@ -50,10 +50,10 @@ test('browser permission rejection is handled without an unhandled promise',asyn
  const h=await setup();h.win.Notification={permission:'default',requestPermission:()=>Promise.reject(Error('unavailable'))};
  assert.equal(await h.run('requestAttentionNotifications()'),false);assert.equal(h.run('state.attentionSettings.notificationsEnabled'),false);
 });
-test('night sleep cannot bypass daytime nap accounting',async()=>{
+test('daytime waking ignores legacy Fatigue and nap accounting',async()=>{
  const h=await setup({initialSave:await fixture()}),morning=new Date(2026,0,2,9).getTime();
  h.run(`state.lightsOff=true;state.sleep.fatigue=80;state.sleep.napping=false;for(let i=0;i<90;i++)Vital.sleepTick(state,${morning}+i*60000)`);
- assert.equal(h.run('state.sleep.napMinutes'),90);assert.equal(h.run('state.lightsOff'),false);
+ assert.equal(h.run('state.sleep.napMinutes'),0);assert.equal(h.run('state.lightsOff'),false);
  h.run(`state.lightsOff=true;state.sleep.napping=false;state.sleep.fatigue=0;Vital.sleepTick(state,${morning})`);assert.equal(h.run('state.lightsOff'),false);
 });
 test('rejected remote save preserves local cache and cannot be uploaded over cloud',async()=>{

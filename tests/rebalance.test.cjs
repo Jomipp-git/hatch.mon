@@ -9,7 +9,7 @@ for(const asleep of [false,true]){
  approx(run('state.care.hambre'),100-(asleep?3.6:8)/60*run('difficulty'));
  approx(run('state.care.higiene'),100-(asleep?2:5)/60*run('difficulty'));
  approx(run('state.care.felicidad'),100-(asleep?.8:4)/60);
- approx(run('state.care.energia'),50+(asleep?24:-2)/60);
+ approx(run('state.care.energia'),50+(asleep?24:2)/60);
 }
 for(const [n,mult] of [[0,1],[1,1.25],[2,1.6],[3,2]]){
  born();run(`state.vital.poops=Array.from({length:${n}},(_,i)=>({id:i+1,createdAge:state.age}));state.vital.poopSerial=${n};Vital.tick(state)`);

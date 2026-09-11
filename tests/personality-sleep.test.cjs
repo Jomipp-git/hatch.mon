@@ -13,13 +13,12 @@ const night=new Date(2026,0,1,22).getTime(),day=new Date(2026,0,2,14).getTime(),
 
   born(first.run);first.run(`Date.now=()=>${night};state.sleep.fatigue=0`);assert.equal(first.run('careAction("luz")'),true);assert.equal(first.run('state.lightsOff'),true);assert.equal(first.run('state.sleep.napping'),false);
   born(first.run);first.run(`Date.now=()=>${day};state.sleep.fatigue=0`);assert.equal(first.run('careAction("luz")'),false);assert.equal(first.run('state.lightsOff'),false);assert.match(first.run('state.message'),/no tiene sueño/);
-  first.run(`state.sleep.fatigue=SLEEP_CONFIG.napThreshold;Date.now=()=>${day}`);assert.equal(first.run('careAction("luz")'),true);assert.equal(first.run('state.sleep.napping'),true);
-  first.run(`for(let i=0;i<90;i++)minuteStep(${day}+i*${MINUTE})`);assert.equal(first.run('state.sleep.napMinutes'),90);assert.equal(first.run('state.lightsOff'),false);
-  first.run(`Vital.ensureSleep(state,${tomorrow})`);assert.equal(first.run('state.sleep.napMinutes'),0);
+  first.run(`state.sleep.fatigue=100;Date.now=()=>${day}`);assert.equal(first.run('careAction("luz")'),false);
+  first.run('state.care.energia=30;state.sleep.napMinutes=90');assert.equal(first.run('careAction("luz")'),true);
 
   born(first.run);first.run(`state.care.hambre=100;state.sleep.fatigue=60;state.lightsOff=true;minuteStep(${night})`);const sleepingHunger=first.run('state.care.hambre'),recovered=first.run('state.sleep.fatigue');
   born(first.run);first.run(`state.care.hambre=100;state.sleep.fatigue=60;state.lightsOff=false;minuteStep(${night})`);const awakeHunger=first.run('state.care.hambre');
-  assert.ok(sleepingHunger<100);assert.ok((100-sleepingHunger)/(100-awakeHunger)>.44&&(100-sleepingHunger)/(100-awakeHunger)<.46);assert.ok(recovered<60);
-  born(first.run);first.run(`state.lightsOff=true;state.sleep.fatigue=80;advanceGameTime(2*${HOUR},${night})`);assert.equal(first.run('state.age'),2*HOUR);assert.ok(first.run('state.care.hambre')<100);assert.ok(first.run('state.sleep.fatigue')<80);
-  console.log('PASS personality/sleep: legacy migration, persistence, evolution, night sleep, daytime nap, daily limit/reset, hunger and offline recovery.');
+  assert.ok(sleepingHunger<100);assert.ok((100-sleepingHunger)/(100-awakeHunger)>.44&&(100-sleepingHunger)/(100-awakeHunger)<.46);assert.equal(recovered,60);
+  born(first.run);first.run(`state.lightsOff=true;state.sleep.fatigue=80;advanceGameTime(2*${HOUR},${night})`);assert.equal(first.run('state.age'),2*HOUR);assert.ok(first.run('state.care.hambre')<100);assert.equal(first.run('state.sleep.fatigue'),80);
+  console.log('PASS personality/sleep: legacy migration, persistence, evolution, night sleep, Energy rest, ignored Fatigue, hunger and offline recovery.');
 })().catch(error=>{console.error(error);process.exitCode=1});

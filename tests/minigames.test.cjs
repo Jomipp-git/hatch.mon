@@ -5,7 +5,7 @@ for(const attribute of ['iq','strength','kindness','style']){
  const initial=run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})');
  run(`TrainingActivities.launch('${attribute}',{commit:train})`);assert.equal(els['training-game'].open,true);assert.equal(run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})'),initial);
  run('TrainingActivities.cancel()');advance(16000);assert.equal(run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})'),initial);
- run(`TrainingActivities.launch('${attribute}',{commit:train})`);if(attribute==='style'){for(let i=0;i<5;i++)els['training-game-content'].children[3].children[1].fire('click');}else advance(40000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),90);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
+ run(`TrainingActivities.launch('${attribute}',{commit:train})`);if(attribute==='style'){for(let i=0;i<5;i++)els['training-game-content'].children[3].children[1].fire('click');}else advance(40000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
  advance(40000);assert.equal(run(`state.training.${attribute}`),1);
 }
 const {run}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")');

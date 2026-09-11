@@ -7,11 +7,11 @@ const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays
     {id:'MADURO',until:.80,hunger:1,hygiene:1,recovery:1,play:1,risk:1},
     {id:'SENIOR',until:Infinity,hunger:1.08,hygiene:1.10,recovery:.85,play:1,risk:1.15}]};
 const CARE_CONFIG={hour:3600000,minute:60000,max:100,
-  decay:{hambre:8,felicidad:4,energia:4,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:5},sleepRecovery:24,
+  decay:{hambre:8,felicidad:4,energia:2,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:5},sleepRecovery:24,
   difficulty:{baseline:1,minFactor:.9,maxDecay:1.20,maxRisk:1.30,decayWeight:.10,riskWeight:.15},
   feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:5},
-  play:{happiness:20,energy:8,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
-  training:{gain:5,energy:10,hunger:4,dirt:3,ap:1},itemAP:1,evolutionItemAP:0,trainerMax:6,trainerRecoveryPerMinute:.1,
+  play:{happiness:20,energy:5,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
+  training:{gain:5,energy:8,hunger:4,dirt:3,ap:1},itemAP:1,evolutionItemAP:0,trainerMax:6,trainerRecoveryPerMinute:.1,
   costs:{alimentar:1,jugar:1,luz:0,limpiar:1,curar:1,auxiliar:1},dropChance:.10,
   aid:{steps:3,restore:40},cure:{restore:40},epsilon:1e-8};
 const DIGESTION_CONFIG={max:6,maxPoops:3,minDelayMinutes:45,maxDelayMinutes:120,
@@ -35,7 +35,7 @@ const PERSONALITY_CONFIG=Object.freeze({
   patient:{labelKey:'personality.patient',fatigueGain:1,socialDemand:.8,whimDemand:1,hungerPrompt:.8},
   complainer:{labelKey:'personality.complainer',fatigueGain:1,socialDemand:1.15,whimDemand:1,hungerPrompt:1.2}
 });
-const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,napLimitMinutes:90,napThreshold:60,autoSleepThreshold:75,fatiguePerMinute:5/60,recoveryPerMinute:20/60});
+const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,napLimitMinutes:90,napThreshold:40,autoSleepThreshold:75,fatiguePerMinute:5/60,recoveryPerMinute:20/60});
 globalThis.Vital=(()=>{
   const vitalText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   const bound=(x,a=0,b=CARE_CONFIG.max)=>Math.min(b,Math.max(a,x));

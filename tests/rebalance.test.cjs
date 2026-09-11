@@ -9,7 +9,7 @@ for(const asleep of [false,true]){
  approx(run('state.care.hambre'),100-(asleep?3.6:8)/60*run('difficulty'));
  approx(run('state.care.higiene'),100-5/60*run('difficulty'));
  approx(run('state.care.felicidad'),100-(asleep?.8:4)/60);
- approx(run('state.care.energia'),50+(asleep?24:-4)/60);
+ approx(run('state.care.energia'),50+(asleep?24:-2)/60);
 }
 for(const [n,mult] of [[0,1],[1,1.25],[2,1.6],[3,2]]){
  born();run(`state.vital.poops=Array.from({length:${n}},(_,i)=>({id:i+1,createdAge:state.age}));state.vital.poopSerial=${n};Vital.tick(state)`);
@@ -24,7 +24,7 @@ for(const [count,expected] of [[3,.15],[4,.30],[5,.50]]){
 born();run('state.care.hambre=100;const rngBefore=state.vital.rng;Vital.tick(state)');assert.equal(run('state.vital.rng===rngBefore'),true);assert.equal(run('state.pokerus'),false);
 born();run('state.vital.recentFeedingLoad=3;advanceGameTime(HOUR)');approx(run('state.vital.recentFeedingLoad'),2.25);
 born();run('state.care.hambre=100;state.inventory.berryStrength=2;useItem("berryStrength");useItem("berryStrength")');assert.equal(run('state.vital.recentFeedingLoad'),2);assert.equal(run('state.pokerus'),false);assert.equal(run('state.training.strength'),10);
-born();run('const beforeTraining=JSON.parse(JSON.stringify(state));train("iq")');assert.equal(run('state.training.iq'),5);approx(run('state.care.energia'),40);approx(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.equal(run('state.trainer.energy'),5);
+born();run('const beforeTraining=JSON.parse(JSON.stringify(state));train("iq")');assert.equal(run('state.training.iq'),5);approx(run('state.care.energia'),42);approx(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.equal(run('state.trainer.energy'),5);
 run('state.care.higiene=82;state.care.felicidad=50;careAction("limpiar")');assert.equal(run('state.care.higiene'),100);assert.equal(run('state.care.felicidad'),53);assert.equal(run('state.vital.dirt'),0);
 // Lifespan configuration and stable seed output remain at the approved C values.
 assert.equal(run('LIFE_CONFIG.baseDays'),4);assert.equal(run('LIFE_CONFIG.variationDays'),.15);assert.equal(run('LIFE_CONFIG.minDays'),3.5);assert.equal(run('LIFE_CONFIG.maxDays'),5);assert.equal(run('LIFE_CONFIG.poorAdjustmentDays'),-.35);assert.equal(run('LIFE_CONFIG.excellentAdjustmentDays'),.75);

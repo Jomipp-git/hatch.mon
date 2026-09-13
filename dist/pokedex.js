@@ -11,14 +11,15 @@ globalThis.Pokedex=(()=>{
   if(['evolved','bred','received'].includes(event))entry[event]=true;
  }
  function weights(pool,dex){
-  const allKnown=pool.every(id=>dex[PokemonData.canonicalId(id)]?.seen===true);
-  return pool.map(id=>{const count=dex[PokemonData.canonicalId(id)]?.ownedIds.length||0,rarity=PokemonData.get(id)?.Rarity;
+  const allKnown=pool.every(id=>{const entry=dex[PokemonData.canonicalId(id)];return entry?.seen===true||entry?.shiny?.seen===true;});
+  return pool.map(id=>{const entry=dex[PokemonData.canonicalId(id)],count=new Set([...(entry?.ownedIds||[]),...(entry?.shiny?.ownedIds||[])]).size,rarity=PokemonData.get(id)?.Rarity;
    const base=Number.isFinite(rarity)&&rarity>0?1/Math.pow(rarity,ENCOUNTER_CONFIG.rarityPower):1;
    return base*(allKnown?ENCOUNTER_CONFIG.allOwned:count===0?ENCOUNTER_CONFIG.unowned:count===1?ENCOUNTER_CONFIG.ownedOnce:ENCOUNTER_CONFIG.ownedMany);
   });
  }
  function choose(pool,dex,rng=Math.random){const w=weights(pool,dex),sum=w.reduce((a,b)=>a+b,0);let roll=Math.max(0,Math.min(.999999999,rng()))*sum;for(let i=0;i<pool.length;i++){roll-=w[i];if(roll<0)return pool[i];}return pool.at(-1);}
- function valid(dex){return dex&&typeof dex==='object'&&!Array.isArray(dex)&&Object.entries(dex).every(([id,e])=>PokemonData.canonicalId(id)===id&&e&&typeof e.seen==='boolean'&&Array.isArray(e.ownedIds)&&e.ownedIds.every(id=>typeof id==='string')&&new Set(e.ownedIds).size===e.ownedIds.length&&['evolved','bred','received'].every(k=>typeof e[k]==='boolean'));}
+ function validEntry(e){return !!e&&typeof e==='object'&&!Array.isArray(e)&&typeof e.seen==='boolean'&&Array.isArray(e.ownedIds)&&e.ownedIds.every(id=>typeof id==='string')&&new Set(e.ownedIds).size===e.ownedIds.length&&['evolved','bred','received'].every(k=>typeof e[k]==='boolean');}
+ function valid(dex){return dex&&typeof dex==='object'&&!Array.isArray(dex)&&Object.entries(dex).every(([id,e])=>PokemonData.canonicalId(id)===id&&validEntry(e)&&(!Object.hasOwn(e,'shiny')||validEntry(e.shiny)));}
  function roster(config,roots){
   const reachable=new Set(roots),edges=[];let changed=true;
   while(changed){changed=false;for(const from of [...reachable])for(const r of config[from]?.rules||[])if(r.enabled!==false&&config[r.to]){if(!reachable.has(r.to)){reachable.add(r.to);changed=true;}}}

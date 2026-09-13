@@ -19,7 +19,7 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `attentionEngine.js` | Prioridad, persistencia y entrega web de avisos de atención | Estado de partida, personalidad y `vitalSimulation.js` |
 | `pokedex.js` | Progreso normal/shiny, roster alcanzable y selección ponderada | Adapter |
 | `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
-| `shiny.js` | Política shiny preparada, tiradas desactivadas | Rareza canónica vía adapter |
+| `shiny.js` | Probabilidad shiny y tirada de eclosión | Rareza canónica vía adapter |
 | `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
 | `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callback de resultado a `train` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
@@ -50,18 +50,22 @@ Las monedas empiezan en 0 y persisten dentro de la partida. Completar un minijue
 
 Los cuidados mantienen decimales. El motor usa la misma simulación por minutos para actividad, ausencia y saltos de tiempo; las siguientes son tasas **base**, antes de dificultad canónica, etapa vital, enfermedad y suciedad:
 
-| Cuidado | Despierto / h | Luz apagada / h |
-|---|---:|---:|
-| Hambre | −8 | −8 |
-| Ánimo | −4 | −3 |
-| Energía | −4 | +24 |
-| Higiene | −5 | −5 |
+| Cuidado | Despierto / h | Descansando / h | Luz apagada / h |
+|---|---:|---:|---:|
+| Hambre | −8 | −8 | −3,6 |
+| Ánimo | −4 | −4 | −0,8 |
+| Higiene | −5 | −5 | −2 |
+| Energía | +2 | +8 | +24 |
 
-La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar, jugar, limpiar, curar y entrenar cuestan 1 AP; auxiliar cuesta 1 AP por paso. Luz y objetos evolutivos cuestan 0 AP; bayas y medicina, 1 AP. Completar entrenamiento aporta de +1 a +5 al atributo, −10 energía, −4 hambre y +3 suciedad. Bayas de atributo aportan +5, con máximo 100. Los IDs retirados `alola`, `galar`, `dawn` y `oval` se descartan del inventario al cargar; su historial de consumo se admite para preservar Memorias y saves antiguos. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
+La energía no decae por tiempo: solo se gasta al jugar (−5) y al entrenar (−8), y se recupera siempre, más rápido cuanto más descansa. Las demás tasas de la columna «Descansando» coinciden con las de vigilia; solo cambia la recuperación de energía.
+
+**Descanso automático.** `SLEEP_CONFIG` define noche de 21 a 9 h y una histéresis de energía: por debajo de 30 el compañero entra en descanso y no sale hasta recuperar 50. Mientras descansa se le ve dormido, el estado contextual lo indica y jugar o entrenar quedan bloqueados con un aviso propio, no con el rechazo genérico por AP. Apagar la luz solo se permite de noche o en descanso; en otro caso responde que no tiene sueño. Si amanece y ya no está en descanso, la luz se enciende sola. No hay siestas ni fatiga acumulada: `sleep.napMinutes`, `sleep.napping` y `sleep.fatigue` solo se conservan para normalizar y validar saves antiguos.
+
+La luz apagada bloquea las acciones de actividad. AP máximo 6, recuperación de 1 cada 10 minutos, sin botón de descanso. Alimentar, jugar, limpiar, curar y entrenar cuestan 1 AP; auxiliar cuesta 1 AP por paso. Luz y objetos evolutivos cuestan 0 AP; bayas y medicina, 1 AP. Completar entrenamiento aporta de +1 a +5 al atributo, −8 energía, −4 hambre y +3 suciedad. Jugar aporta +20 Ánimo por el modificador de etapa, −5 energía y +3 suciedad, y exige esa energía disponible. Bayas de atributo aportan +5, con máximo 100. Los IDs retirados `alola`, `galar`, `dawn` y `oval` se descartan del inventario al cargar; su historial de consumo se admite para preservar Memorias y saves antiguos. Limpiar aporta +55 higiene (máximo 100), +3 Ánimo, elimina todas las deposiciones y resetea suciedad.
 
 Las deposiciones mantienen su aspecto aprobado y un máximo de tres. Sus multiplicadores de desgaste de higiene son 1 / 1,25 / 1,6 / 2. Alcanzar hambre 100 no penaliza. Comidas o bayas adicionales a saciedad añaden una unidad a `recentFeedingLoad`, que disminuye 0,75/h. Riesgo por ingesta extra: 0 / 0 / 15 / 30 / 50%, techo 50%; se usa el nivel entero superior de la carga restante. Una tirada por ingesta, nunca tiradas pasivas de sobrealimentación; los riesgos de varias ingestas se acumulan probabilísticamente.
 
-Pokérus depende de exposición y riesgos de la fisiología, no de una penalización instantánea por una sola deposición. Auxiliar y curar conservan sus reglas. Hambre o higiene agotadas causan debilitamiento; hambre y Ánimo agotadas causan muerte por abandono. También existe muerte natural.
+Pokérus depende de exposición y riesgos de la fisiología, no de una penalización instantánea por una sola deposición. Sus tres causas activas son higiene bajo 20 durante 120 minutos, dos deposiciones con más de 180 minutos y la tirada por sobrealimentación; el riesgo horario parte de 8%, se modula por etapa y dificultad canónica y tiene techo de 18%. La energía ya no enferma: `exposure.energy` se conserva en el save por compatibilidad, pero nunca se acumula. Auxiliar y curar conservan sus reglas. Hambre o higiene agotadas causan debilitamiento; hambre y Ánimo agotadas causan muerte por abandono. También existe muerte natural.
 
 Lifespan mantiene base 4 días, variación inicial ±0,15 días y ajuste por calidad de cuidados con límites 3,5–5 días. C.2 no altera ninguna fórmula ni el balance C.1.
 
@@ -77,7 +81,7 @@ La pista de incubación permanece bajo el título del huevo dentro del LCD y cam
 
 El renderer usa `assets/pmd/manifest.js` con cobertura PMD normal 75/75 y shiny 75/75 para las formas del runtime. La sincronización se realiza mediante `tools/syncPmdAssets.py`; `tests/pmd-runtime-coverage.test.cjs` verifica archivos y render de ambas variantes sin fallback.
 
-La resolución está centralizada en `PMD_STATE_FALLBACKS`: normal→Idle; juego→Walk/Pose/Idle; sueño→Sleep/Idle; despertar tocando→Wake/Pain/Hurt/Idle; encender luz con botón→Idle; comer→Eat validado/Idle con gesto propio; enfermedad→Hurt/Pain/Idle; cansancio→Laying/Sleep/Idle; sobresalto→Cringe/Idle; caricias→Pose/Nod/Rotate/Idle; limpieza→Nod/Pose/Idle; entrenamiento→Hop/Idle (único uso de Hop); muerte→Faint/HitGround/Hurt/Idle antes de la lápida. Si un archivo falla, intenta el siguiente; si todos fallan, usa el marcador retro propio. Gameplay nunca espera a una imagen.
+La resolución está centralizada en `PMD_STATE_FALLBACKS`: normal→Idle; juego→Walk/Pose/Idle; sueño (luz apagada o descanso automático)→Sleep/Idle; despertar tocando→Wake/Pain/Hurt/Idle; encender luz con botón→Idle; comer→Eat validado/Idle con gesto propio; enfermedad→Hurt/Pain/Idle; cansancio→Laying/Sleep/Idle; sobresalto→Hurt/Cringe/Pain/Idle; caricias→Pose/Nod/Rotate/Idle; limpieza→Nod/Pose/Idle; entrenamiento→Hop/Idle (único uso de Hop); muerte→Faint/HitGround/Hurt/Idle antes de la lápida. Si un archivo falla, intenta el siguiente; si todos fallan, usa el marcador retro propio. Gameplay nunca espera a una imagen.
 
 PNG, sheets, bitmap y matrices siguen soportados. La escala principal parte de Idle (objetivo aproximado de 109 px de altura visible) y se ajusta a los cuerpos de los frames representativos, sin incluir el recorrido completo del salto. `frameBounds` separa cuerpo y desplazamiento; offsets internos mantienen centro y baseline y limitan el desplazamiento al borde sin cambiar escala. Animaciones extremas que no caben usan el siguiente fallback. El viewport y la consola siguen fijos. Pokédex y Memorias comparten `collectionSprite`, con Idle estático dimensionado para listas de 80 × 80 px. No hay portraits de reacción en la pantalla principal. Eat se acepta si los bounds de cada frame mantienen dimensiones próximas a Idle (tolerancia del 10 %) y desplazamientos internos de hasta 2 píxeles fuente; si falla o falta el archivo, Idle recibe un gesto de masticar de tres pulsos de 5 px y 3° durante 840 ms, sin escala ni elementos añadidos. Este filtro geométrico necesita revisión visual de las especies. El huevo baja 6 px sin cambiar tamaño; la pista sigue dentro del LCD. La cadencia sigue centralizada en `PMD_TIMING_CONFIG`. Las animaciones se pausan al ocultar la pestaña y respetan movimiento reducido. Los temporizadores visuales no alteran la simulación.
 
@@ -102,7 +106,7 @@ Los archivos existentes se reutilizan. `--refresh` vuelve a descargarlos; `--off
 
 Aumenta con comida útil/limpieza necesaria (+0,6), juego/entrenamiento (+1,5), curación (+3), evolución (+5) y toques positivos (+0,25). Cada minuto de cuidados ≥70 y sin enfermedad aporta +0,04. Sobrealimentar o limpiar un hábitat ya limpio no da vínculo por esa acción. A partir de 60 puntos cambia la reacción positiva a Joyous y una respuesta más cercana cuando existen assets.
 
-Tocar al compañero reacciona según sueño, enfermedad, cansancio y atención acumulada. Los tres primeros toques tolerados son positivos (+0,5 Ánimo, máximo 100); la carga baja 0,2 por minuto y tiene techo 12. Tras insistir, pide espacio sin dar vínculo. Despertarlo tocando enciende la luz y provoca sorpresa. Molestarlo o despertarlo puede restar 1 de Ánimo, con un máximo de una penalización por 5 minutos de vida: cien toques no dan cien recompensas ni cien penalizaciones. No cuesta AP. Huevos mantienen su calentamiento; los muertos y diálogos narrativos no admiten caricias.
+Tocar al compañero reacciona según sueño, enfermedad y atención acumulada; ya no existe una reacción específica de cansancio. Los tres primeros toques tolerados son positivos (+0,5 Ánimo, máximo 100); la carga baja 0,2 por minuto y tiene techo 12. Tras insistir, pide espacio sin dar vínculo. Despertarlo tocando enciende la luz y provoca sorpresa. Molestarlo o despertarlo puede restar 1 de Ánimo, con un máximo de una penalización por 5 minutos de vida: cien toques no dan cien recompensas ni cien penalizaciones. No cuesta AP. Huevos mantienen su calentamiento; los muertos y diálogos narrativos no admiten caricias.
 
 ## Pokédex y apariciones
 
@@ -110,7 +114,7 @@ Pendiente para futuro: badges Visto, Cuidado, Evolucionado y Criado; sin redise�
 
 Memorias registra individuos muertos, con vínculo final, especie/forma, mote, género, edad y causa. Pokédex registra formas canónicas vistas y cuidadas, con IDs de individuos para no contar repetidamente al mismo; también hay flags de evolucionado, criado y recibido. Se consulta desde Mochila → Pokédex. Acceso: **Mochila → Pokédex y Memorias → MEMORIAS**. Cada recuerdo muestra sprite estático, especie/forma, mote, género, edad final, causa, corazones de Vínculo y fecha. No hay botones de activación ni simulación para estos registros. Ambas persisten entre nuevos comienzos, pero el reset total de testing las borra.
 
-Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Peso = `1 / Rarity × multiplicador`: nunca cuidado **8**, cuidado una vez **1**, cuidado varias veces **0,2**. Cuando todas las formas del pool ya fueron vistas, todos usan multiplicador **1** y solo queda rareza. Todos conservan probabilidad positiva. `ENCOUNTER_CONFIG` centraliza los valores; no hay condicionante adicional de calidad porque no existía en la selección anterior. Los huevos de descendencia conocida no se vuelven a sortear. No se añaden especies como Rattata si no pertenecen al repertorio.
+Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Peso = `1 / Rarity × multiplicador`: nunca cuidado **8**, cuidado una vez **1**, cuidado varias veces **0,2**. Cuando todas las formas del pool ya fueron vistas, todos usan multiplicador **1** y solo queda rareza. Todos conservan probabilidad positiva; normal y shiny de una misma forma cuentan juntos al medir cuántas veces se ha cuidado. `ENCOUNTER_CONFIG` centraliza los valores; no hay condicionante adicional de calidad porque no existía en la selección anterior. Los huevos de descendencia conocida no se vuelven a sortear. No se añaden especies como Rattata si no pertenecen al repertorio.
 
 ## Entrenamiento preparado para minijuegos
 
@@ -122,7 +126,7 @@ Fuerza actualiza su marcador con `requestAnimationFrame` y puntúa el valor que 
 
 Mientras un minijuego está abierto, la fisiología y el guardado siguen usando timestamps, pero se pausan el renderer PMD, el huevo, toasts y repintados de la escena que queda detrás del diálogo. Al cerrarlo se sincroniza y se pinta una sola vez. Estilo conserva todas las muestras coalescidas del puntero, pero limita el canvas a un repintado por frame; Amabilidad mantiene la misma tanda mientras haya un puntero activo.
 
-El renderer PMD cachea cada URL cargada y precarga de forma diferida Idle, Sleep, Hurt, Eat, Hop y reacciones cercanas del compañero activo. El huevo carga su fase actual y la siguiente, no las cinco hojas al iniciar. `tools/buildMobileRuntime.py --optimize` conserva originales en `master/asset-originals/`, aplica PNG sin pérdida a los assets del runtime y genera `dist/` mediante allowlist. No incluye `assets/pmd/source/tracker.json`, metadata de sincronización, herramientas, tests ni el master. El informe reproducible queda en `master/mobile-asset-audit.json`.
+El renderer PMD cachea cada URL cargada y precarga de forma diferida Idle, Sleep, Hurt, Eat, Hop y reacciones cercanas del compañero activo. El huevo carga su fase actual y la siguiente, no las cinco hojas al iniciar. `tools/buildMobileRuntime.py` genera `dist/` mediante allowlist: parte de `index.html` y sigue cada referencia, más `assets/ui`, `assets/eggs`, los PNG citados por el manifest y `vendor/`. No incluye `assets/pmd/source/tracker.json`, metadata de sincronización, herramientas, tests ni el master. `dist/` está versionado y debe regenerarse cuando cambia cualquier archivo de runtime. Con `--optimize` recomprime además los PNG sin pérdida y conserva los originales en `master/asset-originals/`, pero solo actúa sobre los que aún no figuran en `master/asset-optimization.json`: los portraits y las variantes shiny añadidos después de la última optimización siguen sin recomprimir, así que esa pasada es un cambio de assets aparte, no parte de sincronizar `dist/`. El informe reproducible queda en `master/mobile-asset-audit.json`.
 
 Las hojas de huevo se sirven a 832×832 px (208 px por celda, suficiente para el viewport de 104 CSS px a DPR 2) con reescalado nearest-neighbor; logo a 264×104 px. Los PNG PMD, portraits e iconos ya estaban por debajo de su tamaño útil de pantalla y solo se recomprimen sin alterar píxeles. No se cambian saves, escala visual del Pokémon ni la geometría de sus animaciones.
 
@@ -130,7 +134,7 @@ Las hojas de huevo se sirven a 832×832 px (208 px por celda, suficiente para el
 
 `MinMood` y `MinBond` son columnas independientes y opcionales: Ánimo **actual** (0–100) y Vínculo **acumulado** (MinBond expresado en 0–5 corazones). Vacío/null/ausente significa sin requisito; si hay ambos, se exigen ambos. El motor rechaza valores fuera de rango. Oak los presenta por separado y Force Evolution prepara ambos mínimos sin reducir valores.
 
-`tools/generateCanonicalData.py` exporta las hojas Pokemon y EvolutionRules según sus encabezados y DataDictionary, sin tablas manuales. Ejecutar `python3 tools/generateCanonicalData.py` (requiere openpyxl); `--check` verifica reproducibilidad. Genera `hatchmonData_v2.js` y `master/hatchmonData_v2.json`. La única tabla activa es `master/pokemonTable_HatchMon_Canonical_v2.xlsx`; la versión anterior quedó en `archive/canonical-workbooks/` y no participa en runtime. MinBond vacío se exporta como null; MinMood, ausente en el Excel actual, sigue siendo opcional en el motor. MinBond usa corazones: `Relationship.evaluateMinBond` convierte a puntos con `RELATIONSHIP_CONFIG.perHeart` (20); motor, Oak y Force Evolution comparten esa evaluación. MinBond 2 exige 40 puntos; MinBond 3 exige 60. El master contiene un PokemonId duplicado (`0052L0`) preexistente; se conserva para no alterar datos fuera de esta integración.
+`tools/generateCanonicalData.py` exporta las hojas Pokemon y EvolutionRules según sus encabezados y DataDictionary, sin tablas manuales. Ejecutar `python3 tools/generateCanonicalData.py` (requiere openpyxl); `--check` verifica reproducibilidad. Genera `hatchmonData_v2.js` y `master/hatchmonData_v2.json`. La única tabla activa es `master/pokemonTable_HatchMon_Canonical_v2.xlsx`; no se conserva ninguna versión anterior en el repositorio. MinBond vacío se exporta como null; MinMood, ausente en el Excel actual, sigue siendo opcional en el motor. MinBond usa corazones: `Relationship.evaluateMinBond` convierte a puntos con `RELATIONSHIP_CONFIG.perHeart` (20); motor, Oak y Force Evolution comparten esa evaluación. MinBond 2 exige 40 puntos; MinBond 3 exige 60. El master contiene un PokemonId duplicado (`0052L0`) preexistente; se conserva para no alterar datos fuera de esta integración.
 
 La evolución ordinaria usa solo `evolutionRules` canónico: edad, atributos, acciones, cuidados sostenidos y objetos. No se completan reglas ausentes con la tabla legacy. Las medias de cuidados se muestrean por etapa; las condiciones sostenidas requieren continuidad. Atributos de entrenamiento son valores fijos.
 
@@ -203,15 +207,19 @@ El criador de la banda inferior ofrece consejos breves según cuidados; no alter
 
 `HatchMon.roster()` calcula alcance desde `PokemonData.roots()` por reglas activas del roster runtime. El roster contiene 75 formas, 25 raíces de huevo y 50 por evolución, sin formas desconectadas dentro del repertorio. No equivale a incorporar las 1.100 filas del catálogo canónico. El grafo verifica rutas configuradas, no garantiza cada condición mediante una partida completa.
 
-### Shiny: preparación, sin encuentros activados
+### Shiny: encuentros activados
 
-`shiny.js` contiene la probabilidad canónica `1/(10*Rarity)`, con activación deshabilitada. El tracker local identifica variantes para 43 formas; Raichu no está verificado. Falta sincronizar PNG shiny, comparar geometría/frameBounds/animaciones con normales y habilitar el selector de assets tras validar cobertura. No se inventan recolores.
+`shiny.js` expone la probabilidad canónica `1/(10*Rarity)` con `enabled:true`. La tirada ocurre una sola vez, al eclosionar, sobre la especie que sale del huevo: una forma de rareza 1 sale shiny 1 de cada 10 veces y una de rareza 5, 1 de cada 50. No hay herencia: cada eclosión tira por su cuenta, incluidos los huevos de crianza.
 
-`social.active.isShiny` es identidad local opcional (ausente = normal), conservada al evolucionar y copiada a Memorias. El QR base no exporta este campo. `Pokedex.record(..., isShiny)` separa progreso shiny en la entrada; no implica descubrir la variante contraria. El renderer admite `isShiny` y selecciona `PMD_ASSETS[id].shiny` cuando exista, compartiendo escala normal; si faltan esos assets usa el marcador retro, sin sustituir shiny por normal. No hay tiradas activas ni herencia shiny.
+La cobertura PMD shiny es 75/75 y `tools/projectStatus.cjs` la verifica junto a la normal. El renderer selecciona `PMD_ASSETS[id].shiny` compartiendo la escala de la variante normal; si faltasen esos assets usa el marcador retro, sin sustituir shiny por normal. No se inventan recolores.
+
+`social.active.isShiny` es identidad local opcional (ausente = normal), conservada al evolucionar y copiada a Memorias. El QR base no exporta este campo. `Pokedex.record(..., isShiny)` guarda el progreso shiny en una subentrada `shiny` con la misma forma que la normal; descubrir una variante no implica descubrir la contraria, y el Pokédex las presenta en tabs separadas.
+
+La ponderación de encuentros cuenta ambas variantes: un individuo shiny ya cuidado reduce el multiplicador de esa forma igual que uno normal, y el pool se considera completo cuando cada forma se ha visto en cualquiera de las dos variantes. `ENCOUNTER_CONFIG` sigue siendo la única fuente de esos valores.
 
 ## Carcasas y diagnóstico
 
-Configuración → Carcasa permite elegir Hatch.mon o una edición desbloqueada. Los colores se extraen de Idle con `tools/generateShellThemes.py`; las 44 definiciones deterministas están en `assets/skins/themes.js`. El navegador solo aplica variables CSS, sin crear archivos. Desbloquear requiere estado vivo y LifeStage MADURO; se comprueba durante los pasos de simulación (incluido tiempo offline) y al renderizar. Cada forma se registra una sola vez.
+Configuración → Carcasa permite elegir Hatch.mon o una edición desbloqueada. Los colores se extraen de Idle con `tools/generateShellThemes.py`; las 75 definiciones deterministas están en `assets/skins/themes.js`, una por forma del roster. El navegador solo aplica variables CSS, sin crear archivos. Desbloquear requiere estado vivo y LifeStage MADURO; se comprueba durante los pasos de simulación (incluido tiempo offline) y al renderizar. Cada forma se registra una sola vez.
 
 `hatch.mon.shells` guarda desbloqueos y selección fuera de la partida, por lo que sobreviven a evolución, muerte y nuevo comienzo. Oak usa una ficha de diagnóstico, barras de medias y detalles evolutivos plegados. Entrenamiento presenta Novato/Aprendiz/Competente/Experto/Maestro/Máximo junto a barra y valor discreto. No cambia requisitos, fisiología ni recompensas.
 
@@ -255,4 +263,4 @@ Testing solo se construye para localhost, 127.0.0.1 o loopback IPv6; reset, salt
 
 `hatch.mon.language` conserva la preferencia local; el envelope cloud usa `preferences.language`. Un valor ausente o distinto de `es`/`en` vuelve a español. No cambia el schema de criatura. El mapa temporal de mensajes permite retraducir feedback visible; no se persiste. Al cargar se descarta únicamente el feedback transitorio antiguo.
 
-`node --test tests/*.test.cjs` comprueba catálogo, persistencia, renders y detección razonable de literales visibles. El detector está en `tests/i18n-audit.cjs`; no sustituye una revisión de código. La auditoría y excepciones están en `I18N_AUDIT.md`. El build vigente es `python3 tools/buildMobileRuntime.py --optimize`: regenera `dist/` desde source, sin compilación npm ni typecheck configurado.
+`node --test tests/*.test.cjs` comprueba catálogo, persistencia, renders y detección razonable de literales visibles. El detector está en `tests/i18n-audit.cjs`; no sustituye una revisión de código. La auditoría y excepciones están en `I18N_AUDIT.md`. El build vigente es `python3 tools/buildMobileRuntime.py`: regenera `dist/` desde source, sin compilación npm ni typecheck configurado.

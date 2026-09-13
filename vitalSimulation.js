@@ -26,16 +26,17 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
     food:'illness.food'}};
 const BREEDING_CONFIG={lifeStage:'MADURO',happiness:70,minCare:40,maxPoops:1,maxDirt:50,oncePerLife:true};
 const PERSONALITY_CONFIG=Object.freeze({
-  sleepy:{labelKey:'personality.sleepy',fatigueGain:1.15,socialDemand:1,hungerPrompt:1},
-  glutton:{labelKey:'personality.glutton',fatigueGain:1,socialDemand:1,hungerPrompt:1.15},
-  playful:{labelKey:'personality.playful',fatigueGain:1,socialDemand:1.25,hungerPrompt:1},
-  independent:{labelKey:'personality.independent',fatigueGain:1,socialDemand:.6,hungerPrompt:1},
-  affectionate:{labelKey:'personality.affectionate',fatigueGain:1,socialDemand:1.25,hungerPrompt:1},
-  mischievous:{labelKey:'personality.mischievous',fatigueGain:1,socialDemand:1,hungerPrompt:1},
-  patient:{labelKey:'personality.patient',fatigueGain:1,socialDemand:.8,hungerPrompt:.8},
-  complainer:{labelKey:'personality.complainer',fatigueGain:1,socialDemand:1.15,hungerPrompt:1.2}
+  sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},
+  glutton:{labelKey:'personality.glutton',socialDemand:1,hungerPrompt:1.15},
+  playful:{labelKey:'personality.playful',socialDemand:1.25,hungerPrompt:1},
+  independent:{labelKey:'personality.independent',socialDemand:.6,hungerPrompt:1},
+  affectionate:{labelKey:'personality.affectionate',socialDemand:1.25,hungerPrompt:1},
+  mischievous:{labelKey:'personality.mischievous',socialDemand:1,hungerPrompt:1},
+  patient:{labelKey:'personality.patient',socialDemand:.8,hungerPrompt:.8},
+  complainer:{labelKey:'personality.complainer',socialDemand:1.15,hungerPrompt:1.2}
 });
-const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,restStart:30,restEnd:50,napLimitMinutes:90,napThreshold:40,napEnergyThreshold:25,autoSleepThreshold:75,fatiguePerMinute:5/60,recoveryPerMinute:20/60});
+// napLimitMinutes se conserva únicamente para normalizar y validar saves legacy.
+const SLEEP_CONFIG=Object.freeze({nightStart:21,nightEnd:9,restStart:30,restEnd:50,napLimitMinutes:90});
 globalThis.Vital=(()=>{
   const vitalText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   const bound=(x,a=0,b=CARE_CONFIG.max)=>Math.min(b,Math.max(a,x));
@@ -86,7 +87,6 @@ globalThis.Vital=(()=>{
     s.sleep.napping=s.sleep.napping===true;
     s.sleep.energyResting=s.sleep.energyResting===true;
     if(typeof s.sleep.napDay!=='string'||!s.sleep.napDay)s.sleep.napDay=sleepDay(timestamp);
-    if(s.sleep.napDay!==sleepDay(timestamp)){s.sleep.napDay=sleepDay(timestamp);s.sleep.napMinutes=0;s.sleep.napping=false;}
     return s.sleep;
   }
   function energyResting(s){
@@ -96,7 +96,7 @@ globalThis.Vital=(()=>{
     return sleep.energyResting;
   }
   function sleepPermission(s,timestamp=Date.now()){
-    return isNight(timestamp)||energyResting(s)?{ok:true,napping:false}:{ok:false,reason:'notSleepy'};
+    return isNight(timestamp)||energyResting(s)?{ok:true}:{ok:false,reason:'notSleepy'};
   }
   function sleepTick(s,timestamp=Date.now()){
     energyResting(s);

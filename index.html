@@ -491,10 +491,10 @@ function careAction(action,rng=Math.random){
   if(!Object.hasOwn(COST,action))return false;
   if(!allowed(action)){if(alive()){if(action==='jugar'&&Vital.energyResting(state))state.message=t('care.resting');else denied();}return false;}
   if(action==='luz'){
-    if(state.lightsOff){state.lightsOff=false;state.sleep.napping=false;state.message=t('care.lightsOn');return true;}
+    if(state.lightsOff){state.lightsOff=false;state.message=t('care.lightsOn');return true;}
     const permission=Vital.sleepPermission(state);
     if(!permission.ok){state.message=t(`sleep.${permission.reason}`,{name:current().name});return false;}
-    state.lightsOff=true;state.sleep.napping=permission.napping;state.message=t('care.lightsOff');return true;
+    state.lightsOff=true;state.message=t('care.lightsOff');return true;
   }
   const usefulCare=action==='alimentar'?state.care.hambre<100:action==='limpiar'?(state.care.higiene<100||state.vital.dirt>0||state.vital.poops.length>0):true;
   spend(COST[action]);

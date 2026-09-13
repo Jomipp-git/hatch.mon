@@ -7,12 +7,13 @@ async function fixture(){
 }
 test('legacy, partial and current saves load/reopen without losing progress; migration is idempotent',async()=>{
  const base=await fixture();
- const variants=[s=>{delete s.personality;delete s.sleep;delete s.attentionEvent;delete s.attentionMeta;delete s.attentionSettings},s=>{delete s.sleep},s=>{s.sleep={napDay:s.sleep.napDay}},s=>{s.sleep={fatigue:43,custom:'keep'}},s=>{delete s.attentionMeta;delete s.attentionSettings},s=>{s.attentionMeta={types:{hunger:{custom:'keep'}}};s.attentionSettings={}},()=>{}];
+ const variants=[s=>{delete s.personality;delete s.sleep;delete s.attentionEvent;delete s.attentionMeta;delete s.attentionSettings},s=>{delete s.sleep},s=>{s.sleep={napDay:s.sleep.napDay}},s=>{s.sleep={fatigue:43,napDay:'2020-1-1',napMinutes:90,napping:true,napUsed:90,napStart:123,napReason:'legacy',custom:'keep'}},s=>{delete s.attentionMeta;delete s.attentionSettings},s=>{s.attentionMeta={types:{hunger:{custom:'keep'}}};s.attentionSettings={}},()=>{}];
  for(const change of variants)for(const cloud of [false,true]){
   const original=copy(base);change(original);original.extension={keep:true};
   const h=await setup({initialSave:original,cloud});assert.equal(h.run('validSave(state)'),true);
   const migrated=JSON.parse(h.run('JSON.stringify(state)'));
   for(const key of ['pokemonId','coins','inventory','training','relationship','care','pokedex','milestones','social','nickname','gender','extension'])assert.deepEqual(migrated[key],original[key],key);
+  if(original.sleep?.custom==='keep')for(const [key,value] of Object.entries(original.sleep))assert.deepEqual(migrated.sleep[key],value,key);
   assert.equal(h.run('JSON.stringify(migrateSave(migrateSave(state)))'),h.run('JSON.stringify(state)'));
   const reopened=await setup({initialSave:JSON.parse(h.storage.get('hatch.mon.v3')),cloud});
   assert.equal(reopened.run('state.personality'),migrated.personality);assert.equal(reopened.run('validSave(state)'),true);
@@ -70,8 +71,10 @@ test('browser permission rejection is handled without an unhandled promise',asyn
 });
 test('daytime waking ignores legacy Fatigue and nap accounting',async()=>{
  const h=await setup({initialSave:await fixture()}),morning=new Date(2026,0,2,9).getTime();
- h.run(`state.lightsOff=true;state.sleep.fatigue=80;state.sleep.napping=false;for(let i=0;i<90;i++)Vital.sleepTick(state,${morning}+i*60000)`);
- assert.equal(h.run('state.sleep.napMinutes'),0);assert.equal(h.run('state.lightsOff'),false);
+ h.run(`state.lightsOff=true;state.sleep.fatigue=80;state.sleep.napDay='2020-1-1';state.sleep.napMinutes=90;state.sleep.napping=true;for(let i=0;i<90;i++)Vital.sleepTick(state,${morning}+i*60000)`);
+ assert.equal(h.run('state.sleep.napMinutes'),90);assert.equal(h.run('state.sleep.napDay'),'2020-1-1');assert.equal(h.run('state.sleep.napping'),true);assert.equal(h.run('state.lightsOff'),false);
+ h.run('state.lightsOff=true;careAction("luz")');assert.equal(h.run('state.sleep.napping'),true);
+ h.run('state.lightsOff=true;Relationship.interact(state)');assert.equal(h.run('state.sleep.napping'),true);
  h.run(`state.lightsOff=true;state.sleep.napping=false;state.sleep.fatigue=0;Vital.sleepTick(state,${morning})`);assert.equal(h.run('state.lightsOff'),false);
 });
 test('rejected remote save preserves local cache and cannot be uploaded over cloud',async()=>{

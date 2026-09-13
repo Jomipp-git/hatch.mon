@@ -484,20 +484,22 @@ function canSpend(cost){return alive()&&!interactionLocked()&&state.trainer.ener
 function spend(cost){if(!canSpend(cost))return false;state.trainer.energy=Math.max(0,state.trainer.energy-cost);return true;}
 function denied(){state.message=t('care.noActions');}
 const COST=CARE_CONFIG.costs;
+// Why the companion cannot be put to bed right now; also the disabled button's tooltip.
+const sleepBlockedText=()=>t(`sleep.${Vital.sleepPermission(state).reason}`,{name:current().name});
 function allowed(action){
-  if(action==='luz')return alive()&&!interactionLocked(); // Despertar nunca cuesta AP.
+  // Despertar nunca cuesta AP ni se bloquea; acostar exige que sea de noche o que ya tenga sueño,
+  // así el botón queda deshabilitado en vez de aceptar la pulsación y responder que no puede.
+  if(action==='luz')return alive()&&!interactionLocked()&&(state.lightsOff||Vital.sleepPermission(state).ok);
   return canSpend(COST[action])&&(!state.lightsOff||['curar','auxiliar'].includes(action))&&
     (action==='auxiliar'?state.phase==='critical':state.phase==='alive')&&
     (action!=='curar'||state.pokerus)&&(action!=='jugar'||(!Vital.energyResting(state)&&state.care.energia>=CARE_CONFIG.play.energy));
 }
 function careAction(action,rng=Math.random){
   if(!Object.hasOwn(COST,action))return false;
-  if(!allowed(action)){if(alive()){if(action==='jugar'&&Vital.energyResting(state))state.message=t('care.resting');else denied();}return false;}
+  if(!allowed(action)){if(alive()){if(action==='jugar'&&Vital.energyResting(state))state.message=t('care.resting');
+    else if(action==='luz'&&!state.lightsOff)state.message=sleepBlockedText();else denied();}return false;}
   if(action==='luz'){
-    if(state.lightsOff){state.lightsOff=false;state.message=t('care.lightsOn');return true;}
-    const permission=Vital.sleepPermission(state);
-    if(!permission.ok){state.message=t(`sleep.${permission.reason}`,{name:current().name});return false;}
-    state.lightsOff=true;state.message=t('care.lightsOff');return true;
+    state.lightsOff=!state.lightsOff;state.message=t(state.lightsOff?'care.lightsOff':'care.lightsOn');return true;
   }
   const usefulCare=action==='alimentar'?state.care.hambre<100:action==='limpiar'?(state.care.higiene<100||state.vital.dirt>0||state.vital.poops.length>0):true;
   spend(COST[action]);
@@ -1052,7 +1054,7 @@ function render(forceFeedback=false){
   if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label',t('ui.poopAria'));poopLayer.append(node);}
   $('health').textContent=health;$('health').hidden=!health;$('health').dataset.attention=attention?state.attentionEvent.severity:'';
   if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
-  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));}});
+  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));if(b.disabled&&alive()&&!state.lightsOff&&!interactionLocked())b.title=sleepBlockedText();}});
   document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
   const actionPoints=Math.floor(state.trainer.energy+1e-8),actionIndicator=$('trainer-energy');
   const pips=el('span',undefined,'action-pips');pips.setAttribute('aria-hidden','true');

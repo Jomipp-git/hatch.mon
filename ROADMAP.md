@@ -149,7 +149,7 @@ o intercambio.
 ## Bloque C · Feedback de beta testers
 
 ### C1 · Botón Dormir deshabilitado cuando no procede
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14
 
 Si el Pokémon no puede dormir en ese momento, el botón debe aparecer deshabilitado y la interfaz
 debe dejar claro que la acción no está disponible **antes** de pulsarla.

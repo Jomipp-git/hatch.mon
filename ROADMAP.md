@@ -198,11 +198,13 @@ Los popups que hoy solo se cierran con la X deben cerrarse también al tocar fue
 
 Hoy no sigue el orden de la Pokédex; Growlithe y Arcanine deberían ir seguidos.
 
-### D4 · Tienda ordenada por tipo y con tarjetas más compactas
-**Estado:** Pendiente
+### D4 · Mochila ordenada por tipo y con tarjetas más compactas
+**Estado:** Hecho · 2026-09-14
 
-Agrupar por familia de objeto (bayas con bayas, piedras con piedras). Los elementos son
-demasiado grandes: la tarjeta necesita bajar de tamaño.
+Confirmado que la petición era sobre la **Mochila**, no la tienda: la tienda solo muestra tres
+objetos al día elegidos al azar por fecha, así que agrupar ahí no aporta. La Mochila agrupa por
+`itemCatalog[id].kind` (bayas, objetos de evolución, medicina, bebidas), omite grupos vacíos y usa
+filas compactas. La rotación diaria de la tienda no cambia.
 
 ### D5 · Sprite no responde al modo monocromo de iOS
 **Estado:** Pendiente

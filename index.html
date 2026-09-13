@@ -42,6 +42,9 @@
   #restart{width:100%;margin-top:16px}
   dialog{width:min(92vw,480px);max-height:85svh;overflow:auto;border:2px solid var(--border);border-radius:20px;padding:22px;background:#f4f1f8;color:var(--ink);box-shadow:0 20px 70px #0003}
   dialog::backdrop{background:#29223480}dialog header{position:sticky;top:-22px;background:#f4f1f8;padding:8px 0;z-index:1}dialog h2{font-size:1.2rem}#close-panel{min-width:44px}
+  .panel-group{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#6d6480;margin:16px 0 0}.panel-group:first-child{margin-top:0}
+  .panel-row.compact{padding:7px 0;gap:8px}.panel-row.compact strong{font-size:.9rem}.panel-row.compact p{font-size:.78rem;margin:1px 0 0;color:#6d6480}.panel-row.compact button{min-height:34px;padding:5px 10px}
+  .panel-row.compact.route{padding-left:18px;border-top:0}
   .panel-row{padding:14px 0;border-top:1px solid #d7d1df;display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-row div{flex:1;min-width:0}.panel-row p{font-size:.875rem;margin:5px 0}.panel-row button{font-size:.875rem;flex-shrink:0}.panel-row ul{padding-left:20px;font-size:.875rem}.panel-note{font-size:.875rem;margin:8px 0 18px}
   .screen{transition:background .4s,color .4s}.screen.lights-off{background:#61796b;color:#f0f4dc}.lights-off progress::-webkit-progress-bar{background:#718779}
   .identity{display:flex;align-items:center;justify-content:center;gap:8px}#gender{font-size:1.2rem;font-weight:bold}#gender[data-gender="male"]{color:#2462bc}#gender[data-gender="female"]{color:#bd314e}.lights-off #gender[data-gender="male"]{color:#83baff}.lights-off #gender[data-gender="female"]{color:#ff93ae}
@@ -297,17 +300,25 @@ const EGG_SPRITES={columns:4,rows:4,phases:{
 const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
 const RETIRED_ITEM_IDS=Object.freeze(['alola','galar','dawn','oval']);
 const itemCatalog={
-  thunder:{get name(){return t('item.thunder');},icon:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',price:180},
-  leaf:{get name(){return t('item.leaf');},icon:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',price:185},
-  shiny:{get name(){return t('item.shiny');},icon:'light',price:190},
-  electirizer:{get name(){return t('item.electirizer');},icon:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',price:170},
-  berry:{get name(){return t('item.berry');},icon:'food',food:true,price:35},
-  berryStrength:{get name(){return t('item.berryStrength');},icon:'food',food:true,attribute:'strength',price:75},
-  berryIQ:{get name(){return t('item.berryIQ');},icon:'food',food:true,attribute:'iq',price:75},
-  berryKindness:{get name(){return t('item.berryKindness');},icon:'food',food:true,attribute:'kindness',price:75},
-  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',heal:true,price:70},
-  tea:{get name(){return t('item.tea');},icon:'food',care:{energia:50},price:50}
+  thunder:{get name(){return t('item.thunder');},icon:'stone',kind:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',kind:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',kind:'stone',price:180},
+  leaf:{get name(){return t('item.leaf');},icon:'stone',kind:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',kind:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',kind:'stone',price:185},
+  shiny:{get name(){return t('item.shiny');},icon:'light',kind:'stone',price:190},
+  electirizer:{get name(){return t('item.electirizer');},icon:'stone',kind:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',kind:'stone',price:170},
+  berry:{get name(){return t('item.berry');},icon:'food',kind:'berry',food:true,price:35},
+  berryStrength:{get name(){return t('item.berryStrength');},icon:'food',kind:'berry',food:true,attribute:'strength',price:75},
+  berryIQ:{get name(){return t('item.berryIQ');},icon:'food',kind:'berry',food:true,attribute:'iq',price:75},
+  berryKindness:{get name(){return t('item.berryKindness');},icon:'food',kind:'berry',food:true,attribute:'kindness',price:75},
+  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',kind:'berry',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',kind:'medicine',heal:true,price:70},
+  tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50}
 };
+// Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
+const ITEM_GROUPS=['berry','stone','medicine','drink'];
+const itemDetail=id=>{const item=itemCatalog[id];
+  return item.kind==='berry'?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):
+    item.kind==='drink'?t('ui.inventory.tea'):item.kind==='medicine'?t('ui.inventory.medicine'):t('ui.inventory.evolution');};
+const shopDetail=id=>{const item=itemCatalog[id];
+  return item.kind==='berry'?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):
+    item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):t('ui.shop.evolutionItem');};
 const COIN_REWARDS=Object.freeze([0,2,4,7,11,16]);
 const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))];
 const shopDayKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
@@ -780,7 +791,7 @@ function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefine
 function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
 function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
 function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(pixelIcon(key),el('span',text));return n;}
-function row(title,detail,button){const r=el('div',undefined,'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
+function row(title,detail,button,cls){const r=el('div',undefined,cls?'panel-row '+cls:'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
 const DISPLAY_PREFERENCE_KEY='hatch.mon.displayMode';
 const LANGUAGE_PREFERENCE_KEY='hatch.mon.language';
 try{I18n?.setLanguage(gameStorage.getItem(LANGUAGE_PREFERENCE_KEY)||'es');}catch{}
@@ -811,12 +822,18 @@ function renderPanel(){
     content.append(el('p',t('ui.inventory.itemCost',{care:CARE_CONFIG.itemAP,evolution:CARE_CONFIG.evolutionItemAP}), 'panel-note'));
     const entries=Object.entries(state.inventory).filter(([,n])=>n>0);
     if(!entries.length)content.append(el('p',t('ui.inventory.empty')));
-    for(const[id,n]of entries){
-      const item=itemCatalog[id],routes=current()?.rules.filter(r=>r.item===id)||[];
-      const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),id==='tea'?t('ui.inventory.tea'):item.food?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):item.care?t('ui.inventory.food'):item.heal?t('ui.inventory.medicine'):t('ui.inventory.evolution'));
-      content.append(entry);
-      if(item.care||item.heal||item.food)entry.append(panelButton(t('use'),()=>useItem(id),!itemUsable(id),id));
-      for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton(t('evolve'),()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`)));
+    // Agrupado por tipo y en filas compactas: el catálogo cabe de un vistazo aunque lo tengas entero.
+    for(const group of ITEM_GROUPS){
+      const owned=entries.filter(([id])=>itemCatalog[id].kind===group);
+      if(!owned.length)continue;
+      content.append(el('h3',t(`item.group.${group}`),'panel-group'));
+      for(const[id,n]of owned){
+        const item=itemCatalog[id],routes=current()?.rules.filter(r=>r.item===id)||[];
+        const entry=row(iconLabel(item.icon,`${item.name} ×${n}`),itemDetail(id),null,'compact');
+        content.append(entry);
+        if(item.care||item.heal||item.food)entry.append(panelButton(t('use'),()=>useItem(id),!itemUsable(id),id));
+        for(const r of routes)content.append(row(evolutionConfig[r.to].name,'',panelButton(t('evolve'),()=>useItem(id,r.to),!itemUsable(id)||!conditionsMet(r),`${id}:${r.to}`),'compact route'));
+      }
     }
   }
   if(panelName==='training'){
@@ -827,8 +844,8 @@ function renderPanel(){
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
     for(const id of dailyShop()){
-      const item=itemCatalog[id],description=id==='tea'?t('ui.shop.tea'):item.heal?t('ui.shop.heal'):item.food?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):t('ui.shop.evolutionItem');
-      content.append(row(iconLabel(item.icon,t('ui.shop.item',{name:itemLabel(id),price:item.price})),description,panelButton(t('buy'),()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
+      const item=itemCatalog[id];
+      content.append(row(iconLabel(item.icon,t('ui.shop.item',{name:itemLabel(id),price:item.price})),shopDetail(id),panelButton(t('buy'),()=>buyShopItem(id),state.coins<item.price,`shop-${id}`)));
     }
   }
   if(panelName==='settings'){

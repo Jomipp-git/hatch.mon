@@ -677,7 +677,9 @@ function breedFromCode(code){
 }
 function rememberDeath(){
   if(state.phase!=='dead'||state.social.memorials.some(e=>e.id===state.social.active.id))return;
-  state.social.memorials.push({...activeEntity(),isShiny:state.social.active.isShiny===true,canonicalSpeciesId:PokemonData.canonicalId(state.pokemonId),diedAt:Date.now(),bond:state.relationship?.points||0});
+  const memorial={...activeEntity(),isShiny:state.social.active.isShiny===true,canonicalSpeciesId:PokemonData.canonicalId(state.pokemonId),diedAt:Date.now(),bond:state.relationship?.points||0};
+  memorial.snapshot.remainder=0;
+  state.social.memorials.push(memorial);
 }
 function incubateStoredEgg(id){
   if(alive()||interactionLocked())throw Error(t('connect.activeCompanionPresent'));
@@ -713,6 +715,7 @@ function migrateSave(data){
     Vital.ensureSleep(s,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   };
   migrateIndividual(data);
+  for(const memorial of data.social?.memorials||[])if(memorial?.snapshot)memorial.snapshot.remainder=0;
   Attention.ensure(data,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   for(const entity of [...(data.social?.eggs||[]),...(data.social?.memorials||[])])migrateIndividual(entity?.snapshot);
   return data;

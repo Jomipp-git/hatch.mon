@@ -42,6 +42,24 @@ test('legacy eggs, stored eggs, critical companions and memorial snapshots migra
   assert.equal(restored.run('JSON.stringify(migrateSave(state))'),restored.run('JSON.stringify(migrateSave(state))'));
  }
 });
+test('death during offline catch-up stores a valid memorial and legacy oversized remainder self-repairs',async()=>{
+ const h=await setup({initialSave:await fixture()});
+
+ h.run('state.remainder=0;minuteStep=()=>die("natural");advanceGameTime(180000,Date.now())');
+
+ assert.equal(h.run('state.phase'),'dead');
+ assert.equal(h.run('state.remainder'),0);
+ assert.equal(h.run('state.social.memorials.at(-1).snapshot.remainder'),0);
+ assert.equal(h.run('validSave(state)'),true);
+
+ const legacy=JSON.parse(h.run('JSON.stringify(state)'));
+ legacy.social.memorials.at(-1).snapshot.remainder=1632620;
+
+ const restored=await setup({initialSave:legacy,cloud:true});
+ assert.equal(restored.run('state.social.memorials.at(-1).snapshot.remainder'),0);
+ assert.equal(restored.run('validSave(state)'),true);
+});
+
 test('ordinary minute timestamps do not turn physiological autosaves into immediate cloud writes',async()=>{
  const h=await setup({initialSave:await fixture()}),calls=[];h.win.HatchCloud={queue:options=>calls.push(options)};
  h.run('save();minuteStep();save()');assert.equal(calls.at(-1).immediate,false);

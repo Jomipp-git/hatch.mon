@@ -8,7 +8,9 @@
 <style>
   :root{color-scheme:light;--ink:#303d35;--lcd:#d5dfd0;--shell:#bbb3cf;--border:#5c546b;--paper:#f3f0f7;--sprite-size:clamp(140px,32vw,160px)}
   *{box-sizing:border-box} [hidden]{display:none!important}
-  body{margin:0;min-height:100svh;display:grid;place-items:center;padding:28px 16px;background:#e9e7ed;color:var(--ink);font:16px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
+  /* manipulation drops the 300 ms double-tap-to-zoom Safari applies to a game of repeated taps,
+     while leaving panning and pinch zoom —the accessible gestures— untouched. */
+  body{margin:0;min-height:100svh;display:grid;place-items:center;padding:28px 16px;background:#e9e7ed;color:var(--ink);font:16px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;touch-action:manipulation}
   button{font:inherit;color:inherit;cursor:pointer;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--paper);padding:10px 12px;transition:background .15s,transform .15s}
   button:hover:enabled{background:#fff} button:active:enabled{transform:translateY(2px)} button:disabled{opacity:.45;cursor:not-allowed}
   button:focus-visible{outline:3px solid #466a4e;outline-offset:4px}

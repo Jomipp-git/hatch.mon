@@ -401,6 +401,7 @@ function evolve(r,item=null,testing=null){
   state.pokemonId=r.to;state.stage++;state.stageAge=0;state.averages={sum:zeroCare(),count:0};state.sustained={};state.actions={};
   state.message=t('evolution.success',{from:evolutionConfig[previous].name,to:current().name});
   Relationship.reward(state,'evolve');Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);Pokedex.record(state.pokedex,state.pokemonId,'evolved',null,state.social.active.isShiny===true);
+  ShellSkins.observe(state);
   evolutionSerial++;return true;
 }
 // Herramienta explícita de Oak. Solo transiciones canónicas del repertorio actual.
@@ -568,6 +569,7 @@ function hatch(rng=Math.random){
   state.social.active.isShiny=Shiny.enabled?Shiny.roll(state.pokemonId,rng):false;
   state.gender=PokemonData.gender(state.pokemonId,rng);state.personality=Vital.personalityFor(rng);Vital.ensureSleep(state);state.vital=Vital.fresh(state.social.active.id);state.relationship=Relationship.fresh();
   Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);
+  ShellSkins.observe(state);
   state.birthScene=true;state.nicknamePending=false;state.message=t('egg.hatchStart');return true;
 }
 function heat(rng=Math.random){

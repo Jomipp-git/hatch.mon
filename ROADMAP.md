@@ -183,18 +183,18 @@ progresivamente más. Definir la curva **después** de analizar el cálculo actu
 ## Bloque D · Segunda tanda de testers
 
 ### D1 · Doble toque no debe hacer zoom en iPhone
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14 (`7d190f1`)
 
 Safari iOS amplía al doble toque. En un juego de toques repetidos eso interrumpe el juego.
 
 ### D2 · Popups flotantes se cierran tocando fuera
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14 (`93384d1`)
 
 Los popups que hoy solo se cierran con la X deben cerrarse también al tocar fuera del panel.
 **Excepción: los minijuegos**, para no salir por accidente a media partida.
 
 ### D3 · Pokédex ordenada por número de Pokédex
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14 (`4a2cbce`)
 
 Hoy no sigue el orden de la Pokédex; Growlithe y Arcanine deberían ir seguidos.
 
@@ -211,7 +211,7 @@ Con el filtro de escala de grises de iPhone activado, el sprite del Pokémon sig
 tanto en Safari como en Chrome. El resto de la interfaz sí cambia.
 
 ### D6 · Carcasa al obtener el Pokémon, no al madurar
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14 (`pendiente`)
 
 Hoy la carcasa se desbloquea al llegar a etapa madura. Debe desbloquearse al conseguir la
 especie: al obtenerla si es primera fase, y en cuanto se evolucione en las siguientes.
@@ -231,6 +231,18 @@ repartir eso por otros paneles.
 **Estado:** Pendiente
 
 Canal dentro del juego para que los jugadores envíen consejos y recomendaciones.
+
+---
+
+## Incidencias abiertas
+
+### Flake intermitente en `tests/vital.test.cjs`
+Falla ~2 de cada 30 pasadas de la suite completa, nunca en aislado (0/60) ni reproducible a
+demanda (0/29 pasadas completas seguidas). El fichero no usa `test()`, así que el runner solo
+reporta `'test failed'` sin el texto del error. `vital.test.cjs` no estabiliza el reloj —su
+contexto no sustituye `Date`—, así que hay tiempo real filtrándose al estado; la longitud del
+código QR que imprime varía entre ejecuciones por eso. Es la hipótesis, no un diagnóstico:
+capturar la salida completa la próxima vez que ocurra antes de tocar nada.
 
 ---
 

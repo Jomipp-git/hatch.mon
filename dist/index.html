@@ -1148,6 +1148,15 @@ for(const k of CARE)$(k).addEventListener('animationend',()=>$(k).classList.remo
 document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>dispatch(()=>careAction(b.dataset.action),(b.dataset.action==='luz'?(state.lightsOff?'normal':'sleep'):({alimentar:'eat',jugar:'play',limpiar:'clean'})[b.dataset.action]))));
 document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>showPanel(b.dataset.panel)));
 $('close-panel').addEventListener('click',closePanel);dialog.addEventListener('close',()=>{disposeMemorialSprites();stopSocialCamera();panelName=null;});
+// Tapping the backdrop dismisses the menu. A modal dialog's backdrop reports the dialog itself as
+// the target, so the pointer has to fall outside its box; requiring the press to start there too
+// keeps a selection that drifts out from closing the panel. #training-game is deliberately absent:
+// a minigame only ends through its own controls.
+const outsidePanel=event=>{const box=dialog.getBoundingClientRect();
+  return event.target===dialog&&(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom);};
+let backdropPress=false;
+dialog.addEventListener('pointerdown',event=>{backdropPress=outsidePanel(event);});
+dialog.addEventListener('click',event=>{const press=backdropPress;backdropPress=false;if(press&&outsidePanel(event))closePanel();});
 $('oak-portrait').addEventListener('click',()=>unlockAdminCheats());
 function resetGame(){
   if(!canUseTesting())return false;

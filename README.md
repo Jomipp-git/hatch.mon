@@ -280,6 +280,8 @@ Configuración → Carcasa permite elegir Hatch.mon o una edición desbloqueada.
 
 Pedir espacio usa Hurt → Cringe → Pain → Idle. Amabilidad conserva los objetos durante una pulsación capturada y separa tandas con 300 ms sin input. Fuerza aumenta la velocidad por ronda, con preparación independiente; Estilo usa arrastre sobre curvas, onda, S, espiral y combinación final; marca progreso y una estela pixel-art. Intelecto conserva sus cinco rondas.
 
+El menú flotante se cierra con la ✕, con Escape o tocando el fondo. El toque de fondo exige que la pulsación empiece y termine fuera de la caja del diálogo, así que una selección que se sale por accidente no lo cierra. El diálogo de minijuego queda deliberadamente fuera: solo se sale con sus propios controles.
+
 La colección muestra todas las posiciones del roster, incluidas `???`, con filtro de variante secundario y detalle plegable de formas descubiertas. Memorias mantiene tarjetas de individuos. La escala de listas utiliza el área alfa de Idle (`assets/pmd/listMetrics.js`, generado por `tools/generateListMetrics.py`), con masa objetivo y límites de encuadre; el renderer principal no cambia. Se revisó una lámina del trío Togepi/Togetic/Togekiss, no la app en navegador.
 
 Los motivos especiales se centralizan en `assets/skins/motifOverrides.json`: la línea Togepi usa triángulos rojos/azules discretos. Para nuevas carcasas, revisar paleta y añadir un motivo reconocible antes de considerarlas terminadas; una banda genérica de los temas anteriores no sustituye esa revisión.

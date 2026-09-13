@@ -1,5 +1,8 @@
 import {client,auth,humanError} from './authService.mjs';
 import {createCloudSaveService,userStorage,snapshotCache} from './cloudSaveService.mjs';
+// Asset cache only; see sw.js. A registration failure must never block the game from starting.
+if('serviceWorker' in navigator&&isSecureContext)
+ addEventListener('load',()=>void navigator.serviceWorker.register('sw.js').catch(()=>{}));
 const $=id=>document.getElementById(id),t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key,gate=$('auth-gate'),game=$('game-root'),message=$('auth-message');
 const ADMIN_UID='a81c13f7-a9d6-46d5-aa5c-66512b25ed68';
 let started=false,starting=false,userId=null,service=null,recovery=new URLSearchParams(location.search).has('recovery'),mode=recovery?'update':'login',busy=false,leaving=false;

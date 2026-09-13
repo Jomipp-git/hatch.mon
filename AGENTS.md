@@ -4,7 +4,7 @@
 
 - Web estática sin compilación ni `package.json`. `index.html` orquesta el juego y carga los módulos como scripts diferidos (`data-game-src`); solo `appBootstrap.mjs`, `authService.mjs` y `cloudSaveService.mjs` son módulos ES. `appEnvironment.js` e `i18n.js` se cargan directos.
 - Rama única `main`, sin ramas de trabajo. El agente entrega cambios en local y **nunca** ejecuta `git commit` ni `git push`; eso lo hace la persona. Un push a `main` publica el sitio, así que deja el árbol coherente y señala cualquier artefacto que quede pendiente de regenerar.
-- `dist/` es artefacto generado y versionado (`python3 tools/buildMobileRuntime.py --optimize`, allowlist desde `index.html`). No se edita a mano. Tocar runtime (JS/HTML de raíz o assets incluidos) deja `dist/` desfasado: regenéralo o avísalo de forma explícita en la entrega.
+- `dist/` es artefacto generado y versionado (`python3 tools/buildMobileRuntime.py --optimize`, allowlist desde `index.html` más `sw.js`). No se edita a mano. El build sella el ID de compilación dentro de `sw.js`, así que esa línea también es generada. Tocar runtime (JS/HTML de raíz o assets incluidos) deja `dist/` desfasado: regenéralo o avísalo de forma explícita en la entrega.
 - `hatchmonData_v2.js`, `evolutionTable.js` y `master/legacyIds.json` también son generados: se regeneran con `python3 tools/syncCanonical.py`, que propaga el Excel a datos, repertorio, assets PMD, carcasas, métricas y `dist/`. Solo entran al runtime las reglas con `MinAgeDays` informado y las especies que conectan. Los IDs legacy son claves de save: se anclan en `master/legacyIds.json` y nunca se reescriben.
 - `master/` guarda fuentes archivadas (Excel canónico, originales de assets, informes) y no participa en runtime. `assets/pmd/` contiene las 75 formas con variante `shiny/`; `tools/` las utilidades Python/Node.
 - `.rgignore` excluye `dist/`, catálogos, manifiestos y sprites, de modo que `rg` busca solo en fuente. Para inspeccionar lo excluido, usa rutas explícitas.
@@ -22,7 +22,7 @@
 
 ## Verificación
 
-- Suite completa desde la raíz: `node --test tests/*.test.cjs` (43 archivos, 99 pruebas). `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
+- Suite completa desde la raíz: `node --test tests/*.test.cjs` (44 archivos, 103 pruebas). `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
 - Comprobaciones aparte: `node tools/projectStatus.cjs` (roster y cobertura de assets) y `PLAYWRIGHT_MODULE="$(npm root -g)/playwright" node tests/browser-recovery.cjs`, que abre Chrome real con todas las peticiones interceptadas y valida la build de `dist/`.
 - Servidor local: `python3 -m http.server 8080 --bind 127.0.0.1`. Nunca `file://`; no existe `npm run dev`.
 - Si una verificación no se puede ejecutar, dilo en la entrega y márcala como no ejecutada; no la des por hecha ni la deduzcas del código.

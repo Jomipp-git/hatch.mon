@@ -65,16 +65,30 @@ Límite conocido y deliberado: las formas alternativas (sufijo distinto de `A0`)
 entrada explícita en el mapa `FORMS` del script. Sin ella el script falla en vez de adivinar.
 Se mantiene ese comportamiento.
 
-### A3 · Reescalado y optimización de imágenes al sincronizar
-**Estado:** Bloqueado (espera decisión)
+### A3 · Consumo de datos y caché de assets
+**Estado:** Hecho · 2026-09-14
 
-Lo que hoy existe: `tools/buildMobileRuntime.py --optimize` recomprime PNG sin pérdida,
-reescala las hojas de huevo a 832×832 y el logo a 264×104 con nearest-neighbor, y guarda los
-originales en `master/asset-originals/`. Los sprites y portraits PMD **no** se reescalan: ya
-están por debajo de su tamaño útil en pantalla y solo se recomprimen. La escala visual del
-compañero se aplica en render (`scale: 3` en el metadata de cada sprite).
+El reescalado vigente se mantiene (huevos a 832×832, logo a 264×104, sprites PMD sin reescalar
+porque ya están por debajo de su tamaño útil; la escala visual se aplica en render con
+`scale: 3`). El objetivo se replanteó como reducir datos y acelerar la carga:
 
-Falta confirmar a qué reescalado se refiere la petición antes de tocar nada.
+- **Paleta exacta sin pérdida.** Los PNG con ≤256 colores RGBA se reescriben a PNG-8 con `tRNS`.
+  Los sprites PMD usaban 7–15 colores en RGBA de 32 bits. Runtime PNG: 18,5 MB → 8,4 MB (−55 %),
+  2131 de 2640 archivos en modo paleta, 2529 verificados píxel a píxel contra su original.
+- **Poda de datos canónicos** (ver A1): `hatchmonData_v2.js` 597 KB → 48 KB en bruto.
+- **Service worker** (`sw.js`): caché por build de medios inmutables bajo `assets/` y `vendor/`.
+  Una segunda visita no vuelve a descargar sprites ni huevos. Verificado en Chrome real.
+
+Pendiente por decidir, no aplicado:
+
+- **WebP sin pérdida.** Mediría −68 % sobre los sprites (frente al −55 % de la paleta) y −24 % en
+  las hojas de huevo, que son lo más pesado de la primera carga. Es exacto en alfa y en todo píxel
+  visible; solo difiere el RGB oculto bajo alfa 0. Implica renombrar ~2600 archivos y tocar
+  `syncPmdAssets.py`, el manifiesto y el builder, así que se deja como paso aparte.
+- **Huevos.** Las cinco hojas suman 1,9 MB y la primera carga baja dos (~800 KB). Son arte suavizado
+  de 50 000 colores, no pixel-art, así que la paleta no les aplica. Además se reescalan de
+  1256→832 con nearest en ratio no entero, lo que duplica píxeles de forma irregular: merece
+  revisión propia.
 
 ---
 

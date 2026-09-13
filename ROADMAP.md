@@ -11,7 +11,7 @@ Leyenda de estado: `Pendiente` · `En curso` · `Bloqueado (espera decisión)` �
 ## Bloque A · Pipeline de contenido canónico
 
 ### A1 · Propagación automática del workbook canónico
-**Estado:** En curso
+**Estado:** Hecho · 2026-09-14
 
 Al actualizar `master/pokemonTable_HatchMon_Canonical_v2.xlsx`, todos los artefactos generados
 deben reflejar el cambio antes del siguiente deploy, sin pasos manuales recordados de memoria.
@@ -36,21 +36,25 @@ Cadena de artefactos afectada por un alta de especie:
 | `tests/obtainable-roster.json` (golden) | — | **a mano** |
 | `dist/**` | `tools/buildMobileRuntime.py --optimize` | automático |
 
-Plan:
-1. Generar `evolutionTable.js` desde el workbook aplicando la regla `MinAgeDays`.
-2. Fijar los IDs legacy en un mapa versionado (`master/legacyIds.json`): son claves de save y no
-   pueden cambiar aunque cambie el `DisplayName` del Excel. Las altas nuevas reciben un slug
-   derivado del nombre; las existentes quedan ancladas.
-3. Orquestador único `tools/syncCanonical.py` que encadena la tabla de arriba en orden.
-4. Modo `--check` en toda la cadena + prueba en la suite que falla si algún artefacto está
-   desfasado respecto al workbook. Esa prueba es la garantía real: no se puede llegar a `main`
-   con estado obsoleto sin que `node --test tests/*.test.cjs` se ponga en rojo.
-5. Opcional: hook `pre-commit` que dispare el `--check` cuando el `.xlsx` esté en el índice.
+Entregado:
+1. `evolutionTable.js` y `hatchmonData_v2.js` se generan desde el workbook aplicando la regla.
+2. IDs legacy anclados en `master/legacyIds.json`, en el orden histórico del repertorio. Las altas
+   reciben un slug de `DisplayName` y se añaden al final; una colisión detiene la generación.
+3. Orquestador `python3 tools/syncCanonical.py` (`--check`, `--optimize`, `--refresh-assets`).
+4. `tests/canonical-pipeline.test.cjs`: 5 pruebas que fallan si un artefacto está desfasado, si una
+   especie admitida llega sin assets/shiny/carcasa/métricas o si `dist/` no refleja el runtime.
+5. Poda aplicada: el runtime pasó de 1100 especies y 526 reglas a 78 y 51 (597 KB → 48 KB en bruto,
+   41 KB → 3 KB con gzip). El workbook completo sigue archivado en `master/hatchmonData_v2.json`.
+6. Smoochum y Jynx entraron al repertorio (75 → 77 formas) con sus assets normales y shiny.
+7. Ditto se admite sin regla evolutiva: `contract['Ditto']` lo define como pareja de crianza y el
+   adapter necesita su ficha para enrutar el caso especial.
 
-Decisiones abiertas: ver «Preguntas abiertas» al final.
+Pendiente opcional: hook `pre-commit` que dispare el `--check` cuando el `.xlsx` esté en el índice.
+Hoy la garantía es la suite, que es donde de verdad se bloquea el deploy.
 
 ### A2 · Descarga automática de assets PMD para altas nuevas
-**Estado:** Pendiente (depende de A1)
+**Estado:** Hecho · 2026-09-14 (entregado junto a A1: sin los assets de las altas nuevas la suite
+queda en rojo, así que no eran separables)
 
 `tools/syncPmdAssets.py` ya descarga normal y shiny desde el repositorio SpriteCollab que
 alimenta sprites.pmdcollab.org, verifica identidad y subgrupo contra `tracker.json`, y regenera
@@ -59,7 +63,7 @@ dentro del orquestador.
 
 Límite conocido y deliberado: las formas alternativas (sufijo distinto de `A0`) exigen una
 entrada explícita en el mapa `FORMS` del script. Sin ella el script falla en vez de adivinar.
-Se mantiene ese comportamiento; el orquestador debe reportar el alta pendiente con claridad.
+Se mantiene ese comportamiento.
 
 ### A3 · Reescalado y optimización de imágenes al sincronizar
 **Estado:** Bloqueado (espera decisión)

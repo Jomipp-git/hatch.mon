@@ -1,5 +1,5 @@
 {
-  "total": 75,
+  "total": 77,
   "egg": [
     {
       "id": "pichu",
@@ -100,6 +100,10 @@
     {
       "id": "happiny",
       "name": "Happiny"
+    },
+    {
+      "id": "smoochum",
+      "name": "Smoochum"
     }
   ],
   "evolutionOnly": [
@@ -242,6 +246,10 @@
     {
       "id": "chansey",
       "name": "Chansey"
+    },
+    {
+      "id": "jynx",
+      "name": "Jynx"
     },
     {
       "id": "raichu",
@@ -554,6 +562,11 @@
     {
       "from": "chansey",
       "to": "blissey",
+      "enabled": true
+    },
+    {
+      "from": "smoochum",
+      "to": "jynx",
       "enabled": true
     }
   ]

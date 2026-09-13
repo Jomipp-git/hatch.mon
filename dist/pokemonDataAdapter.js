@@ -1,17 +1,15 @@
 /* Adaptador de la fuente generada v2. No duplica fichas biológicas.
- * Los alias solo enlazan nombres históricos con formas verificadas en la fuente.
+ * El repertorio generado aporta el canonicalId de cada ID legacy; aquí no se infiere ninguno.
  */
 'use strict';
 globalThis.PokemonData = (() => {
   const dataText=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
   if(HATCHMON_DATA.schemaVersion!==2)throw Error('Se requiere hatchmonData_v2.js (schemaVersion 2).');
   const records=new Map(HATCHMON_DATA.pokemon.map(p=>[p.PokemonId,p]));
-  const aliases={raichualola:'0026L0',toxtricityamp:'0849A0',toxtricitylow:'0849B0'};
   const legacyToCanonical=new Map(),canonicalToLegacy=new Map();
-  for(const [id,old] of Object.entries(evolutionTable)){
-    const matches=aliases[id]?[records.get(aliases[id])]:HATCHMON_DATA.pokemon.filter(p=>p.DisplayName===old.nombre);
-    if(matches.length!==1||!matches[0])throw Error(`No hay correspondencia canónica inequívoca para ${id}.`);
-    legacyToCanonical.set(id,matches[0].PokemonId);canonicalToLegacy.set(matches[0].PokemonId,id);
+  for(const [id,entry] of Object.entries(evolutionTable)){
+    if(!records.has(entry.canonicalId))throw Error(`No hay correspondencia canónica inequívoca para ${id}.`);
+    legacyToCanonical.set(id,entry.canonicalId);canonicalToLegacy.set(entry.canonicalId,id);
   }
   const canonicalId=id=>records.has(id)?id:legacyToCanonical.get(id)||null;
   const get=id=>records.get(canonicalId(id))||null;

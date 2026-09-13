@@ -24,9 +24,10 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callback de resultado a `train` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
 | `socialEngine.js` | HM1, validación, historial y compatibilidad offline | Adapter, Vital |
-| `pokemonDataAdapter.js` | Consulta canónica, alias de IDs y compatibilidad biológica | Datos v2, repertorio legacy |
+| `pokemonDataAdapter.js` | Consulta canónica, resolución de IDs y compatibilidad biológica | Datos v2, repertorio legacy |
 | `hatchmonData_v2.js` | Catálogo y reglas generados para runtime | Excel master, `tools/generateCanonicalData.py` |
-| `evolutionTable.js` | Repertorio runtime de 75 formas y nombres para resolver IDs | Consumido por adapter y orquestación |
+| `evolutionTable.js` | Repertorio runtime generado: ID legacy → canonicalId y nombre | Excel master, `tools/generateCanonicalData.py` |
+| `tools/syncCanonical.py` | Orquestador que propaga el Excel a todos los artefactos | Resto de generadores, Node, Pillow |
 
 `assets/` contiene huevos, logo y sprites; `vendor/` contiene QR y licencia. `tests/` reúne verificaciones y el inventario de assets. `master/` conserva fuentes archivadas, sin uso en runtime. `AGENTS.md` define el flujo de trabajo para futuras modificaciones.
 
@@ -34,8 +35,9 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 
 ## Reglas estructurales clave
 
-- `master/pokemonTable_HatchMon_Canonical_v2.xlsx` es la fuente maestra; `hatchmonData_v2.js` es su artefacto canónico de runtime para datos Pokémon y reglas evolutivas/biológicas. Consultar mediante el adapter; no completar datos ausentes por inferencia ni copiar el catálogo.
-- `evolutionTable.js` conserva repertorio e IDs históricos; no decide reglas canónicas ni proporciona gráficos al compañero activo.
+- `master/pokemonTable_HatchMon_Canonical_v2.xlsx` es la fuente maestra; `hatchmonData_v2.js` es su artefacto canónico de runtime para datos Pokémon y reglas evolutivas/biológicas, ya podado al repertorio admitido. Consultar mediante el adapter; no completar datos ausentes por inferencia ni copiar el catálogo.
+- `evolutionTable.js` es artefacto generado: no se edita a mano. Conserva los IDs legacy históricos —claves de save— y no decide reglas canónicas ni proporciona gráficos al compañero activo.
+- **Regla de admisión:** solo llegan al runtime las reglas de evolución con `MinAgeDays` informado y las especies que conectan. El resto del workbook se archiva en `master/hatchmonData_v2.json` y no se embarca. La única excepción es la especie del grupo huevo `Ditto`, que `contract['Ditto']` mantiene viva como pareja de crianza.
 - LifeStage depende de edad/lifespan; EvolutionStage depende de la especie. Son independientes.
 - Un solo compañero vivo activo, o un huevo incubándose. Los huevos guardados son inertes; no existe banco de criaturas vivas.
 - Muertos → Memorias, nunca reactivables. Perfiles vivos de QR sirven para crianza, no para almacenar compañeros.
@@ -84,6 +86,39 @@ El renderer usa `assets/pmd/manifest.js` con cobertura PMD normal 75/75 y shiny 
 La resolución está centralizada en `PMD_STATE_FALLBACKS`: normal→Idle; juego→Walk/Pose/Idle; sueño (luz apagada o descanso automático)→Sleep/Idle; despertar tocando→Wake/Pain/Hurt/Idle; encender luz con botón→Idle; comer→Eat validado/Idle con gesto propio; enfermedad→Hurt/Pain/Idle; cansancio→Laying/Sleep/Idle; sobresalto→Hurt/Cringe/Pain/Idle; caricias→Pose/Nod/Rotate/Idle; limpieza→Nod/Pose/Idle; entrenamiento→Hop/Idle (único uso de Hop); muerte→Faint/HitGround/Hurt/Idle antes de la lápida. Si un archivo falla, intenta el siguiente; si todos fallan, usa el marcador retro propio. Gameplay nunca espera a una imagen.
 
 PNG, sheets, bitmap y matrices siguen soportados. La escala principal parte de Idle (objetivo aproximado de 109 px de altura visible) y se ajusta a los cuerpos de los frames representativos, sin incluir el recorrido completo del salto. `frameBounds` separa cuerpo y desplazamiento; offsets internos mantienen centro y baseline y limitan el desplazamiento al borde sin cambiar escala. Animaciones extremas que no caben usan el siguiente fallback. El viewport y la consola siguen fijos. Pokédex y Memorias comparten `collectionSprite`, con Idle estático dimensionado para listas de 80 × 80 px. No hay portraits de reacción en la pantalla principal. Eat se acepta si los bounds de cada frame mantienen dimensiones próximas a Idle (tolerancia del 10 %) y desplazamientos internos de hasta 2 píxeles fuente; si falla o falta el archivo, Idle recibe un gesto de masticar de tres pulsos de 5 px y 3° durante 840 ms, sin escala ni elementos añadidos. Este filtro geométrico necesita revisión visual de las especies. El huevo baja 6 px sin cambiar tamaño; la pista sigue dentro del LCD. La cadencia sigue centralizada en `PMD_TIMING_CONFIG`. Las animaciones se pausan al ocultar la pestaña y respetan movimiento reducido. Los temporizadores visuales no alteran la simulación.
+
+## Propagación del workbook canónico
+
+Al cambiar `master/pokemonTable_HatchMon_Canonical_v2.xlsx`, una sola orden desde la raíz propaga
+el cambio a todos los artefactos generados:
+
+```sh
+python3 tools/syncCanonical.py
+```
+
+Encadena, en orden de dependencia: datos y repertorio canónicos → assets PMD normales y shiny de
+las formas nuevas → carcasas → métricas de lista → `dist/`. `--optimize` añade la recompresión de
+PNG al build; `--refresh-assets` vuelve a descargar lo que ya está en disco; `--check` no escribe
+nada y solo informa de desfases.
+
+**Qué entra al juego.** Solo las reglas de evolución con `MinAgeDays` informado y las especies que
+conectan. Una regla sin ese campo no se embarca, y una especie que solo aparece en reglas así
+tampoco. El workbook completo (1100 formas, 526 reglas) se conserva en `master/hatchmonData_v2.json`;
+el runtime embarca únicamente el repertorio admitido más la especie Ditto, que `contract['Ditto']`
+mantiene viva como pareja de crianza sin regla evolutiva propia.
+
+**IDs legacy.** Las claves de `evolutionTable.js` (`pichu`, `raichualola`) viajan dentro de los
+saves, así que están ancladas en `master/legacyIds.json` y nunca se reescriben: el orden del archivo
+es el orden del repertorio en runtime. Un alta nueva recibe un slug derivado de `DisplayName` y se
+añade al final; una colisión detiene la generación en vez de reutilizar un ID.
+
+**Garantía.** `tests/canonical-pipeline.test.cjs` vuelve a generar en memoria y falla si algún
+artefacto quedó desfasado, si una especie admitida no trae assets normales, shiny, carcasa y
+métricas, o si `dist/` no refleja los módulos que carga `index.html`. No se puede llegar a `main`
+con estado obsoleto sin que la suite se ponga en rojo.
+
+Una forma alternativa nueva (sufijo distinto de `A0`) exige además su entrada explícita en el mapa
+`FORMS` de `tools/syncPmdAssets.py`; sin ella la sincronización falla en vez de suponer un subgrupo.
 
 ## Importación PMDCollab
 
@@ -181,7 +216,7 @@ Desde la raíz:
 node --test tests/*.test.cjs
 ```
 
-Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
+Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `tests/canonical-pipeline.test.cjs` añade el guardarraíl del pipeline: falla si cualquier artefacto generado está desfasado respecto al workbook, si una especie admitida llega sin assets, shiny o carcasa, o si `dist/` no refleja los módulos de runtime. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
 
 ## Nota de Futuro
 

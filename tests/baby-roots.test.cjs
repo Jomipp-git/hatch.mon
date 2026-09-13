@@ -25,7 +25,9 @@ test('every runtime canonical root remains eligible without admitting the entire
  const h=await setup();
  assert.equal(h.run(`Object.keys(evolutionTable).filter(id=>PokemonData.get(id).PreEvolutionId===null).every(id=>STARTERS.includes(id)&&obtainableRoster.egg.some(p=>p.id===id))`),true);
  assert.equal(h.run('STARTERS.every(id=>Object.hasOwn(evolutionTable,id))'),true);
- assert.ok(h.run('STARTERS.length')<h.run('HATCHMON_DATA.pokemon.filter(p=>p.PreEvolutionId===null).length'));
+ const archive=JSON.parse(require('node:fs').readFileSync('master/hatchmonData_v2.json'));
+ assert.ok(h.run('STARTERS.length')<archive.pokemon.filter(p=>p.PreEvolutionId===null).length);
+ assert.ok(h.run('HATCHMON_DATA.pokemon.length')<archive.pokemon.length,'runtime data must stay pruned');
  h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Pepo");state.inventory.tea=2;save()');
  const saved=JSON.parse(h.storage.get('hatch.mon.v3')),restored=await setup({initialSave:saved});
  assert.equal(restored.run('validSave(state)'),true);

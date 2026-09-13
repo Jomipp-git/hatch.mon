@@ -4,578 +4,6 @@ Source: https://github.com/PMDCollab/SpriteCollab
 Policy and attribution: source/LICENSE.md; author names and contacts: source/credit_names.txt.
 Per-file credit logs are preserved alongside each species when provided. No entire repository is downloaded.
 
-## 0172A0 shiny
-Source path: 0172/0000/0001
-Per-file attribution: 0172A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!454421330058805251>"], "total": 2}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!322382592202637322>"], "total": 2}
-
-## 0172A0 · Pichu
-Source path: 0172
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Spikey-Valentine https://twitter.com/spikeyvalentine
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, C_Pariah <@322382592202637322>
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0025A0 shiny
-Source path: 0025/0000/0001
-Per-file attribution: 0025A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!204460364023201793>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0025A0 · Pikachu
-Source path: 0025
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0026A0 shiny
-Source path: 0026/0000/0001
-Per-file attribution: 0026A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-
-## 0026A0 · Raichu
-Source path: 0026
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Grimlin https://twitter.com/Griimlin, Top_Kec @topkec.bsky.social
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, C_Pariah <@322382592202637322>, 3Monika4 <@270755102178934785>
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0026L0 shiny
-Source path: 0026/0001/0001
-Per-file attribution: 0026L0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!576876006636519434>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0026L0 · Raichu (Alolan Form)
-Source path: 0026/0001
-sprite: baronessfaron
-Files/states: Hop, Hurt, Idle, Pose, Rotate, Sleep, Walk
-portrait: Emmuffin https://twitter.com/Ernmuffin
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0133A0 shiny
-Source path: 0133/0000/0001
-Per-file attribution: 0133A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
-
-## 0133A0 · Eevee
-Source path: 0133
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0134A0 shiny
-Source path: 0134/0000/0001
-Per-file attribution: 0134A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!237286997645983744>", "<@!593113130213572610>"], "total": 3}
-
-## 0134A0 · Vaporeon
-Source path: 0134
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0135A0 shiny
-Source path: 0135/0000/0001
-Per-file attribution: 0135A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!593113130213572610>"], "total": 2}
-Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
-
-## 0135A0 · Jolteon
-Source path: 0135
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, dmDash
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , ShyStarryRain , "motherhenna(Helen)" <@!543717476421074945>, Morei https://bsky.app/profile/murpia57.bsky.social, Vynnyal <https://vynnyal.tumblr.com/>
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0136A0 shiny
-Source path: 0136/0000/0001
-Per-file attribution: 0136A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!576876006636519434>", "<@!228595807132057600>"], "total": 3}
-Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
-
-## 0136A0 · Flareon
-Source path: 0136
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Ginnie , JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Vynnyal <https://vynnyal.tumblr.com/>, ShyStarryRain , LegendaryPhoenix , baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0196A0 shiny
-Source path: 0196/0000/0001
-Per-file attribution: 0196A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!217899432652308480>", "<@!544245909639397378>"], "total": 3}
-Portrait credits: {"primary": "<@!593113130213572610>", "secondary": ["<@!544245909639397378>"], "total": 2}
-
-## 0196A0 · Espeon
-Source path: 0196
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/, baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0197A0 shiny
-Source path: 0197/0000/0001
-Per-file attribution: 0197A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!356635814668664832>"], "total": 2}
-
-## 0197A0 · Umbreon
-Source path: 0197
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Mojo
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0470A0 shiny
-Source path: 0470/0000/0001
-Per-file attribution: 0470A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!544245909639397378>"], "total": 2}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0470A0 · Leafeon
-Source path: 0470
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0471A0 shiny
-Source path: 0471/0000/0001
-Per-file attribution: 0471A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!544245909639397378>"], "total": 2}
-Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
-
-## 0471A0 · Glaceon
-Source path: 0471
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0700A0 shiny
-Source path: 0700/0000/0001
-Per-file attribution: 0700A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!799737881538723891>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!331183966508023808>"], "total": 2}
-
-## 0700A0 · Sylveon
-Source path: 0700
-sprite: baronessfaron
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: Emmuffin https://twitter.com/Ernmuffin,  , NeonCityRain https://neoncityrain.tumblr.com/
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0236A0 shiny
-Source path: 0236/0000/0001
-Per-file attribution: 0236A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!330751862590406656>", "<@!356635814668664832>"], "total": 3}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!215699178553212929>", "<@!772726854188400641>"], "total": 3}
-
-## 0236A0 · Tyrogue
-Source path: 0236
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
-Files/states: Eat, Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0106A0 shiny
-Source path: 0106/0000/0001
-Per-file attribution: 0106A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": ["<@!234720295292895232>"], "total": 2}
-
-## 0106A0 · Hitmonlee
-Source path: 0106
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Tainted#3886 , G〜 https://bsky.app/profile/justtr4sh.pmd.social
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0107A0 shiny
-Source path: 0107/0000/0001
-Per-file attribution: 0107A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-
-## 0107A0 · Hitmonchan
-Source path: 0107
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Normal
-
-## 0237A0 shiny
-Source path: 0237/0000/0001
-Per-file attribution: 0237A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!215699178553212929>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!217899432652308480>", "secondary": [], "total": 1}
-
-## 0237A0 · Hitmontop
-Source path: 0237
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Noo https://artfight.net/~NooNoo_Skidoo
-Files/states: Normal, Happy
-
-## 0446A0 shiny
-Source path: 0446/0000/0001
-Per-file attribution: 0446A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-
-## 0446A0 · Munchlax
-Source path: 0446
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0143A0 shiny
-Source path: 0143/0000/0001
-Per-file attribution: 0143A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
-
-## 0143A0 · Snorlax
-Source path: 0143
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, NOLASMOR , Emboarger
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0447A0 shiny
-Source path: 0447/0000/0001
-Per-file attribution: 0447A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!801938240562397194>", "<@!237286997645983744>"], "total": 3}
-
-## 0447A0 · Riolu
-Source path: 0447
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0448A0 shiny
-Source path: 0448/0000/0001
-Per-file attribution: 0448A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!157796074457661440>", "<@!350050109741858829>"], "total": 3}
-
-## 0448A0 · Lucario
-Source path: 0448
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deeshura https://bsky.app/profile/deeshura.bsky.social, G〜 https://bsky.app/profile/justtr4sh.pmd.social, JFain , Emmuffin https://twitter.com/Ernmuffin
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0848A0 shiny
-Source path: 0848/0000/0001
-Per-file attribution: 0848A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!153547941401853952>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0848A0 · Toxel
-Source path: 0848
-sprite: baronessfaron
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: EzerArt https://twitter.com/EzerArt_, Emmuffin https://twitter.com/Ernmuffin, Waffluffe https://twitter.com/waffluffe, Emboarger
-Files/states: Normal
-
-## 0849A0 shiny
-Source path: 0849/0000/0001
-Per-file attribution: 0849A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!178935491867967490>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0849A0 · Toxtricity (Amped Form)
-Source path: 0849
-sprite: baronessfaron
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: Emmuffin https://twitter.com/Ernmuffin, Noo https://artfight.net/~NooNoo_Skidoo, Precascer https://twitter.com/Precascer
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0849B0 shiny
-Source path: 0849/0001/0001
-Per-file attribution: 0849B0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!576876006636519434>", "secondary": ["<@!217899432652308480>"], "total": 2}
-
-## 0849B0 · Toxtricity (Low Key Form)
-Source path: 0849/0001
-sprite: JFain
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: Noo https://artfight.net/~NooNoo_Skidoo
-Files/states: Normal, Happy, Joyous, Angry, Sad, Surprised
-
-## 0173A0 shiny
-Source path: 0173/0000/0001
-Per-file attribution: 0173A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!702275233125630042>", "<@!544245909639397378>"], "total": 5}
-
-## 0173A0 · Cleffa
-Source path: 0173
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deleca7755 <https://www.deviantart.com/deleca-7755>, baronessfaron , JFain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0035A0 shiny
-Source path: 0035/0000/0001
-Per-file attribution: 0035A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!193530896211509248>", "secondary": [], "total": 1}
-
-## 0035A0 · Clefairy
-Source path: 0035
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, estelstarlight https://estelstarlight.tumblr.com/post/186838449949
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0036A0 shiny
-Source path: 0036/0000/0001
-Per-file attribution: 0036A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
-
-## 0036A0 · Clefable
-Source path: 0036
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, jackolanternjackalope https://www.instagram.com/jackolanternjackalope/, Gust https://twitter.com/Estelaris__
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0174A0 shiny
-Source path: 0174/0000/0001
-Per-file attribution: 0174A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!861005464682889266>", "secondary": [], "total": 1}
-
-## 0174A0 · Igglybuff
-Source path: 0174
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0039A0 shiny
-Source path: 0039/0000/0001
-Per-file attribution: 0039A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!314519507869761556>", "<@!237286997645983744>"], "total": 3}
-
-## 0039A0 · Jigglypuff
-Source path: 0039
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo , Emboarger
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0040A0 shiny
-Source path: 0040/0000/0001
-Per-file attribution: 0040A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!593113130213572610>"], "total": 2}
-Portrait credits: {"primary": "<@!861005464682889266>", "secondary": ["<@!560604377203736617>"], "total": 2}
-
-## 0040A0 · Wigglytuff
-Source path: 0040
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__, Gayschlatt , gromchurch https://twitter.com/poongis2
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0175A0 shiny
-Source path: 0175/0000/0001
-Per-file attribution: 0175A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!173896352554549248>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!576876006636519434>"], "total": 2}
-
-## 0175A0 · Togepi
-Source path: 0175
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0176A0 shiny
-Source path: 0176/0000/0001
-Per-file attribution: 0176A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!356635814668664832>"], "total": 2}
-
-## 0176A0 · Togetic
-Source path: 0176
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, XModxGodX
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0468A0 shiny
-Source path: 0468/0000/0001
-Per-file attribution: 0468A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!173896352554549248>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!217899432652308480>"], "total": 2}
-
-## 0468A0 · Togekiss
-Source path: 0468
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/,
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0298A0 shiny
-Source path: 0298/0000/0001
-Per-file attribution: 0298A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!576876006636519434>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
-
-## 0298A0 · Azurill
-Source path: 0298
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fable https://twitter.com/fabledpainter
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0183A0 shiny
-Source path: 0183/0000/0001
-Per-file attribution: 0183A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!702275233125630042>"], "total": 2}
-Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
-
-## 0183A0 · Marill
-Source path: 0183
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit , Jarleypeño https://www.deviantart.com/applecone413
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0184A0 shiny
-Source path: 0184/0000/0001
-Per-file attribution: 0184A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!217899432652308480>"], "total": 2}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>"], "total": 2}
-
-## 0184A0 · Azumarill
-Source path: 0184
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, ShyStarryRain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0458A0 shiny
-Source path: 0458/0000/0001
-Per-file attribution: 0458A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!861005464682889266>"], "total": 2}
-
-## 0458A0 · Mantyke
-Source path: 0458
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
-Files/states: Normal, Happy, Joyous, Surprised
-
-## 0226A0 shiny
-Source path: 0226/0000/0001
-Per-file attribution: 0226A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!356635814668664832>"], "total": 2}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-
-## 0226A0 · Mantine
-Source path: 0226
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0239A0 shiny
-Source path: 0239/0000/0001
-Per-file attribution: 0239A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-
-## 0239A0 · Elekid
-Source path: 0239
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Angels-Snack https://angels-snack.tumblr.com/, Morei https://bsky.app/profile/murpia57.bsky.social
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0125A0 shiny
-Source path: 0125/0000/0001
-Per-file attribution: 0125A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!207188665959448576>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!215699178553212929>", "secondary": [], "total": 1}
-
-## 0125A0 · Electabuzz
-Source path: 0125
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Coksi https://coksi.carrd.co/
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0466A0 shiny
-Source path: 0466/0000/0001
-Per-file attribution: 0466A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!207188665959448576>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!237286997645983744>", "<@!1377429093997477928>"], "total": 3}
-
-## 0466A0 · Electivire
-Source path: 0466
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger , JustAGunk <@1377429093997477928>
-Files/states: Normal, Happy, Pain
-
-## 0240A0 shiny
-Source path: 0240/0000/0001
-Per-file attribution: 0240A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!237286997645983744>"], "total": 2}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!200385851069300736>"], "total": 2}
-
-## 0240A0 · Magby
-Source path: 0240
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0126A0 shiny
-Source path: 0126/0000/0001
-Per-file attribution: 0126A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-
-## 0126A0 · Magmar
-Source path: 0126
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
-Files/states: Normal, Worried
-
-## 0467A0 shiny
-Source path: 0467/0000/0001
-Per-file attribution: 0467A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-
-## 0467A0 · Magmortar
-Source path: 0467
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Normal, Surprised
-
 ## 0001A0 shiny
 Source path: 0001/0000/0001
 Per-file attribution: 0001A0/shiny/credits-sprite.txt and credits-portrait.txt
@@ -693,43 +121,121 @@ Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Top_Kec @topkec.bsky.social
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
-## 0147A0 shiny
-Source path: 0147/0000/0001
-Per-file attribution: 0147A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!171030521009274881>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>", "<@!576876006636519434>"], "total": 3}
+## 0025A0 shiny
+Source path: 0025/0000/0001
+Per-file attribution: 0025A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!204460364023201793>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
 
-## 0147A0 · Dratini
-Source path: 0147
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Hop, Hurt, Idle, Laying, Pain, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__, frostibirb https://twitter.com/frostibirb
+## 0025A0 · Pikachu
+Source path: 0025
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
-## 0148A0 shiny
-Source path: 0148/0000/0001
-Per-file attribution: 0148A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>"], "total": 2}
+## 0026A0 shiny
+Source path: 0026/0000/0001
+Per-file attribution: 0026A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
 
-## 0148A0 · Dragonair
-Source path: 0148
+## 0026A0 · Raichu
+Source path: 0026
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Grimlin https://twitter.com/Griimlin, Top_Kec @topkec.bsky.social
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, C_Pariah <@322382592202637322>, 3Monika4 <@270755102178934785>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0026L0 shiny
+Source path: 0026/0001/0001
+Per-file attribution: 0026L0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!576876006636519434>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0026L0 · Raichu (Alolan Form)
+Source path: 0026/0001
+sprite: baronessfaron
+Files/states: Hop, Hurt, Idle, Pose, Rotate, Sleep, Walk
+portrait: Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0035A0 shiny
+Source path: 0035/0000/0001
+Per-file attribution: 0035A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!193530896211509248>", "secondary": [], "total": 1}
+
+## 0035A0 · Clefairy
+Source path: 0035
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, estelstarlight https://estelstarlight.tumblr.com/post/186838449949
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
-## 0149A0 shiny
-Source path: 0149/0000/0001
-Per-file attribution: 0149A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!157796074457661440>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!141718238336778241>"], "total": 2}
+## 0036A0 shiny
+Source path: 0036/0000/0001
+Per-file attribution: 0036A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
 
-## 0149A0 · Dragonite
-Source path: 0149
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, SethY https://linktr.ee/sethyuikora, Deeshura https://bsky.app/profile/deeshura.bsky.social
+## 0036A0 · Clefable
+Source path: 0036
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger , AlexGroeger , "motherhenna(Helen)" <@!543717476421074945>
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, jackolanternjackalope https://www.instagram.com/jackolanternjackalope/, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0039A0 shiny
+Source path: 0039/0000/0001
+Per-file attribution: 0039A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!314519507869761556>", "<@!237286997645983744>"], "total": 3}
+
+## 0039A0 · Jigglypuff
+Source path: 0039
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo , Emboarger
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0040A0 shiny
+Source path: 0040/0000/0001
+Per-file attribution: 0040A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!593113130213572610>"], "total": 2}
+Portrait credits: {"primary": "<@!861005464682889266>", "secondary": ["<@!560604377203736617>"], "total": 2}
+
+## 0040A0 · Wigglytuff
+Source path: 0040
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__, Gayschlatt , gromchurch https://twitter.com/poongis2
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0058A0 shiny
+Source path: 0058/0000/0001
+Per-file attribution: 0058A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!117780585635643396>", "secondary": ["<@!356635814668664832>"], "total": 2}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!388808249165479939>", "<@!356635814668664832>"], "total": 3}
+
+## 0058A0 · Growlithe
+Source path: 0058
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JustAGunk <@1377429093997477928>
+Files/states: Cringe, Eat, Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deltex12 /u/Deltex12, LT https://twitter.com/eLTehH
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0059A0 shiny
+Source path: 0059/0000/0001
+Per-file attribution: 0059A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!544245909639397378>"], "total": 2}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!544245909639397378>"], "total": 2}
+
+## 0059A0 · Arcanine
+Source path: 0059
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0063A0 shiny
@@ -771,160 +277,43 @@ Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
-## 0058A0 shiny
-Source path: 0058/0000/0001
-Per-file attribution: 0058A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!117780585635643396>", "secondary": ["<@!356635814668664832>"], "total": 2}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!388808249165479939>", "<@!356635814668664832>"], "total": 3}
-
-## 0058A0 · Growlithe
-Source path: 0058
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JustAGunk <@1377429093997477928>
-Files/states: Cringe, Eat, Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deltex12 /u/Deltex12, LT https://twitter.com/eLTehH
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0059A0 shiny
-Source path: 0059/0000/0001
-Per-file attribution: 0059A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!544245909639397378>"], "total": 2}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!544245909639397378>"], "total": 2}
-
-## 0059A0 · Arcanine
-Source path: 0059
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0433A0 shiny
-Source path: 0433/0000/0001
-Per-file attribution: 0433A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!183561486893842432>"], "total": 2}
-
-## 0433A0 · Chingling
-Source path: 0433
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, anomalocaris https://twitter.com/radiodonta_lord
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, chime <@!183561486893842432>
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0358A0 shiny
-Source path: 0358/0000/0001
-Per-file attribution: 0358A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!232091727094218752>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95638225439166464>", "secondary": ["<@!183561486893842432>", "<@!476409795239477248>"], "total": 3}
-
-## 0358A0 · Chimecho
-Source path: 0358
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Eat, Hop, Hurt, Idle, Pose, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, chime <@!183561486893842432>, baronessfaron
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0406A0 shiny
-Source path: 0406/0000/0001
-Per-file attribution: 0406A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!402958234371227648>"], "total": 2}
-Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!593113130213572610>"], "total": 2}
-
-## 0406A0 · Budew
-Source path: 0406
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, Uni https://github.com/ArianaCastro01
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/,  , Deeshura https://bsky.app/profile/deeshura.bsky.social
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0315A0 shiny
-Source path: 0315/0000/0001
-Per-file attribution: 0315A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!350050109741858829>"], "total": 2}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-
-## 0315A0 · Roselia
-Source path: 0315
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, JFain
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0407A0 shiny
-Source path: 0407/0000/0001
-Per-file attribution: 0407A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!576876006636519434>", "<@!356635814668664832>"], "total": 3}
-Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!544245909639397378>", "<@!350050109741858829>"], "total": 3}
-
-## 0407A0 · Roserade
-Source path: 0407
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , G〜 https://bsky.app/profile/justtr4sh.pmd.social
-Files/states: Cringe, Eat, Hop, Hurt, Idle, Nod, Pose, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , G〜 https://bsky.app/profile/justtr4sh.pmd.social
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0360A0 shiny
-Source path: 0360/0000/0001
-Per-file attribution: 0360A0/shiny/credits-sprite.txt and credits-portrait.txt
+## 0106A0 shiny
+Source path: 0106/0000/0001
+Per-file attribution: 0106A0/shiny/credits-sprite.txt and credits-portrait.txt
 Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": ["<@!234720295292895232>"], "total": 2}
 
-## 0360A0 · Wynaut
-Source path: 0360
+## 0106A0 · Hitmonlee
+Source path: 0106
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , Emmuffin https://twitter.com/Ernmuffin, Gust https://twitter.com/Estelaris__
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Tainted#3886 , G〜 https://bsky.app/profile/justtr4sh.pmd.social
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
-## 0202A0 shiny
-Source path: 0202/0000/0001
-Per-file attribution: 0202A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!217899432652308480>"], "total": 2}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!593113130213572610>", "<@!861005464682889266>"], "total": 3}
+## 0107A0 shiny
+Source path: 0107/0000/0001
+Per-file attribution: 0107A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
 
-## 0202A0 · Wobbuffet
-Source path: 0202
+## 0107A0 · Hitmonchan
+Source path: 0107
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Tainted#3886 , Gust https://twitter.com/Estelaris__
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal
 
-## 0438A0 shiny
-Source path: 0438/0000/0001
-Per-file attribution: 0438A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+## 0113A0 shiny
+Source path: 0113/0000/0001
+Per-file attribution: 0113A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!593113130213572610>"], "total": 2}
 
-## 0438A0 · Bonsly
-Source path: 0438
+## 0113A0 · Chansey
+Source path: 0113
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
-Files/states: Normal, Sad
-
-## 0185A0 shiny
-Source path: 0185/0000/0001
-Per-file attribution: 0185A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!217899432652308480>"], "total": 2}
-Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!593113130213572610>"], "total": 2}
-
-## 0185A0 · Sudowoodo
-Source path: 0185
-sprite: CHUNSOFT https://www.spike-chunsoft.com/
-Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/,
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0439A0 shiny
-Source path: 0439/0000/0001
-Per-file attribution: 0439A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
-
-## 0439A0 · Mime Jr.
-Source path: 0439
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, Emitone Emitone#0884
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0122A0 shiny
@@ -940,30 +329,368 @@ Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Normal
 
-## 0440A0 shiny
-Source path: 0440/0000/0001
-Per-file attribution: 0440A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!314519507869761556>"], "total": 2}
+## 0124A0 shiny
+Source path: 0124/0000/0001
+Per-file attribution: 0124A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!117780585635643396>", "secondary": ["<@!576876006636519434>"], "total": 2}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!576876006636519434>"], "total": 2}
 
-## 0440A0 · Happiny
-Source path: 0440
-sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
-Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo
-Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
-
-## 0113A0 shiny
-Source path: 0113/0000/0001
-Per-file attribution: 0113A0/shiny/credits-sprite.txt and credits-portrait.txt
-Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
-Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!593113130213572610>"], "total": 2}
-
-## 0113A0 · Chansey
-Source path: 0113
+## 0124A0 · Jynx
+Source path: 0124
 sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
-portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal
+
+## 0125A0 shiny
+Source path: 0125/0000/0001
+Per-file attribution: 0125A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!207188665959448576>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!215699178553212929>", "secondary": [], "total": 1}
+
+## 0125A0 · Electabuzz
+Source path: 0125
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Coksi https://coksi.carrd.co/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0126A0 shiny
+Source path: 0126/0000/0001
+Per-file attribution: 0126A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+
+## 0126A0 · Magmar
+Source path: 0126
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
+Files/states: Normal, Worried
+
+## 0133A0 shiny
+Source path: 0133/0000/0001
+Per-file attribution: 0133A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
+
+## 0133A0 · Eevee
+Source path: 0133
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0134A0 shiny
+Source path: 0134/0000/0001
+Per-file attribution: 0134A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!237286997645983744>", "<@!593113130213572610>"], "total": 3}
+
+## 0134A0 · Vaporeon
+Source path: 0134
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0135A0 shiny
+Source path: 0135/0000/0001
+Per-file attribution: 0135A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!593113130213572610>"], "total": 2}
+Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
+
+## 0135A0 · Jolteon
+Source path: 0135
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, dmDash
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , ShyStarryRain , "motherhenna(Helen)" <@!543717476421074945>, Morei https://bsky.app/profile/murpia57.bsky.social, Vynnyal <https://vynnyal.tumblr.com/>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0136A0 shiny
+Source path: 0136/0000/0001
+Per-file attribution: 0136A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!576876006636519434>", "<@!228595807132057600>"], "total": 3}
+Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
+
+## 0136A0 · Flareon
+Source path: 0136
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Ginnie , JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Vynnyal <https://vynnyal.tumblr.com/>, ShyStarryRain , LegendaryPhoenix , baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0143A0 shiny
+Source path: 0143/0000/0001
+Per-file attribution: 0143A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
+
+## 0143A0 · Snorlax
+Source path: 0143
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, NOLASMOR , Emboarger
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0147A0 shiny
+Source path: 0147/0000/0001
+Per-file attribution: 0147A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!171030521009274881>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>", "<@!576876006636519434>"], "total": 3}
+
+## 0147A0 · Dratini
+Source path: 0147
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Hop, Hurt, Idle, Laying, Pain, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__, frostibirb https://twitter.com/frostibirb
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0148A0 shiny
+Source path: 0148/0000/0001
+Per-file attribution: 0148A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>"], "total": 2}
+
+## 0148A0 · Dragonair
+Source path: 0148
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0149A0 shiny
+Source path: 0149/0000/0001
+Per-file attribution: 0149A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!157796074457661440>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!141718238336778241>"], "total": 2}
+
+## 0149A0 · Dragonite
+Source path: 0149
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, SethY https://linktr.ee/sethyuikora, Deeshura https://bsky.app/profile/deeshura.bsky.social
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger , AlexGroeger , "motherhenna(Helen)" <@!543717476421074945>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0172A0 shiny
+Source path: 0172/0000/0001
+Per-file attribution: 0172A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!454421330058805251>"], "total": 2}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!322382592202637322>"], "total": 2}
+
+## 0172A0 · Pichu
+Source path: 0172
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Spikey-Valentine https://twitter.com/spikeyvalentine
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, C_Pariah <@322382592202637322>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0173A0 shiny
+Source path: 0173/0000/0001
+Per-file attribution: 0173A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!702275233125630042>", "<@!544245909639397378>"], "total": 5}
+
+## 0173A0 · Cleffa
+Source path: 0173
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deleca7755 <https://www.deviantart.com/deleca-7755>, baronessfaron , JFain
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0174A0 shiny
+Source path: 0174/0000/0001
+Per-file attribution: 0174A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!861005464682889266>", "secondary": [], "total": 1}
+
+## 0174A0 · Igglybuff
+Source path: 0174
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0175A0 shiny
+Source path: 0175/0000/0001
+Per-file attribution: 0175A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!173896352554549248>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!576876006636519434>"], "total": 2}
+
+## 0175A0 · Togepi
+Source path: 0175
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0176A0 shiny
+Source path: 0176/0000/0001
+Per-file attribution: 0176A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!356635814668664832>"], "total": 2}
+
+## 0176A0 · Togetic
+Source path: 0176
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, XModxGodX
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0183A0 shiny
+Source path: 0183/0000/0001
+Per-file attribution: 0183A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!702275233125630042>"], "total": 2}
+Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
+
+## 0183A0 · Marill
+Source path: 0183
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit , Jarleypeño https://www.deviantart.com/applecone413
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0184A0 shiny
+Source path: 0184/0000/0001
+Per-file attribution: 0184A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!217899432652308480>"], "total": 2}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!356635814668664832>"], "total": 2}
+
+## 0184A0 · Azumarill
+Source path: 0184
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, ShyStarryRain
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0185A0 shiny
+Source path: 0185/0000/0001
+Per-file attribution: 0185A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!217899432652308480>"], "total": 2}
+Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!593113130213572610>"], "total": 2}
+
+## 0185A0 · Sudowoodo
+Source path: 0185
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/,
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0196A0 shiny
+Source path: 0196/0000/0001
+Per-file attribution: 0196A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!217899432652308480>", "<@!544245909639397378>"], "total": 3}
+Portrait credits: {"primary": "<@!593113130213572610>", "secondary": ["<@!544245909639397378>"], "total": 2}
+
+## 0196A0 · Espeon
+Source path: 0196
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, 0palite https://zeropalart.tumblr.com/, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0197A0 shiny
+Source path: 0197/0000/0001
+Per-file attribution: 0197A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!356635814668664832>"], "total": 2}
+
+## 0197A0 · Umbreon
+Source path: 0197
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin, Mojo
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0202A0 shiny
+Source path: 0202/0000/0001
+Per-file attribution: 0202A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!217899432652308480>"], "total": 2}
+Portrait credits: {"primary": "<@!234720295292895232>", "secondary": ["<@!593113130213572610>", "<@!861005464682889266>"], "total": 3}
+
+## 0202A0 · Wobbuffet
+Source path: 0202
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Tainted#3886 , Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0226A0 shiny
+Source path: 0226/0000/0001
+Per-file attribution: 0226A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!356635814668664832>"], "total": 2}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0226A0 · Mantine
+Source path: 0226
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0236A0 shiny
+Source path: 0236/0000/0001
+Per-file attribution: 0236A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!330751862590406656>", "<@!356635814668664832>"], "total": 3}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!215699178553212929>", "<@!772726854188400641>"], "total": 3}
+
+## 0236A0 · Tyrogue
+Source path: 0236
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
+Files/states: Eat, Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0237A0 shiny
+Source path: 0237/0000/0001
+Per-file attribution: 0237A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!215699178553212929>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!217899432652308480>", "secondary": [], "total": 1}
+
+## 0237A0 · Hitmontop
+Source path: 0237
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Noo https://artfight.net/~NooNoo_Skidoo
+Files/states: Normal, Happy
+
+## 0238A0 shiny
+Source path: 0238/0000/0001
+Per-file attribution: 0238A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!544245909639397378>"], "total": 2}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!593113130213572610>"], "total": 2}
+
+## 0238A0 · Smoochum
+Source path: 0238
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0239A0 shiny
+Source path: 0239/0000/0001
+Per-file attribution: 0239A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+
+## 0239A0 · Elekid
+Source path: 0239
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Angels-Snack https://angels-snack.tumblr.com/, Morei https://bsky.app/profile/murpia57.bsky.social
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0240A0 shiny
+Source path: 0240/0000/0001
+Per-file attribution: 0240A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!237286997645983744>"], "total": 2}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!200385851069300736>"], "total": 2}
+
+## 0240A0 · Magby
+Source path: 0240
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
 
 ## 0242A0 shiny
@@ -978,4 +705,303 @@ sprite: CHUNSOFT https://www.spike-chunsoft.com/
 Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
 portrait: CHUNSOFT https://www.spike-chunsoft.com/, JFain
 Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0298A0 shiny
+Source path: 0298/0000/0001
+Per-file attribution: 0298A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!576876006636519434>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!593113130213572610>", "secondary": [], "total": 1}
+
+## 0298A0 · Azurill
+Source path: 0298
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fable https://twitter.com/fabledpainter
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0315A0 shiny
+Source path: 0315/0000/0001
+Per-file attribution: 0315A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!350050109741858829>"], "total": 2}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+
+## 0315A0 · Roselia
+Source path: 0315
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, JFain
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0358A0 shiny
+Source path: 0358/0000/0001
+Per-file attribution: 0358A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!232091727094218752>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95638225439166464>", "secondary": ["<@!183561486893842432>", "<@!476409795239477248>"], "total": 3}
+
+## 0358A0 · Chimecho
+Source path: 0358
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Eat, Hop, Hurt, Idle, Pose, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, chime <@!183561486893842432>, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0360A0 shiny
+Source path: 0360/0000/0001
+Per-file attribution: 0360A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!234720295292895232>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0360A0 · Wynaut
+Source path: 0360
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , Emmuffin https://twitter.com/Ernmuffin, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0406A0 shiny
+Source path: 0406/0000/0001
+Per-file attribution: 0406A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!402958234371227648>"], "total": 2}
+Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!593113130213572610>"], "total": 2}
+
+## 0406A0 · Budew
+Source path: 0406
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Uni https://github.com/ArianaCastro01
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/,  , Deeshura https://bsky.app/profile/deeshura.bsky.social
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0407A0 shiny
+Source path: 0407/0000/0001
+Per-file attribution: 0407A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!576876006636519434>", "<@!356635814668664832>"], "total": 3}
+Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!544245909639397378>", "<@!350050109741858829>"], "total": 3}
+
+## 0407A0 · Roserade
+Source path: 0407
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , G〜 https://bsky.app/profile/justtr4sh.pmd.social
+Files/states: Cringe, Eat, Hop, Hurt, Idle, Nod, Pose, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron , G〜 https://bsky.app/profile/justtr4sh.pmd.social
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0433A0 shiny
+Source path: 0433/0000/0001
+Per-file attribution: 0433A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!183561486893842432>"], "total": 2}
+
+## 0433A0 · Chingling
+Source path: 0433
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, anomalocaris https://twitter.com/radiodonta_lord
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, chime <@!183561486893842432>
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0438A0 shiny
+Source path: 0438/0000/0001
+Per-file attribution: 0438A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0438A0 · Bonsly
+Source path: 0438
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Caitemis https://caitemis-art.tumblr.com/
+Files/states: Normal, Sad
+
+## 0439A0 shiny
+Source path: 0439/0000/0001
+Per-file attribution: 0439A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+
+## 0439A0 · Mime Jr.
+Source path: 0439
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, G〜 https://bsky.app/profile/justtr4sh.pmd.social, Emitone Emitone#0884
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0440A0 shiny
+Source path: 0440/0000/0001
+Per-file attribution: 0440A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": ["<@!314519507869761556>"], "total": 2}
+
+## 0440A0 · Happiny
+Source path: 0440
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Mojo
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0446A0 shiny
+Source path: 0446/0000/0001
+Per-file attribution: 0446A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!200385851069300736>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+
+## 0446A0 · Munchlax
+Source path: 0446
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0447A0 shiny
+Source path: 0447/0000/0001
+Per-file attribution: 0447A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!200318546750865418>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!801938240562397194>", "<@!237286997645983744>"], "total": 3}
+
+## 0447A0 · Riolu
+Source path: 0447
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Fearless-Quit
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0448A0 shiny
+Source path: 0448/0000/0001
+Per-file attribution: 0448A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!157796074457661440>", "<@!350050109741858829>"], "total": 3}
+
+## 0448A0 · Lucario
+Source path: 0448
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, Emmuffin https://twitter.com/Ernmuffin
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Deeshura https://bsky.app/profile/deeshura.bsky.social, G〜 https://bsky.app/profile/justtr4sh.pmd.social, JFain , Emmuffin https://twitter.com/Ernmuffin
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0458A0 shiny
+Source path: 0458/0000/0001
+Per-file attribution: 0458A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!200318546750865418>", "secondary": ["<@!861005464682889266>"], "total": 2}
+
+## 0458A0 · Mantyke
+Source path: 0458
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Gust https://twitter.com/Estelaris__
+Files/states: Normal, Happy, Joyous, Surprised
+
+## 0466A0 shiny
+Source path: 0466/0000/0001
+Per-file attribution: 0466A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!207188665959448576>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!215699178553212929>", "secondary": ["<@!237286997645983744>", "<@!1377429093997477928>"], "total": 3}
+
+## 0466A0 · Electivire
+Source path: 0466
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, Emboarger , JustAGunk <@1377429093997477928>
+Files/states: Normal, Happy, Pain
+
+## 0467A0 shiny
+Source path: 0467/0000/0001
+Per-file attribution: 0467A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!95650095034273792>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!350050109741858829>", "secondary": [], "total": 1}
+
+## 0467A0 · Magmortar
+Source path: 0467
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Normal, Surprised
+
+## 0468A0 shiny
+Source path: 0468/0000/0001
+Per-file attribution: 0468A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!173896352554549248>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!173896352554549248>", "secondary": ["<@!217899432652308480>"], "total": 2}
+
+## 0468A0 · Togekiss
+Source path: 0468
+sprite: CHUNSOFT https://www.spike-chunsoft.com/
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/,
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0470A0 shiny
+Source path: 0470/0000/0001
+Per-file attribution: 0470A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!544245909639397378>"], "total": 2}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0470A0 · Leafeon
+Source path: 0470
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, baronessfaron
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0471A0 shiny
+Source path: 0471/0000/0001
+Per-file attribution: 0471A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!195280695009083392>", "secondary": ["<@!544245909639397378>"], "total": 2}
+Portrait credits: {"primary": "<@!544245909639397378>", "secondary": [], "total": 1}
+
+## 0471A0 · Glaceon
+Source path: 0471
+sprite: CHUNSOFT https://www.spike-chunsoft.com/, JFain , baronessfaron
+Files/states: Cringe, Eat, Faint, HitGround, Hop, Hurt, Idle, Laying, Nod, Pain, Pose, Rotate, Sleep, Wake, Walk
+portrait: CHUNSOFT https://www.spike-chunsoft.com/, PhillipsYoung https://twitter.com/PhilliYoung196, JFain
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0700A0 shiny
+Source path: 0700/0000/0001
+Per-file attribution: 0700A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!799737881538723891>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": ["<@!331183966508023808>"], "total": 2}
+
+## 0700A0 · Sylveon
+Source path: 0700
+sprite: baronessfaron
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: Emmuffin https://twitter.com/Ernmuffin,  , NeonCityRain https://neoncityrain.tumblr.com/
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0848A0 shiny
+Source path: 0848/0000/0001
+Per-file attribution: 0848A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!153547941401853952>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0848A0 · Toxel
+Source path: 0848
+sprite: baronessfaron
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: EzerArt https://twitter.com/EzerArt_, Emmuffin https://twitter.com/Ernmuffin, Waffluffe https://twitter.com/waffluffe, Emboarger
+Files/states: Normal
+
+## 0849A0 shiny
+Source path: 0849/0000/0001
+Per-file attribution: 0849A0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!178935491867967490>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+
+## 0849A0 · Toxtricity (Amped Form)
+Source path: 0849
+sprite: baronessfaron
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: Emmuffin https://twitter.com/Ernmuffin, Noo https://artfight.net/~NooNoo_Skidoo, Precascer https://twitter.com/Precascer
+Files/states: Normal, Happy, Joyous, Angry, Sad, Pain, Surprised, Worried, Sigh
+
+## 0849B0 shiny
+Source path: 0849/0001/0001
+Per-file attribution: 0849B0/shiny/credits-sprite.txt and credits-portrait.txt
+Sprite credits: {"primary": "<@!356635814668664832>", "secondary": [], "total": 1}
+Portrait credits: {"primary": "<@!576876006636519434>", "secondary": ["<@!217899432652308480>"], "total": 2}
+
+## 0849B0 · Toxtricity (Low Key Form)
+Source path: 0849/0001
+sprite: JFain
+Files/states: Hop, Hurt, Idle, Rotate, Sleep, Walk
+portrait: Noo https://artfight.net/~NooNoo_Skidoo
+Files/states: Normal, Happy, Joyous, Angry, Sad, Surprised
 

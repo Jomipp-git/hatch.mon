@@ -1,120 +1,83 @@
+/* Generated from master/pokemonTable_HatchMon_Canonical_v2.xlsx. Do not hand-edit.
+ * Playable roster: species connected by an evolution rule with MinAgeDays informed.
+ * Keys are save-visible legacy IDs pinned in master/legacyIds.json.
+ */
 const evolutionTable = {
-  pichu: { 
-    nombre: 'Pichu', emoji: '⚡', etapa: 'Baby', 
-    evoluciones: [
-      { destino: 'pikachu', edadMinima: 1.0, estadisticas: { felicidad: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }
-    ] 
-  },
-  pikachu: { 
-    nombre: 'Pikachu', emoji: '🐭⚡', etapa: 'Kid', 
-    evoluciones: [
-      { destino: 'raichu', edadMinima: 2.0, objeto: 'piedra_trueno' },
-      { destino: 'raichualola', edadMinima: 2.0, estadisticas: { style: 80 }, objeto: 'piedra_trueno' }
-    ] 
-  },
-  raichu: { nombre: 'Raichu', emoji: '⚡🐹', etapa: 'Adult', evoluciones: [] },
-  raichualola: { nombre: 'Raichu Alola', emoji: '🏄‍♂️⚡', etapa: 'Adult', evoluciones: [] },
-  
-  eevee: { 
-    nombre: 'Eevee', emoji: '🦊', etapa: 'Kid', 
-    evoluciones: [
-      { destino: 'vaporeon', edadMinima: 1.0, objeto: 'piedra_agua' },
-      { destino: 'jolteon', edadMinima: 1.0, objeto: 'piedra_trueno' },
-      { destino: 'flareon', edadMinima: 1.0, objeto: 'piedra_fuego' },
-      { destino: 'leafeon', edadMinima: 1.0, objeto: 'piedra_hoja' },
-      { destino: 'glaceon', edadMinima: 1.0, objeto: 'piedra_hielo' },
-      { destino: 'espeon', edadMinima: 1.5, estadisticas: { iq: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 80, duracionMs: 8 * 60 * 60 * 1000 }] },
-      { destino: 'umbreon', edadMinima: 1.5, estadisticas: { strength: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 80, duracionMs: 8 * 60 * 60 * 1000 }] },
-      { destino: 'sylveon', edadMinima: 1.5, estadisticas: { kindness: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 80, duracionMs: 8 * 60 * 60 * 1000 }] }
-    ] 
-  },
-  vaporeon: { nombre: 'Vaporeon', emoji: '💧🦊', etapa: 'Adult', evoluciones: [] },
-  jolteon: { nombre: 'Jolteon', emoji: '⚡🦊', etapa: 'Adult', evoluciones: [] },
-  flareon: { nombre: 'Flareon', emoji: '🔥🦊', etapa: 'Adult', evoluciones: [] },
-  espeon: { nombre: 'Espeon', emoji: '🔮🦊', etapa: 'Adult', evoluciones: [] },
-  umbreon: { nombre: 'Umbreon', emoji: '🌙🦊', etapa: 'Adult', evoluciones: [] },
-  leafeon: { nombre: 'Leafeon', emoji: '🍃🦊', etapa: 'Adult', evoluciones: [] },
-  glaceon: { nombre: 'Glaceon', emoji: '❄️🦊', etapa: 'Adult', evoluciones: [] },
-  sylveon: { nombre: 'Sylveon', emoji: '🎀🦊', etapa: 'Adult', evoluciones: [] },
-
-  tyrogue: { 
-    nombre: 'Tyrogue', emoji: '🥊', etapa: 'Baby', 
-    evoluciones: [
-      { destino: 'hitmonlee', edadMinima: 1.5, estadisticas: { strength: 70, style: 30 } },
-      { destino: 'hitmonchan', edadMinima: 1.5, estadisticas: { iq: 70, strength: 30 } },
-      { destino: 'hitmontop', edadMinima: 1.5, estadisticas: { style: 50, strength: 50 } }
-    ] 
-  },
-  hitmonlee: { nombre: 'Hitmonlee', emoji: '🦵', etapa: 'Adult', evoluciones: [] },
-  hitmonchan: { nombre: 'Hitmonchan', emoji: '👊', etapa: 'Adult', evoluciones: [] },
-  hitmontop: { nombre: 'Hitmontop', emoji: '🌀', etapa: 'Adult', evoluciones: [] },
-
-  munchlax: { 
-    nombre: 'Munchlax', emoji: '🐻', etapa: 'Baby', 
-    evoluciones: [
-      { destino: 'snorlax', edadMinima: 1.5, sostenidas: [{ estadistica: 'hambre', minimo: 80, duracionMs: 12 * 60 * 60 * 1000 }] }
-    ] 
-  },
-  snorlax: { nombre: 'Snorlax', emoji: '🐻💤', etapa: 'Adult', evoluciones: [] },
-
-  riolu: { 
-    nombre: 'Riolu', emoji: '🐕', etapa: 'Baby', 
-    evoluciones: [
-      { destino: 'lucario', edadMinima: 1.5, estadisticas: { iq: 70, strength: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 8 * 60 * 60 * 1000 }] }
-    ] 
-  },
-  lucario: { nombre: 'Lucario', emoji: '🥷', etapa: 'Adult', evoluciones: [] },
-
-  toxel: { 
-    nombre: 'Toxel', emoji: '💜', etapa: 'Baby', 
-    evoluciones: [
-      { destino: 'toxtricityamp', edadMinima: 1.5, estadisticas: { strength: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] },
-      { destino: 'toxtricitylow', edadMinima: 1.5, estadisticas: { style: 70 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }
-    ] 
-  },
-  toxtricityamp: { nombre: 'Toxtricity (Aguda)', emoji: '🎸', etapa: 'Adult', evoluciones: [] },
-  toxtricitylow: { nombre: 'Toxtricity (Grave)', emoji: '🎸', etapa: 'Adult', evoluciones: [] },
-
-  // Resto de bebés genéricos estructurados con base en la tabla
-  cleffa: { nombre: 'Cleffa', emoji: '⭐', etapa: 'Baby', evoluciones: [{ destino: 'clefairy', edadMinima: 1.0, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  clefairy: { nombre: 'Clefairy', emoji: '🌟', etapa: 'Kid', evoluciones: [{ destino: 'clefable', edadMinima: 2.0, objeto: 'piedra_lunar' }] },
-  clefable: { nombre: 'Clefable', emoji: '🌟🧚', etapa: 'Adult', evoluciones: [] },
-
-  igglybuff: { nombre: 'Igglybuff', emoji: '🎈', etapa: 'Baby', evoluciones: [{ destino: 'jigglypuff', edadMinima: 1.0, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  jigglypuff: { nombre: 'Jigglypuff', emoji: '🎤', etapa: 'Kid', evoluciones: [{ destino: 'wigglytuff', edadMinima: 2.0, objeto: 'piedra_lunar' }] },
-  wigglytuff: { nombre: 'Wigglytuff', emoji: '🎶', etapa: 'Adult', evoluciones: [] },
-
-  togepi: { nombre: 'Togepi', emoji: '🥚✨', etapa: 'Baby', evoluciones: [{ destino: 'togetic', edadMinima: 1.0, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  togetic: { nombre: 'Togetic', emoji: '✨🪽', etapa: 'Kid', evoluciones: [{ destino: 'togekiss', edadMinima: 2.0, objeto: 'piedra_dia' }] },
-  togekiss: { nombre: 'Togekiss', emoji: '🕊️', etapa: 'Adult', evoluciones: [] },
-
-  azurill: { nombre: 'Azurill', emoji: '🔵', etapa: 'Baby', evoluciones: [{ destino: 'marill', edadMinima: 1.0, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  marill: { nombre: 'Marill', emoji: '🐭💧', etapa: 'Kid', evoluciones: [{ destino: 'azumarill', edadMinima: 2.0, accionRequerida: 'jugar', repeticionesAccion: 10 }] },
-  azumarill: { nombre: 'Azumarill', emoji: '🐰💧', etapa: 'Adult', evoluciones: [] },
-
-  mantyke: { nombre: 'Mantyke', emoji: '🌊', etapa: 'Baby', evoluciones: [{ destino: 'mantine', edadMinima: 1.5, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }], accionRequerida: 'limpiar', repeticionesAccion: 10 }] },
-  mantine: { nombre: 'Mantine', emoji: '🦈', etapa: 'Adult', evoluciones: [] },
-
-  elekid: { nombre: 'Elekid', emoji: '🔌', etapa: 'Baby', evoluciones: [{ destino: 'electabuzz', edadMinima: 1.0, estadisticas: { strength: 50 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  electabuzz: { nombre: 'Electabuzz', emoji: '⚡👹', etapa: 'Kid', evoluciones: [{ destino: 'electivire', edadMinima: 2.0, objeto: 'Electrizador' }] },
-  electivire: { nombre: 'Electivire', emoji: '⚡🦍', etapa: 'Adult', evoluciones: [] },
-
-  magby: { nombre: 'Magby', emoji: '🔥', etapa: 'Baby', evoluciones: [{ destino: 'magmar', edadMinima: 1.0, estadisticas: { style: 50 }, sostenidas: [{ estadistica: 'felicidad', minimo: 70, duracionMs: 6 * 60 * 60 * 1000 }] }] },
-  magmar: { nombre: 'Magmar', emoji: '🔥👹', etapa: 'Kid', evoluciones: [{ destino: 'magmortar', edadMinima: 2.0, objeto: 'Magmatizador' }] },
-  magmortar: { nombre: 'Magmortar', emoji: '🔥💥', etapa: 'Adult', evoluciones: [] },
-
-  // Repertorio histórico de IDs para el content update. Las reglas viven en la fuente v2.
-  bulbasaur:{nombre:'Bulbasaur',emoji:'',etapa:'Kid',evoluciones:[]},ivysaur:{nombre:'Ivysaur',emoji:'',etapa:'Teen',evoluciones:[]},venusaur:{nombre:'Venusaur',emoji:'',etapa:'Adult',evoluciones:[]},
-  charmander:{nombre:'Charmander',emoji:'',etapa:'Kid',evoluciones:[]},charmeleon:{nombre:'Charmeleon',emoji:'',etapa:'Teen',evoluciones:[]},charizard:{nombre:'Charizard',emoji:'',etapa:'Adult',evoluciones:[]},
-  squirtle:{nombre:'Squirtle',emoji:'',etapa:'Kid',evoluciones:[]},wartortle:{nombre:'Wartortle',emoji:'',etapa:'Teen',evoluciones:[]},blastoise:{nombre:'Blastoise',emoji:'',etapa:'Adult',evoluciones:[]},
-  dratini:{nombre:'Dratini',emoji:'',etapa:'Kid',evoluciones:[]},dragonair:{nombre:'Dragonair',emoji:'',etapa:'Teen',evoluciones:[]},dragonite:{nombre:'Dragonite',emoji:'',etapa:'Adult',evoluciones:[]},
-  abra:{nombre:'Abra',emoji:'',etapa:'Kid',evoluciones:[]},kadabra:{nombre:'Kadabra',emoji:'',etapa:'Teen',evoluciones:[]},alakazam:{nombre:'Alakazam',emoji:'',etapa:'Adult',evoluciones:[]},
-  growlithe:{nombre:'Growlithe',emoji:'',etapa:'Kid',evoluciones:[]},arcanine:{nombre:'Arcanine',emoji:'',etapa:'Adult',evoluciones:[]},
-  // Alias del repertorio; fichas y reglas se leen de la fuente canónica.
-  chingling:{nombre:'Chingling'},chimecho:{nombre:'Chimecho'},
-  budew:{nombre:'Budew'},roselia:{nombre:'Roselia'},roserade:{nombre:'Roserade'},
-  wynaut:{nombre:'Wynaut'},wobbuffet:{nombre:'Wobbuffet'},
-  bonsly:{nombre:'Bonsly'},sudowoodo:{nombre:'Sudowoodo'},
-  mimejr:{nombre:'Mime Jr.'},mrmime:{nombre:'Mr. Mime'},
-  happiny:{nombre:'Happiny'},chansey:{nombre:'Chansey'},blissey:{nombre:'Blissey'},
+  pichu: {canonicalId: "0172A0", nombre: "Pichu"},
+  pikachu: {canonicalId: "0025A0", nombre: "Pikachu"},
+  raichu: {canonicalId: "0026A0", nombre: "Raichu"},
+  raichualola: {canonicalId: "0026L0", nombre: "Raichu (Alolan Form)"},
+  eevee: {canonicalId: "0133A0", nombre: "Eevee"},
+  vaporeon: {canonicalId: "0134A0", nombre: "Vaporeon"},
+  jolteon: {canonicalId: "0135A0", nombre: "Jolteon"},
+  flareon: {canonicalId: "0136A0", nombre: "Flareon"},
+  espeon: {canonicalId: "0196A0", nombre: "Espeon"},
+  umbreon: {canonicalId: "0197A0", nombre: "Umbreon"},
+  leafeon: {canonicalId: "0470A0", nombre: "Leafeon"},
+  glaceon: {canonicalId: "0471A0", nombre: "Glaceon"},
+  sylveon: {canonicalId: "0700A0", nombre: "Sylveon"},
+  tyrogue: {canonicalId: "0236A0", nombre: "Tyrogue"},
+  hitmonlee: {canonicalId: "0106A0", nombre: "Hitmonlee"},
+  hitmonchan: {canonicalId: "0107A0", nombre: "Hitmonchan"},
+  hitmontop: {canonicalId: "0237A0", nombre: "Hitmontop"},
+  munchlax: {canonicalId: "0446A0", nombre: "Munchlax"},
+  snorlax: {canonicalId: "0143A0", nombre: "Snorlax"},
+  riolu: {canonicalId: "0447A0", nombre: "Riolu"},
+  lucario: {canonicalId: "0448A0", nombre: "Lucario"},
+  toxel: {canonicalId: "0848A0", nombre: "Toxel"},
+  toxtricityamp: {canonicalId: "0849A0", nombre: "Toxtricity (Amped Form)"},
+  toxtricitylow: {canonicalId: "0849B0", nombre: "Toxtricity (Low Key Form)"},
+  cleffa: {canonicalId: "0173A0", nombre: "Cleffa"},
+  clefairy: {canonicalId: "0035A0", nombre: "Clefairy"},
+  clefable: {canonicalId: "0036A0", nombre: "Clefable"},
+  igglybuff: {canonicalId: "0174A0", nombre: "Igglybuff"},
+  jigglypuff: {canonicalId: "0039A0", nombre: "Jigglypuff"},
+  wigglytuff: {canonicalId: "0040A0", nombre: "Wigglytuff"},
+  togepi: {canonicalId: "0175A0", nombre: "Togepi"},
+  togetic: {canonicalId: "0176A0", nombre: "Togetic"},
+  togekiss: {canonicalId: "0468A0", nombre: "Togekiss"},
+  azurill: {canonicalId: "0298A0", nombre: "Azurill"},
+  marill: {canonicalId: "0183A0", nombre: "Marill"},
+  azumarill: {canonicalId: "0184A0", nombre: "Azumarill"},
+  mantyke: {canonicalId: "0458A0", nombre: "Mantyke"},
+  mantine: {canonicalId: "0226A0", nombre: "Mantine"},
+  elekid: {canonicalId: "0239A0", nombre: "Elekid"},
+  electabuzz: {canonicalId: "0125A0", nombre: "Electabuzz"},
+  electivire: {canonicalId: "0466A0", nombre: "Electivire"},
+  magby: {canonicalId: "0240A0", nombre: "Magby"},
+  magmar: {canonicalId: "0126A0", nombre: "Magmar"},
+  magmortar: {canonicalId: "0467A0", nombre: "Magmortar"},
+  bulbasaur: {canonicalId: "0001A0", nombre: "Bulbasaur"},
+  ivysaur: {canonicalId: "0002A0", nombre: "Ivysaur"},
+  venusaur: {canonicalId: "0003A0", nombre: "Venusaur"},
+  charmander: {canonicalId: "0004A0", nombre: "Charmander"},
+  charmeleon: {canonicalId: "0005A0", nombre: "Charmeleon"},
+  charizard: {canonicalId: "0006A0", nombre: "Charizard"},
+  squirtle: {canonicalId: "0007A0", nombre: "Squirtle"},
+  wartortle: {canonicalId: "0008A0", nombre: "Wartortle"},
+  blastoise: {canonicalId: "0009A0", nombre: "Blastoise"},
+  dratini: {canonicalId: "0147A0", nombre: "Dratini"},
+  dragonair: {canonicalId: "0148A0", nombre: "Dragonair"},
+  dragonite: {canonicalId: "0149A0", nombre: "Dragonite"},
+  abra: {canonicalId: "0063A0", nombre: "Abra"},
+  kadabra: {canonicalId: "0064A0", nombre: "Kadabra"},
+  alakazam: {canonicalId: "0065A0", nombre: "Alakazam"},
+  growlithe: {canonicalId: "0058A0", nombre: "Growlithe"},
+  arcanine: {canonicalId: "0059A0", nombre: "Arcanine"},
+  chingling: {canonicalId: "0433A0", nombre: "Chingling"},
+  chimecho: {canonicalId: "0358A0", nombre: "Chimecho"},
+  budew: {canonicalId: "0406A0", nombre: "Budew"},
+  roselia: {canonicalId: "0315A0", nombre: "Roselia"},
+  roserade: {canonicalId: "0407A0", nombre: "Roserade"},
+  wynaut: {canonicalId: "0360A0", nombre: "Wynaut"},
+  wobbuffet: {canonicalId: "0202A0", nombre: "Wobbuffet"},
+  bonsly: {canonicalId: "0438A0", nombre: "Bonsly"},
+  sudowoodo: {canonicalId: "0185A0", nombre: "Sudowoodo"},
+  mimejr: {canonicalId: "0439A0", nombre: "Mime Jr."},
+  mrmime: {canonicalId: "0122A0", nombre: "Mr. Mime"},
+  happiny: {canonicalId: "0440A0", nombre: "Happiny"},
+  chansey: {canonicalId: "0113A0", nombre: "Chansey"},
+  blissey: {canonicalId: "0242A0", nombre: "Blissey"},
+  jynx: {canonicalId: "0124A0", nombre: "Jynx"},
+  smoochum: {canonicalId: "0238A0", nombre: "Smoochum"},
 };

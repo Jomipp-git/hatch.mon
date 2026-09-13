@@ -4,7 +4,7 @@ const {setup}=require('./uiHarness.cjs');
  const {run,els,flush,doc}=await setup();
  const born=()=>run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Test")');
  const ids=run('[...obtainableRoster.egg,...obtainableRoster.evolutionOnly].map(e=>e.id)');
- assert.equal(ids.length,75);
+ assert.equal(ids.length,run('Object.keys(evolutionConfig).length'));
  assert.deepEqual(JSON.parse(fs.readFileSync('tests/obtainable-roster.json')),JSON.parse(run('JSON.stringify(obtainableRoster)')));
  born();
  for(const id of ids){

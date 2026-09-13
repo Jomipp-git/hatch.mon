@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
 (async()=>{const {run,els,flush}=await setup();for(let rarity=1;rarity<=5;rarity++)assert.equal(run(`Shiny.probability(${rarity})`),1/(10*rarity));
-assert.equal(run('Shiny.enabled'),true);assert.equal(run('obtainableRoster.total'),75);assert.equal(run('obtainableRoster.egg.length'),25);assert.equal(run('obtainableRoster.excluded.length'),0);
+assert.equal(run('Shiny.enabled'),true);assert.equal(run('obtainableRoster.total'),run('Object.keys(evolutionConfig).length'));assert.equal(run('obtainableRoster.egg.length'),run('STARTERS.length'));assert.equal(run('obtainableRoster.excluded.length'),0);
 run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.social.active.isShiny=true;state.pokedex=Pokedex.fresh();Pokedex.record(state.pokedex,state.pokemonId,"owned",state.social.active.id,true);save()');
 assert.equal(run('Pokedex.valid(state.pokedex)'),true);
 const dex=JSON.parse(run('JSON.stringify(state.pokedex)')),key=Object.keys(dex)[0];

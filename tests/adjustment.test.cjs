@@ -21,9 +21,17 @@ born('pikachu');run('state.age=2*DAY');assert.equal(run('evolve(current().rules[
 // No live bank; profiles remain valid for breeding, never importable as companions.
 born();run('state.pokerus=false;var profile=exportEntity()');born();assert.throws(()=>run('importEntity(profile)'),/Solo se importan huevos/);assert.equal(run('typeof activateEntity'),'undefined');assert.equal(run('Object.hasOwn(state.social,"collection")'),false);
 run('var eggState=freshState();var egg={...eggState.social.active,kind:"egg",speciesId:null,snapshot:snapshotOf(eggState)};var eggCode=HatchMonSocial.pack(egg);importEntity(eggCode);var stored=JSON.stringify(state.social.eggs)');assert.equal(run('state.social.eggs.length'),1);assert.throws(()=>run('incubateStoredEgg(egg.id)'),/compañero vivo/);run('advanceGameTime(3*HOUR)');assert.equal(run('JSON.stringify(state.social.eggs)===stored'),true);
-run('die("neglect");var deadId=state.social.active.id');assert.equal(run('state.social.memorials.length'),1);assert.equal(run('state.social.memorials[0].snapshot.vital.deathCause'),'neglect');assert.equal(run('validSave(state)'),true);assert.throws(()=>run('incubateStoredEgg(deadId)'),/Solo puedes/);run('rememberDeath()');assert.equal(run('state.social.memorials.length'),1);
+run('die("natural");var deadId=state.social.active.id');assert.equal(run('state.social.memorials.length'),1);assert.equal(run('state.social.memorials[0].snapshot.vital.deathCause'),'natural');assert.equal(run('validSave(state)'),true);assert.throws(()=>run('incubateStoredEgg(deadId)'),/Solo puedes/);run('rememberDeath()');assert.equal(run('state.social.memorials.length'),1);
 run('incubateStoredEgg(egg.id)');assert.equal(run('state.phase'),'egg');assert.equal(run('state.vital'),null);assert.equal(run('state.age'),0);assert.equal(run('state.social.eggs.length'),0);assert.equal(run('state.social.memorials.length'),1);assert.equal(run('validSave(state)'),true);
 run('var bad=HatchMonSocial.copy(state);bad.version=10');assert.equal(run('validSave(bad)'),false);assert.equal(run('typeof migrateSave'),'function');
 // Persisted bank cannot contain a living or dead snapshot; stored egg remains inert.
 run('var bad=HatchMonSocial.copy(state);bad.social.eggs.push(bad.social.memorials[0])');assert.equal(run('validSave(bad)'),false);
-console.log('PASS C.2: canonical preparation, care/physiology preservation, branches, actions, sustained, items, LifeStage independent, single living companion, inert eggs, permanent memories, schema11.');
+// Memorias is only for companions that reached the end of their life.
+born();run('var before=state.social.memorials.length;die("neglect")');
+assert.equal(run('state.social.memorials.length'),run('before'),'a neglect death is not remembered');
+assert.equal(run('validSave(state)'),true);
+run('rememberDeath()');assert.equal(run('state.social.memorials.length'),run('before'));
+// A memorial an older build already wrote is dropped when the save is loaded.
+run('var legacy=HatchMonSocial.copy(state);legacy.phase="egg";legacy.social.memorials.push({...state.social.active,kind:"creature",speciesId:"pichu",canonicalSpeciesId:PokemonData.canonicalId("pichu"),isShiny:false,diedAt:1,bond:0,snapshot:{...snapshotOf(state),phase:"dead",vital:{...state.vital,deathCause:"neglect"}}})');
+assert.equal(run('migrateSave(HatchMonSocial.copy(legacy)).social.memorials.filter(e=>e.snapshot.vital.deathCause==="neglect").length'),0);
+console.log('PASS C.2: canonical preparation, care/physiology preservation, branches, actions, sustained, items, LifeStage independent, single living companion, inert eggs, natural-death memories only, schema11.');

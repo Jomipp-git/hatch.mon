@@ -680,7 +680,9 @@ function breedFromCode(code){
   return t('breeding.eggCreated',{name:state.nickname||current().name});
 }
 function rememberDeath(){
-  if(state.phase!=='dead'||state.social.memorials.some(e=>e.id===state.social.active.id))return;
+  // Memorias is for companions that reached the end of their life. One lost to neglect is not
+  // remembered there, and migrateSave drops any that an older build already recorded.
+  if(state.phase!=='dead'||state.vital?.deathCause==='neglect'||state.social.memorials.some(e=>e.id===state.social.active.id))return;
   const memorial={...activeEntity(),isShiny:state.social.active.isShiny===true,canonicalSpeciesId:PokemonData.canonicalId(state.pokemonId),diedAt:Date.now(),bond:state.relationship?.points||0};
   memorial.snapshot.remainder=0;
   state.social.memorials.push(memorial);
@@ -719,6 +721,7 @@ function migrateSave(data){
     Vital.ensureSleep(s,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   };
   migrateIndividual(data);
+  if(Array.isArray(data.social?.memorials))data.social.memorials=data.social.memorials.filter(e=>e?.snapshot?.vital?.deathCause!=='neglect');
   for(const memorial of data.social?.memorials||[])if(memorial?.snapshot)memorial.snapshot.remainder=0;
   Attention.ensure(data,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   for(const entity of [...(data.social?.eggs||[]),...(data.social?.memorials||[])])migrateIndividual(entity?.snapshot);
@@ -1129,7 +1132,7 @@ function renderPokedex(){
     const hearts=el('div',undefined,'memory-hearts'),filled=Relationship.hearts({relationship:{points:memory.bond||0}});hearts.setAttribute('role','img');hearts.setAttribute('aria-label',t('memories.bond',{hearts:filled}));
     for(let i=0;i<5;i++)hearts.append(pixelIcon('kindness',i<filled?'':'empty'));copy.append(hearts);
     const hours=Math.floor(snap.age/HOUR);copy.append(el('p',t('memories.age',{days:Math.floor(hours/24),hours:hours%24})));
-    copy.append(el('p',snap.vital?.deathCause==='natural'?t('memories.natural'):snap.vital?.deathCause==='neglect'?t('memories.neglect'):t('memories.unknown')));
+    copy.append(el('p',snap.vital?.deathCause==='natural'?t('memories.natural'):t('memories.unknown')));
     if(Number.isFinite(memory.diedAt))copy.append(el('p',new Date(memory.diedAt).toLocaleDateString(I18n.getLocale(),{day:'numeric',month:'short',year:'numeric'}),'subtle'));
     card.append(visual,copy);content.append(card);
   }

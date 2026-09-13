@@ -211,13 +211,13 @@ Con el filtro de escala de grises de iPhone activado, el sprite del Pokémon sig
 tanto en Safari como en Chrome. El resto de la interfaz sí cambia.
 
 ### D6 · Carcasa al obtener el Pokémon, no al madurar
-**Estado:** Hecho · 2026-09-14 (`pendiente`)
+**Estado:** Hecho · 2026-09-14 (`d41f6da`)
 
 Hoy la carcasa se desbloquea al llegar a etapa madura. Debe desbloquearse al conseguir la
 especie: al obtenerla si es primera fase, y en cuanto se evolucione en las siguientes.
 
 ### D7 · Los muertos por descuido no entran en Memorias
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-14
 
 Memorias debe reservarse para los que llegaron al final de su vida, no para los abandonados.
 

@@ -3,3 +3,6 @@
 
 __pycache__/
 *.py[cod]
+
+# Artefactos temporales de Excel
+~$*.xlsx

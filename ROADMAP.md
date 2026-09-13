@@ -180,6 +180,60 @@ progresivamente más. Definir la curva **después** de analizar el cálculo actu
 
 ---
 
+## Bloque D · Segunda tanda de testers
+
+### D1 · Doble toque no debe hacer zoom en iPhone
+**Estado:** Pendiente
+
+Safari iOS amplía al doble toque. En un juego de toques repetidos eso interrumpe el juego.
+
+### D2 · Popups flotantes se cierran tocando fuera
+**Estado:** Pendiente
+
+Los popups que hoy solo se cierran con la X deben cerrarse también al tocar fuera del panel.
+**Excepción: los minijuegos**, para no salir por accidente a media partida.
+
+### D3 · Pokédex ordenada por número de Pokédex
+**Estado:** Pendiente
+
+Hoy no sigue el orden de la Pokédex; Growlithe y Arcanine deberían ir seguidos.
+
+### D4 · Tienda ordenada por tipo y con tarjetas más compactas
+**Estado:** Pendiente
+
+Agrupar por familia de objeto (bayas con bayas, piedras con piedras). Los elementos son
+demasiado grandes: la tarjeta necesita bajar de tamaño.
+
+### D5 · Sprite no responde al modo monocromo de iOS
+**Estado:** Pendiente
+
+Con el filtro de escala de grises de iPhone activado, el sprite del Pokémon sigue en color,
+tanto en Safari como en Chrome. El resto de la interfaz sí cambia.
+
+### D6 · Carcasa al obtener el Pokémon, no al madurar
+**Estado:** Pendiente
+
+Hoy la carcasa se desbloquea al llegar a etapa madura. Debe desbloquearse al conseguir la
+especie: al obtenerla si es primera fase, y en cuanto se evolucione en las siguientes.
+
+### D7 · Los muertos por descuido no entran en Memorias
+**Estado:** Pendiente
+
+Memorias debe reservarse para los que llegaron al final de su vida, no para los abandonados.
+
+### D8 · Pantalla propia de crianza y huevos
+**Estado:** Pendiente
+
+Botón nuevo debajo de Tienda que abre una pantalla dedicada a crianza y huevos, en lugar de
+repartir eso por otros paneles.
+
+### D9 · Buzón de feedback
+**Estado:** Pendiente
+
+Canal dentro del juego para que los jugadores envíen consejos y recomendaciones.
+
+---
+
 ## Preguntas abiertas
 
 1. **IDs legacy (A1).** Las claves de `evolutionTable.js` (`pichu`, `raichualola`) son las que se

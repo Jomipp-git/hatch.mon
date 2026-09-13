@@ -219,6 +219,7 @@ Desde la raíz:
 
 ```sh
 node --test tests/*.test.cjs
+python3 tools/serveLocal.py        # http://127.0.0.1:8080/ ; --dist sirve la build
 ```
 
 Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `tests/canonical-pipeline.test.cjs` añade el guardarraíl del pipeline: falla si cualquier artefacto generado está desfasado respecto al workbook, si una especie admitida llega sin assets, shiny o carcasa, o si `dist/` no refleja los módulos de runtime. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.

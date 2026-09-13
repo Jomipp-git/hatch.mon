@@ -6,3 +6,6 @@ __pycache__/
 
 # Artefactos temporales de Excel
 ~$*.xlsx
+
+# Configuración local del agente
+.claude/

@@ -312,6 +312,316 @@
       "name": "Blissey"
     }
   ],
+  "dexOrder": [
+    {
+      "id": "bulbasaur",
+      "name": "Bulbasaur"
+    },
+    {
+      "id": "ivysaur",
+      "name": "Ivysaur"
+    },
+    {
+      "id": "venusaur",
+      "name": "Venusaur"
+    },
+    {
+      "id": "charmander",
+      "name": "Charmander"
+    },
+    {
+      "id": "charmeleon",
+      "name": "Charmeleon"
+    },
+    {
+      "id": "charizard",
+      "name": "Charizard"
+    },
+    {
+      "id": "squirtle",
+      "name": "Squirtle"
+    },
+    {
+      "id": "wartortle",
+      "name": "Wartortle"
+    },
+    {
+      "id": "blastoise",
+      "name": "Blastoise"
+    },
+    {
+      "id": "pikachu",
+      "name": "Pikachu"
+    },
+    {
+      "id": "raichu",
+      "name": "Raichu"
+    },
+    {
+      "id": "raichualola",
+      "name": "Raichu (Alolan Form)"
+    },
+    {
+      "id": "clefairy",
+      "name": "Clefairy"
+    },
+    {
+      "id": "clefable",
+      "name": "Clefable"
+    },
+    {
+      "id": "jigglypuff",
+      "name": "Jigglypuff"
+    },
+    {
+      "id": "wigglytuff",
+      "name": "Wigglytuff"
+    },
+    {
+      "id": "growlithe",
+      "name": "Growlithe"
+    },
+    {
+      "id": "arcanine",
+      "name": "Arcanine"
+    },
+    {
+      "id": "abra",
+      "name": "Abra"
+    },
+    {
+      "id": "kadabra",
+      "name": "Kadabra"
+    },
+    {
+      "id": "alakazam",
+      "name": "Alakazam"
+    },
+    {
+      "id": "hitmonlee",
+      "name": "Hitmonlee"
+    },
+    {
+      "id": "hitmonchan",
+      "name": "Hitmonchan"
+    },
+    {
+      "id": "chansey",
+      "name": "Chansey"
+    },
+    {
+      "id": "mrmime",
+      "name": "Mr. Mime"
+    },
+    {
+      "id": "jynx",
+      "name": "Jynx"
+    },
+    {
+      "id": "electabuzz",
+      "name": "Electabuzz"
+    },
+    {
+      "id": "magmar",
+      "name": "Magmar"
+    },
+    {
+      "id": "eevee",
+      "name": "Eevee"
+    },
+    {
+      "id": "vaporeon",
+      "name": "Vaporeon"
+    },
+    {
+      "id": "jolteon",
+      "name": "Jolteon"
+    },
+    {
+      "id": "flareon",
+      "name": "Flareon"
+    },
+    {
+      "id": "snorlax",
+      "name": "Snorlax"
+    },
+    {
+      "id": "dratini",
+      "name": "Dratini"
+    },
+    {
+      "id": "dragonair",
+      "name": "Dragonair"
+    },
+    {
+      "id": "dragonite",
+      "name": "Dragonite"
+    },
+    {
+      "id": "pichu",
+      "name": "Pichu"
+    },
+    {
+      "id": "cleffa",
+      "name": "Cleffa"
+    },
+    {
+      "id": "igglybuff",
+      "name": "Igglybuff"
+    },
+    {
+      "id": "togepi",
+      "name": "Togepi"
+    },
+    {
+      "id": "togetic",
+      "name": "Togetic"
+    },
+    {
+      "id": "marill",
+      "name": "Marill"
+    },
+    {
+      "id": "azumarill",
+      "name": "Azumarill"
+    },
+    {
+      "id": "sudowoodo",
+      "name": "Sudowoodo"
+    },
+    {
+      "id": "espeon",
+      "name": "Espeon"
+    },
+    {
+      "id": "umbreon",
+      "name": "Umbreon"
+    },
+    {
+      "id": "wobbuffet",
+      "name": "Wobbuffet"
+    },
+    {
+      "id": "mantine",
+      "name": "Mantine"
+    },
+    {
+      "id": "tyrogue",
+      "name": "Tyrogue"
+    },
+    {
+      "id": "hitmontop",
+      "name": "Hitmontop"
+    },
+    {
+      "id": "smoochum",
+      "name": "Smoochum"
+    },
+    {
+      "id": "elekid",
+      "name": "Elekid"
+    },
+    {
+      "id": "magby",
+      "name": "Magby"
+    },
+    {
+      "id": "blissey",
+      "name": "Blissey"
+    },
+    {
+      "id": "azurill",
+      "name": "Azurill"
+    },
+    {
+      "id": "roselia",
+      "name": "Roselia"
+    },
+    {
+      "id": "chimecho",
+      "name": "Chimecho"
+    },
+    {
+      "id": "wynaut",
+      "name": "Wynaut"
+    },
+    {
+      "id": "budew",
+      "name": "Budew"
+    },
+    {
+      "id": "roserade",
+      "name": "Roserade"
+    },
+    {
+      "id": "chingling",
+      "name": "Chingling"
+    },
+    {
+      "id": "bonsly",
+      "name": "Bonsly"
+    },
+    {
+      "id": "mimejr",
+      "name": "Mime Jr."
+    },
+    {
+      "id": "happiny",
+      "name": "Happiny"
+    },
+    {
+      "id": "munchlax",
+      "name": "Munchlax"
+    },
+    {
+      "id": "riolu",
+      "name": "Riolu"
+    },
+    {
+      "id": "lucario",
+      "name": "Lucario"
+    },
+    {
+      "id": "mantyke",
+      "name": "Mantyke"
+    },
+    {
+      "id": "electivire",
+      "name": "Electivire"
+    },
+    {
+      "id": "magmortar",
+      "name": "Magmortar"
+    },
+    {
+      "id": "togekiss",
+      "name": "Togekiss"
+    },
+    {
+      "id": "leafeon",
+      "name": "Leafeon"
+    },
+    {
+      "id": "glaceon",
+      "name": "Glaceon"
+    },
+    {
+      "id": "sylveon",
+      "name": "Sylveon"
+    },
+    {
+      "id": "toxel",
+      "name": "Toxel"
+    },
+    {
+      "id": "toxtricityamp",
+      "name": "Toxtricity (Amped Form)"
+    },
+    {
+      "id": "toxtricitylow",
+      "name": "Toxtricity (Low Key Form)"
+    }
+  ],
   "excluded": [],
   "edges": [
     {

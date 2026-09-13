@@ -24,7 +24,13 @@ globalThis.Pokedex=(()=>{
   const reachable=new Set(roots),edges=[];let changed=true;
   while(changed){changed=false;for(const from of [...reachable])for(const r of config[from]?.rules||[])if(r.enabled!==false&&config[r.to]){if(!reachable.has(r.to)){reachable.add(r.to);changed=true;}}}
   for(const [from,p]of Object.entries(config))for(const r of p.rules)edges.push({from,to:r.to,enabled:r.enabled!==false});
-  return {total:reachable.size,egg:roots.map(id=>({id,name:config[id].name})),evolutionOnly:[...reachable].filter(id=>!roots.includes(id)).map(id=>({id,name:config[id].name})),excluded:Object.keys(config).filter(id=>!reachable.has(id)).map(id=>({id,name:config[id].name})),edges};
+  const entry=id=>({id,name:config[id].name});
+  // egg order is the hatch pool and must not move; dexOrder is the presentation order, by
+  // national number with the canonical ID breaking ties so regional forms follow their base.
+  const dexOrder=[...reachable].map(id=>[id,PokemonData.canonicalId(id)])
+   .sort((a,b)=>(PokemonData.get(a[1]).DexNo-PokemonData.get(b[1]).DexNo)||a[1].localeCompare(b[1]))
+   .map(([id])=>entry(id));
+  return {total:reachable.size,egg:roots.map(entry),evolutionOnly:[...reachable].filter(id=>!roots.includes(id)).map(entry),dexOrder,excluded:Object.keys(config).filter(id=>!reachable.has(id)).map(entry),edges};
  }
  return Object.freeze({fresh,record,weights,choose,valid,roster});
 })();

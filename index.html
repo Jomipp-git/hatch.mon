@@ -1108,7 +1108,7 @@ function renderPokedex(){
     const entries=Object.entries(state.pokedex).map(([id,e])=>[id,dexVariant==='shiny'?e.shiny:e]).filter(([,e])=>e?.seen);content.append(el('p',t('dex.summary',{count:entries.length,total:obtainableRoster.total,owned:entries.filter(([,e])=>e.ownedIds.length).length,memories:state.social.memorials.length}),'panel-note'));
     const completion=el('progress');completion.max=obtainableRoster.total;completion.value=entries.length;completion.setAttribute('aria-label',t('dex.progress',{count:entries.length,total:obtainableRoster.total}));content.append(completion);
     const grid=el('div',undefined,'dex-grid');
-    for(const entry of [...obtainableRoster.egg,...obtainableRoster.evolutionOnly]){
+    for(const entry of obtainableRoster.dexOrder){
       const id=PokemonData.canonicalId(entry.id),e=entries.find(([key])=>key===id)?.[1];
       const card=el(e?'details':'article',undefined,'dex-tile');
       if(e){const summary=el('summary');summary.append(collectionSprite(id,dexVariant==='shiny'),el('strong',PokemonData.get(id).DisplayName));card.append(summary,el('p',[t(e.ownedIds.length?'dex.owned':'dex.seen'),e.evolved&&t('dex.evolved'),e.bred&&t('dex.bred'),e.received&&t('dex.received')].filter(Boolean).join(' · ')));}

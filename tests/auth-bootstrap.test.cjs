@@ -66,3 +66,27 @@ test('logout saves current runtime before flush and stop, while hiding game and 
  assert.deepEqual(order,['save','flush','stop','logout']);
  const saved=JSON.parse(runtime.storage.get('hatch.mon.v3'));assert.equal(saved.coins,137);assert.equal(saved.trainer.energy,2);
 });
+
+test('the offline stub stays a local-server substitution and never ships',()=>{
+ const stub='tools/devStubs/authService.mjs';
+ assert.ok(fs.existsSync(stub));
+ // Comments name Supabase to explain the boundary; only executable code is checked here.
+ const code=fs.readFileSync(stub,'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm,'');
+ assert.ok(!/^\s*import\b|createClient|esm\.sh|supabase\.co/mi.test(code),
+  'the stub must not import Supabase or name its endpoint');
+ assert.ok(!/\bchannel\b/.test(code),'without channel(), cloudSaveService falls back to polling');
+ // It reaches the page only through tools/serveLocal.py --offline, never through the build.
+ assert.match(fs.readFileSync('tools/serveLocal.py','utf8'),/tools\/devStubs\/authService\.mjs/);
+ assert.ok(!fs.existsSync('dist/tools'),'tools/ must never be staged');
+ assert.match(fs.readFileSync('dist/authService.mjs','utf8'),/supabase\.co/,'dist must carry the real auth module');
+ assert.deepEqual(fs.readFileSync('dist/authService.mjs'),fs.readFileSync('authService.mjs'));
+ // The stub must answer every call cloudSaveService makes; a gap would fail silently in game.
+ const cloud=fs.readFileSync('cloudSaveService.mjs','utf8');
+ for(const call of ['maybeSingle','upsert','getSession','onAuthStateChange'])
+  assert.ok(code.includes(call),`stub is missing ${call}`);
+ for(const call of ['maybeSingle','upsert','getSession'])assert.ok(cloud.includes(call),call);
+ // The real module exports exactly what the stub replaces.
+ const real=fs.readFileSync('authService.mjs','utf8');
+ for(const name of ['client','auth','humanError'])
+  assert.ok(new RegExp(`export (const|function) ${name}\\b`).test(real)&&new RegExp(`export (const|function) ${name}\\b`).test(code),name);
+});

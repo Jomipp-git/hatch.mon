@@ -219,8 +219,20 @@ Desde la raíz:
 
 ```sh
 node --test tests/*.test.cjs
-python3 tools/serveLocal.py        # http://127.0.0.1:8080/ ; --dist sirve la build
+python3 tools/serveLocal.py --offline   # pruebas 100 % locales, sin red
+python3 tools/serveLocal.py             # árbol fuente contra el proyecto Supabase REAL
+python3 tools/serveLocal.py --dist      # la build staged, también contra el proyecto real
 ```
+
+**Servir en localhost no aísla el backend.** Las credenciales viven en `authService.mjs`, así que
+sin `--offline` la página habla con el proyecto Supabase de producción: el login es real y cada
+guardado escribe la fila real de esa cuenta. `--offline` sustituye `authService.mjs` por
+`tools/devStubs/authService.mjs` en tiempo de petición: no importa Supabase, entra directo al
+juego sin pantalla de login, marca la página con un distintivo rojo y guarda la fila en
+`localStorage`, de modo que el `cloudSaveService` real sigue ejecutando su lógica de revisión y
+merge contra ese almacén. La sustitución vive solo en el servidor local; el stub nunca se copia a
+`dist/` y el sitio publicado no puede alcanzarlo. `tests/auth-bootstrap.test.cjs` vigila esa
+frontera.
 
 Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `tests/canonical-pipeline.test.cjs` añade el guardarraíl del pipeline: falla si cualquier artefacto generado está desfasado respecto al workbook, si una especie admitida llega sin assets, shiny o carcasa, o si `dist/` no refleja los módulos de runtime. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
 

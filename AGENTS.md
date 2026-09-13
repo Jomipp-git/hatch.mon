@@ -22,9 +22,9 @@
 
 ## Verificación
 
-- Suite completa desde la raíz: `node --test tests/*.test.cjs` (44 archivos, 103 pruebas). `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
+- Suite completa desde la raíz: `node --test tests/*.test.cjs` (44 archivos, 104 pruebas). `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
 - Comprobaciones aparte: `node tools/projectStatus.cjs` (roster y cobertura de assets) y `PLAYWRIGHT_MODULE="$(npm root -g)/playwright" node tests/browser-recovery.cjs`, que abre Chrome real con todas las peticiones interceptadas y valida la build de `dist/`.
-- Servidor local: `python3 -m http.server 8080 --bind 127.0.0.1`. Nunca `file://`; no existe `npm run dev`.
+- Servidor local: `python3 tools/serveLocal.py --offline` para pruebas aisladas; sin `--offline` la página habla con el Supabase de producción aunque sirvas desde localhost. Nunca `file://`; no existe `npm run dev`.
 - Si una verificación no se puede ejecutar, dilo en la entrega y márcala como no ejecutada; no la des por hecha ni la deduzcas del código.
 - Prefiere fixtures mínimos y representativos. Ejecuta las pruebas afectadas; amplía la verificación si hay cambios transversales, fallos o riesgos concretos. No repitas pruebas aprobadas sin motivo nuevo.
 

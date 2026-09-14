@@ -14,8 +14,8 @@ for(const attribute of ['iq','strength','kindness','style']){
   const fire=(type,point)=>{for(const fn of canvas.events[type]||[])fn({pointerId:1,button:0,clientX:point[0],clientY:point[1],preventDefault(){}});};
   for(let r=0;r<5;r++){const path=run(`StyleTracing.path(${r},${canvas.dataset.seed})`);
    fire('pointerdown',path[0]);fire('pointermove',path[1]);fire('pointerup',path[1]);finish.fire('click');}
- }else advance(40000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
- advance(40000);assert.equal(run(`state.training.${attribute}`),1);
+ }else advance(60000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
+ advance(60000);assert.equal(run(`state.training.${attribute}`),1);
 }
 const {run}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")');
 for(let gain=1;gain<=5;gain++){
@@ -33,6 +33,7 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  const paid=()=>run('JSON.stringify([state.trainer.energy,state.care.energia,state.care.hambre,state.vital.dirt])');
  const open=()=>{run('closePanel();showPanel("training")');practice().fire('click');};
  run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.trainer.energy=6;state.care.energia=100;state.care.hambre=100;state.vital.dirt=0');
+ run('gameStorage.setItem(TUTORIAL_KEY,JSON.stringify(TRAIN))');
  const untouched=paid();
  open();
  assert.equal(els['training-game'].open,true);
@@ -48,7 +49,7 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  assert.equal(paid(),JSON.stringify([5,92,96,3]),'la pestana en segundo plano devuelve la sesion');
  assert.equal(els['training-game'].open,false);
  // Y terminar de verdad sigue premiando una sola vez.
- open();advance(40000);
+ open();advance(60000);
  assert.equal(run('state.training.iq'),1);
  assert.equal(paid(),JSON.stringify([4,84,92,6]),'sin cobro doble al puntuar');
  run('state.trainer.energy=0;closePanel();showPanel("training")');
@@ -63,6 +64,7 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  const practice=()=>walk(els['panel-content']).find(e=>e.dataset?.key==='strength');
  const field=()=>els['training-game-content'].children[3];
  run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.trainer.energy=6;state.care.energia=100');
+ run('gameStorage.setItem(TUTORIAL_KEY,JSON.stringify(TRAIN))');
  run('globalThis.buzz=[];globalThis.navigator={vibrate:p=>{buzz.push(String(p));return true}}');
  run('closePanel();showPanel("training")');practice().fire('click');
  advance(40000);
@@ -77,10 +79,10 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  again().fire('click');
  assert.equal(els['training-game'].open,true,'y repetir abre otra partida');
  assert.equal(run('state.trainer.energy'),before-1,'cobrando la sesion otra vez');
- advance(40000);
+ advance(60000);
  assert.equal(run('buzz.length'),0,'sin vibrar con movimiento reducido');
  // Sin AP para otra sesion, el boton no se ofrece.
- run('state.trainer.energy=1;closePanel();showPanel("training")');practice().fire('click');advance(40000);
+ run('state.trainer.energy=1;closePanel();showPanel("training")');practice().fire('click');advance(60000);
  assert.equal(again(),undefined,'y no se ofrece si la siguiente sesion no se puede pagar');
 }
 // Intelecto: la ventana crece con la secuencia, la secuencia se alarga en vez de rehacerse, y
@@ -114,5 +116,46 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  for(let i=0;i<4;i++)keys()[2].fire('click');
  assert.equal(hint(),run("t('minigame.iq.right')"),'repetir el prefijo mas una luz sigue valiendo');
 }
-console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again and no duplicate completion.');
+// El tutorial va antes de cobrar: los testers entraban, jugaban cuatro rondas y seguian sin saber
+// que se les pedia, y leer las reglas no deberia costar una sesion.
+{
+ const {run,els,advance}=await setup();
+ const walk=e=>[e,...e.children.flatMap(walk)];
+ const card=key=>walk(els['panel-content']).find(e=>e.dataset?.key===key);
+ const buttons=()=>els['training-game-content'].children.filter(e=>e.tagName==='button');
+ run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.trainer.energy=6');
+ assert.equal(run('tutorialsSeen().join()'),'','de fabrica no se ha visto ninguno');
+ run('closePanel();showPanel("training")');card('iq').fire('click');
+ assert.equal(els['training-game'].open,true,'la primera practica abre las reglas');
+ assert.equal(run('TrainingActivities.isActive()'),false,'que no son todavia una partida');
+ assert.equal(run('state.trainer.energy'),6,'y no cuestan nada');
+ // Echarse atras tampoco cobra, y no marca el tutorial como visto.
+ buttons().find(b=>b.textContent===run("t('minigame.common.notNow')")).fire('click');
+ assert.equal(els['training-game'].open,false);
+ assert.equal(run('state.trainer.energy'),6);
+ assert.equal(run('tutorialsSeen().join()'),'');
+ // Empezar cobra y arranca la partida; a partir de ahi la practica va directa.
+ run('closePanel();showPanel("training")');card('iq').fire('click');
+ buttons().find(b=>b.textContent===run("t('minigame.common.start')")).fire('click');
+ assert.equal(run('TrainingActivities.isActive()'),true);
+ assert.equal(run('state.trainer.energy'),5);
+ assert.equal(run('tutorialsSeen().join()'),'iq');
+ // La tarjeta de ronda dice en que ronda estas y que se te pide, antes de cada tanda.
+ const field=els['training-game-content'].children[3],card1=field.children.at(-1);
+ assert.equal(field.dataset.phase,'prepare');
+ assert.equal(card1.children[0].textContent,run("t('minigame.common.roundCard',{round:1,total:TrainingActivities.config.memoryRounds})"));
+ assert.equal(card1.children[1].textContent,run("t('minigame.iq.goal')"));
+ advance(60000);
+ run('closePanel();showPanel("training");state.trainer.energy=6');card('iq').fire('click');
+ assert.equal(run('TrainingActivities.isActive()'),true,'la segunda vez se entra directo');
+ assert.equal(run('state.trainer.energy'),5);
+ run('TrainingActivities.cancel()');
+ // El interrogante deja releerlas cuando quieras, y sigue sin cobrar.
+ run('closePanel();showPanel("training")');card('how-iq').fire('click');
+ assert.equal(run('TrainingActivities.isActive()'),false);
+ assert.equal(run('state.trainer.energy'),5);
+ run('TrainingActivities.cancel()');
+ assert.equal(els['training-game'].open,false);
+}
+console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again a briefing that precedes the charge, a round card and no duplicate completion.');
 })().catch(e=>{console.error(e);process.exitCode=1});

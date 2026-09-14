@@ -130,7 +130,7 @@
   [data-display-mode="lcd"] .screen:not(.lights-off) #bond .pixel-icon{color:#365943}[data-display-mode="lcd"] .screen:not(.lights-off) #bond .empty{color:#7d9a77;opacity:1}
   [data-display-mode="lcd"] .screen.lights-off #bond .pixel-icon{color:#bed09a}[data-display-mode="lcd"] .screen.lights-off #bond .empty{opacity:.55}
   [data-display-mode="lcd"] .screen .empty{opacity:.55}
-  .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a}
+  .minigame-field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-height:180px;padding:14px;background:var(--lcd);border:3px double #52694a;position:relative}.minigame-field .round-card{position:absolute;inset:0;display:grid;place-content:center;gap:8px;padding:14px;text-align:center;background:var(--lcd);z-index:2}.minigame-field:not([data-phase="prepare"]) .round-card{display:none}.round-card strong{font-size:1.05rem;letter-spacing:.14em}.round-card span{font-size:.74rem;color:#3f5340}.minigame-field.briefing{display:block;min-height:0}.minigame-field.briefing p{margin:0 0 8px;font-size:.78rem;padding-left:14px;text-indent:-14px}.minigame-field.briefing p::before{content:'\2022  ';font-weight:bold}.minigame-field.briefing .briefing-rounds{margin:12px 0 0;font-weight:bold;text-align:center}.minigame-field.briefing .briefing-rounds::before{content:''}
   .minigame-field button{touch-action:manipulation;min-height:56px;font-weight:bold;border-radius:3px}.minigame-field button.lit{background:#52694a;color:#fff;box-shadow:inset 0 0 0 3px #263b30}.minigame-field button:active{background:#91a477}
   .minigame-field button.timing-track{grid-column:1/-1;min-height:96px;height:96px;position:relative;padding:0;background:#e4ebcf;border:2px solid #52694a;overflow:hidden;display:block}.timing-zone{position:absolute;top:0;height:100%;background:#c2d3a2}.timing-core{position:absolute;top:0;height:100%;background:#91a477;box-shadow:inset 2px 0 0 #52694a,inset -2px 0 0 #52694a}.timing-marker{position:absolute;transform:translateX(-50%);top:0;width:6px;height:100%;background:#263b30}.timing-caption{position:absolute;inset:6px 0 auto;text-align:center;font-size:.68rem;letter-spacing:.08em;color:#3f5340;pointer-events:none}
   #training-game-content>p{min-height:32px;overflow-wrap:anywhere}#training-game-content button{min-width:0;white-space:normal;overflow-wrap:anywhere}.social-flows>button{min-width:0;overflow-wrap:anywhere}#training-game-content>button{margin-top:12px;width:100%}.minigame-field{outline:calc(var(--pulse,0)*4px) solid #52694a}
@@ -140,7 +140,7 @@
   [data-object="papel"]::before{clip-path:polygon(10% 0,70% 0,90% 20%,90% 100%,10% 100%)}[data-object="lata"]::before{clip-path:polygon(15% 0,85% 0,85% 100%,15% 100%)}[data-object="botella"]::before{clip-path:polygon(35% 0,65% 0,65% 25%,85% 40%,85% 100%,15% 100%,15% 40%,35% 25%)}[data-object="flor"]::before{clip-path:polygon(30% 0,70% 0,70% 20%,100% 20%,100% 50%,65% 50%,65% 100%,40% 100%,40% 50%,0 50%,0 20%,30% 20%)}[data-object="hoja"]::before{clip-path:polygon(100% 0,100% 50%,70% 80%,30% 80%,10% 100%,0 90%,20% 70%,20% 30%,50% 0)}
   .console{background:linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%),var(--shellBase,var(--shell));border-color:var(--shellDark,var(--border))}.bezel{background:var(--bezel,#4e4a56)}.care button{background:var(--button,var(--paper))}
   dialog{border-radius:10px;border:4px double var(--shellDark,#5c546b);background:#e8ecdf}dialog header{background:#e8ecdf}dialog h2{font-size:1rem}
-  .diagnosis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.diagnosis .panel-row{display:block;padding:6px;border:1px solid #a9b69b;border-radius:4px}.diagnosis p{margin:3px 0}.training-card{padding:12px;margin:10px 0;border:1px solid #a9b69b;border-radius:5px}.training-card .panel-row{border:0;padding:0 0 8px}.training-card p{font-size:.72rem}
+  .diagnosis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.diagnosis .panel-row{display:block;padding:6px;border:1px solid #a9b69b;border-radius:4px}.diagnosis p{margin:3px 0}.training-card{padding:12px;margin:10px 0;border:1px solid #a9b69b;border-radius:5px}.training-card .card-actions{display:flex;gap:6px;align-items:stretch}.training-card .card-actions .card-help{flex:0 0 auto;min-width:44px;padding:0 10px;font-weight:bold}.training-card .panel-row{border:0;padding:0 0 8px}.training-card p{font-size:.72rem}
   .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}.evolution-detail{border-top:1px solid #a9b69b;padding:10px 0}.evolution-detail summary{cursor:pointer;font-weight:bold;font-size:.8rem}
   .minigame-field .minigame-again{grid-column:1/-1}.minigame-field[data-phase="prepare"]{border-style:dashed;opacity:.75}.minigame-field[data-phase="play"]{border-color:#263b30}.minigame-field button[data-result="correct"]{outline:3px solid #52694a;opacity:.6}.minigame-field button[data-result="wrong"]{outline:3px double #263b30;text-decoration:line-through}
   .dex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dex-tile{padding:8px 3px;text-align:center;background:#d5dfd055;border:1px solid #a9b69b;border-radius:5px;min-width:0}.dex-tile summary{cursor:pointer;list-style:none}.dex-tile strong{font-size:.7rem;display:block;overflow-wrap:anywhere}.dex-tile p,.dex-tile small{font-size:.65rem}.dex-tile .memory-sprite{margin:auto}.unknown{font-size:1.3rem;color:#6b7961}
@@ -390,7 +390,19 @@ const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{n
 // Las mismas condiciones que deshabilitan la tarjeta de Entrenamiento deciden si se puede repetir
 // sin volver al panel; separadas aqui para no escribirlas dos veces.
 const canTrain=k=>state.phase==='alive'&&!Vital.energyResting(state)&&!state.lightsOff&&canSpend(CARE_CONFIG.training.ap)&&state.care.energia>=CARE_CONFIG.training.energy&&state.training[k]<100;
+// Que ya se han visto las reglas es del dispositivo, no de la partida: no tiene sentido volver a
+// explicar el minijuego al eclosionar otro huevo, y el save no cambia de esquema por esto.
+const TUTORIAL_KEY='hatch.mon.tutorials';
+function tutorialsSeen(){try{const raw=JSON.parse(gameStorage.getItem(TUTORIAL_KEY)||'[]');return Array.isArray(raw)?raw.filter(k=>TRAIN.includes(k)):[];}catch{return [];}}
+function markTutorialSeen(k){if(!TRAIN.includes(k))return false;const seen=tutorialsSeen();if(seen.includes(k))return false;
+  try{gameStorage.setItem(TUTORIAL_KEY,JSON.stringify([...seen,k]));}catch{}return true;}
+// La primera vez las reglas van por delante del cobro: abrir para leerlas y echarse atras no debe
+// costar una sesion.
 function launchTraining(k){
+  if(tutorialsSeen().includes(k))return startTraining(k);
+  return TrainingActivities.brief(k,{start:attribute=>{markTutorialSeen(attribute);startTraining(attribute);}});
+}
+function startTraining(k){
   const companionId=state.social.active.id;
   return TrainingActivities.launch(k,{
     onActive:trainingVisuals,
@@ -850,6 +862,16 @@ function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefine
 function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
 function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
 function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(pixelIcon(key),el('span',text));return n;}
+// El interrogante deja releer las reglas cuando quieras, y nunca cobra: `brief` va antes que
+// `begin`. Sigue disponible aunque la practica este deshabilitada por AP o por energia.
+function trainingActions(k){
+  const actions=el('div',undefined,'card-actions');
+  const help=el('button','?');help.type='button';help.className='card-help';help.dataset.key=`how-${k}`;
+  help.setAttribute('aria-label',t('minigame.common.howTo'));help.title=t('minigame.common.howTo');
+  help.addEventListener('click',()=>{closePanel();TrainingActivities.brief(k,{start:attribute=>{markTutorialSeen(attribute);startTraining(attribute);}});});
+  actions.append(help,panelButton(t('minigame.common.practice'),()=>{closePanel();launchTraining(k);return false;},!canTrain(k),k));
+  return actions;
+}
 function row(title,detail,button,cls){const r=el('div',undefined,cls?'panel-row '+cls:'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}
 const DISPLAY_PREFERENCE_KEY='hatch.mon.displayMode';
 const LANGUAGE_PREFERENCE_KEY='hatch.mon.language';
@@ -898,7 +920,7 @@ function renderPanel(){
   if(panelName==='training'){
     if(state.phase==='egg'){content.append(el('p',t('minigame.training.eggUnavailable')));return;}
     content.append(el('p',t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy}), 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{closePanel();launchTraining(k);return false;},!canTrain(k),k)));card.append(meter);content.append(card);}
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),trainingActions(k)));card.append(meter);content.append(card);}
   }
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));

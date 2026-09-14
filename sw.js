@@ -7,7 +7,7 @@
  * stays uncached; media is referenced by exact path and cannot disagree with anything.
  * Each build owns its cache; activating a new one drops every older cache in a single pass.
  */
-const BUILD = '16d1ce335aab';
+const BUILD = '3b4369ae21dc';
 const CACHE = `hatchmon-assets-${BUILD}`;
 const CACHEABLE = /^(assets|vendor)\/.+\.(png|webp|avif|jpe?g|gif|svg|woff2?)$/;
 

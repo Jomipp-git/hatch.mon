@@ -18,8 +18,9 @@ globalThis.TrainingActivities=(()=>{
   // Siete rondas con la ventana estrechandose, en vez de diez todas iguales: era el minijuego mas
   // largo y el unico sin ninguna curva.
   cleanupRounds:7,cleanupBase:1800,cleanupStep:120,cleanupTiles:6,cleanupMinTrash:2,cleanupMaxTrash:4,
-  prepare:600,resolveDelay:300});
- const launchers={};let active=null;
+  // La tarjeta de ronda tiene que dar tiempo a leerse; con 600 ms no se registraba.
+  prepare:1000,resolveDelay:300});
+ const launchers={};let active=null,briefingExit=null;
  // Un toque corto confirma, uno largo corrige. Es el unico canal de respuesta inmediata que tiene
  // el juego: no hay sonido, y en movil el dedo tapa justo la casilla que acaba de cambiar. Se
  // respeta prefers-reduced-motion, que es el interruptor que el jugador ya tiene.
@@ -44,7 +45,31 @@ globalThis.TrainingActivities=(()=>{
   if(offset<=zone)return 1-(1-config.strengthEdgeScore)*(offset-config.strengthCoreRadius)/(zone-config.strengthCoreRadius);
   const score=config.strengthEdgeScore*(1-(offset-zone)/(config.strengthMissRadius-zone));return score>1e-9?score:0;
  };
+ const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
+ const roundsFor=attribute=>attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:config.strengthRounds;
+ // Cada actividad se explica en tres pasos antes de empezar. Los testers entraban, jugaban cuatro
+ // rondas y seguian sin saber que se les pedia.
+ const BRIEFINGS=Object.freeze({iq:3,strength:3,kindness:3,style:3});
  function register(attribute,launcher){if(!Object.hasOwn(modes,attribute)||typeof launcher!=='function')throw Error(t('minigame.error.invalidActivity'));launchers[attribute]=launcher;}
+ // El tutorial va ANTES de cobrar: abrir para leer las reglas y echarse atras no debe costar una
+ // sesion. Se muestra solo o desde el interrogante de la tarjeta, y usa el mismo dialogo.
+ function brief(attribute,{start=()=>{},close=()=>{}}={}){
+  if(!Object.hasOwn(modes,attribute)||active)return false;
+  const dialog=document.getElementById('training-game'),host=document.getElementById('training-game-content');
+  host.replaceChildren();
+  const steps=node('div',undefined,'minigame-field briefing');
+  for(let i=1;i<=BRIEFINGS[attribute];i++)steps.append(node('p',t(`minigame.${attribute}.step${i}`)));
+  steps.append(node('p',t('minigame.common.rounds',{rounds:roundsFor(attribute)}),'briefing-rounds'));
+  const go=node('button',t('minigame.common.start')),back=node('button',t('minigame.common.notNow'));
+  go.type='button';back.type='button';
+  // Limpiar antes de cerrar: el listener de `close` llama a cancel, que si no repetiria la salida.
+  const shut=then=>{briefingExit=null;if(dialog.open)dialog.close();then();};
+  go.addEventListener('click',()=>shut(()=>start(attribute)));
+  back.addEventListener('click',()=>shut(()=>close(attribute)));
+  briefingExit=()=>close(attribute);
+  host.append(node('h2',modeName(attribute)),node('p',t(`minigame.${attribute}.instructions`)),steps,go,back);
+  dialog.showModal();return true;
+ }
  // El coste de la sesion se cobra al abrir, no al puntuar. Si llegara con el resultado, cancelar
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
  // Por eso `cancel` solo devuelve el gasto cuando el corte no es del jugador: pestana en segundo
@@ -61,8 +86,7 @@ globalThis.TrainingActivities=(()=>{
   if(launchers[attribute])return launchers[attribute]({complete,cancel,attribute});
   dialog=document.getElementById('training-game');const host=document.getElementById('training-game-content');host.replaceChildren();
   const setText=(element,text)=>{if(element.textContent!==text)element.textContent=text;};
-  const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
-  const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',()=>cancel());
+  const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),roundCard=node('div',undefined,'round-card'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',()=>cancel());
   host.append(title,hint,status,field,exit);dialog.showModal();
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
@@ -139,12 +163,17 @@ globalThis.TrainingActivities=(()=>{
   const verdict=()=>{phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);};
   function nextRound(){
    round++;const count=attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:total;
-   if(round>=count){finish();return;}if(attribute==='strength'){phase='prepare';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}else beginRound();
+   if(round>=count){finish();return;}
+   phase='prepare';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);
   }
   function tick(){
    if(done)return;if(field.dataset.phase!==phase)field.dataset.phase=phase;const elapsed=performance.now()-phaseStart;
    if(phase==='prepare'){
-    setText(hint,t('minigame.common.prepare'));controls.forEach(b=>b.disabled=true);if(elapsed>=config.prepare)beginRound();
+    setText(hint,t('minigame.common.prepare'));controls.forEach(b=>b.disabled=true);
+    // La tarjeta vive siempre en el campo; quien la muestra y la esconde es `data-phase`.
+    if(roundCard.dataset.round!==String(round)){roundCard.dataset.round=String(round);
+     roundCard.replaceChildren(node('strong',t('minigame.common.roundCard',{round:round+1,total:roundsFor(attribute)})),node('span',t(`minigame.${attribute}.goal`)));}
+    if(elapsed>=config.prepare)beginRound();
    }else if(phase==='resolve'){
     // Fuerza deja su veredicto en el hint, asi que aqui no se pisa: solo se le da tiempo a leerlo.
     if(attribute==='kindness')setText(hint,t('minigame.common.nextRound'));
@@ -170,8 +199,13 @@ globalThis.TrainingActivities=(()=>{
    setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((memoryWindow(sequence.length)-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds}):t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
    if(!done){if(attribute==='strength')frame=requestFrame(tick);else timer=setTimeout(tick,config.tick);}
   }
+  // Detras de los controles para no mover sus indices; Estilo no la lleva porque no tiene rondas
+  // con pausa. Quien la muestra y la esconde es `data-phase` en el campo.
+  field.append(roundCard);
   tick();return true;
  }
- function cancel(refund=false){return active?.cancel(refund)||false;}
- return Object.freeze({modes,config,grade,gradeThresholds:GRADE_THRESHOLDS,strengthPrecision,launch,register,cancel,isActive:()=>active!==null});
+ function cancel(refund=false){const leave=briefingExit;briefingExit=null;
+  if(!active&&leave){const dialog=document.getElementById('training-game');if(dialog?.open)dialog.close();leave();return false;}
+  return active?.cancel(refund)||false;}
+ return Object.freeze({modes,config,grade,gradeThresholds:GRADE_THRESHOLDS,strengthPrecision,launch,brief,register,cancel,isActive:()=>active!==null});
 })();

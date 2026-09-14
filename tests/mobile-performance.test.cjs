@@ -8,7 +8,7 @@ test('Strength: visual perfect zone, pointerdown, stale frame tolerance, five pe
  const at=()=>parseFloat(marker.style.left);
  for(let round=0;round<5;round++){
   const period=cfg('strengthBasePeriod')-round*cfg('strengthPeriodStep');
-  h.advance(600);frame();
+  h.advance(cfg('prepare'));frame();
   assert.ok(Math.abs(at()-50)>45,'la ronda arranca en un extremo, no sobre el centro');
   h.advance(period*Math.PI/2);frame();assert.ok(Math.abs(at()-50)<1,'y el marcador cruza el centro');
   // Event arrives a second after the last frame; score the position actually displayed.
@@ -29,7 +29,7 @@ test('Strength continuous frames stop on cancel/background; same position scores
  const seen=[];
  for(const hz of [60,90,120]){
   const h=await setup();h.run('var frames=new Map(),frameId=0;globalThis.requestAnimationFrame=fn=>{frames.set(++frameId,fn);return frameId};globalThis.cancelAnimationFrame=id=>frames.delete(id);TrainingActivities.launch("strength",{commit:()=>true})');
-  for(let i=0;i<Math.ceil(.7*hz);i++){h.advance(1000/hz);h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn(performance.now()))');}
+  for(let i=0;i<Math.ceil(1.1*hz);i++){h.advance(1000/hz);h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn(performance.now()))');}
   const track=h.els['training-game-content'].children[3].children[0];
   const position=parseFloat(track.children[2].style.left)/100;
   assert.ok(Number.isFinite(position));

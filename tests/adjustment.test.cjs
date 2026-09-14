@@ -31,14 +31,7 @@ born();run('var before=state.social.memorials.length;die("neglect")');
 assert.equal(run('state.social.memorials.length'),run('before'),'a neglect death is not remembered');
 assert.equal(run('validSave(state)'),true);
 run('rememberDeath()');assert.equal(run('state.social.memorials.length'),run('before'));
-// Memories starts empty: a save from before this build loses its beta-era memorials, once.
-run('var beta=HatchMonSocial.copy(state);beta.phase="egg";delete beta.social.memorialsReset;beta.social.memorials=[{...state.social.active,kind:"creature",speciesId:"pichu",canonicalSpeciesId:PokemonData.canonicalId("pichu"),isShiny:false,diedAt:1,bond:0,snapshot:{...snapshotOf(state),phase:"dead",vital:{...state.vital,deathCause:"natural"}}}]');
-assert.equal(run('migrateSave(HatchMonSocial.copy(beta)).social.memorials.length'),0,'beta memorials are cleared');
-assert.equal(run('migrateSave(HatchMonSocial.copy(beta)).social.memorialsReset'),true,'and the save says so');
-// Only once: a memorial earned after the reset survives every later load.
-run('var after=migrateSave(HatchMonSocial.copy(beta));after.social.memorials=[{...state.social.active,kind:"creature",speciesId:"pichu",canonicalSpeciesId:PokemonData.canonicalId("pichu"),isShiny:false,diedAt:2,bond:0,snapshot:{...snapshotOf(state),phase:"dead",vital:{...state.vital,deathCause:"natural"}}}]');
-assert.equal(run('migrateSave(HatchMonSocial.copy(after)).social.memorials.length'),1,'later memorials are kept');
 // A memorial an older build already wrote is dropped when the save is loaded.
-run('var legacy=migrateSave(HatchMonSocial.copy(state));legacy.phase="egg";legacy.social.memorials.push({...state.social.active,kind:"creature",speciesId:"pichu",canonicalSpeciesId:PokemonData.canonicalId("pichu"),isShiny:false,diedAt:1,bond:0,snapshot:{...snapshotOf(state),phase:"dead",vital:{...state.vital,deathCause:"neglect"}}})');
+run('var legacy=HatchMonSocial.copy(state);legacy.phase="egg";legacy.social.memorials.push({...state.social.active,kind:"creature",speciesId:"pichu",canonicalSpeciesId:PokemonData.canonicalId("pichu"),isShiny:false,diedAt:1,bond:0,snapshot:{...snapshotOf(state),phase:"dead",vital:{...state.vital,deathCause:"neglect"}}})');
 assert.equal(run('migrateSave(HatchMonSocial.copy(legacy)).social.memorials.filter(e=>e.snapshot.vital.deathCause==="neglect").length'),0);
 console.log('PASS C.2: canonical preparation, care/physiology preservation, branches, actions, sustained, items, LifeStage independent, single living companion, inert eggs, natural-death memories only, schema11.');

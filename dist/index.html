@@ -388,7 +388,7 @@ const STARTERS=PokemonData.roots();
 const obtainableRoster=Pokedex.roster(evolutionConfig,STARTERS);
 const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{nameKey:'minigame.strength.activity',icon:'train'},kindness:{nameKey:'minigame.kindness.activity',icon:'kindness'},style:{nameKey:'minigame.style.activity',icon:'style'}};
 function freshState(now=Date.now()){
-  return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[],memorialsReset:true},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
+  return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
     averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
     trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('heatHint')};
@@ -750,14 +750,7 @@ function migrateSave(data){
     Vital.ensureSleep(s,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   };
   migrateIndividual(data);
-  if(data.social){
-    // Memorias empieza de cero: los recuerdos de la beta se escribieron con reglas que ya no rigen.
-    // La marca viaja en el save, así que el borrado ocurre exactamente una vez por partida y no
-    // depende del reloj del dispositivo. Los recuerdos ganados después ya no se tocan.
-    if(!data.social.memorialsReset){data.social.memorials=[];data.social.memorialsReset=true;}
-    // Red de seguridad: otro dispositivo con una build anterior aún podría escribir una por abandono.
-    else if(Array.isArray(data.social.memorials))data.social.memorials=data.social.memorials.filter(e=>e?.snapshot?.vital?.deathCause!=='neglect');
-  }
+  if(Array.isArray(data.social?.memorials))data.social.memorials=data.social.memorials.filter(e=>e?.snapshot?.vital?.deathCause!=='neglect');
   // Shiny sightings recorded before they counted for the plain form are folded back into it.
   for(const entry of Object.values(data.pokedex||{})){
     const shiny=entry?.shiny;if(!shiny?.seen)continue;

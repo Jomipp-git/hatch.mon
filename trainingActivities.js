@@ -12,6 +12,14 @@ globalThis.TrainingActivities=(()=>{
   strengthBasePeriod:420,strengthPeriodStep:60,strengthResolve:700,
   cleanupRounds:10,cleanupWindow:1500,prepare:600,resolveDelay:300});
  const launchers={};let active=null;
+ // Un toque corto confirma, uno largo corrige. Es el unico canal de respuesta inmediata que tiene
+ // el juego: no hay sonido, y en movil el dedo tapa justo la casilla que acaba de cambiar. Se
+ // respeta prefers-reduced-motion, que es el interruptor que el jugador ya tiene.
+ const HAPTICS=Object.freeze({tap:8,good:18,fair:[10,40,10],bad:70});
+ const stillPatterns=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
+ const haptic=name=>{if(stillPatterns())return false;const pattern=typeof name==='string'?HAPTICS[name]:name;
+  if(pattern===undefined)return false;try{return globalThis.navigator?.vibrate?.(pattern)===true;}catch{return false;}};
+ const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
  const strengthPrecision=position=>{
   const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
@@ -26,7 +34,7 @@ globalThis.TrainingActivities=(()=>{
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
  // Por eso `cancel` solo devuelve el gasto cuando el corte no es del jugador: pestana en segundo
  // plano, cierre de la pagina o parada del runtime. Rendirse a mano cuesta lo mismo que perder.
- function launch(attribute,{begin=()=>true,abandon=()=>{},commit,onActive=()=>{},formatReward=()=>''}){
+ function launch(attribute,{begin=()=>true,abandon=()=>{},repeat=null,canRepeat=()=>false,commit,onActive=()=>{},formatReward=()=>''}){
   if(!Object.hasOwn(modes,attribute)||active||!begin(attribute))return false;
   let done=false,timer=null,frame=null,dialog=null,dispose=null;
   const requestFrame=globalThis.requestAnimationFrame||((fn)=>setTimeout(fn,16));
@@ -48,20 +56,27 @@ globalThis.TrainingActivities=(()=>{
   // centro, asi que pulsar en el instante en que se habilitaba el control era siempre perfecto.
   const strengthPosition=t=>(Math.sin(t/(config.strengthBasePeriod-round*config.strengthPeriodStep)+(round%2?Math.PI/2:-Math.PI/2))+1)/2;
   const button=(label,fn,onPress=false)=>{const b=node('button',label);b.type='button';b.addEventListener('pointerdown',event=>{if(event.button!==undefined&&event.button!==0)return;if(onPress){event.preventDefault();fn();return;}b.setPointerCapture?.(event.pointerId);held.add(b);presses.set(b,{round,valid:phase==='play'});});b.addEventListener('pointerup',()=>held.delete(b));b.addEventListener('pointercancel',()=>{held.delete(b);presses.delete(b);});b.addEventListener('lostpointercapture',()=>held.delete(b));b.addEventListener('click',event=>{if(onPress){if(event.detail===0)fn();return;}const press=presses.get(b);presses.delete(b);if(press&&press.round!==round)return;fn(press);});field.append(b);controls.push(b);return b;};
-  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());};
-  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,onFinish:finish});return true;}
+  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());
+   if(ok)gradeHaptic(gain);
+   // Volver a practicar no deberia costar tres toques por el panel de Entrenamiento: es lo que se
+   // hace despues de casi cada partida. Solo se ofrece si la siguiente sesion se puede pagar.
+   if(ok&&repeat&&canRepeat(attribute)){const again=node('button',t('minigame.common.again'),'minigame-again');again.type='button';
+    again.addEventListener('click',()=>{dialog.close();repeat(attribute);});field.append(again);}};
+  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:finish});return true;}
   if(attribute==='iq'){
    setText(hint,t('minigame.iq.instructions'));
    for(let i=0;i<4;i++)button(['A','B','C','D'][i],()=>{
     if(done||phase!=='answer'||performance.now()-phaseStart>=config.memoryResponse)return;
+    haptic('tap');
     if(i!==sequence[answer])roundCorrect=false;answer++;
-    if(answer===sequence.length){if(roundCorrect)earned++;nextRound();}
+    if(answer===sequence.length){if(roundCorrect)earned++;haptic(roundCorrect?'good':'bad');nextRound();}
    });total=config.memoryRounds;
   }else if(attribute==='strength'){
    setText(hint,t('minigame.strength.instructions'));
    // La pista entera es el control: con el dedo miras la barra, no un boton pequeno en una
    // esquina, asi que el objetivo tactil tiene que ser la barra.
    const track=button('',()=>{if(done||hit||phase!=='play')return;hit=true;const precision=strengthPrecision(visibleStrengthPosition);earned+=precision;
+    haptic(precision===1?'good':precision>0?'fair':'bad');
     setText(hint,precision===1?t('minigame.strength.perfect'):precision>=config.strengthEdgeScore?t('minigame.strength.close'):precision>0?t('minigame.strength.edge'):t('minigame.strength.miss'));
     // Sin esto la ronda seguia corriendo hasta agotar la ventana: acertar pronto premiaba con
     // dos segundos y medio de pantalla quieta.
@@ -74,7 +89,7 @@ globalThis.TrainingActivities=(()=>{
    targets=[marker];total=config.strengthRounds;
   }else if(attribute==='kindness'){
    setText(hint,t('minigame.kindness.instructions'));
-   for(let i=0;i<6;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=config.cleanupWindow)||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
+   for(let i=0;i<6;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=config.cleanupWindow)||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;haptic(targets[i]?'good':'bad');setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
   }
 
   function beginRound(){
@@ -114,7 +129,7 @@ globalThis.TrainingActivities=(()=>{
     if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
      // Dejar pasar la ventana tambien se cuenta y se dice: antes la ronda cambiaba sin explicar
      // que el marcador se habia escapado.
-     else{hit=true;setText(hint,t('minigame.strength.miss'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
+     else{hit=true;haptic('bad');setText(hint,t('minigame.strength.miss'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
     else if(attribute==='strength'){if(!hit)setText(hint,t('minigame.strength.now'));if(!hit){visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls[0].disabled=hit;}
 
     else if(hint.textContent!==t('minigame.kindness.collected')&&hint.textContent!==t('minigame.kindness.keep'))setText(hint,t('minigame.kindness.reminder'));

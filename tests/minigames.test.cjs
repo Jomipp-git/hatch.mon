@@ -46,5 +46,33 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  assert.equal(practice().disabled,true,'sin AP la practica no se ofrece');
  assert.notEqual(untouched,paid());
 }
-console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond and no duplicate completion.');
+// El dedo es el unico canal de respuesta inmediata: no hay sonido y en movil tapa la casilla que
+// acaba de cambiar. Y repetir no deberia costar tres toques por el panel de Entrenamiento.
+{
+ const {run,els,advance}=await setup();
+ const walk=e=>[e,...e.children.flatMap(walk)];
+ const practice=()=>walk(els['panel-content']).find(e=>e.dataset?.key==='strength');
+ const field=()=>els['training-game-content'].children[3];
+ run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.trainer.energy=6;state.care.energia=100');
+ run('globalThis.buzz=[];globalThis.navigator={vibrate:p=>{buzz.push(String(p));return true}}');
+ run('closePanel();showPanel("training")');practice().fire('click');
+ advance(40000);
+ // Cinco rondas dejadas pasar: un pulso correctivo por ronda y otro por el resultado.
+ assert.equal(run('buzz.length'),6,'la partida vibra al puntuar cada ronda y al cerrar');
+ assert.equal(run('new Set(buzz).size'),1,'y todas las notas fallidas suenan igual');
+ // prefers-reduced-motion es el interruptor que el jugador ya tiene: tambien apaga la haptica.
+ run('buzz.length=0;globalThis.matchMedia=q=>({matches:q.includes("reduced-motion")})');
+ const again=()=>field().children.find(b=>b.tagName==='button'&&b.textContent===run("t('minigame.common.again')"));
+ assert.ok(again(),'el resultado ofrece repetir sin volver al panel');
+ const before=run('state.trainer.energy');
+ again().fire('click');
+ assert.equal(els['training-game'].open,true,'y repetir abre otra partida');
+ assert.equal(run('state.trainer.energy'),before-1,'cobrando la sesion otra vez');
+ advance(40000);
+ assert.equal(run('buzz.length'),0,'sin vibrar con movimiento reducido');
+ // Sin AP para otra sesion, el boton no se ofrece.
+ run('state.trainer.energy=1;closePanel();showPanel("training")');practice().fire('click');advance(40000);
+ assert.equal(again(),undefined,'y no se ofrece si la siguiente sesion no se puede pagar');
+}
+console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again and no duplicate completion.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
 (async()=>{
  for(const attribute of ['iq','strength','kindness']){
-  const {run,els,advance}=await setup();run(`globalThis.result=null;TrainingActivities.launch('${attribute}',{commit:(k,g)=>{result=g;return true}})`);
+  const {run,els,advance}=await setup();run(`globalThis.result=null;globalThis.buzz=[];globalThis.navigator={vibrate:p=>{buzz.push(p);return true}};TrainingActivities.launch('${attribute}',{commit:(k,g)=>{result=g;return true}})`);
   // Fuerza necesita muestreo fino: la precision ya no es plana dentro de la zona, asi que hay que
   // esperar a que el marcador cruce el centro en vez de pulsar en cuanto se habilita el control.
   const step=attribute==='strength'?5:20;
@@ -14,6 +14,9 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
    if(attribute==='style'){const marker=field.children[0]?.children[1];if(marker&&parseFloat(marker.style.left)>=40&&parseFloat(marker.style.left)<=60){const b=buttons.find(b=>b.classList.contains('lit'));b?.fire('click');}}
   }
   assert.equal(run('result'),5,`${attribute}: all content perfectly played must earn +5`);
+  // El +5 se celebra con un patron de tres pulsos; un pulso suelto es el correctivo.
+  assert.ok(Array.isArray(run('buzz.at(-1)')),`${attribute}: a +5 ends on a celebratory pattern`);
+  assert.equal(run('buzz.at(-1).length'),5,`${attribute}: three buzzes with two gaps`);
  }
  const {run}=await setup();for(const [score,gain]of [[0,1],[.25,2],[.5,3],[.75,4],[.99,4],[1,5]])assert.equal(run(`TrainingActivities.grade(${score})`),gain);
  console.log('PASS playable perfect runs: five memory rounds, strength, all 30 trash targets and 16 rhythm beats each award +5; imperfect grades 1–4.');

@@ -142,7 +142,7 @@
   dialog{border-radius:10px;border:4px double var(--shellDark,#5c546b);background:#e8ecdf}dialog header{background:#e8ecdf}dialog h2{font-size:1rem}
   .diagnosis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.diagnosis .panel-row{display:block;padding:6px;border:1px solid #a9b69b;border-radius:4px}.diagnosis p{margin:3px 0}.training-card{padding:12px;margin:10px 0;border:1px solid #a9b69b;border-radius:5px}.training-card .panel-row{border:0;padding:0 0 8px}.training-card p{font-size:.72rem}
   .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}.evolution-detail{border-top:1px solid #a9b69b;padding:10px 0}.evolution-detail summary{cursor:pointer;font-weight:bold;font-size:.8rem}
-  .minigame-field[data-phase="prepare"]{border-style:dashed;opacity:.75}.minigame-field[data-phase="play"]{border-color:#263b30}.minigame-field button[data-result="correct"]{outline:3px solid #52694a;opacity:.6}.minigame-field button[data-result="wrong"]{outline:3px double #263b30;text-decoration:line-through}
+  .minigame-field .minigame-again{grid-column:1/-1}.minigame-field[data-phase="prepare"]{border-style:dashed;opacity:.75}.minigame-field[data-phase="play"]{border-color:#263b30}.minigame-field button[data-result="correct"]{outline:3px solid #52694a;opacity:.6}.minigame-field button[data-result="wrong"]{outline:3px double #263b30;text-decoration:line-through}
   .dex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dex-tile{padding:8px 3px;text-align:center;background:#d5dfd055;border:1px solid #a9b69b;border-radius:5px;min-width:0}.dex-tile summary{cursor:pointer;list-style:none}.dex-tile strong{font-size:.7rem;display:block;overflow-wrap:anywhere}.dex-tile p,.dex-tile small{font-size:.65rem}.dex-tile .memory-sprite{margin:auto}.unknown{font-size:1.3rem;color:#6b7961}
   .console{background-image:var(--motifImage,none),linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%);background-color:var(--shellBase,var(--shell));background-repeat:no-repeat;background-position:right bottom,center;background-size:160px 80px,100% 100%}
   .tracing-field{display:flex;flex-direction:column;padding:8px;gap:8px}.tracing-canvas{display:block;width:100%;height:auto;aspect-ratio:320/220;background:#d5dfd0;touch-action:none;user-select:none;image-rendering:pixelated}.tracing-canvas[data-centered="false"]{outline:2px dashed #52694a;outline-offset:-3px}.tracing-field>button{min-height:40px}
@@ -387,6 +387,19 @@ for(const p of Object.values(evolutionConfig))for(const r of p.rules){
 const STARTERS=PokemonData.roots();
 const obtainableRoster=Pokedex.roster(evolutionConfig,STARTERS);
 const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{nameKey:'minigame.strength.activity',icon:'train'},kindness:{nameKey:'minigame.kindness.activity',icon:'kindness'},style:{nameKey:'minigame.style.activity',icon:'style'}};
+// Las mismas condiciones que deshabilitan la tarjeta de Entrenamiento deciden si se puede repetir
+// sin volver al panel; separadas aqui para no escribirlas dos veces.
+const canTrain=k=>state.phase==='alive'&&!Vital.energyResting(state)&&!state.lightsOff&&canSpend(CARE_CONFIG.training.ap)&&state.care.energia>=CARE_CONFIG.training.energy&&state.training[k]<100;
+function launchTraining(k){
+  const companionId=state.social.active.id;
+  return TrainingActivities.launch(k,{
+    onActive:trainingVisuals,
+    formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),
+    begin:attribute=>{let ok=false;dispatch(()=>{ok=beginTraining(attribute);return ok;});return ok;},
+    abandon:()=>dispatch(()=>refundTraining()),
+    repeat:launchTraining,canRepeat:canTrain,
+    commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain);return result;},'train');return result;}});
+}
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
@@ -885,7 +898,7 @@ function renderPanel(){
   if(panelName==='training'){
     if(state.phase==='egg'){content.append(el('p',t('minigame.training.eggUnavailable')));return;}
     content.append(el('p',t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy}), 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),begin:attribute=>{let ok=false;dispatch(()=>{ok=beginTraining(attribute);return ok;});return ok;},abandon:()=>dispatch(()=>refundTraining()),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||Vital.energyResting(state)||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{closePanel();launchTraining(k);return false;},!canTrain(k),k)));card.append(meter);content.append(card);}
   }
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));

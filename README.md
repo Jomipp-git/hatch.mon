@@ -158,6 +158,10 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 `TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad identificación y Estilo trazado mediante `styleTracing.js`. Costes y requisitos permanecen en el motor de entrenamiento.
 
+**Háptica.** Cada veredicto se acompaña de un pulso por `navigator.vibrate`: corto al acertar, doble al quedarse a medias, largo al fallar, y un patrón de tres pulsos si la nota llega a +4. Es el único canal de respuesta inmediata que tiene el juego — no hay sonido, y en móvil el dedo tapa justo la casilla que acaba de cambiar. `prefers-reduced-motion: reduce` lo apaga entero, así que el interruptor es el que el jugador ya tiene en el sistema.
+
+**Repetir.** La pantalla de resultado ofrece *Otra vez*, que relanza la misma actividad sin pasar por el panel; solo aparece si la siguiente sesión se puede pagar, y la cobra como cualquier otra.
+
 ## Rendimiento móvil y build de runtime
 
 Fuerza actualiza su marcador con `requestAnimationFrame` y puntúa el valor que se ha dibujado, tomado en `pointerdown`; no espera al `click`. La pista entera es el control: es el botón, de 96 px de alto, para que el objetivo táctil sea la barra que se está mirando. La precisión es continua — 1 exacto en el núcleo central (±4 %), .7 en los bordes de la zona pintada (40–60 %) y 0 fuera de ±20 % — de modo que centrar y rozar ya no valen lo mismo. El marcador arranca en un extremo, alternando lado por ronda: antes empezaba en el centro y pulsar en el instante en que se habilitaba el control era siempre perfecto. Acertar cierra la ronda en 700 ms en vez de agotar la ventana de 3 s, y dejarla pasar se anuncia como fallo. Cinco núcleos clavados producen +5, independientemente de que el dispositivo repinte a 60, 90 o 120 Hz. Los timers visuales se cancelan al cerrar, cancelar u ocultar el minijuego.

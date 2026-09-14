@@ -33,7 +33,7 @@ globalThis.StyleTracing=(()=>{
   const end=()=>{previous=null;};
   return {points,tolerance,start,move,end,current,progress:()=>progress/(points.length-1),complete:()=>progress>=points.length-1-.5,score:()=>Math.min(1,progress/(points.length-1))*(travel?Math.max(0,1-error/travel):0)};
  }
- function mount({field,hint,status,node,onFinish}){
+ function mount({field,hint,status,node,haptic=()=>false,onFinish}){
   field.className='minigame-field tracing-field';hint.textContent=t('minigame.style.instructions');
   const canvas=node('canvas'),next=node('button',t('minigame.style.finishPath'));canvas.width=config.width;canvas.height=config.height;canvas.className='tracing-canvas';canvas.setAttribute('aria-label',t('minigame.style.canvasLabel'));next.type='button';field.append(canvas,next);
   let round=0,scorer=createScorer(0),pointer=null,disposed=false,centered=true,trail=[],scores=[],paintFrame=null,gestureRect=null;
@@ -49,9 +49,9 @@ globalThis.StyleTracing=(()=>{
    status.textContent=t('minigame.style.progress',{round:round+1,total:curves.length,percent:Math.round(scorer.progress()*100)});
   }
   function release(){const id=pointer;pointer=null;scorer.end();if(id!==null&&canvas.hasPointerCapture?.(id))canvas.releasePointerCapture(id);}
-  function advance(){if(disposed)return;release();scores.push(scorer.score());round++;if(round===curves.length){disposed=true;onFinish(grade(scores.reduce((a,b)=>a+b,0)/scores.length));return;}scorer=createScorer(round);trail=[];centered=true;draw();}
+  function advance(){if(disposed)return;release();const score=scorer.score();scores.push(score);haptic(score>=.75?'good':score>=.4?'fair':'bad');round++;if(round===curves.length){disposed=true;onFinish(grade(scores.reduce((a,b)=>a+b,0)/scores.length));return;}scorer=createScorer(round);trail=[];centered=true;draw();}
   const position=e=>{const r=gestureRect||canvas.getBoundingClientRect();return [(e.clientX-r.left)*config.width/r.width,(e.clientY-r.top)*config.height/r.height];};
-  canvas.addEventListener('pointerdown',e=>{if(disposed||pointer!==null||(e.button!==undefined&&e.button!==0))return;e.preventDefault();gestureRect=canvas.getBoundingClientRect();if(!scorer.start(position(e)))return;pointer=e.pointerId;canvas.setPointerCapture(e.pointerId);trail=[position(e)];scheduleDraw();});
+  canvas.addEventListener('pointerdown',e=>{if(disposed||pointer!==null||(e.button!==undefined&&e.button!==0))return;e.preventDefault();gestureRect=canvas.getBoundingClientRect();if(!scorer.start(position(e))){haptic('bad');hint.textContent=t('minigame.style.startHere');return;}hint.textContent=t('minigame.style.instructions');pointer=e.pointerId;canvas.setPointerCapture(e.pointerId);trail=[position(e)];scheduleDraw();});
   canvas.addEventListener('pointermove',e=>{if(disposed||e.pointerId!==pointer)return;e.preventDefault();const samples=e.getCoalescedEvents?.();for(const sample of samples?.length?samples:[e]){const p=position(sample);centered=scorer.move(p);trail.push(p);if(trail.length>12)trail.shift();}canvas.dataset.centered=String(centered);scheduleDraw();});
   canvas.addEventListener('pointerup',e=>{if(disposed||e.pointerId!==pointer)return;e.preventDefault();scorer.move(position(e));release();if(scorer.complete())advance();else draw();});
   for(const event of ['pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>{if(e.pointerId===pointer){release();draw();}});

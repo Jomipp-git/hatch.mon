@@ -224,6 +224,7 @@ node --test tests/*.test.cjs
 python3 tools/serveLocal.py --offline   # pruebas 100 % locales, sin red
 python3 tools/serveLocal.py             # árbol fuente contra el proyecto Supabase REAL
 python3 tools/serveLocal.py --dist      # la build staged, también contra el proyecto real
+python3 tools/serveLocal.py --lan      # además accesible desde el móvil en la misma red
 ```
 
 **Servir en localhost no aísla el backend.** Las credenciales viven en `authService.mjs`, así que
@@ -234,7 +235,8 @@ juego sin pantalla de login, marca la página con un distintivo rojo y guarda la
 `localStorage`, de modo que el `cloudSaveService` real sigue ejecutando su lógica de revisión y
 merge contra ese almacén. La sustitución vive solo en el servidor local; el stub nunca se copia a
 `dist/` y el sitio publicado no puede alcanzarlo. `tests/auth-bootstrap.test.cjs` vigila esa
-frontera.
+frontera. `tools/lcdProbe.html` es una página de diagnóstico autónoma, no runtime: aísla en qué
+condición deja WebKit de aplicar el filtro SVG del modo LCD.
 
 Las pruebas cubren simulación, evolución, breeding/QR, persistencia, huevos, interacción, colecciones y render. `tests/canonical-pipeline.test.cjs` añade el guardarraíl del pipeline: falla si cualquier artefacto generado está desfasado respecto al workbook, si una especie admitida llega sin assets, shiny o carcasa, o si `dist/` no refleja los módulos de runtime. `node tools/projectStatus.cjs` resume el roster y la cobertura de assets locales. Las pruebas DOM/canvas y CSS no sustituyen la revisión visual en navegador.
 

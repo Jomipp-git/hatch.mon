@@ -4,6 +4,7 @@
   python3 tools/serveLocal.py              source tree, REAL Supabase project
   python3 tools/serveLocal.py --offline    source tree, no network at all
   python3 tools/serveLocal.py --dist       the staged build, REAL Supabase project
+  python3 tools/serveLocal.py --lan        also reachable from a phone on the same network
 
 Without --offline the page talks to the production Supabase project even on localhost: the
 credentials live in authService.mjs, so logging in there is a real login and every save writes
@@ -43,7 +44,10 @@ def main():
     parser.add_argument('--bind', default='127.0.0.1')
     parser.add_argument('--dist', action='store_true', help='serve dist/ instead of the source tree')
     parser.add_argument('--offline', action='store_true', help='stub auth and cloud saves; no network')
+    parser.add_argument('--lan', action='store_true', help='bind every interface so a phone can reach it')
     args = parser.parse_args()
+    if args.lan:
+        args.bind = '0.0.0.0'
     directory = ROOT / 'dist' if args.dist else ROOT
     os.chdir(directory)
     base = OfflineHandler if args.offline else http.server.SimpleHTTPRequestHandler
@@ -52,6 +56,16 @@ def main():
     with socketserver.TCPServer((args.bind, args.port), handler) as server:
         mode = 'OFFLINE (stubbed auth, localStorage saves)' if args.offline else 'LIVE Supabase project'
         print(f'serving {directory.name}/ at http://{args.bind}:{args.port}/  ·  {mode}', flush=True)
+        if args.lan:
+            import socket
+            probe = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:
+                probe.connect(('192.0.2.1', 1))  # TEST-NET-1: routed nowhere, just reveals the local address
+                print(f'reachable on this network at http://{probe.getsockname()[0]}:{args.port}/', flush=True)
+            except OSError:
+                print('could not determine the LAN address', flush=True)
+            finally:
+                probe.close()
         server.serve_forever()
 
 if __name__ == '__main__':

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hatch.mon · sonda del modo LCD</title>
+<style>
+ body{margin:0;padding:16px;background:#e9e7ed;color:#303d35;font:15px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+ h1{font-size:1.05rem;margin:0 0 4px}
+ p{margin:0 0 16px;font-size:.85rem}
+ .case{margin-bottom:14px;padding:10px;background:#fff;border:1px solid #c9c3d4;border-radius:10px}
+ .case b{display:block;font-size:.8rem;margin-bottom:6px}
+ .case small{display:block;font-size:.72rem;color:#6d6480;margin-top:6px}
+ .screen{background:#d5dfd0;padding:10px;display:flex;gap:10px;align-items:center;isolation:isolate;overflow:hidden}
+ .lcd{filter:url(#lcd-palette)}
+ canvas,img{image-rendering:pixelated;display:block;width:96px;height:96px}
+ .swatches{display:flex}.swatches i{width:24px;height:96px;display:block}
+ @keyframes nudge{50%{translate:0 -3px}}
+ .animated{animation:nudge .8s ease-in-out infinite}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <filter id="lcd-palette" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+  <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 0 0 0 1 0"/>
+  <feComponentTransfer>
+   <feFuncR type="discrete" tableValues=".14902 .32157 .56863 .83529"/>
+   <feFuncG type="discrete" tableValues=".23137 .41176 .64314 .87451"/>
+   <feFuncB type="discrete" tableValues=".18824 .29020 .46667 .73333"/>
+  </feComponentTransfer>
+ </filter>
+</defs></svg>
+
+<h1>Sonda del modo LCD</h1>
+<p>Cada bloque debe verse en la paleta verde de 4 tonos. Apunta cuáles siguen en color.</p>
+
+<div class="case"><b>1 · Colores planos dentro del filtro (control)</b>
+ <div class="screen lcd"><div class="swatches"><i style="background:#e2413c"></i><i style="background:#2f6fd0"></i><i style="background:#f2c744"></i><i style="background:#ffffff"></i></div></div>
+ <small>Si este sale en color, el filtro SVG no funciona en absoluto.</small></div>
+
+<div class="case"><b>2 · Canvas heredando el filtro del padre (lo que hace el juego)</b>
+ <div class="screen lcd"><canvas id="a" width="32" height="32"></canvas></div>
+ <small>Si solo falla este, WebKit no aplica el filtro del ancestro al canvas.</small></div>
+
+<div class="case"><b>3 · Canvas animado heredando el filtro del padre</b>
+ <div class="screen lcd"><canvas id="b" width="32" height="32" class="animated"></canvas></div>
+ <small>Si 2 va bien y este no, la causa es la promoción a capa por animación.</small></div>
+
+<div class="case"><b>4 · Filtro aplicado al propio canvas</b>
+ <div class="screen"><canvas id="c" width="32" height="32" class="lcd"></canvas></div>
+ <small>Si este funciona y 2 no, el arreglo es filtrar el canvas directamente.</small></div>
+
+<div class="case"><b>5 · Imagen heredando el filtro del padre</b>
+ <div class="screen lcd"><img id="d" alt=""></div>
+ <small>Distingue «falla el canvas» de «falla cualquier contenido con imagen».</small></div>
+
+<script>
+ const COLORS=['#e2413c','#2f6fd0','#f2c744','#ffffff','#1b7d3a','#8a3fbf'];
+ function paint(id){
+  const context=document.getElementById(id).getContext('2d');
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){
+   context.fillStyle=COLORS[(Math.floor(x/6)+Math.floor(y/6))%COLORS.length];
+   context.fillRect(x,y,1,1);
+  }
+ }
+ for(const id of ['a','b','c'])paint(id);
+ document.getElementById('d').src=document.getElementById('a').toDataURL();
+</script>
+</body>
+</html>

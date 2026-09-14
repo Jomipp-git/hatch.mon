@@ -206,11 +206,28 @@ objetos al día elegidos al azar por fecha, así que agrupar ahí no aporta. La 
 `itemCatalog[id].kind` (bayas, objetos de evolución, medicina, bebidas), omite grupos vacíos y usa
 filas compactas. La rotación diaria de la tienda no cambia.
 
-### D5 · Sprite no responde al modo monocromo de iOS
-**Estado:** Pendiente
+### D5 · El sprite no entra en el modo LCD del juego en iPhone
+**Estado:** Bloqueado (falta evidencia del dispositivo)
 
-Con el filtro de escala de grises de iPhone activado, el sprite del Pokémon sigue en color,
-tanto en Safari como en Chrome. El resto de la interfaz sí cambia.
+Confirmado que se trata del **modo LCD del propio juego**, no del filtro de accesibilidad de iOS.
+El modo aplica `filter:url(#lcd-palette)` —un filtro SVG con cuantización discreta a cuatro
+tonos— sobre `.screen`; el sprite es un `<canvas>` descendiente que debería heredarlo. En iOS
+(Safari y Chrome comparten WebKit) el sprite se queda en color.
+
+No se puede arreglar a ciegas: si el filtro del ancestro sí llega al canvas en algunos iOS,
+aplicarlo también al canvas lo pasaría dos veces, y esta cuantización **no es idempotente** —la
+segunda pasada vuelve a calcular luminancia sobre los cuatro tonos y los reasigna—. Hace falta
+saber qué falla exactamente antes de tocar CSS.
+
+`tools/lcdProbe.html` aísla las cinco hipótesis en una página autónoma: colores planos bajo el
+filtro, canvas heredando el filtro, canvas animado heredando el filtro, filtro aplicado al propio
+canvas e imagen heredando el filtro. Se sirve con `python3 tools/serveLocal.py --lan` y se abre
+desde el iPhone; el bloque que salga en color nombra la causa y el arreglo:
+
+- Falla el 1 → el filtro SVG no se aplica en absoluto; hay que cambiar de técnica.
+- Falla solo el 2 → WebKit no lleva el filtro del ancestro al canvas; arreglo, el caso 4.
+- Va el 2 y falla el 3 → la promoción a capa por animación; arreglo, evitarla o forzar la capa.
+- Falla el 5 igual que el 2 → no es específico del canvas sino de cualquier contenido con imagen.
 
 ### D6 · Carcasa al obtener el Pokémon, no al madurar
 **Estado:** Hecho · 2026-09-14 (`d41f6da`)

@@ -1130,9 +1130,11 @@ function interactWithPokemon(){const response=Relationship.interact(state);if(!r
 let dexVariant='normal';
 let collectionTab='pokedex',memorialRenderers=[];
 function disposeMemorialSprites(){for(const renderer of memorialRenderers)renderer.stop();memorialRenderers=[];}
-function collectionSprite(id,isShiny=false){
-  const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');visual.setAttribute('aria-label',PokemonData.get(id)?.DisplayName||id);
-  const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny});return visual;
+function collectionSprite(id,isShiny=false,silhouette=false){
+  const name=PokemonData.get(id)?.DisplayName||id;
+  const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');
+  visual.setAttribute('aria-label',silhouette?t('dex.seenSilhouette',{name}):name);
+  const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny,silhouette});return visual;
 }
 function renderPokedex(){
   dialog.dataset.lcdSurface='true';disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent=t('ui.inventory.collection');
@@ -1146,7 +1148,8 @@ function renderPokedex(){
     for(const entry of obtainableRoster.dexOrder){
       const id=PokemonData.canonicalId(entry.id),e=entries.find(([key])=>key===id)?.[1];
       const card=el(e?'details':'article',undefined,'dex-tile');
-      if(e){const summary=el('summary');summary.append(collectionSprite(id,dexVariant==='shiny'),el('strong',PokemonData.get(id).DisplayName));card.append(summary,el('p',[t(e.ownedIds.length?'dex.owned':'dex.seen'),e.evolved&&t('dex.evolved'),e.bred&&t('dex.bred'),e.received&&t('dex.received')].filter(Boolean).join(' · ')));}
+      // Seen is not cared for: a form you only met through someone else's code stays a silhouette.
+      if(e){const summary=el('summary');summary.append(collectionSprite(id,dexVariant==='shiny',!e.ownedIds.length),el('strong',PokemonData.get(id).DisplayName));card.append(summary,el('p',[t(e.ownedIds.length?'dex.owned':'dex.seen'),e.evolved&&t('dex.evolved'),e.bred&&t('dex.bred'),e.received&&t('dex.received')].filter(Boolean).join(' · ')));}
       else{const mystery=el('div','???','memory-sprite unknown');mystery.setAttribute('aria-label',t('dex.unknownForm'));card.append(mystery,el('small',t('dex.unknown')));}
       grid.append(card);
     }content.append(grid);return;

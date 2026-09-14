@@ -1,6 +1,9 @@
 /* Render canvas PMD, reproducción del huevo y fallback retro. */
 'use strict';
 const POKEMON_RENDER_CONFIG={maxWidth:112,maxHeight:120,placeholderScale:4,
+  // A form only seen through someone else's code shows as a solid shape: every visible pixel
+  // becomes this one tone. Dark grey rather than black, which reads as a hole in the grid.
+  silhouette:[58,58,68],
   palette:[null,'#344e3b','#71915b','#bed09a'],
   placeholder:{type:'matrix',pixels:[
     '0000000000000000',
@@ -53,6 +56,15 @@ globalThis.PokemonRenderer=(()=>{
   }
   function create(host,{list=false}={}){
     let key=null,serial=0,timer=null,canvas=null,paused=false,currentDraw=null;
+    function flatten(){
+      // Semi-transparent edges become fully opaque, so the shape reads as one mass, not a blur.
+      const ctx=canvas.getContext('2d');
+      if(typeof ctx.getImageData!=='function')return;
+      const frame=ctx.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+      const [r,g,b]=POKEMON_RENDER_CONFIG.silhouette;
+      for(let i=0;i<data.length;i+=4){if(!data[i+3])continue;data[i]=r;data[i+1]=g;data[i+2]=b;data[i+3]=255;}
+      ctx.putImageData(frame,0,0);
+    }
     const cancel=()=>{if(timer!==null)clearTimeout(timer);timer=null;};
     const stop=()=>{serial++;cancel();key=null;currentDraw=null;host.replaceChildren();};
     function matrix(def){
@@ -63,8 +75,8 @@ globalThis.PokemonRenderer=(()=>{
       const palette=def.palette||POKEMON_RENDER_CONFIG.palette;
       pixels.forEach((row,y)=>Array.from(row).forEach((value,x)=>{if(palette[Number(value)]){ctx.fillStyle=palette[Number(value)];ctx.fillRect(offsetX+x*scale,offsetY+y*scale,scale,scale);}}));
     }
-    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true,isShiny=false}={}){
-      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}:${isShiny}`;
+    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true,isShiny=false,silhouette=false}={}){
+      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}:${isShiny}:${silhouette}`;
       if(key===nextKey)return;if(!list&&!dead)preloadNearby(speciesId,isShiny);stop();key=nextKey;const token=serial;
       canvas=document.createElement('canvas');canvas.className='pokemon-pixels';canvas.setAttribute('aria-hidden','true');host.append(canvas);
       const metrics=geometry(speciesId,list);canvas.width=metrics.width;canvas.height=metrics.height;canvas.style.width=`${metrics.width*1.3}px`;canvas.style.height=`${metrics.height*1.3}px`;
@@ -76,7 +88,7 @@ globalThis.PokemonRenderer=(()=>{
         if(serial!==token)return;
         const def=candidates.shift()||POKEMON_RENDER_CONFIG.placeholder;
         if(visualState==='eat'&&def.animationName==='Eat'&&!PmdVisuals.stableEat(speciesId,def)){attempt();return;}
-        if(def.type==='matrix'||def.type==='bitmap'){host.dataset.visual=dead?'memorial':'placeholder';matrix(def);return;}
+        if(def.type==='matrix'||def.type==='bitmap'){host.dataset.visual=dead?'memorial':'placeholder';matrix(def);if(silhouette)flatten();return;}
         host.dataset.visual='loading';
         load(def.src).then(img=>{
         if(serial!==token)return;
@@ -88,7 +100,7 @@ globalThis.PokemonRenderer=(()=>{
         const crop=first?{x:first[0],y:first[1],width:first[2]-first[0],height:first[3]-first[1]}:def.crop||{x:0,y:0,width:w,height:h};
         if(crop.x<0||crop.y<0||crop.width<=0||crop.height<=0||crop.x+crop.width>w||crop.y+crop.height>h){attempt();return;}
         if((list?[frameBounds(def)[0]]:frameBounds(def)).some(b=>(b[2]-b[0])*metrics.scale>98||(b[3]-b[1])*metrics.scale>98)){attempt();return;}
-        host.dataset.visual='asset';host.dataset.asset=def.src;host.dataset.visualState=visualState;
+        host.dataset.visual='asset';host.dataset.asset=def.src;host.dataset.visualState=visualState;host.dataset.silhouette=String(silhouette);
         canvas.classList.toggle('feeding-idle',visualState==='eat'&&def.animationName!=='Eat'&&animate);
         const scale=metrics.scale;let frame=0;
         currentDraw=()=>{
@@ -100,6 +112,7 @@ globalThis.PokemonRenderer=(()=>{
           const x=Math.max(3,Math.min(canvas.width-3-fw*scale,(canvas.width-crop.width*scale)/2+(b[0]-crop.x)*scale));
           const y=Math.max(3,Math.min(metrics.baseline-fh*scale,metrics.baseline-(crop.y+crop.height-b[1])*scale));
           ctx.drawImage(img,frame*w+b[0],row*h+b[1],fw,fh,x,y,fw*scale,fh*scale);ctx.restore();
+          if(silhouette)flatten();
           if(animate&&frames>1&&!(visualState==='faint'&&frame===frames-1)&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
             const delay=typeof PmdVisuals==='undefined'?def.durations?.[frame]||1000/(def.fps||4):PmdVisuals.frameDuration(def,frame);frame=(frame+1)%frames;timer=setTimeout(currentDraw,delay);
           }

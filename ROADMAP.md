@@ -140,9 +140,10 @@ Mostrar la familia evolutiva del Pokémon en la sección del Prof. Oak.
 ### B8 · Regalo e intercambio de huevos
 **Estado:** Pendiente
 
-Hoy compartir un breeding code registra automáticamente el Pokémon propio en la Pokédex del
-amigo: eso no se quiere. En su lugar, poder enviar huevos del inventario a un amigo como regalo
-o intercambio.
+Poder enviar huevos del inventario a un amigo como regalo o intercambio.
+
+La parte de «compartir un breeding code no debe registrar en la Pokédex» queda **descartada**: se
+mantiene el registro, diferenciando visto de cuidado (ver D12).
 
 ---
 
@@ -181,6 +182,16 @@ progresivamente más. Definir la curva **después** de analizar el cálculo actu
 ---
 
 ## Bloque D · Segunda tanda de testers
+
+### D12 · Visto frente a cuidado en la Pokédex
+**Estado:** Hecho · 2026-09-14
+
+Leer el código de otra persona sigue registrando su forma en la Pokédex, como antes. Lo que cambia
+es cómo se muestra: una entrada sin ningún `ownedIds` aparece como silueta —todos los píxeles
+visibles al mismo gris oscuro, opacos— y solo se ve a color cuando has cuidado la especie.
+
+La silueta se calcula sobre el canvas (`getImageData`/`putImageData`), no con un filtro CSS: el
+modo LCD ya enseñó que WebKit no es de fiar aplicando filtros sobre un canvas (ver D5).
 
 ### D10 · Login por email y contraseña
 **Estado:** Hecho en cliente · 2026-09-14 · **falta una comprobación en Supabase**

@@ -68,6 +68,8 @@ def main():
         if args.refresh_assets:
             command.append('--refresh')
         step(f'PMD assets (normal + shiny) for {len(wanted)} form(s)', command)
+    # Las paletas son cache de red y viven fuera de este pipeline: si falta alguna, el generador
+    # para con el comando exacto que hay que lanzar.
     step('shell themes', [sys.executable, 'tools/generateShellThemes.py'])
     step('list metrics', [sys.executable, 'tools/generateListMetrics.py'])
     step('dist build', [sys.executable, 'tools/buildMobileRuntime.py'] + (['--optimize'] if args.optimize else []))

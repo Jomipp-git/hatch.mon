@@ -23,13 +23,23 @@ assert.equal(run('POKEMON_RENDER_CONFIG.silhouette.length'),3);
 assert.match(fs.readFileSync('pokemonRenderer.js','utf8'),/if\(silhouette\)flatten\(\);/);
 const mass=run(`['togepi','togetic','togekiss'].map(id=>{const g=PokemonRenderer.geometry(id,true),m=PMD_LIST_METRICS[PokemonData.canonicalId(id)];return m.opaqueArea*g.scale*g.scale})`);assert.ok(Math.max(...mass)/Math.min(...mass)<1.5);
 // Las carcasas: la forma base va monocroma y cada evolucion de la linea suma un color.
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togepi")).motif'),'plain');
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togepi")).motifColors.length'),0);
-// Sin silueta dibujada, la familia sale del tipo primario; con ella, manda la especie.
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togetic")).motif'),'diamonds','Hada sin silueta propia');
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).motif'),'togekiss','la silueta de la especie gana al tipo');
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("charizard")).motif'),'charizard');
-assert.ok(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).motifColors.length')>run('ShellSkins.theme(PokemonData.canonicalId("togetic")).motifColors.length'),'y la ultima forma, un color mas');
+const colorsOf=form=>run(`ShellSkins.theme(PokemonData.canonicalId("${form}")).motifColors.length`);
+assert.equal(colorsOf('charmander'),1,'la forma base va a un solo color');
+assert.equal(colorsOf('charmeleon'),2);
+assert.equal(colorsOf('charizard'),3,'y la ultima forma llega a tres');
+// Nunca se inventa un color para llegar al cupo: Togekiss solo tiene tres tonos en su paleta,
+// asi que su estampado se queda en los dos que no son el plastico.
+assert.equal(colorsOf('togekiss'),2,'una paleta corta da menos colores, no colores inventados');
+assert.ok(colorsOf('togepi')<colorsOf('togetic'),'y la progresion por linea se mantiene');
+// Cada especie del repertorio tiene su silueta dibujada a mano; la familia por tipo es el respaldo.
+for(const form of ['togepi','togetic','togekiss','charizard','snorlax','eevee','lucario'])
+ assert.equal(run(`ShellSkins.theme(PokemonData.canonicalId("${form}")).motif`),form.replace('.','').toLowerCase(),`${form} lleva su propia silueta`);
+const generic=run('Object.values(SHELL_THEMES).filter(t=>t.motif==="plain").length');
+assert.equal(generic,0,'ninguna forma se queda sin motivo');
+// Las ediciones shiny son temas aparte: se ganan al tener esa forma en shiny, no con la normal.
+const shinyId=run('PokemonData.canonicalId("charizard")+":shiny"');
+assert.ok(run(`Object.hasOwn(SHELL_THEMES,'${shinyId}')`),'cada forma tiene edicion shiny');
+assert.notEqual(run(`SHELL_THEMES['${shinyId}'].shellBase`),run('ShellSkins.theme(PokemonData.canonicalId("charizard")).shellBase'),'con su propia paleta');
 // Cada accion lleva su canto, y son colores legibles sobre un boton claro.
 const edges=run('ShellSkins.theme(PokemonData.canonicalId("charizard")).buttonEdges');
 assert.equal(edges.length,4,'un canto por accion');

@@ -1,1 +1,6 @@
-{}
+{
+  "0849A0": {"motifColors": ["#f0c810", "#5e3474", "#c9a30d"]},
+  "0849B0": {"motifColors": ["#2ec8e6", "#5e3474", "#1f9ab4"]},
+  "0849A0:shiny": {"motifColors": ["#f0c810", "#77424d", "#c9a30d"]},
+  "0849B0:shiny": {"motifColors": ["#2ec8e6", "#77424d", "#1f9ab4"]}
+}

@@ -125,8 +125,11 @@ test('the offline stub stays a local-server substitution and never ships',()=>{
  for(const call of [...boot.matchAll(/(?<![.\w])auth\.([a-zA-Z]+)\(/g)].map(m=>m[1]))
   assert.ok(new RegExp(`\\b${call}:`).test(code),`stub is missing auth.${call}`);
  for(const call of ['maybeSingle','upsert','getSession'])assert.ok(cloud.includes(call),call);
- // The real module exports exactly what the stub replaces.
- const real=fs.readFileSync('authService.mjs','utf8');
- for(const name of boot.match(/^import \{([^}]*)\} from '\.\/authService\.mjs'/m)[1].split(',').map(n=>n.trim()))
-  assert.ok(new RegExp(`export (const|function) ${name}\\b`).test(real)&&new RegExp(`export (const|function) ${name}\\b`).test(code),name);
+ // Every stand-in must export what appBootstrap imports, or the module never loads at all.
+ const imported=boot.match(/^import \{([^}]*)\} from '\.\/authService\.mjs'/m)[1].split(',').map(n=>n.trim());
+ const standIns={'authService.mjs':fs.readFileSync('authService.mjs','utf8'),[stub]:code,
+  'tests/browser-recovery.cjs':fs.readFileSync('tests/browser-recovery.cjs','utf8')};
+ for(const [file,source] of Object.entries(standIns))
+  // A stand-in may group bindings in one statement, so the name only has to sit inside an export.
+  for(const name of imported)assert.match(source,new RegExp(`export (const|function)[^;\\n]*\\b${name}\\b`),`${file} is missing ${name}`);
 });

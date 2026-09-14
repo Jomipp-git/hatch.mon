@@ -4,6 +4,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),{setup}=re
 const origin='http://127.0.0.1:8081';
 const authSource=`const session={user:{id:'recovery-fixture',email:'test@example.test'}};
 export const auth={logout:async()=>({error:null})},humanError=()=>'';
+export const needsConfirmation=()=>false;
 export const client={auth:{getSession:async()=>({data:{session}}),onAuthStateChange(){}},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:await(await fetch('/__fixture')).json(),error:null})})}),upsert:async(row)=>{await fetch('/__fixture',{method:'PUT',body:JSON.stringify(row)});return {error:null}}})};`;
 (async()=>{
  const h=await setup();h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Pepo");state.coins=120;state.relationship.points=45;state.inventory={tea:2,berry:3};state.sleep={napMinutes:15}');

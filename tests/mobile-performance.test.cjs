@@ -2,25 +2,47 @@ const {test}=require('node:test'),assert=require('node:assert/strict');const {se
 test('Strength: visual perfect zone, pointerdown, stale frame tolerance, five perfect rounds, no duplicate click',async()=>{
  const h=await setup();h.run('var frames=new Map(),frameId=0;globalThis.requestAnimationFrame=fn=>{frames.set(++frameId,fn);return frameId};globalThis.cancelAnimationFrame=id=>frames.delete(id);var gains=[];TrainingActivities.launch("strength",{commit:(a,g)=>{gains.push(g);return true}})');
  const frame=()=>h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn(performance.now()))');
- const field=h.els['training-game-content'].children[3],marker=field.children[0].children[1],button=field.children[1];
+ // La pista es el control: un unico boton que contiene zona, nucleo, marcador y rotulo.
+ const field=h.els['training-game-content'].children[3],button=field.children[0],marker=button.children[2];
+ const cfg=key=>h.run(`TrainingActivities.config.${key}`);
+ const at=()=>parseFloat(marker.style.left);
  for(let round=0;round<5;round++){
-  h.advance(600);frame();assert.equal(parseFloat(marker.style.left),50);
+  const period=cfg('strengthBasePeriod')-round*cfg('strengthPeriodStep');
+  h.advance(600);frame();
+  assert.ok(Math.abs(at()-50)>45,'la ronda arranca en un extremo, no sobre el centro');
+  h.advance(period*Math.PI/2);frame();assert.ok(Math.abs(at()-50)<1,'y el marcador cruza el centro');
   // Event arrives a second after the last frame; score the position actually displayed.
   h.advance(1000);button.events.pointerdown[0]({button:0,pointerId:1,preventDefault(){}});button.events.click[0]({detail:1});
-  assert.equal(h.els['training-game-content'].children[1].textContent,'¡En el centro!');h.advance(2000);frame();
+  assert.equal(h.els['training-game-content'].children[1].textContent,'¡En el centro!');
+  // Acertar corta la ronda: ya no hay que agotar la ventana de tres segundos mirando la pantalla.
+  h.advance(cfg('strengthResolve')+1);frame();
  }
  assert.equal(h.run('gains.join()'),'5');assert.equal(h.run('frames.size'),0);
- for(const pos of [.4,.45,.5,.55,.6])assert.equal(h.run(`TrainingActivities.strengthPrecision(${pos})`),1);
- for(const pos of [.399,.601])assert.ok(h.run(`TrainingActivities.strengthPrecision(${pos})`)<1);
+ const precision=pos=>h.run(`TrainingActivities.strengthPrecision(${pos})`);
+ for(const pos of [.46,.5,.54])assert.equal(precision(pos),1,'el nucleo del 4 % puntua 1 exacto');
+ for(const pos of [.4,.6])assert.ok(Math.abs(precision(pos)-cfg('strengthEdgeScore'))<1e-9,'y el borde de la zona pintada, .7');
+ assert.ok(precision(.45)<1&&precision(.45)>precision(.42),'entre medias baja de forma continua');
+ for(const pos of [.3,.7,.05,.95])assert.equal(precision(pos),0,'fuera de +-20 % no puntua');
+ assert.ok(precision(.35)>0&&precision(.35)<cfg('strengthEdgeScore'));
 });
 test('Strength continuous frames stop on cancel/background; same position scores equally at 60/90/120 Hz',async()=>{
+ const seen=[];
  for(const hz of [60,90,120]){
   const h=await setup();h.run('var frames=new Map(),frameId=0;globalThis.requestAnimationFrame=fn=>{frames.set(++frameId,fn);return frameId};globalThis.cancelAnimationFrame=id=>frames.delete(id);TrainingActivities.launch("strength",{commit:()=>true})');
   for(let i=0;i<Math.ceil(.7*hz);i++){h.advance(1000/hz);h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn(performance.now()))');}
-  const position=parseFloat(h.els['training-game-content'].children[3].children[0].children[1].style.left)/100;
-  assert.ok(Number.isFinite(position));assert.equal(h.run(`TrainingActivities.strengthPrecision(${position})`),position>=.4&&position<=.6?1:Math.max(0,position<.4?position/.4:(1-position)/.4));
+  const track=h.els['training-game-content'].children[3].children[0];
+  const position=parseFloat(track.children[2].style.left)/100;
+  assert.ok(Number.isFinite(position));
+  // Se puntua lo que se ha dibujado, sea cual sea la cadencia de repintado del dispositivo.
+  const precision=h.run(`TrainingActivities.strengthPrecision(${position})`),edge=h.run('TrainingActivities.config.strengthEdgeScore');
+  track.events.pointerdown[0]({button:0,pointerId:1,preventDefault(){}});
+  assert.equal(h.els['training-game-content'].children[1].textContent,
+   precision===1?'¡En el centro!':precision>=edge?'Cerca del centro':precision>0?'Al borde de la zona':'Fuera de zona',
+   `${hz} Hz puntua la posicion dibujada`);
+  seen.push(precision);
   h.doc.hidden=true;h.doc.events.visibilitychange();assert.equal(h.run('frames.size'),0);
  }
+ assert.equal(seen.length,3);
 });
 test('main visuals pause behind training while physiology and immediate commit remain active',async()=>{
  const h=await setup();h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");render();var oldAge=state.age;trainingVisuals(true);var node=document.getElementById("stats").children[0];');

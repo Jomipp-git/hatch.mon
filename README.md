@@ -160,7 +160,7 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 ## Rendimiento móvil y build de runtime
 
-Fuerza actualiza su marcador con `requestAnimationFrame` y puntúa el valor que se ha dibujado, tomado en `pointerdown`; no espera al `click`. La zona central visible y perfecta es exactamente 40–60 % del recorrido. Cinco rondas dentro de esa zona producen +5, independientemente de que el dispositivo repinte a 60, 90 o 120 Hz. Los timers visuales se cancelan al cerrar, cancelar u ocultar el minijuego.
+Fuerza actualiza su marcador con `requestAnimationFrame` y puntúa el valor que se ha dibujado, tomado en `pointerdown`; no espera al `click`. La pista entera es el control: es el botón, de 96 px de alto, para que el objetivo táctil sea la barra que se está mirando. La precisión es continua — 1 exacto en el núcleo central (±4 %), .7 en los bordes de la zona pintada (40–60 %) y 0 fuera de ±20 % — de modo que centrar y rozar ya no valen lo mismo. El marcador arranca en un extremo, alternando lado por ronda: antes empezaba en el centro y pulsar en el instante en que se habilitaba el control era siempre perfecto. Acertar cierra la ronda en 700 ms en vez de agotar la ventana de 3 s, y dejarla pasar se anuncia como fallo. Cinco núcleos clavados producen +5, independientemente de que el dispositivo repinte a 60, 90 o 120 Hz. Los timers visuales se cancelan al cerrar, cancelar u ocultar el minijuego.
 
 Mientras un minijuego está abierto, la fisiología y el guardado siguen usando timestamps, pero se pausan el renderer PMD, el huevo, toasts y repintados de la escena que queda detrás del diálogo. Al cerrarlo se sincroniza y se pinta una sola vez. Estilo conserva todas las muestras coalescidas del puntero, pero limita el canvas a un repintado por frame; Amabilidad mantiene la misma tanda mientras haya un puntero activo.
 
@@ -226,6 +226,8 @@ python3 tools/serveLocal.py             # árbol fuente contra el proyecto Supab
 python3 tools/serveLocal.py --dist      # la build staged, también contra el proyecto real
 python3 tools/serveLocal.py --lan      # además accesible desde el móvil en la misma red
 ```
+
+El servidor responde siempre con `Cache-Control: no-store`: Python solo envía `Last-Modified` y el navegador es libre de deducir una ventana de frescura, de modo que editar un fichero de runtime y recargar mostraba la build anterior.
 
 **Servir en localhost no aísla el backend.** Las credenciales viven en `authService.mjs`, así que
 sin `--offline` la página habla con el proyecto Supabase de producción: el login es real y cada

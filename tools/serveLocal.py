@@ -25,7 +25,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STUBS = {'/authService.mjs': ROOT / 'tools/devStubs/authService.mjs'}
 
-class OfflineHandler(http.server.SimpleHTTPRequestHandler):
+class NoStoreHandler(http.server.SimpleHTTPRequestHandler):
+    """Never let the browser reuse a response.
+
+    Python's static handler only sends Last-Modified, and Chrome is free to guess a freshness
+    window from it. Editing a runtime file and reloading then shows the previous build, which is
+    the worst possible failure mode while checking a change by hand.
+    """
+
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-store, must-revalidate')
+        super().end_headers()
+
+class OfflineHandler(NoStoreHandler):
     def send_head(self):
         stub = STUBS.get(self.path.split('?')[0])
         if stub is None:
@@ -34,7 +46,6 @@ class OfflineHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Type', 'text/javascript')
         self.send_header('Content-Length', str(len(body)))
-        self.send_header('Cache-Control', 'no-store')
         self.end_headers()
         return __import__('io').BytesIO(body)
 
@@ -50,7 +61,7 @@ def main():
         args.bind = '0.0.0.0'
     directory = ROOT / 'dist' if args.dist else ROOT
     os.chdir(directory)
-    base = OfflineHandler if args.offline else http.server.SimpleHTTPRequestHandler
+    base = OfflineHandler if args.offline else NoStoreHandler
     handler = functools.partial(base, directory=str(directory))
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer((args.bind, args.port), handler) as server:

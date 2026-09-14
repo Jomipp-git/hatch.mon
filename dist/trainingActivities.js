@@ -3,10 +3,24 @@ globalThis.TrainingActivities=(()=>{
  const t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
  const modes=Object.freeze({iq:'minigame.attribute.iq',strength:'minigame.attribute.strength',kindness:'minigame.attribute.kindness',style:'minigame.attribute.style'});
  const modeName=attribute=>t(modes[attribute]);
- const config=Object.freeze({tick:40,memoryRounds:5,memoryResponse:4000,memoryFlash:550,strengthRounds:5,strengthWindow:3000,strengthPerfectMin:.4,strengthPerfectMax:.6,cleanupRounds:10,cleanupWindow:1500,prepare:600});
+ const config=Object.freeze({tick:40,memoryRounds:5,memoryResponse:4000,memoryFlash:550,
+  strengthRounds:5,strengthWindow:3000,strengthPerfectMin:.4,strengthPerfectMax:.6,
+  // Clavarla es el 4 % central; el resto de la zona pintada baja hasta .7 y fuera de +-20 % no
+  // puntua. Antes la zona entera valia 1 y justo fuera se seguia puntuando casi 1, asi que
+  // rozarla y centrarla daban lo mismo y la banda dibujada no significaba nada.
+  strengthCoreRadius:.04,strengthEdgeScore:.7,strengthMissRadius:.2,
+  strengthBasePeriod:420,strengthPeriodStep:60,strengthResolve:700,
+  cleanupRounds:10,cleanupWindow:1500,prepare:600,resolveDelay:300});
  const launchers={};let active=null;
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
- const strengthPrecision=position=>position>=config.strengthPerfectMin&&position<=config.strengthPerfectMax?1:Math.max(0,position<config.strengthPerfectMin?position/config.strengthPerfectMin:(1-position)/(1-config.strengthPerfectMax));
+ const strengthPrecision=position=>{
+  const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
+  // El margen solo abre el borde del nucleo: sin el, .46 cae fuera por 4e-17 de coma flotante.
+  const offset=Math.abs(position-centre);
+  if(offset<=config.strengthCoreRadius+1e-9)return 1;
+  if(offset<=zone)return 1-(1-config.strengthEdgeScore)*(offset-config.strengthCoreRadius)/(zone-config.strengthCoreRadius);
+  const score=config.strengthEdgeScore*(1-(offset-zone)/(config.strengthMissRadius-zone));return score>1e-9?score:0;
+ };
  function register(attribute,launcher){if(!Object.hasOwn(modes,attribute)||typeof launcher!=='function')throw Error(t('minigame.error.invalidActivity'));launchers[attribute]=launcher;}
  // El coste de la sesion se cobra al abrir, no al puntuar. Si llegara con el resultado, cancelar
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
@@ -30,7 +44,9 @@ globalThis.TrainingActivities=(()=>{
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
   let visibleStrengthPosition=.5;
-  const strengthPosition=t=>(Math.sin(t/(420-round*60))+1)/2;
+  // El marcador arranca en un extremo, alternando lado por ronda. Antes empezaba justo en el
+  // centro, asi que pulsar en el instante en que se habilitaba el control era siempre perfecto.
+  const strengthPosition=t=>(Math.sin(t/(config.strengthBasePeriod-round*config.strengthPeriodStep)+(round%2?Math.PI/2:-Math.PI/2))+1)/2;
   const button=(label,fn,onPress=false)=>{const b=node('button',label);b.type='button';b.addEventListener('pointerdown',event=>{if(event.button!==undefined&&event.button!==0)return;if(onPress){event.preventDefault();fn();return;}b.setPointerCapture?.(event.pointerId);held.add(b);presses.set(b,{round,valid:phase==='play'});});b.addEventListener('pointerup',()=>held.delete(b));b.addEventListener('pointercancel',()=>{held.delete(b);presses.delete(b);});b.addEventListener('lostpointercapture',()=>held.delete(b));b.addEventListener('click',event=>{if(onPress){if(event.detail===0)fn();return;}const press=presses.get(b);presses.delete(b);if(press&&press.round!==round)return;fn(press);});field.append(b);controls.push(b);return b;};
   const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());};
   if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,onFinish:finish});return true;}
@@ -43,8 +59,18 @@ globalThis.TrainingActivities=(()=>{
    });total=config.memoryRounds;
   }else if(attribute==='strength'){
    setText(hint,t('minigame.strength.instructions'));
-   const track=node('div',undefined,'timing-track'),zone=node('div',undefined,'timing-zone'),marker=node('div',undefined,'timing-marker');zone.style.left=`${config.strengthPerfectMin*100}%`;zone.style.width=`${(config.strengthPerfectMax-config.strengthPerfectMin)*100}%`;track.append(zone,marker);field.append(track);
-   button(t('minigame.strength.action'),()=>{if(done||hit||phase!=='play')return;hit=true;const precision=strengthPrecision(visibleStrengthPosition);earned+=precision;setText(hint,precision===1?t('minigame.strength.perfect'):precision>0?t('minigame.strength.close'):t('minigame.strength.miss'));},true);
+   // La pista entera es el control: con el dedo miras la barra, no un boton pequeno en una
+   // esquina, asi que el objetivo tactil tiene que ser la barra.
+   const track=button('',()=>{if(done||hit||phase!=='play')return;hit=true;const precision=strengthPrecision(visibleStrengthPosition);earned+=precision;
+    setText(hint,precision===1?t('minigame.strength.perfect'):precision>=config.strengthEdgeScore?t('minigame.strength.close'):precision>0?t('minigame.strength.edge'):t('minigame.strength.miss'));
+    // Sin esto la ronda seguia corriendo hasta agotar la ventana: acertar pronto premiaba con
+    // dos segundos y medio de pantalla quieta.
+    phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);},true);
+   track.className='timing-track';
+   const zone=node('div',undefined,'timing-zone'),core=node('div',undefined,'timing-core'),marker=node('div',undefined,'timing-marker'),caption=node('span',t('minigame.strength.action'),'timing-caption');
+   zone.style.left=`${config.strengthPerfectMin*100}%`;zone.style.width=`${(config.strengthPerfectMax-config.strengthPerfectMin)*100}%`;
+   core.style.left=`${(.5-config.strengthCoreRadius)*100}%`;core.style.width=`${config.strengthCoreRadius*200}%`;
+   track.append(zone,core,marker,caption);
    targets=[marker];total=config.strengthRounds;
   }else if(attribute==='kindness'){
    setText(hint,t('minigame.kindness.instructions'));
@@ -56,7 +82,7 @@ globalThis.TrainingActivities=(()=>{
    if(attribute==='iq'){
     phase='show';answer=0;roundCorrect=true;sequence=Array.from({length:round+2},()=>Math.floor(Math.random()*4));
    }else{
-    phase='play';if(attribute==='strength'){visibleStrengthPosition=.5;targets[0].style.left='50%';}controls.forEach(b=>b.disabled=false);
+    phase='play';if(attribute==='strength'){visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls.forEach(b=>b.disabled=false);
     if(attribute==='kindness'){
      const offset=Math.floor(Math.random()*6);targets=controls.map((_,i)=>(i+offset)%6<3);total+=3;
      const trash=[['papel','minigame.kindness.paper'],['lata','minigame.kindness.can'],['botella','minigame.kindness.bottle']],keep=[['flor','minigame.kindness.flower'],['hoja','minigame.kindness.leaf']];
@@ -72,7 +98,10 @@ globalThis.TrainingActivities=(()=>{
    if(done)return;if(field.dataset.phase!==phase)field.dataset.phase=phase;const elapsed=performance.now()-phaseStart;
    if(phase==='prepare'){
     setText(hint,t('minigame.common.prepare'));controls.forEach(b=>b.disabled=true);if(elapsed>=config.prepare)beginRound();
-   }else if(phase==='resolve'){setText(hint,t('minigame.common.nextRound'));if(elapsed>=300&&!held.size)nextRound();
+   }else if(phase==='resolve'){
+    // Fuerza deja su veredicto en el hint, asi que aqui no se pisa: solo se le da tiempo a leerlo.
+    if(attribute!=='strength')setText(hint,t('minigame.common.nextRound'));
+    if(elapsed>=(attribute==='strength'?config.strengthResolve:config.resolveDelay)&&!held.size)nextRound();
    }else if(attribute==='iq'){
     if(phase==='show'){
      setText(hint,t('minigame.common.observeRound',{round:round+1,total:config.memoryRounds}));
@@ -82,7 +111,10 @@ globalThis.TrainingActivities=(()=>{
     }else{setText(hint,t('minigame.iq.repeat'));if(elapsed>=config.memoryResponse)nextRound();}
    }else{
     const duration=attribute==='strength'?config.strengthWindow:config.cleanupWindow;
-    if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}else nextRound();}
+    if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
+     // Dejar pasar la ventana tambien se cuenta y se dice: antes la ronda cambiaba sin explicar
+     // que el marcador se habia escapado.
+     else{hit=true;setText(hint,t('minigame.strength.miss'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
     else if(attribute==='strength'){if(!hit)setText(hint,t('minigame.strength.now'));if(!hit){visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls[0].disabled=hit;}
 
     else if(hint.textContent!==t('minigame.kindness.collected')&&hint.textContent!==t('minigame.kindness.keep'))setText(hint,t('minigame.kindness.reminder'));

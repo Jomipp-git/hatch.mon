@@ -1,10 +1,10 @@
 {
   "summary": {
-    "build": "684791161cf9",
+    "build": "0168351c7d2f",
     "pngCount": 2640,
     "pngBefore": 18548483,
     "pngAfter": 8418674,
-    "runtimeBytes": 9396206,
+    "runtimeBytes": 9396743,
     "files": 2681,
     "resized": [
       "assets/eggs/egg_phase_1.png",

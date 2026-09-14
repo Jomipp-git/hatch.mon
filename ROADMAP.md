@@ -193,6 +193,17 @@ visibles al mismo gris oscuro, opacos— y solo se ve a color cuando has cuidado
 La silueta se calcula sobre el canvas (`getImageData`/`putImageData`), no con un filtro CSS: el
 modo LCD ya enseñó que WebKit no es de fiar aplicando filtros sobre un canvas (ver D5).
 
+### D16 · Memorias arranca de cero
+**Estado:** Hecho · 2026-09-14 · **destructivo, confirmar antes del push**
+
+Los recuerdos escritos durante la beta se borran la primera vez que se carga el save. La marca
+`social.memorialsReset` viaja dentro de la partida, así que el borrado ocurre exactamente una vez y
+no depende del reloj del dispositivo; lo que se gane después queda intacto. Las partidas nuevas
+nacen ya marcadas.
+
+Es irreversible una vez que un jugador carga la build. Mientras no haya push, deshacerlo es
+revertir este commit.
+
 ### D13 · Un fallo de acceso tiene que verse
 **Estado:** Hecho · 2026-09-14
 

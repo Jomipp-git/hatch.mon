@@ -51,7 +51,7 @@ test('main visuals pause behind training while physiology and immediate commit r
 test('Style coalesces paints without dropping scorer samples; drag reads geometry once',async()=>{
  const h=await setup();h.run('var frames=new Map(),frameId=0;globalThis.requestAnimationFrame=fn=>{frames.set(++frameId,fn);return frameId};globalThis.cancelAnimationFrame=id=>frames.delete(id);TrainingActivities.launch("style",{commit:()=>true})');
  const canvas=h.els['training-game-content'].children[3].children[0];let paints=0,rects=0;canvas.getContext().clearRect=()=>paints++;canvas.getBoundingClientRect=()=>{rects++;return{left:0,top:0,width:320,height:220}};canvas.setPointerCapture=()=>{};canvas.hasPointerCapture=()=>false;
- const path=h.run('StyleTracing.path(0)'),event=p=>({pointerId:1,button:0,clientX:p[0],clientY:p[1],preventDefault(){}});
+ const path=h.run(`StyleTracing.path(0,${canvas.dataset.seed})`),event=p=>({pointerId:1,button:0,clientX:p[0],clientY:p[1],preventDefault(){}});
  canvas.events.pointerdown[0](event(path[0]));for(const p of path.slice(1,25))canvas.events.pointermove[0](event(p));assert.equal(paints,0);assert.equal(rects,1);assert.equal(h.run('frames.size'),1);h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn())');assert.equal(paints,1);h.run('TrainingActivities.cancel()');assert.equal(h.run('frames.size'),0);
 });
 test('egg loads current/next only; active PMD images reused across reactions',async()=>{

@@ -5,7 +5,16 @@ for(const attribute of ['iq','strength','kindness','style']){
  const initial=run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})');
  run(`TrainingActivities.launch('${attribute}',{commit:train})`);assert.equal(els['training-game'].open,true);assert.equal(run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})'),initial);
  run('TrainingActivities.cancel()');advance(16000);assert.equal(run('JSON.stringify({training:state.training,care:state.care,trainer:state.trainer})'),initial);
- run(`TrainingActivities.launch('${attribute}',{commit:train})`);if(attribute==='style'){for(let i=0;i<5;i++)els['training-game-content'].children[3].children[1].fire('click');}else advance(40000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
+ run(`TrainingActivities.launch('${attribute}',{commit:train})`);if(attribute==='style'){
+  // Terminar recorrido ya no cierra la ronda con un cero: hay que empezar el trazo. Se traza lo
+  // minimo y se entrega, que es la version de Estilo del minimo por agotar el tiempo.
+  const canvas=els['training-game-content'].children[3].children[0],finish=els['training-game-content'].children[3].children[1];
+  canvas.setPointerCapture=()=>{};canvas.hasPointerCapture=()=>false;canvas.releasePointerCapture=()=>{};
+  canvas.getBoundingClientRect=()=>({left:0,top:0,width:320,height:220});
+  const fire=(type,point)=>{for(const fn of canvas.events[type]||[])fn({pointerId:1,button:0,clientX:point[0],clientY:point[1],preventDefault(){}});};
+  for(let r=0;r<5;r++){const path=run(`StyleTracing.path(${r},${canvas.dataset.seed})`);
+   fire('pointerdown',path[0]);fire('pointermove',path[1]);fire('pointerup',path[1]);finish.fire('click');}
+ }else advance(40000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
  advance(40000);assert.equal(run(`state.training.${attribute}`),1);
 }
 const {run}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")');

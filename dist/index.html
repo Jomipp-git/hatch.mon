@@ -1112,8 +1112,8 @@ function companionStatus(){
   if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return t('ui.needsSpace',{name});
   if(state.care.felicidad<40)return t('ui.wantsPlay',{name});
   if(!state.lightsOff&&!interactionLocked()){
-    if(current().rules.some(r=>r.item&&itemUsable(r.item)))return t('oak.ready');
-    if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return t('oak.breedingReady');
+    if(current().rules.some(r=>r.item&&itemUsable(r.item)))return t('oak.ready',{name});
+    if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return t('oak.breedingReady',{name});
   }
   return t('ui.calm');
 }

@@ -73,7 +73,7 @@ test('Shop, collection, care and training labels render in English and Spanish',
  run("closePanel();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('');showPanel('training')");assert.match(text(els['panel-content']),/Intellect/);assert.match(text(els['panel-content']),/Practice/);
  run("closePanel();showPanel('pokedex');collectionTab='memories';renderPokedex()");assert.match(text(els['panel-content']),/MEMORIES/);assert.match(text(els['panel-content']),/No departed/);
  run("HatchI18n.setLanguage('es');renderPokedex()");assert.match(text(els['panel-content']),/MEMORIAS/);
- assert.equal(run("Vital.eat(state,CARE_CONFIG.feed)"),'Ya parece bastante lleno.');run("HatchI18n.setLanguage('en')");assert.match(run("Vital.eat(state,CARE_CONFIG.feed)"),/full|rest/);
+ assert.equal(run("Vital.eat(state,CARE_CONFIG.feed)"),'Ya parece bastante lleno.');run("HatchI18n.setLanguage('en')");assert.match(run("Vital.eat(state,CARE_CONFIG.feed)"),/full|settle/);
 });
 test('raw platform errors never leak through the localized presentation layer',()=>{
  const ctx=vm.createContext({});vm.runInContext(fs.readFileSync('i18n.js','utf8'),ctx);const i=ctx.HatchI18n;i.setLanguage('es');assert.equal(i.errorMessage(new Error('DOMException: device failed'),'qr.cameraUnavailable'),i.t('qr.cameraUnavailable'));const message=i.t('qr.codeUsed');i.setLanguage('en');assert.equal(i.errorMessage({message}),i.t('qr.codeUsed'));

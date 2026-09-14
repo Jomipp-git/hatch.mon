@@ -28,7 +28,22 @@ estilo sin que nadie tenga que opinar. Todo texto pasa por `HatchI18n`, en ES y 
 - **Humor**: en los cuidados y las reacciones, sí. En errores, pagos, pérdidas de datos y esperas,
   nunca.
 
-## 3. Vocabulario canónico
+## 3. La banda LCD de Oak
+
+Es el único sitio donde el juego habla seguido, así que es donde antes se nota la incoherencia. Todo
+lo que aparece ahí cae en uno de estos cuatro moldes, y ninguno pasa de una línea y media:
+
+| Canal | Qué es | Molde |
+|---|---|---|
+| Estado (`#health`) | se queda mientras dure la situación | nombra al compañero y apunta a la siguiente acción |
+| Aviso (`#health`) | reemplaza al estado y escala en tres niveles | el mismo, subiendo la urgencia sin repetir palabras |
+| Resultado (`#toast`) | aparece tras una acción tuya | cuenta qué ha pasado, en pasado |
+| Bloqueo (`#toast`) | la acción no se ha podido hacer | por qué, y qué hacer para desbloquearla |
+
+Dos textos del mismo momento no pueden decir lo mismo con otras palabras: si el estado ya dice
+«{name} necesita un poco de espacio», la reacción al toque cuenta otra cosa («Se ha apartado»).
+
+## 4. Vocabulario canónico
 
 Un concepto, una palabra. La palabra de la derecha no aparece en el catálogo.
 
@@ -42,16 +57,16 @@ Un concepto, una palabra. La palabra de la derecha no aparece en el catálogo.
 | compañero / companion | mascota, criatura, bicho |
 | Vínculo / Bond | cariño, amistad |
 
-## 4. El tono cambia con el momento
+## 5. El tono cambia con el momento
 
 - **Celebración**: una exclamación, corta. «¡Perfecto!»
-- **Rutina**: enunciado, sin signo. «Hábitat limpio: sin deposiciones y con más bienestar.»
+- **Rutina**: enunciado, sin signo. «Hábitat limpio. Se le nota más a gusto.»
 - **Error del jugador**: qué ha pasado y qué puede hacer ahora. Ni disculpa ni reproche.
   «Este compañero no tiene un género con el que criar.»
 - **Fallo nuestro o riesgo de perder datos**: se pide perdón una vez, se dice qué está a salvo y se
   da la salida. «Tu partida no se ha guardado. Mantén esta pestaña abierta para no perderla.»
 
-## 5. Excepción registrada
+## 6. Excepción registrada
 
 Los textos del **momento del huevo** —incubación, toques, eclosión y nacimiento— quedan fuera de
 esta revisión por decisión de producto: `eggTitle`, `ui.warmEgg`, `ui.eggHint.1-4`, `ui.eggHatching`,

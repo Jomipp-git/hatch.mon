@@ -18,6 +18,11 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
   assert.ok(Array.isArray(run('buzz.at(-1)')),`${attribute}: a +5 ends on a celebratory pattern`);
   assert.equal(run('buzz.at(-1).length'),5,`${attribute}: three buzzes with two gaps`);
  }
- const {run}=await setup();for(const [score,gain]of [[0,1],[.25,2],[.5,3],[.75,4],[.99,4],[1,5]])assert.equal(run(`TrainingActivities.grade(${score})`),gain);
- console.log('PASS playable perfect runs: five memory rounds, strength, every trash tile and 16 rhythm beats each award +5; imperfect grades 1–4.');
+ // El 5 ya no pide un 1,0 exacto: era irrepetible con la precision continua de Fuerza y el trazo a
+ // pulso de Estilo, y la sesion se cobra igual salga como salga.
+ const {run}=await setup();
+ for(const [score,gain]of [[0,1],[.31,1],[.32,2],[.57,2],[.58,3],[.77,3],[.78,4],[.91,4],[.92,5],[1,5]])
+  assert.equal(run(`TrainingActivities.grade(${score})`),gain,`score ${score}`);
+ assert.equal(run('TrainingActivities.gradeThresholds.join()'),'0.92,0.78,0.58,0.32');
+ console.log('PASS playable perfect runs: five memory rounds, strength, every trash tile and 16 rhythm beats each award +5; imperfect grades 1–4 on a curve where +5 is near-perfect, not literally perfect.');
 })().catch(e=>{console.error(e);process.exitCode=1});

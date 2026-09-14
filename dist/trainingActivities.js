@@ -30,7 +30,12 @@ globalThis.TrainingActivities=(()=>{
  const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
  const memoryWindow=length=>config.memoryBase+config.memoryStep*length;
  const cleanupWindow=round=>config.cleanupBase-config.cleanupStep*round;
- const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
+ // El 5 pedia un 1,0 exacto. Con la precision continua de Fuerza y el trazo a pulso de Estilo eso
+ // no es "excelente", es irrepetible, y la sesion se cobra igual salga como salga: un tramo
+ // inalcanzable solo convierte el mejor resultado posible en una perdida neta. Estos umbrales son
+ // los unicos del juego; Estilo entrega su media y se puntua aqui, para no llevar dos curvas.
+ const GRADE_THRESHOLDS=Object.freeze([.92,.78,.58,.32]);
+ const grade=score=>{const value=Math.max(0,Math.min(1,score));const step=GRADE_THRESHOLDS.findIndex(min=>value>=min);return step<0?1:5-step;};
  const strengthPrecision=position=>{
   const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
   // El margen solo abre el borde del nucleo: sin el, .46 cae fuera por 4e-17 de coma flotante.
@@ -72,7 +77,7 @@ globalThis.TrainingActivities=(()=>{
    // hace despues de casi cada partida. Solo se ofrece si la siguiente sesion se puede pagar.
    if(ok&&repeat&&canRepeat(attribute)){const again=node('button',t('minigame.common.again'),'minigame-again');again.type='button';
     again.addEventListener('click',()=>{dialog.close();repeat(attribute);});field.append(again);}};
-  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:finish});return true;}
+  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:mean=>finish(grade(mean))});return true;}
   if(attribute==='iq'){
    setText(hint,t('minigame.iq.instructions'));
    for(let i=0;i<4;i++)button(['A','B','C','D'][i],()=>{
@@ -168,5 +173,5 @@ globalThis.TrainingActivities=(()=>{
   tick();return true;
  }
  function cancel(refund=false){return active?.cancel(refund)||false;}
- return Object.freeze({modes,config,grade,strengthPrecision,launch,register,cancel,isActive:()=>active!==null});
+ return Object.freeze({modes,config,grade,gradeThresholds:GRADE_THRESHOLDS,strengthPrecision,launch,register,cancel,isActive:()=>active!==null});
 })();

@@ -2,9 +2,11 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
 (async()=>{const {run,els,advance}=await setup();
 for(let round=0;round<5;round++){
  run(`var trace=StyleTracing.createScorer(${round});var path=trace.points;trace.start(path[0]);for(const p of path.slice(1))trace.move(p)`);
- assert.ok(run('trace.complete()'));assert.equal(run('StyleTracing.grade(trace.score())'),5);
+ assert.ok(run('trace.complete()'));assert.equal(run('TrainingActivities.grade(trace.score())'),5);
 }
-for(const [score,gain]of [[0,1],[.4,2],[.6,3],[.75,4],[.9,5],[1,5]])assert.equal(run(`StyleTracing.grade(${score})`),gain);
+// Estilo ya no lleva curva propia: entrega la media cruda y la puntua TrainingActivities, que es
+// donde viven los umbrales de las cuatro actividades.
+assert.equal(run('StyleTracing.grade'),undefined);
 // La tolerancia se mide en pixeles reales: un lienzo dibujado a la mitad de su espacio logico la
 // duplica, porque el dedo que traza no se encoge con el lienzo.
 assert.equal(run('StyleTracing.createScorer(4).tolerance'),10);

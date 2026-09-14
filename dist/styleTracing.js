@@ -19,7 +19,6 @@ globalThis.StyleTracing=(()=>{
  }
  const path=(round,seed=0)=>{const v=variant(seed,round);return Array.from({length:config.samples+1},(_,i)=>curves[round](i/config.samples,v));};
  const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
- const grade=score=>score>=.9?5:score>=.75?4:score>=.6?3:score>=.4?2:1;
  // `scale` compensa que el lienzo se dibuje mas pequeno de lo que mide su espacio logico: en un
  // movil de 375 px el canvas de 320 se pinta a ~228, asi que una tolerancia de 10 quedaba en 7 px
  // reales, mas fina que la yema de un dedo y con el dedo encima tapando la linea.
@@ -71,7 +70,7 @@ globalThis.StyleTracing=(()=>{
    status.textContent=t('minigame.style.progress',{round:round+1,total:curves.length,percent:Math.round(scorer.progress()*100)});
   }
   function release(){const id=pointer;pointer=null;scorer.end();if(id!==null&&canvas.hasPointerCapture?.(id))canvas.releasePointerCapture(id);}
-  function advance(){if(disposed||next.disabled)return;release();const score=scorer.score();scores.push(score);haptic(score>=.75?'good':score>=.4?'fair':'bad');round++;if(round===curves.length){disposed=true;onFinish(grade(scores.reduce((a,b)=>a+b,0)/scores.length));return;}scorer=createScorer(round,{seed,scale:measure()});trail=[];centered=true;draw();}
+  function advance(){if(disposed||next.disabled)return;release();const score=scorer.score();scores.push(score);haptic(score>=.75?'good':score>=.4?'fair':'bad');round++;if(round===curves.length){disposed=true;onFinish(scores.reduce((a,b)=>a+b,0)/scores.length);return;}scorer=createScorer(round,{seed,scale:measure()});trail=[];centered=true;draw();}
   const position=e=>{const r=gestureRect||canvas.getBoundingClientRect();return [(e.clientX-r.left)*config.width/r.width,(e.clientY-r.top)*config.height/r.height];};
   canvas.addEventListener('pointerdown',e=>{if(disposed||pointer!==null||(e.button!==undefined&&e.button!==0))return;e.preventDefault();gestureRect=canvas.getBoundingClientRect();scorer.rescale(measure(gestureRect));if(!scorer.start(position(e))){haptic('bad');hint.textContent=t('minigame.style.startHere');return;}hint.textContent=t('minigame.style.instructions');pointer=e.pointerId;canvas.setPointerCapture(e.pointerId);trail=[position(e)];scheduleDraw();});
   canvas.addEventListener('pointermove',e=>{if(disposed||e.pointerId!==pointer)return;e.preventDefault();const samples=e.getCoalescedEvents?.();for(const sample of samples?.length?samples:[e]){const p=position(sample);centered=scorer.move(p);trail.push(p);if(trail.length>12)trail.shift();}canvas.dataset.centered=String(centered);scheduleDraw();});
@@ -80,5 +79,7 @@ globalThis.StyleTracing=(()=>{
   next.addEventListener('click',advance);draw();
   return ()=>{disposed=true;if(paintFrame!==null)cancelFrame(paintFrame);paintFrame=null;release();};
  }
- return Object.freeze({config,path,grade,createScorer,mount});
+ // Sin `grade` propio: la media del trazo se entrega cruda y la puntua TrainingActivities, que es
+ // donde viven los umbrales de las cuatro actividades.
+ return Object.freeze({config,path,createScorer,mount});
 })();

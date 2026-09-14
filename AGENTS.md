@@ -19,7 +19,7 @@
 - No vuelques `hatchmonData_v2.js` ni `master/hatchmonData_v2.json`: son catálogos en una línea. Consulta registros/campos específicos mediante el adapter o un script con salida acotada. No copies datos canónicos a otros módulos.
 - Conserva las responsabilidades del mapa. Evita refactorizaciones masivas; propone extracciones solo si reducen un acoplamiento o una dificultad real de edición.
 - Antes de añadir una constante, mapping, regla, mensaje o validación, busca su fuente existente y reutilízala. Los bloques `*_CONFIG` de `vitalSimulation.js`, `relationship.js` y `pokedex.js` centralizan balance; no dupliques valores en `index.html`. Usa nombres descriptivos y comentarios solo para lógica no obvia.
-- Todo texto visible pasa por `HatchI18n.t` o los atributos `data-i18n*`, en ES y EN. Detector: `tests/i18n-audit.cjs`; excepciones registradas en `I18N_AUDIT.md`.
+- Todo texto visible pasa por `HatchI18n.t` o los atributos `data-i18n*`, en ES y EN. Detector: `tests/i18n-audit.cjs`; excepciones registradas en `I18N_AUDIT.md`. La voz y el vocabulario canónico están en `VOICE.md`: consúltalo antes de escribir o cambiar un texto, y actualízalo si una decisión de tono cambia.
 - Los saves usan `version:12`. Cambiar el esquema invalida partidas existentes: si no es el objetivo de la tarea, normaliza en `migrateSave` en lugar de subir la versión.
 
 ## Verificación

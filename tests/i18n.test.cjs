@@ -55,7 +55,7 @@ test('language changes refresh rendered messages and placeholders without reload
  const message={textContent:'',children:[],getAttribute:()=>null},label={dataset:{i18nPlaceholder:'optionalNickname'},setAttribute(name,v){this[name]=v},children:[]};
  const document={documentElement:{},querySelectorAll(selector){if(selector==='*')return [message,label];if(selector==='[data-i18n-placeholder]')return [label];return [];}};
  const ctx=vm.createContext({document});vm.runInContext(fs.readFileSync('i18n.js','utf8'),ctx);const i18n=ctx.HatchI18n;
- message.textContent=i18n.t('ui.found',{name:i18n.t('item.berry')});i18n.setLanguage('en');assert.equal(message.textContent,'You found Berry! It was added to your Bag.');assert.equal(label.placeholder,'Optional nickname');i18n.setLanguage('es');assert.equal(message.textContent,'¡Encontraste Baya! Se ha guardado en tu mochila.');
+ message.textContent=i18n.t('ui.found',{name:i18n.t('item.berry')});i18n.setLanguage('en');assert.equal(message.textContent,'You found Berry. It’s in the Bag.');assert.equal(label.placeholder,'Optional nickname');i18n.setLanguage('es');assert.equal(message.textContent,'Has encontrado Baya. Está en la Mochila.');
 });
 test('settings persists locale and old or invalid preferences safely default to Spanish',async()=>{
  const game=await setup();game.run("showPanel('settings')");const buttons=game.els['panel-content'].querySelectorAll('button');buttons.find(b=>b.textContent==='English').fire('click');assert.equal(game.run('HatchI18n.getLanguage()'),'en');assert.equal(game.storage.get('hatch.mon.language'),'en');assert.match(game.run("LABELS.hambre"),/Hunger/);

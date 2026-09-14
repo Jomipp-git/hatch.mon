@@ -19,7 +19,7 @@ const {setup}=require('./uiHarness.cjs');
     assert.equal(h.run('state.care.higiene'),63);
   }
   assert.equal(h.run('t("item.tea")'),'Té');
-  assert.equal(h.run('t("ui.shop.tea")'),'Recupera 50 puntos de energía.');
+  assert.equal(h.run('t("ui.shop.tea")'),'Recupera 50 de energía.');
   h.run('I18n.setLanguage("en")');
   assert.equal(h.run('t("item.tea")'),'Tea');
   assert.equal(h.run('t("ui.shop.tea")'),'Restores 50 Energy.');

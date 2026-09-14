@@ -414,6 +414,8 @@ const clamp=n=>Math.max(0,Math.min(100,n));
 const alive=()=>state.phase==='alive'||state.phase==='critical';
 const interactionLocked=()=>state.birthScene||state.nicknamePending||state.foundItem!==null;
 const current=()=>evolutionConfig[state.pokemonId];
+// El mote, o el nombre de la especie si todavía no tiene: se escribía a mano en cuatro sitios.
+const companionName=()=>state.nickname||current().name;
 function mean(k){return state.averages?.count?state.averages.sum[k]/state.averages.count:null;}
 const sustainedKey=c=>`${c.estadistica}:${c.minimo}`;
 function updateSustained(elapsed=0,before=state.care){
@@ -659,7 +661,7 @@ function finishBirthScene(){if(!state.birthScene)return false;state.birthScene=f
 function setNickname(value=''){
   if(!state.nicknamePending)return false;
   state.nickname=String(value).trim().slice(0,20);state.nicknamePending=false;
-  state.message=t('birth.welcome',{name:state.nickname||current().name});return true;
+  state.message=t('birth.welcome',{name:companionName()});return true;
 }
 function acknowledgeItem(){if(state.foundItem===null)return false;state.foundItem=null;return true;}
 // Guardado local: conserva edad, muestras, inventario y ausencia entre visitas.
@@ -745,7 +747,7 @@ function breedFromCode(code){
     createdAt:Date.now(),parents:[origin(activeEntity()),origin(result.payload.entity)],snapshot:snapshotOf(freshState())};
   state.vital.hasProducedEgg=true;for(const id of [state.social.active.id,result.payload.entity.id])if(!state.social.bredIds.includes(id))state.social.bredIds.push(id);
   state.social.eggs.push(egg);state.social.importedIds.push(result.payload.id);Pokedex.record(state.pokedex,result.offspring,'bred');
-  return t('breeding.eggCreated',{name:state.nickname||current().name});
+  return t('breeding.eggCreated',{name:companionName()});
 }
 function rememberDeath(){
   // Memorias is for companions that reached the end of their life. One lost to neglect is not
@@ -826,7 +828,7 @@ function hideToast(immediate=true){
 const EGG_TOUCH_FEEDBACK=['egg.touch.1','egg.touch.2','egg.touch.3','egg.touch.4','egg.touch.5'];
 const notificationApi=()=>globalThis.Notification||window.Notification||null;
 const notificationPermission=()=>{const api=notificationApi();return !api?'unavailable':api.permission||'default';};
-function attentionMessage(){const event=state.attentionEvent;return event?.active?t(Attention.messageKey(event),{name:state.nickname||current().name}):'';}
+function attentionMessage(){const event=state.attentionEvent;return event?.active?t(Attention.messageKey(event),{name:companionName()}):'';}
 function deliverAttention(now=Date.now()){
   const event=state.attentionEvent;if(!event?.active||!Attention.notificationDue(state,now)||document.hidden===false)return false;
   const api=notificationApi();if(!api||api.permission!=='granted')return false;
@@ -1097,16 +1099,18 @@ function presentNarrative(){
   }else if($('found-dialog').open)$('found-dialog').close();
 }
 function companionStatus(){
+  // El nombre se pide DESPUES del huevo: en fase huevo todavia no hay especie que consultar.
   if(state.phase==='egg'||state.birthScene)return '';
-  if(state.phase==='dead')return t('ui.remembered');
-  if(state.phase==='critical')return state.pokerus?t('ui.criticalVirus'):t('ui.critical');
-  if(state.pokerus)return t('ui.treatment');
-  if(state.care.hambre<35)return t('ui.hungry');
-  if(Vital.energyResting(state))return t('ui.sleeping');
-  if(state.care.energia<30)return state.lightsOff?t('ui.sleeping'):t('ui.sleepy');
-  if(state.care.higiene<40||state.vital.poops.length||state.vital.dirt>=BREEDING_CONFIG.maxDirt)return t('ui.cleaningNeeded');
-  if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return t('ui.needsSpace');
-  if(state.care.felicidad<40)return t('ui.wantsPlay');
+  const name=companionName();
+  if(state.phase==='dead')return t('ui.remembered',{name});
+  if(state.phase==='critical')return t(state.pokerus?'ui.criticalVirus':'ui.critical',{name});
+  if(state.pokerus)return t('ui.treatment',{name});
+  if(state.care.hambre<35)return t('ui.hungry',{name});
+  if(Vital.energyResting(state))return t('ui.sleeping',{name});
+  if(state.care.energia<30)return t(state.lightsOff?'ui.sleeping':'ui.sleepy',{name});
+  if(state.care.higiene<40||state.vital.poops.length||state.vital.dirt>=BREEDING_CONFIG.maxDirt)return t('ui.cleaningNeeded',{name});
+  if(state.relationship.attention>RELATIONSHIP_CONFIG.positiveTapLimit)return t('ui.needsSpace',{name});
+  if(state.care.felicidad<40)return t('ui.wantsPlay',{name});
   if(!state.lightsOff&&!interactionLocked()){
     if(current().rules.some(r=>r.item&&itemUsable(r.item)))return t('oak.ready');
     if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return t('oak.breedingReady');

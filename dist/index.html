@@ -36,6 +36,7 @@
   .message-strip #health,.message-strip #toast{grid-area:1/2;margin:0;width:100%;font-size:13.5px;line-height:18px;max-height:36px;overflow:hidden;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
   .message-strip #health[data-attention="needsAttention"]{color:#52694a}.message-strip #health[data-attention="serious"]{color:#263b30;font-weight:bold}
   .message-strip:has(#toast:not([hidden])) #health{visibility:hidden}
+  .trainer-energy[data-depleted="true"]{color:#8a3b1f;font-weight:bold}.trainer-energy[data-depleted="true"] .action-pip{border-color:#c07a5c}.trainer-energy[data-depleted="true"] .trainer-recharge{color:#8a3b1f}
   .trainer-energy{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;letter-spacing:.01em}.trainer-energy:hover{background:transparent}.trainer-energy:focus-visible{outline:2px solid #466a4e;outline-offset:3px}.action-pips{display:inline-flex;gap:2px}.action-pip{width:7px;height:7px;border:1px solid #657260;background:transparent}.action-pip.filled{background:#46654c}.trainer-recharge{color:#657260;font-size:.62rem;white-space:nowrap}
   #toast{opacity:0;transition:opacity .18s ease;pointer-events:none}#toast.visible{opacity:1}#toast[data-kind="event"]{font-weight:bold}#save-note{font-size:10px;margin:0;text-align:center;overflow:auto}
 
@@ -150,6 +151,7 @@
   #auth-google{width:100%;margin:0 0 16px}
   .auth-console form,.auth-console label{display:grid;gap:8px}.auth-console form{gap:16px}.auth-console input{width:100%;font:inherit;padding:10px;border:1px solid var(--border);border-radius:6px}.auth-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.auth-links button{font-size:.8rem}.auth-message{min-height:3em;font-size:.85rem}#cloud-status{font-size:.75rem;text-align:center;max-width:460px;margin:14px auto 0}
   .auth-hint{font-size:.72rem;color:#4b4458}#auth-resend{width:100%;margin:0 0 16px;font-size:.8rem}
+  .auth-message[data-kind="error"]{color:#7a2f18;font-weight:bold;border-left:3px solid #b4351f;padding-left:9px}
   /* Loading and sign-in must not look alike: while one shows, the other is not in the document flow. */
   .auth-loading{display:none;gap:14px;align-items:center;padding:26px 4px;justify-content:center}
   [data-state="loading"] .auth-loading{display:flex}[data-state="loading"] #auth-form-block{display:none}
@@ -503,6 +505,9 @@ function skipTime(hours){
   return true;
 }
 function canSpend(cost){return alive()&&!interactionLocked()&&state.trainer.energy+1e-8>=cost;}
+// Whole minutes until the next action point lands; the strip only repaints once per game minute.
+const minutesToNextAction=()=>Math.max(1,Math.ceil((Math.floor(state.trainer.energy+1e-8)+1-state.trainer.energy)/CARE_CONFIG.trainerRecoveryPerMinute));
+let actionsExhausted=false;
 function spend(cost){if(!canSpend(cost))return false;state.trainer.energy=Math.max(0,state.trainer.energy-cost);return true;}
 function denied(){state.message=t('care.noActions');}
 const COST=CARE_CONFIG.costs;
@@ -746,6 +751,13 @@ function migrateSave(data){
   };
   migrateIndividual(data);
   if(Array.isArray(data.social?.memorials))data.social.memorials=data.social.memorials.filter(e=>e?.snapshot?.vital?.deathCause!=='neglect');
+  // Shiny sightings recorded before they counted for the plain form are folded back into it.
+  for(const entry of Object.values(data.pokedex||{})){
+    const shiny=entry?.shiny;if(!shiny?.seen)continue;
+    entry.seen=true;
+    for(const id of shiny.ownedIds||[])if(!entry.ownedIds.includes(id))entry.ownedIds.push(id);
+    for(const flag of ['evolved','bred','received'])if(shiny[flag])entry[flag]=true;
+  }
   for(const memorial of data.social?.memorials||[])if(memorial?.snapshot)memorial.snapshot.remainder=0;
   Attention.ensure(data,Number.isFinite(data.lastSync)?data.lastSync:Date.now());
   for(const entity of [...(data.social?.eggs||[]),...(data.social?.memorials||[])])migrateIndividual(entity?.snapshot);
@@ -1085,10 +1097,16 @@ function render(forceFeedback=false){
   document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));if(b.disabled&&alive()&&!state.lightsOff&&!interactionLocked())b.title=sleepBlockedText();}});
   document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
   const actionPoints=Math.floor(state.trainer.energy+1e-8),actionIndicator=$('trainer-energy');
+  const depleted=actionPoints===0&&alive();
   const pips=el('span',undefined,'action-pips');pips.setAttribute('aria-hidden','true');
   for(let i=0;i<MAX_AP;i++)pips.append(el('span',undefined,`action-pip${i<actionPoints?' filled':''}`));
-  actionIndicator.replaceChildren(el('span',t('ui.actionsValue',{current:actionPoints,max:MAX_AP})),pips,el('span',t('ui.recharge'),'trainer-recharge'));
+  // Empty is a state, not just an absence: the strip says so and counts down to the next point.
+  actionIndicator.dataset.depleted=String(depleted);
+  actionIndicator.replaceChildren(el('span',depleted?t('ui.noActions'):t('ui.actionsValue',{current:actionPoints,max:MAX_AP})),pips,
+    el('span',depleted?t('ui.nextAction',{minutes:minutesToNextAction()}):t('ui.recharge'),'trainer-recharge'));
   actionIndicator.setAttribute('aria-label',t('ui.actionsAria',{current:actionPoints,max:MAX_AP}));
+  if(depleted&&!actionsExhausted){showToast(t('ui.outOfActions',{minutes:minutesToNextAction()}),true);}
+  actionsExhausted=depleted;
   $('coin-balance').textContent=t('ui.coinBalance',{coins:state.coins});$('coin-balance').setAttribute('aria-label',t('ui.coinBalanceAria',{coins:state.coins}));
   if(interactionLocked())hideToast();
   if(state.message!==lastMessage||forceFeedback){lastMessage=state.message;if(!interactionLocked())showToast(I18n.localize(state.message),important);}

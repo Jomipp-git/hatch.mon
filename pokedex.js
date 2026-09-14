@@ -3,12 +3,18 @@
 const ENCOUNTER_CONFIG={unowned:8,ownedOnce:1,ownedMany:.2,rarityPower:1,allOwned:1};
 globalThis.Pokedex=(()=>{
  const fresh=()=>({});
+ const freshEntry=()=>({seen:false,ownedIds:[],evolved:false,bred:false,received:false});
  function record(dex,id,event='seen',individualId=null,isShiny=false){
   const key=PokemonData.canonicalId(id);if(!key)return;
-  const base=dex[key]??={seen:false,ownedIds:[],evolved:false,bred:false,received:false};
-  const entry=isShiny?(base.shiny??={seen:false,ownedIds:[],evolved:false,bred:false,received:false}):base;entry.seen=true;
-  if(event==='owned'&&individualId&&!entry.ownedIds.includes(individualId))entry.ownedIds.push(individualId);
-  if(['evolved','bred','received'].includes(event))entry[event]=true;
+  const base=dex[key]??=freshEntry();
+  // A shiny counts for the plain form too: meeting the rare variant means you have met the species.
+  // Never the other way round, which is what keeps the shiny Pokédex the harder one to fill.
+  const targets=isShiny?[base.shiny??=freshEntry(),base]:[base];
+  for(const entry of targets){
+   entry.seen=true;
+   if(event==='owned'&&individualId&&!entry.ownedIds.includes(individualId))entry.ownedIds.push(individualId);
+   if(['evolved','bred','received'].includes(event))entry[event]=true;
+  }
  }
  function weights(pool,dex){
   const allKnown=pool.every(id=>{const entry=dex[PokemonData.canonicalId(id)];return entry?.seen===true||entry?.shiny?.seen===true;});

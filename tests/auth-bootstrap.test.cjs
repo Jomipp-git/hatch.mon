@@ -1,15 +1,15 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
-async function boot(session=null,{fail=false,search='',runtimeHarness=null}={}){
+async function boot(session=null,{fail=false,search='',runtimeHarness=null,loginError=null}={}){
  const nodes=new Map(),calls=[],events={},history=[],storage=new Map();let listener;
  const el=id=>{if(!nodes.has(id))nodes.set(id,{hidden:id==='game-root',textContent:'',value:'',dataset:{},events:{},addEventListener(k,f){this.events[k]=f}});return nodes.get(id)};
  el('game-source').textContent=runtimeHarness?fs.readFileSync('index.html','utf8').match(/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/)[1]:'window.HatchRuntime={stop(){},save(){}}';
  const window=runtimeHarness?.win||{addEventListener(k,f){events[k]=f}},location={search,pathname:'/index.html',replace:p=>history.push(p),reload:()=>history.push('reload')};
  const document={addEventListener(k,f){events[k]=f},getElementById:el,querySelectorAll:()=>[{dataset:{gameSrc:'dummy.js'}}],createElement:()=>({}),head:{append(s){if(s.src){calls.push('script');s.onload()}else{calls.push('game');if(runtimeHarness){try{runtimeHarness.run(s.textContent)}catch{}}else Function('window',s.textContent)(window)}}}};
- const auth={};for(const key of ['login','signup','recover','update','google','logout','resendConfirmation'])auth[key]=async()=>{calls.push(key);return{data:{session:key==='signup'?null:session},error:null}};
+ const auth={};for(const key of ['login','signup','recover','update','google','logout','resendConfirmation'])auth[key]=async()=>{calls.push(key);return{data:{session:key==='signup'?null:session},error:key==='login'?loginError:null}};
  const client={auth:{onAuthStateChange:f=>listener=f,getSession:async()=>({data:{session},error:null})}};
  const service={load:async()=>{calls.push('load');assert.equal(el('game-root').hidden,true);assert.equal(window.HatchRuntime,undefined);if(fail)throw Error('network')},queue:()=>calls.push('queue'),flush:async()=>calls.push('flush'),close:()=>calls.push('close'),block(){},isBlocked:()=>false};
  const source="const globalThis={HatchI18n:{t:key=>({\n  'auth.title.login':'Tu compañero te espera','auth.signIn':'Entrar','auth.title.signup':'Crear cuenta','auth.signUp':'Crear cuenta','auth.title.recover':'Recuperar acceso','auth.sendRecovery':'Enviar enlace','auth.title.update':'Nueva contraseña','auth.savePassword':'Guardar contraseña','auth.loadingCompanion':'Cargando compañero…','auth.confirmEmail':'Revisa tu correo para confirmar la cuenta.','auth.recoverySent':'Revisa tu correo para recuperar el acceso.','auth.choosePassword':'Elige tu nueva contraseña.','auth.unsupportedSave':'Esta partida necesita otra versión de Hatch.mon. No se ha modificado.','auth.companionLoadFailed':'No se pudo cargar tu compañero. Reintenta con conexión.','auth.accountFallback':'Tu cuenta','auth.sessionExpired':'Tu sesión ha expirado. Inicia sesión de nuevo.','auth.sessionCheckFailed':'No se pudo comprobar la sesión. Revisa la conexión.','system.offlineLocal':'Modo local. Recarga con conexión antes de sincronizar.','system.connectionRecovered':'Conexión recuperada. Recarga para resolver la partida cloud.'}[key]||key)}};\n"+fs.readFileSync('appBootstrap.mjs','utf8').replace(/^import .*;\n/gm,'');
- await new (Object.getPrototypeOf(async function(){}).constructor)('client','auth','humanError','needsConfirmation','createCloudSaveService','userStorage','snapshotCache','document','window','location','localStorage','history',source)(client,auth,()=> 'Error humano',error=>error?.code==='email_not_confirmed',()=>service,()=>runtimeHarness?{getItem:k=>runtimeHarness.storage.get(k)||null,setItem:(k,v)=>runtimeHarness.storage.set(k,v),removeItem:k=>runtimeHarness.storage.delete(k)}:{getItem:()=>null},()=>null,document,window,location,storage,{replaceState(){}});
+ await new (Object.getPrototypeOf(async function(){}).constructor)('client','auth','humanError','needsConfirmation','createCloudSaveService','userStorage','snapshotCache','document','window','location','localStorage','history',source)(client,auth,error=>`humano:${error?.code||''}`,error=>error?.code==='email_not_confirmed',()=>service,()=>runtimeHarness?{getItem:k=>runtimeHarness.storage.get(k)||null,setItem:(k,v)=>runtimeHarness.storage.set(k,v),removeItem:k=>runtimeHarness.storage.delete(k)}:{getItem:()=>null},()=>null,document,window,location,storage,{replaceState(){}});
  return {el,calls,window,listener,history};
 }
 test('the gate shows one thing at a time and never repeats the button you already pressed',async()=>{
@@ -34,6 +34,20 @@ test('the gate shows one thing at a time and never repeats the button you alread
  const broken=await boot({user:{id:'A',email:'a@example.test'}},{fail:true});
  assert.equal(broken.el('auth-gate').dataset.state,'form');
  assert.equal(broken.el('auth-retry').hidden,false);
+});
+test('a failed sign-in says so loudly and points at creating an account',async()=>{
+ const failing=await boot(null,{loginError:{code:'invalid_credentials',message:'Invalid login credentials'}});
+ failing.el('auth-email').value='nobody@example.test';
+ await failing.el('auth-form').events.submit({preventDefault(){}});
+ assert.equal(failing.el('auth-message').dataset.kind,'error','an error is marked as one, not left as plain text');
+ assert.match(fs.readFileSync('index.html','utf8'),/\.auth-message\[data-kind="error"\]\{/,'and is styled apart');
+ // Supabase answers the same way for a wrong password and a missing account, so the copy covers both.
+ const catalog=fs.readFileSync('i18n.js','utf8').split('\n').filter(line=>line.includes('"auth.invalidCredentials"'));
+ assert.equal(catalog.length,2,'both languages');
+ for(const line of catalog)assert.match(line,/Crear cuenta|Create account/,'the message names the way out');
+ // A message that is not a failure stays quiet.
+ failing.el('auth-signup').events.click();
+ assert.equal(failing.el('auth-message').dataset.kind,'','switching mode clears the error');
 });
 test('an unconfirmed account is offered the confirmation email again',async()=>{
  const h=await boot();

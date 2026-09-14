@@ -11,7 +11,19 @@ for(const shiny of [null,[],true,{}, {...dex[key].shiny,seen:1},{...dex[key].shi
  assert.equal(run(`Pokedex.valid(${JSON.stringify(malformed)})`),false,JSON.stringify(shiny));
 }
 const saved=JSON.parse(run('JSON.stringify(state)'));const restored=await setup({initialSave:saved});assert.equal(restored.run('state.social.active.isShiny'),true);
-run('Shiny.roll=()=>{throw Error("No reroll")};forceEvolution("pikachu")');assert.equal(run('state.social.active.isShiny'),true);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].seen'),false);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].shiny.seen'),true);
+// Meeting the shiny means you have met the species, so the plain entry fills in with it.
+run('Shiny.roll=()=>{throw Error("No reroll")};forceEvolution("pikachu")');assert.equal(run('state.social.active.isShiny'),true);
+assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].seen'),true);assert.equal(run('state.pokedex[PokemonData.canonicalId("pikachu")].shiny.seen'),true);
+assert.deepEqual(run('state.pokedex[PokemonData.canonicalId("pikachu")].ownedIds'),run('state.pokedex[PokemonData.canonicalId("pikachu")].shiny.ownedIds'));
+// Never the other way round: a plain encounter leaves the shiny Pokédex untouched.
+run('var plain=Pokedex.fresh();Pokedex.record(plain,"eevee","owned","only-plain",false)');
+assert.equal(run('Object.hasOwn(plain[PokemonData.canonicalId("eevee")],"shiny")'),false);
+// A save written before that rule gets its plain entries folded back in on load.
+const stale=JSON.parse(run('JSON.stringify(state)'));const staleKey=run('PokemonData.canonicalId("pikachu")');
+stale.pokedex[staleKey]={...stale.pokedex[staleKey],seen:false,ownedIds:[],evolved:false};
+const folded=await setup({initialSave:stale});
+assert.equal(folded.run(`state.pokedex['${staleKey}'].seen`),true);
+assert.deepEqual(folded.run(`state.pokedex['${staleKey}'].ownedIds`),folded.run(`state.pokedex['${staleKey}'].shiny.ownedIds`));
 assert.equal(run('Object.hasOwn(activeEntity(),"isShiny")'),false);
 run('die("natural")');assert.equal(run('state.social.memorials[0].isShiny'),true);
 run('collectionTab="memories";renderPokedex()');await flush();assert.ok(run('memorialRenderers.length')>0);

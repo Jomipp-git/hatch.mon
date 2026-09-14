@@ -193,6 +193,35 @@ visibles al mismo gris oscuro, opacos— y solo se ve a color cuando has cuidado
 La silueta se calcula sobre el canvas (`getImageData`/`putImageData`), no con un filtro CSS: el
 modo LCD ya enseñó que WebKit no es de fiar aplicando filtros sobre un canvas (ver D5).
 
+### D13 · Un fallo de acceso tiene que verse
+**Estado:** Hecho · 2026-09-14
+
+Escribir email y contraseña sin tener cuenta «no hacía nada»: el mensaje existía pero era texto
+plano del mismo color que el resto, encima del formulario. Ahora un error se marca como tal —rojo,
+negrita, barra lateral— y el texto de `invalid_credentials` señala el botón «Crear cuenta».
+
+Supabase responde lo mismo para contraseña equivocada y cuenta inexistente, a propósito, para no
+permitir enumerar usuarios. No se puede afirmar «usuario no registrado»; el texto cubre los dos
+casos, que es la versión honesta.
+
+### D14 · Quedarse sin acciones tiene que notarse
+**Estado:** Hecho · 2026-09-14
+
+Los botones se deshabilitaban pero nada decía por qué. Ahora, al gastar el último punto: un aviso
+puntual («Te has quedado sin acciones. La siguiente llega en N min.») y la tira de acciones pasa a
+estado agotado —«Sin acciones», en rojo, con cuenta atrás «+1 en N min» en lugar del «+1 / 10 min»
+fijo—. El aviso salta una vez por agotamiento, no en cada repintado.
+
+Se descartó el popup modal: interrumpe y hay que cerrarlo. La tira ya estaba en pantalla y es
+donde el jugador va a mirar; el aviso solo llama la atención la primera vez.
+
+### D15 · Shiny implica la forma normal en la Pokédex
+**Estado:** Hecho · 2026-09-14
+
+Registrar una forma shiny marca también la entrada normal —vista, cuidada y banderas—, nunca al
+revés. Así la Pokédex shiny sigue siendo la difícil de completar. Los saves anteriores se rellenan
+al cargar: toda entrada con `shiny.seen` vuelca sus datos sobre la entrada base.
+
 ### D10 · Login por email y contraseña
 **Estado:** Hecho en cliente · 2026-09-14 · **falta una comprobación en Supabase**
 
@@ -303,8 +332,12 @@ Canal dentro del juego para que los jugadores envíen consejos y recomendaciones
 ## Incidencias abiertas
 
 ### Flake intermitente en `tests/vital.test.cjs`
-Falla ~2 de cada 30 pasadas de la suite completa, nunca en aislado (0/60) ni reproducible a
-demanda (0/29 pasadas completas seguidas). El fichero no usa `test()`, así que el runner solo
+Falla ~3 de cada 40 pasadas de la suite completa, nunca en aislado (0/60) ni reproducible a
+demanda (0/41 pasadas completas seguidas). **Las tres veces ocurrió inmediatamente después de
+ejecutar `buildMobileRuntime.py` en la misma orden**, y la última murió en 69 ms —muy por debajo
+de los ~450 ms que tarda—, así que revienta al arrancar, no en una aserción. Sospecha principal:
+agotamiento transitorio de descriptores de fichero mientras el build acaba de escribir 2681
+archivos y la suite abre cientos de PNG en paralelo. El fichero no usa `test()`, así que el runner solo
 reporta `'test failed'` sin el texto del error. `vital.test.cjs` no estabiliza el reloj —su
 contexto no sustituye `Date`—, así que hay tiempo real filtrándose al estado; la longitud del
 código QR que imprime varía entre ejecuciones por eso. Es la hipótesis, no un diagnóstico:

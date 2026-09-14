@@ -62,13 +62,15 @@ globalThis.TrainingActivities=(()=>{
   steps.append(node('p',t('minigame.common.rounds',{rounds:roundsFor(attribute)}),'briefing-rounds'));
   const go=node('button',t('minigame.common.start')),back=node('button',t('minigame.common.notNow'));
   go.type='button';back.type='button';
-  // Limpiar antes de cerrar: el listener de `close` llama a cancel, que si no repetiria la salida.
+  // Reglas y partida comparten dialogo. Cerrarlo para volver a abrirlo no vale: el evento `close`
+  // llega encolado, DESPUES de que la partida haya arrancado, y el listener que lo escucha la
+  // cancela con el coste ya cobrado. Empezar solo reemplaza el contenido; cerrar es salir.
   const shut=then=>{briefingExit=null;if(dialog.open)dialog.close();then();};
-  go.addEventListener('click',()=>shut(()=>start(attribute)));
+  go.addEventListener('click',()=>{briefingExit=null;if(!start(attribute)&&dialog.open)dialog.close();});
   back.addEventListener('click',()=>shut(()=>close(attribute)));
   briefingExit=()=>close(attribute);
   host.append(node('h2',modeName(attribute)),node('p',t(`minigame.${attribute}.instructions`)),steps,go,back);
-  dialog.showModal();return true;
+  if(!dialog.open)dialog.showModal();return true;
  }
  // El coste de la sesion se cobra al abrir, no al puntuar. Si llegara con el resultado, cancelar
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
@@ -87,7 +89,7 @@ globalThis.TrainingActivities=(()=>{
   dialog=document.getElementById('training-game');const host=document.getElementById('training-game-content');host.replaceChildren();
   const setText=(element,text)=>{if(element.textContent!==text)element.textContent=text;};
   const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),roundCard=node('div',undefined,'round-card'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',()=>cancel());
-  host.append(title,hint,status,field,exit);dialog.showModal();
+  host.append(title,hint,status,field,exit);if(!dialog.open)dialog.showModal();
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
   let visibleStrengthPosition=.5;
@@ -100,7 +102,7 @@ globalThis.TrainingActivities=(()=>{
    // Volver a practicar no deberia costar tres toques por el panel de Entrenamiento: es lo que se
    // hace despues de casi cada partida. Solo se ofrece si la siguiente sesion se puede pagar.
    if(ok&&repeat&&canRepeat(attribute)){const again=node('button',t('minigame.common.again'),'minigame-again');again.type='button';
-    again.addEventListener('click',()=>{dialog.close();repeat(attribute);});field.append(again);}};
+    again.addEventListener('click',()=>{if(!repeat(attribute)&&dialog.open)dialog.close();});field.append(again);}};
   if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:mean=>finish(grade(mean))});return true;}
   if(attribute==='iq'){
    setText(hint,t('minigame.iq.instructions'));

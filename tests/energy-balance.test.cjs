@@ -30,7 +30,7 @@ test('rest blocks Play/Training without spending and permits non-energy care',as
  assert.equal(h.run('allowed("jugar")'),false);
  h.run('showPanel("training")');
  const walk=e=>[e,...(e.children||[]).flatMap(walk)];
- const buttons=walk(h.els['panel-content']).filter(e=>e.textContent===h.run("t('minigame.common.practice')"));
+ const buttons=walk(h.els['panel-content']).filter(e=>e.textContent===h.run("t('minigame.common.start')"));
  assert.equal(buttons.length,4);assert.ok(buttons.every(b=>b.disabled));
  h.run('closePanel()');
  for(const action of ['careAction("jugar")','train("iq")']){assert.equal(h.run(action),false);assert.equal(h.run('state.trainer.energy'),6);assert.equal(h.run('state.care.energia'),30);assert.match(h.run('state.message'),/Está descansando/);}

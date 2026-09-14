@@ -390,18 +390,6 @@ const trainingOptions={iq:{nameKey:'minigame.iq.activity',icon:'iq'},strength:{n
 // Las mismas condiciones que deshabilitan la tarjeta de Entrenamiento deciden si se puede repetir
 // sin volver al panel; separadas aqui para no escribirlas dos veces.
 const canTrain=k=>state.phase==='alive'&&!Vital.energyResting(state)&&!state.lightsOff&&canSpend(CARE_CONFIG.training.ap)&&state.care.energia>=CARE_CONFIG.training.energy&&state.training[k]<100;
-// Que ya se han visto las reglas es del dispositivo, no de la partida: no tiene sentido volver a
-// explicar el minijuego al eclosionar otro huevo, y el save no cambia de esquema por esto.
-const TUTORIAL_KEY='hatch.mon.tutorials';
-function tutorialsSeen(){try{const raw=JSON.parse(gameStorage.getItem(TUTORIAL_KEY)||'[]');return Array.isArray(raw)?raw.filter(k=>TRAIN.includes(k)):[];}catch{return [];}}
-function markTutorialSeen(k){if(!TRAIN.includes(k))return false;const seen=tutorialsSeen();if(seen.includes(k))return false;
-  try{gameStorage.setItem(TUTORIAL_KEY,JSON.stringify([...seen,k]));}catch{}return true;}
-// La primera vez las reglas van por delante del cobro: abrir para leerlas y echarse atras no debe
-// costar una sesion.
-function launchTraining(k){
-  if(tutorialsSeen().includes(k))return startTraining(k);
-  return TrainingActivities.brief(k,{start:attribute=>{markTutorialSeen(attribute);startTraining(attribute);}});
-}
 function startTraining(k){
   const companionId=state.social.active.id;
   return TrainingActivities.launch(k,{
@@ -409,7 +397,7 @@ function startTraining(k){
     formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),
     begin:attribute=>{let ok=false;dispatch(()=>{ok=beginTraining(attribute);return ok;});return ok;},
     abandon:()=>dispatch(()=>refundTraining()),
-    repeat:launchTraining,canRepeat:canTrain,
+    repeat:startTraining,canRepeat:canTrain,
     commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain);return result;},'train');return result;}});
 }
 function freshState(now=Date.now()){
@@ -862,14 +850,14 @@ function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefine
 function panelButton(text,callback,disabled,key){const b=el('button',text);b.type='button';b.disabled=disabled;b.dataset.key=key;b.addEventListener('click',()=>dispatch(callback,TRAIN.includes(key)?'train':itemCatalog[key]?.food?'eat':null));return b;}
 function pixelIcon(key,extra=''){const n=el('span',undefined,'pixel-icon '+extra);n.dataset.icon=key;n.setAttribute('aria-hidden','true');return n;}
 function iconLabel(key,text){const n=el('span',undefined,'icon-label');n.append(pixelIcon(key),el('span',text));return n;}
-// El interrogante deja releer las reglas cuando quieras, y nunca cobra: `brief` va antes que
-// `begin`. Sigue disponible aunque la practica este deshabilitada por AP o por energia.
+// Dos botones, dos cosas distintas: el interrogante explica y nunca cobra (`brief` va antes que
+// `begin`, y sigue disponible aunque no haya AP o energia); Empezar arranca la partida y punto.
 function trainingActions(k){
   const actions=el('div',undefined,'card-actions');
   const help=el('button','?');help.type='button';help.className='card-help';help.dataset.key=`how-${k}`;
   help.setAttribute('aria-label',t('minigame.common.howTo'));help.title=t('minigame.common.howTo');
-  help.addEventListener('click',()=>{closePanel();TrainingActivities.brief(k,{start:attribute=>{markTutorialSeen(attribute);startTraining(attribute);}});});
-  actions.append(help,panelButton(t('minigame.common.practice'),()=>{closePanel();launchTraining(k);return false;},!canTrain(k),k));
+  help.addEventListener('click',()=>{closePanel();TrainingActivities.brief(k,{start:startTraining});});
+  actions.append(help,panelButton(t('minigame.common.start'),()=>{closePanel();startTraining(k);return false;},!canTrain(k),k));
   return actions;
 }
 function row(title,detail,button,cls){const r=el('div',undefined,cls?'panel-row '+cls:'panel-row'),copy=el('div');copy.append(el('strong',title));if(detail)copy.append(el('p',detail));r.append(copy);if(button)r.append(button);return r;}

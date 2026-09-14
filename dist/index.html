@@ -1225,7 +1225,6 @@ function renderPokedex(){
       grid.append(card);
     }content.append(grid);return;
   }
-  content.append(el('p',t('memories.summary',{total:obtainableRoster.total,count:Object.values(state.pokedex).filter(e=>e.seen).length,owned:Object.values(state.pokedex).filter(e=>e.ownedIds.length).length,memories:state.social.memorials.length}),'panel-note'));
   content.append(el('p',t('memories.help'),'panel-note'));
   if(!state.social.memorials.length)content.append(el('p',t('memories.empty')));
   for(const memory of state.social.memorials){

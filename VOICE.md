@@ -22,7 +22,8 @@ estilo sin que nadie tenga que opinar. Todo texto pasa por `HatchI18n`, en ES y 
 - **El juego no habla de sí mismo en primera persona**, salvo cuando la responsabilidad es nuestra:
   «Algo ha fallado por nuestra parte» sí; «He guardado tu partida» no.
 - **La banda inferior es el Profesor Oak.** Lleva su retrato y su `aria-label`: todo lo que aparece
-  ahí —estado, avisos, resultados de cuidado— se lee como si lo dijera él. Una sola voz.
+  ahí se lee como si lo dijera él, también lo que no va del compañero («Has comprado Baya»).
+  Decidido el 15-09-2026: una sola voz, sin segundo canal para los mensajes de sistema.
 - **Exclamaciones**: una como mucho, y solo en una celebración real. Si todo grita, nada destaca.
 - **Emoji en la interfaz**: no. El juego ya tiene pixel art.
 - **Humor**: en los cuidados y las reacciones, sí. En errores, pagos, pérdidas de datos y esperas,

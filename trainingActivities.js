@@ -8,20 +8,24 @@ globalThis.TrainingActivities=(()=>{
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
  const strengthPrecision=position=>position>=config.strengthPerfectMin&&position<=config.strengthPerfectMax?1:Math.max(0,position<config.strengthPerfectMin?position/config.strengthPerfectMin:(1-position)/(1-config.strengthPerfectMax));
  function register(attribute,launcher){if(!Object.hasOwn(modes,attribute)||typeof launcher!=='function')throw Error(t('minigame.error.invalidActivity'));launchers[attribute]=launcher;}
- function launch(attribute,{commit,onActive=()=>{},formatReward=()=>''}){
-  if(!Object.hasOwn(modes,attribute)||active)return false;
+ // El coste de la sesion se cobra al abrir, no al puntuar. Si llegara con el resultado, cancelar
+ // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
+ // Por eso `cancel` solo devuelve el gasto cuando el corte no es del jugador: pestana en segundo
+ // plano, cierre de la pagina o parada del runtime. Rendirse a mano cuesta lo mismo que perder.
+ function launch(attribute,{begin=()=>true,abandon=()=>{},commit,onActive=()=>{},formatReward=()=>''}){
+  if(!Object.hasOwn(modes,attribute)||active||!begin(attribute))return false;
   let done=false,timer=null,frame=null,dialog=null,dispose=null;
   const requestFrame=globalThis.requestAnimationFrame||((fn)=>setTimeout(fn,16));
   const cancelFrame=globalThis.cancelAnimationFrame||clearTimeout;
   const stop=()=>{clearTimeout(timer);timer=null;if(frame!==null)cancelFrame(frame);frame=null;dispose?.();dispose=null;};
-  const cancel=()=>{if(done)return false;done=true;stop();active=null;if(dialog?.open)dialog.close();onActive(false);return false;};
+  const cancel=(refund=false)=>{if(done)return false;done=true;stop();active=null;if(dialog?.open)dialog.close();onActive(false);if(refund)abandon(attribute);return false;};
   const complete=(gain=5)=>{if(done)return false;done=true;stop();active=null;try{return commit(attribute,Math.max(1,Math.min(5,Math.round(gain))));}finally{onActive(false);}};
   active={cancel};onActive(true);
   if(launchers[attribute])return launchers[attribute]({complete,cancel,attribute});
   dialog=document.getElementById('training-game');const host=document.getElementById('training-game-content');host.replaceChildren();
   const setText=(element,text)=>{if(element.textContent!==text)element.textContent=text;};
   const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
-  const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',cancel);
+  const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',()=>cancel());
   host.append(title,hint,status,field,exit);dialog.showModal();
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
@@ -89,6 +93,6 @@ globalThis.TrainingActivities=(()=>{
   }
   tick();return true;
  }
- function cancel(){return active?.cancel()||false;}
+ function cancel(refund=false){return active?.cancel(refund)||false;}
  return Object.freeze({modes,config,grade,strengthPrecision,launch,register,cancel,isActive:()=>active!==null});
 })();

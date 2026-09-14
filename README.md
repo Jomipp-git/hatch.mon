@@ -21,7 +21,7 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
 | `shiny.js` | Probabilidad shiny y tirada de eclosión | Rareza canónica vía adapter |
 | `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
-| `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callback de resultado a `train` |
+| `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callbacks `begin`/`commit`/`abandon` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
 | `socialEngine.js` | HM1, validación, historial y compatibilidad offline | Adapter, Vital |
 | `pokemonDataAdapter.js` | Consulta canónica, resolución de IDs y compatibilidad biológica | Datos v2, repertorio legacy |
@@ -256,7 +256,7 @@ Fuerza dispone de cinco rondas de 3 s y puntúa precisión con máxima puntuaci�
 
 Para Fuerza y Amabilidad, rendimiento normalizado `s`: +5 al alcanzar 1; en otro caso `1 + floor(4*s)`, limitado a +1–+4. Intelecto otorga directamente el número de rondas correctas, con mínimo +1. No hay bonus por terminar rápido.
 
-El coste habitual se aplica una sola vez al completar (atributos limitados a 100). Cancelar, ocultar la pestaña o salir no concede puntos ni cobra la sesión. Vínculo añade 0,3 por punto obtenido, hasta 1,5. No cambia Ánimo. Force Evolution sigue funcionando sin minijuegos.
+El coste habitual (1 AP, −8 energía, −4 hambre, +3 suciedad) se cobra **al abrir** el minijuego y no depende del resultado; puntuar solo añade atributo (limitado a 100) y monedas. Se cobra por delante porque, cobrando al final, rendirse en una partida torcida sería gratis y lo óptimo sería reintentar hasta clavarla. Rendirse con Cancelar o Escape cuesta lo mismo que perder; solo un corte ajeno al jugador — pestaña en segundo plano, cierre de la página o parada del runtime — devuelve el gasto. Vínculo añade 0,3 por punto obtenido, hasta 1,5. No cambia Ánimo. Force Evolution sigue funcionando sin minijuegos.
 
 ## Colecciones y presentación
 

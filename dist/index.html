@@ -550,18 +550,37 @@ function careAction(action,rng=Math.random){
   if(action==='jugar')Attention.markInteraction(state);updateSustained();checkHealth();Attention.evaluate(state);checkEvolution();return true;
 }
 function heal(){state.pokerus=false;state.vital.illnessCause=null;state.vital.exposure={hygiene:0,energy:0};state.care.higiene=Math.max(CARE_CONFIG.cure.restore,state.care.higiene);state.care.energia=Math.max(CARE_CONFIG.cure.restore,state.care.energia);}
-function train(k,gain=CARE_CONFIG.training.gain){
-  if(!Number.isInteger(gain)||gain<1||gain>5)return false;
+// Entrenar se cobra al abrir el minijuego y se premia al puntuarlo, en dos mitades. El desgaste
+// (AP, energia, hambre, suciedad) es el precio de la sesion y no depende del resultado; la nota
+// solo decide el atributo y las monedas. Si el coste llegara al final, rendirse en una partida
+// torcida seria gratis y lo optimo seria reintentar hasta clavarla.
+function beginTraining(k){
   if(!TRAIN.includes(k)||state.phase!=='alive')return false;
   if(Vital.energyResting(state)){state.message=t('care.resting');return false;}
   if(state.lightsOff){state.message=t('care.lightsTraining');return false;}
   if(state.care.energia<CARE_CONFIG.training.energy){state.message=t('care.lowEnergy');return false;}
   if(state.training[k]>=100){state.message=t('care.maxAttribute');return false;}
   if(!spend(CARE_CONFIG.training.ap)){denied();return false;}
-  state.training[k]=clamp(state.training[k]+gain);state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
+  state.care.energia=clamp(state.care.energia-CARE_CONFIG.training.energy);
   state.care.hambre=clamp(state.care.hambre-CARE_CONFIG.training.hunger);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.training.dirt);
-  Vital.energyResting(state);
+  Vital.energyResting(state);return true;
+}
+// Solo para cortes ajenos al jugador: la pestana pasa a segundo plano, se cierra la pagina o para
+// el runtime. Rendirse pulsando Cancelar no devuelve nada.
+function refundTraining(){
+  const c=CARE_CONFIG.training;
+  state.trainer.energy=Math.min(CARE_CONFIG.trainerMax,state.trainer.energy+c.ap);
+  state.care.energia=clamp(state.care.energia+c.energy);state.care.hambre=clamp(state.care.hambre+c.hunger);
+  state.vital.dirt=clamp(state.vital.dirt-c.dirt);Vital.energyResting(state);return true;
+}
+function finishTraining(k,gain){
+  if(!Number.isInteger(gain)||gain<1||gain>5||!TRAIN.includes(k))return false;
+  state.training[k]=clamp(state.training[k]+gain);
   const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=t('training.reward',{stat:LABELS[k],gain,coins});updateSustained();checkHealth();checkEvolution();return true;
+}
+function train(k,gain=CARE_CONFIG.training.gain){
+  if(!Number.isInteger(gain)||gain<1||gain>5)return false;
+  return beginTraining(k)&&finishTraining(k,gain);
 }
 function itemAPCost(id){const item=itemCatalog[id];return item&&(item.food||item.care||item.heal)?CARE_CONFIG.itemAP:CARE_CONFIG.evolutionItemAP;}
 function itemUsable(id){
@@ -866,7 +885,7 @@ function renderPanel(){
   if(panelName==='training'){
     if(state.phase==='egg'){content.append(el('p',t('minigame.training.eggUnavailable')));return;}
     content.append(el('p',t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy}), 'panel-note'));
-    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=train(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||Vital.energyResting(state)||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
+    for(const k of TRAIN){const o=trainingOptions[k],card=el('section',undefined,'training-card'),rank=state.training[k]===100?t('minigame.rank.maximum'):t(`minigame.rank.${Math.floor(state.training[k]/20)}`),stat=t(`minigame.attribute.${k}`),meter=el('progress');meter.max=100;meter.value=state.training[k];meter.setAttribute('aria-label',stat);card.append(row(iconLabel(o.icon,stat),t('minigame.training.card',{rank,value:state.training[k],activity:t(o.nameKey)}),panelButton(t('minigame.common.practice'),()=>{const companionId=state.social.active.id;closePanel();TrainingActivities.launch(k,{onActive:trainingVisuals,formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),begin:attribute=>{let ok=false;dispatch(()=>{ok=beginTraining(attribute);return ok;});return ok;},abandon:()=>dispatch(()=>refundTraining()),commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain);return result;},'train');return result;}});return false;},state.phase!=='alive'||Vital.energyResting(state)||state.lightsOff||!canSpend(CARE_CONFIG.training.ap)||state.care.energia<CARE_CONFIG.training.energy||state.training[k]>=100,k)));card.append(meter);content.append(card);}
   }
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
@@ -1235,11 +1254,11 @@ if(canUseTesting())window.HatchMon=Object.freeze({reset:resetGame,roster:()=>Hat
 $('training-game').addEventListener('cancel',event=>{event.preventDefault();TrainingActivities.cancel();$('training-game').close();});
 $('training-game').addEventListener('close',()=>TrainingActivities.cancel());
 $('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(state.social.eggs.length)showPanel('beginning');else startNewBeginning();});
-window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
+window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel(true);stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
-document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel();stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
+document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel(true);stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});
 restore();
-window.HatchRuntime={save,applyCloudSave(game,preferences={}){try{game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;}catch{return false;}state=game;savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;lockAdminCheats();clearInterval(timer);timer=null;TrainingActivities.cancel();stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
+window.HatchRuntime={save,applyCloudSave(game,preferences={}){try{game=migrateSave(game);if(runtimeStopped||!validSave(game))return false;}catch{return false;}state=game;savedImportantState=null;displayMode=preferences.displayMode==='lcd'?'lcd':'color';try{gameStorage.setItem(LANGUAGE_PREFERENCE_KEY,preferences.language==='en'?'en':'es');I18n?.setLanguage(preferences.language==='en'?'en':'es');}catch{}$('display-root').dataset.displayMode=displayMode;ShellSkins.hydrate(preferences.shells,$('display-root'));hideToast();clearPetReaction();sync();render();if(dialog.open)renderPanel();return true;},stop(){runtimeStopped=true;lockAdminCheats();clearInterval(timer);timer=null;TrainingActivities.cancel(true);stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();pokemonRenderer.stop();eggController.stop();disposeMemorialSprites();for(const id of ['panel','training-game','nickname-dialog','found-dialog'])if($(id).open)$(id).close();}};
 save();lastMessage=state.message;render();startTimer();
 </script>
 <script type="module">import('./appBootstrap.mjs').catch(()=>{document.getElementById('auth-message').textContent=globalThis.HatchI18n?.t('errors.network')||'errors.network';document.getElementById('auth-submit').disabled=true;document.getElementById('auth-google').disabled=true;});</script>

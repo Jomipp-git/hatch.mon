@@ -1,23 +1,25 @@
-"""Deterministic shell themes sampled from local PMD Idle sprites.
+"""Temas de carcasa a partir de las paletas cacheadas en `master/palettes.json`.
 
-Una carcasa dice de quien es antes de leer el nombre. Cada especie aporta:
+Una carcasa dice de quien es antes de leer el nombre. Cada forma aporta:
 
-  * su color dominante, del que salen los seis tonos del plastico;
-  * cuantos colores lleva, segun lo lejos que este de la forma base de su linea:
-    una forma base va monocroma y cada evolucion suma un color del propio sprite;
-  * un motivo geometrico derivado de su tipo, tenue y repetido sobre el plastico.
+  * los colores de su paleta (pokemonpalette.com, cacheados por `tools/fetchPalettes.py`),
+    de los que salen los seis tonos del plastico y el tinte del fondo de pagina;
+  * cuantos colores lleva el estampado, segun lo lejos que este de la forma base de su
+    linea: una base va monocroma y sin motivo, y cada evolucion suma un color;
+  * un motivo: silueta propia si la especie tiene una dibujada a mano en `shellSkins.js`,
+    y si no, la familia geometrica que le toca por su tipo primario.
 
-El tipo decide el motivo para cubrir el repertorio entero sin trabajo manual;
-`assets/skins/motifOverrides.json` pisa lo que haga falta mimar a mano.
+No hay respaldo silencioso: si una forma no esta en la cache, el generador para. Inventar
+un color seria peor que fallar, porque nadie se enteraria.
 """
-from pathlib import Path
 from collections import Counter
 import colorsys
 import json
-from PIL import Image
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-# Motivo por tipo primario. Nombres implementados en shellSkins.js.
+PALETTES = ROOT / 'master/palettes.json'
+# Motivo por tipo primario cuando la especie no tiene silueta propia.
 TYPE_MOTIFS = {
     'Fire': 'sparks', 'Water': 'waves', 'Electric': 'bolts', 'Grass': 'sprouts',
     'Psychic': 'orbits', 'Fairy': 'diamonds', 'Normal': 'dots', 'Fighting': 'bands',
@@ -25,58 +27,86 @@ TYPE_MOTIFS = {
     'Ghost': 'eclipse', 'Steel': 'blocks', 'Ground': 'bands', 'Flying': 'waves',
     'Bug': 'dots', 'Poison': 'diamonds',
 }
-# Una forma base no lleva motivo: el escalon se nota al evolucionar.
+# Siluetas dibujadas a mano, por especie (numero de Pokedex). Las formas alternas de una
+# misma especie comparten silueta: separarlas leeria como un fallo, no como un detalle.
+SPECIES_MOTIFS = {6: 'charizard', 124: 'jynx', 125: 'electabuzz',
+                  143: 'snorlax', 468: 'togekiss', 849: 'toxtricity'}
+# Colores del estampado segun escalones desde la forma base de la linea.
 MOTIF_COLORS_BY_DEPTH = (0, 1, 2)
+
+
+def hex_to_rgb(value):
+    value = value.lstrip('#')
+    return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
 
 
 def mix(color, target, amount):
     return '#' + ''.join(f'{round(c * (1 - amount) + target * amount):02x}' for c in color)
 
 
-def colorful(color):
-    r, g, b = (c / 255 for c in color)
-    _, saturation, value = colorsys.rgb_to_hsv(r, g, b)
-    return saturation > .18 and .12 < value < .96
+def readable(value, floor=.42):
+    """Oscurece un color hasta que sirve de canto sobre un boton claro."""
+    r, g, b = (c / 255 for c in hex_to_rgb(value))
+    hue, saturation, lightness = colorsys.rgb_to_hls(r, g, b)
+    lightness = min(lightness, floor)
+    saturation = max(saturation, .35)
+    return '#' + ''.join(f'{round(c * 255):02x}' for c in colorsys.hls_to_rgb(hue, lightness, saturation))
 
 
-def distinct(color, chosen):
-    """Un tono nuevo, no otra sombra del mismo."""
-    hue, _, value = colorsys.rgb_to_hsv(*(c / 255 for c in color))
-    for other in chosen:
-        other_hue, _, other_value = colorsys.rgb_to_hsv(*(c / 255 for c in other))
-        gap = abs(hue - other_hue)
-        gap = min(gap, 1 - gap)
-        if gap < .07 and abs(value - other_value) < .28:
-            return False
-    return True
+def luminance(rgb):
+    r, g, b = (c / 255 for c in rgb)
+    return .2126 * r + .7152 * g + .0722 * b
 
 
-def palette(image, want):
-    """Los `want` colores mas frecuentes del sprite que no se pisen entre si."""
-    pixels = [(r, g, b) for r, g, b, a in image.getdata() if a > 200]
-    counts = Counter(pixels)
+def darken_to(rgb, target):
+    """Mezcla hacia negro hasta bajar de `target` de luminancia.
+
+    Se oscurece el color tal cual en vez de reconstruirlo desde HLS: la saturacion HLS
+    miente en los extremos —un #eeeeff casi blanco marca saturacion 1— y bajarle la luz
+    devolvia un azul puro que no esta en ninguna parte del Pokemon. Multiplicar conserva
+    el tono y la proporcion de color reales.
+    """
+    current = luminance(rgb)
+    if current <= target:
+        return rgb
+    factor = max(.05, target / current) ** .85
+    return tuple(c * factor for c in rgb)
+
+
+def distinct_edges(highlights, count=4):
+    """Cuatro cantos que se distingan de verdad entre si.
+
+    Coger los cuatro primeros highlights no vale: dos tonos vecinos de la misma paleta dan
+    cantos que a simple vista son el mismo, y entonces el color por accion no informa de
+    nada. Cuando la paleta no da para cuatro colores separados, los que faltan salen a
+    distinta profundidad del mismo tono, que sigue siendo un color del Pokemon.
+    """
+    seen = [hex_to_rgb(value) for value in highlights] or [(128, 128, 128)]
+    spread = lambda a, b: max(abs(x - y) for x, y in zip(a, b))
     chosen = []
-    for color, _ in counts.most_common():
-        if not colorful(color) or not distinct(color, chosen):
-            continue
-        chosen.append(color)
-        if len(chosen) == want:
-            return chosen
-    # Un sprite casi monocromo no da mas tonos. Se completa relajando la saturacion, pero nunca con
-    # el contorno negro ni con el blanco del brillo: como motivo leerian a mancha, no a textura.
-    for color, _ in counts.most_common():
-        _, _, value = colorsys.rgb_to_hsv(*(c / 255 for c in color))
-        if color in chosen or not .18 < value < .94:
-            continue
-        # Aqui vale una sombra del mismo tono, con tal de que se separe en claridad: un sprite de
-        # un solo color no tiene un segundo tono que ofrecer, pero si un claro y un oscuro.
-        if any(abs(value - colorsys.rgb_to_hsv(*(c / 255 for c in other))[2]) < .2 for other in chosen):
-            continue
-        chosen.append(color)
-        if len(chosen) == want:
+    for candidate in seen:
+        if all(spread(candidate, other) > 48 for other in chosen):
+            chosen.append(candidate)
+        if len(chosen) == count:
             break
-    # Antes que inventar un tono, se devuelven menos: el motivo se dibuja igual con uno solo.
-    return chosen or [(150, 150, 150)]
+
+    # Suficientemente oscuros para leerse de canto bajo un boton claro, pero no tanto que el
+    # color se pierda: por debajo de .15 los cuatro se ven negros y la senal deja de informar.
+    targets = (.24, .36, .17, .45)
+    edges, used = [], []
+    for index in range(count):
+        base = chosen[index % len(chosen)]
+        # Cada repeticion del mismo tono baja o sube un escalon, asi que nunca coinciden.
+        depth = targets[index % len(targets)] if index < len(chosen) else targets[index % len(targets)]
+        edge = darken_to(base, depth)
+        while any(spread(edge, other) <= 24 for other in used):
+            depth *= .66
+            edge = darken_to(base, depth)
+            if depth < .03:
+                break
+        used.append(edge)
+        edges.append('#' + ''.join(f'{round(max(0, min(255, c))):02x}' for c in edge))
+    return edges
 
 
 def line_depth(pokemon_id, predecessors):
@@ -90,42 +120,71 @@ def line_depth(pokemon_id, predecessors):
     return depth
 
 
-canonical = json.loads((ROOT / 'master/hatchmonData_v2.json').read_text())
-records = {entry['PokemonId']: entry for entry in canonical['pokemon']}
-predecessors = {entry['PokemonId']: entry['PreEvolutionId'] for entry in canonical['pokemon']}
-overrides = json.loads((ROOT / 'assets/skins/motifOverrides.json').read_text())
-
-themes = {}
-for file in sorted((ROOT / 'assets/pmd').glob('*/metadata.json')):
-    data = json.loads(file.read_text())
-    idle = data['sprites'].get('Idle')
-    if not idle:
-        continue
-    pokemon_id = data['pokemonId']
-    record = records.get(pokemon_id, {})
-    depth = min(line_depth(pokemon_id, predecessors), len(MOTIF_COLORS_BY_DEPTH) - 1)
-    image = Image.open(ROOT / idle['src']).convert('RGBA').crop((0, 0, idle['width'], idle['height']))
-    colors = palette(image, 1 + MOTIF_COLORS_BY_DEPTH[depth])
-    color = colors[0]
-    motif_colors = colors[1:1 + MOTIF_COLORS_BY_DEPTH[depth]]
-    themes[pokemon_id] = {
-        'name': data['name'],
-        'shellBase': mix(color, 255, .48), 'shellDark': mix(color, 0, .60),
-        'shellLight': mix(color, 255, .80), 'accent': mix(color, 0, .12),
-        'bezel': mix(color, 0, .65), 'button': mix(color, 255, .87),
-        # El motivo se acerca al plastico para que sea textura y no dibujo encima.
-        'motif': TYPE_MOTIFS.get(record.get('Type1'), 'dots') if motif_colors else 'plain',
-        'motifColors': [mix(c, 0, .18) for c in motif_colors],
+def build(palette, record, depth, motif_names):
+    colors = palette['normal']
+    primary = hex_to_rgb(colors['primary'])
+    wanted = MOTIF_COLORS_BY_DEPTH[min(depth, len(MOTIF_COLORS_BY_DEPTH) - 1)]
+    # El estampado sale de los tonos que no son el plastico, para que se despegue del fondo.
+    rest = [c for c in colors['highlights'] if c != colors['primary']] or [colors['accent']]
+    motif_colors = [readable(c, .5) for c in rest[:wanted]]
+    dex = record['DexNo']
+    species = SPECIES_MOTIFS.get(dex)
+    motif = (species or TYPE_MOTIFS.get(record.get('Type1'), 'dots')) if motif_colors else 'plain'
+    if species and species not in motif_names:
+        raise SystemExit(f'silueta declarada sin dibujar en shellSkins.js: {species}')
+    edges = (colors['highlights'] or [colors['primary']])
+    return {
+        'name': palette['name'],
+        'shellBase': mix(primary, 255, .48), 'shellDark': mix(primary, 0, .60),
+        'shellLight': mix(primary, 255, .80), 'accent': mix(primary, 0, .12),
+        'bezel': mix(primary, 0, .65), 'button': mix(primary, 255, .87),
+        # El fondo de pagina se tine, pero muy poco: es el lienzo del estampado, no el estampado.
+        'pageBase': mix(primary, 255, .82),
+        'buttonEdges': distinct_edges(edges),
+        'motif': motif,
+        'motifColors': motif_colors,
     }
 
-for pokemon_id, override in overrides.items():
-    if pokemon_id in themes:
-        themes[pokemon_id].update(override)
 
-out = ROOT / 'assets/skins'
-out.mkdir(exist_ok=True)
-(out / 'themes.js').write_text(
-    '/* Generated by tools/generateShellThemes.py from PMD Idle pixels. */\n'
-    'const SHELL_THEMES=' + json.dumps(themes, ensure_ascii=False, separators=(',', ':')) + ';\n')
-plain = sum(1 for theme in themes.values() if theme['motif'] == 'plain')
-print(len(themes), 'shell themes generated;', plain, 'monochrome base forms,', len(themes) - plain, 'patterned')
+def main():
+    if not PALETTES.exists():
+        raise SystemExit(f'falta {PALETTES.relative_to(ROOT)}: ejecuta tools/fetchPalettes.py')
+    palettes = json.loads(PALETTES.read_text())
+    canonical = json.loads((ROOT / 'master/hatchmonData_v2.json').read_text())
+    records = {entry['PokemonId']: entry for entry in canonical['pokemon']}
+    predecessors = {entry['PokemonId']: entry['PreEvolutionId'] for entry in canonical['pokemon']}
+    overrides = json.loads((ROOT / 'assets/skins/motifOverrides.json').read_text())
+    motif_names = set(__import__('re').findall(r'^\s{2}([a-z]+):\{', (ROOT / 'shellSkins.js').read_text(), __import__('re').M))
+
+    themes, missing = {}, []
+    for file in sorted((ROOT / 'assets/pmd').glob('*/metadata.json')):
+        data = json.loads(file.read_text())
+        if not data['sprites'].get('Idle'):
+            continue
+        pokemon_id = data['pokemonId']
+        if pokemon_id not in palettes:
+            missing.append(f"{pokemon_id} {data['name']}")
+            continue
+        depth = line_depth(pokemon_id, predecessors)
+        themes[pokemon_id] = build(palettes[pokemon_id], records[pokemon_id], depth, motif_names)
+
+    if missing:
+        raise SystemExit('sin paleta cacheada (ejecuta tools/fetchPalettes.py):\n  ' + '\n  '.join(missing))
+
+    for pokemon_id, override in overrides.items():
+        if pokemon_id in themes:
+            themes[pokemon_id].update(override)
+
+    out = ROOT / 'assets/skins'
+    out.mkdir(exist_ok=True)
+    (out / 'themes.js').write_text(
+        '/* Generated by tools/generateShellThemes.py from master/palettes.json. */\n'
+        'const SHELL_THEMES=' + json.dumps(themes, ensure_ascii=False, separators=(',', ':')) + ';\n')
+    plain = sum(1 for theme in themes.values() if theme['motif'] == 'plain')
+    silhouettes = Counter(t['motif'] for t in themes.values() if t['motif'] in SPECIES_MOTIFS.values())
+    print(f'{len(themes)} temas; {plain} bases monocromas, {len(themes) - plain} con estampado, '
+          f'{sum(silhouettes.values())} con silueta propia ({", ".join(sorted(silhouettes))})')
+
+
+if __name__ == '__main__':
+    main()

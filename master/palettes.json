@@ -1,0 +1,2009 @@
+{
+ "0001A0": {
+  "name": "Bulbasaur",
+  "dex": 1,
+  "normal": {
+   "primary": "#399494",
+   "secondary": "#62d5b4",
+   "accent": "#73ac31",
+   "highlights": [
+    "#399494",
+    "#62d5b4",
+    "#73ac31",
+    "#a4d541",
+    "#5cb7a1",
+    "#ee2039"
+   ]
+  },
+  "shiny": {
+   "primary": "#73a431",
+   "secondary": "#9cd54a",
+   "accent": "#008320",
+   "highlights": [
+    "#73a431",
+    "#9cd54a",
+    "#008320"
+   ]
+  }
+ },
+ "0002A0": {
+  "name": "Ivysaur",
+  "dex": 2,
+  "normal": {
+   "primary": "#5acdbd",
+   "secondary": "#209483",
+   "accent": "#f97e7e",
+   "highlights": [
+    "#5acdbd",
+    "#209483",
+    "#f97e7e",
+    "#3a7a53",
+    "#6aaa5e",
+    "#84d378"
+   ]
+  },
+  "shiny": {
+   "primary": "#7ba431",
+   "secondary": "#a4d54a",
+   "accent": "#318331",
+   "highlights": [
+    "#7ba431",
+    "#a4d54a",
+    "#318331"
+   ]
+  }
+ },
+ "0003A0": {
+  "name": "Venusaur",
+  "dex": 3,
+  "normal": {
+   "primary": "#20b49c",
+   "secondary": "#69d4c5",
+   "accent": "#ff7b73",
+   "highlights": [
+    "#20b49c",
+    "#69d4c5",
+    "#ff7b73",
+    "#d84747",
+    "#56aa4b",
+    "#feed62"
+   ]
+  },
+  "shiny": {
+   "primary": "#a4d54a",
+   "secondary": "#395a20",
+   "accent": "#ffd500",
+   "highlights": [
+    "#a4d54a",
+    "#395a20",
+    "#ffd500"
+   ]
+  }
+ },
+ "0004A0": {
+  "name": "Charmander",
+  "dex": 4,
+  "normal": {
+   "primary": "#ff9441",
+   "secondary": "#de5239",
+   "accent": "#fdd582",
+   "highlights": [
+    "#ff9441",
+    "#de5239",
+    "#fdd582",
+    "#e3ac62",
+    "#8b2900",
+    "#fdd437"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffde29",
+   "secondary": "#ee9c00",
+   "accent": "#944a00",
+   "highlights": [
+    "#ffde29",
+    "#ee9c00",
+    "#944a00"
+   ]
+  }
+ },
+ "0005A0": {
+  "name": "Charmeleon",
+  "dex": 5,
+  "normal": {
+   "primary": "#ff524a",
+   "secondary": "#cd3939",
+   "accent": "#e5cdae",
+   "highlights": [
+    "#ff524a",
+    "#cd3939",
+    "#e5cdae",
+    "#b28b5e",
+    "#ff4100",
+    "#fddd45"
+   ]
+  },
+  "shiny": {
+   "primary": "#dea429",
+   "secondary": "#ffe600",
+   "accent": "#ff6220",
+   "highlights": [
+    "#dea429",
+    "#ffe600",
+    "#ff6220"
+   ]
+  }
+ },
+ "0006A0": {
+  "name": "Charizard",
+  "dex": 6,
+  "normal": {
+   "primary": "#ee8329",
+   "secondary": "#cd5241",
+   "accent": "#2c7392",
+   "highlights": [
+    "#ee8329",
+    "#cd5241",
+    "#2c7392",
+    "#084152",
+    "#eddd82",
+    "#ebb463"
+   ]
+  },
+  "shiny": {
+   "primary": "#837b94",
+   "secondary": "#5a5a6a",
+   "accent": "#831029",
+   "highlights": [
+    "#837b94",
+    "#5a5a6a",
+    "#831029"
+   ]
+  }
+ },
+ "0007A0": {
+  "name": "Squirtle",
+  "dex": 7,
+  "normal": {
+   "primary": "#8bc5cd",
+   "secondary": "#fee5a1",
+   "accent": "#b96b1c",
+   "highlights": [
+    "#8bc5cd",
+    "#fee5a1",
+    "#b96b1c",
+    "#609ba3",
+    "#297383",
+    "#7f2c0d"
+   ]
+  },
+  "shiny": {
+   "primary": "#7ba4e6",
+   "secondary": "#b4cdff",
+   "accent": "#416283",
+   "highlights": [
+    "#7ba4e6",
+    "#b4cdff",
+    "#416283"
+   ]
+  }
+ },
+ "0008A0": {
+  "name": "Wartortle",
+  "dex": 8,
+  "normal": {
+   "primary": "#8bacf6",
+   "secondary": "#627bc5",
+   "accent": "#ffffff",
+   "highlights": [
+    "#8bacf6",
+    "#627bc5",
+    "#ffffff",
+    "#d7eef5",
+    "#ddc58f",
+    "#916363"
+   ]
+  },
+  "shiny": {
+   "primary": "#b4b4f6",
+   "secondary": "#8b7bbd",
+   "accent": "#ffffff",
+   "highlights": [
+    "#b4b4f6",
+    "#8b7bbd",
+    "#ffffff"
+   ]
+  }
+ },
+ "0009A0": {
+  "name": "Blastoise",
+  "dex": 9,
+  "normal": {
+   "primary": "#5e8cca",
+   "secondary": "#224a6d",
+   "accent": "#e4c579",
+   "highlights": [
+    "#5e8cca",
+    "#224a6d",
+    "#e4c579",
+    "#896244",
+    "#d3ac54",
+    "#cdcdd5"
+   ]
+  },
+  "shiny": {
+   "primary": "#d5b4f6",
+   "secondary": "#735294",
+   "accent": "#a47bbd",
+   "highlights": [
+    "#d5b4f6",
+    "#735294",
+    "#a47bbd"
+   ]
+  }
+ },
+ "0025A0": {
+  "name": "Pikachu",
+  "dex": 25,
+  "normal": {
+   "primary": "#f7e950",
+   "secondary": "#edce5e",
+   "accent": "#2c2c30",
+   "highlights": [
+    "#f7e950",
+    "#edce5e",
+    "#2c2c30",
+    "#846541",
+    "#bf2923",
+    "#e05e48"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffc531",
+   "secondary": "#ffa400",
+   "accent": "#b43100",
+   "highlights": [
+    "#ffc531",
+    "#ffa400",
+    "#b43100"
+   ]
+  }
+ },
+ "0026A0": {
+  "name": "Raichu",
+  "dex": 26,
+  "normal": {
+   "primary": "#f6ac29",
+   "secondary": "#d97c3d",
+   "accent": "#ffeed5",
+   "highlights": [
+    "#f6ac29",
+    "#d97c3d",
+    "#ffeed5",
+    "#8b6210",
+    "#fbbd31",
+    "#fddd67"
+   ]
+  },
+  "shiny": {
+   "primary": "#f67b20",
+   "secondary": "#ffe6d5",
+   "accent": "#8b6210",
+   "highlights": [
+    "#f67b20",
+    "#ffe6d5",
+    "#8b6210"
+   ]
+  }
+ },
+ "0026L0": {
+  "name": "Raichu (Alolan Form)",
+  "dex": 26,
+  "normal": {
+   "primary": "#f6ac29",
+   "secondary": "#d97c3d",
+   "accent": "#ffeed5",
+   "highlights": [
+    "#f6ac29",
+    "#d97c3d",
+    "#ffeed5",
+    "#8b6210",
+    "#fbbd31",
+    "#fddd67"
+   ]
+  },
+  "shiny": {
+   "primary": "#f67b20",
+   "secondary": "#ffe6d5",
+   "accent": "#8b6210",
+   "highlights": [
+    "#f67b20",
+    "#ffe6d5",
+    "#8b6210"
+   ]
+  }
+ },
+ "0035A0": {
+  "name": "Clefairy",
+  "dex": 35,
+  "normal": {
+   "primary": "#ffd5bd",
+   "secondary": "#ffacac",
+   "accent": "#9c5252",
+   "highlights": [
+    "#ffd5bd",
+    "#ffacac",
+    "#9c5252",
+    "#714b3b",
+    "#101010",
+    "#fdd5bf"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffdede",
+   "secondary": "#f6acac",
+   "accent": "#a44141",
+   "highlights": [
+    "#ffdede",
+    "#f6acac",
+    "#a44141"
+   ]
+  }
+ },
+ "0036A0": {
+  "name": "Clefable",
+  "dex": 36,
+  "normal": {
+   "primary": "#ffc5b4",
+   "secondary": "#ee9494",
+   "accent": "#8b4a52",
+   "highlights": [
+    "#ffc5b4",
+    "#ee9494",
+    "#8b4a52",
+    "#d07ea4",
+    "#b85d7b",
+    "#fcc6b6"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffdede",
+   "secondary": "#f6b4b4",
+   "accent": "#cd5a5a",
+   "highlights": [
+    "#ffdede",
+    "#f6b4b4",
+    "#cd5a5a"
+   ]
+  }
+ },
+ "0039A0": {
+  "name": "Jigglypuff",
+  "dex": 39,
+  "normal": {
+   "primary": "#ffaca4",
+   "secondary": "#e67383",
+   "accent": "#ec5f6d",
+   "highlights": [
+    "#ffaca4",
+    "#e67383",
+    "#ec5f6d",
+    "#dd4655",
+    "#ffffff",
+    "#1785b5"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6cdee",
+   "secondary": "#de9cc5",
+   "accent": "#7b5a73",
+   "highlights": [
+    "#f6cdee",
+    "#de9cc5",
+    "#7b5a73"
+   ]
+  }
+ },
+ "0040A0": {
+  "name": "Wigglytuff",
+  "dex": 40,
+  "normal": {
+   "primary": "#ffffff",
+   "secondary": "#ffacbd",
+   "accent": "#f67b94",
+   "highlights": [
+    "#ffffff",
+    "#ffacbd",
+    "#f67b94",
+    "#e5dee6",
+    "#101010",
+    "#186786"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffffff",
+   "secondary": "#eeb4f6",
+   "accent": "#d594cd",
+   "highlights": [
+    "#ffffff",
+    "#eeb4f6",
+    "#d594cd"
+   ]
+  }
+ },
+ "0058A0": {
+  "name": "Growlithe",
+  "dex": 58,
+  "normal": {
+   "primary": "#fff6a4",
+   "secondary": "#decd7b",
+   "accent": "#e98c53",
+   "highlights": [
+    "#fff6a4",
+    "#decd7b",
+    "#e98c53",
+    "#c55252",
+    "#2e2e2d",
+    "#fbb45d"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6f6b4",
+   "secondary": "#c5b431",
+   "accent": "#d5cd8b",
+   "highlights": [
+    "#f6f6b4",
+    "#c5b431",
+    "#d5cd8b"
+   ]
+  }
+ },
+ "0059A0": {
+  "name": "Arcanine",
+  "dex": 59,
+  "normal": {
+   "primary": "#d5a48b",
+   "secondary": "#ffdeac",
+   "accent": "#c5525a",
+   "highlights": [
+    "#d5a48b",
+    "#ffdeac",
+    "#c5525a"
+   ]
+  },
+  "shiny": {
+   "primary": "#d5bd94",
+   "secondary": "#f6e6bd",
+   "accent": "#b49c00",
+   "highlights": [
+    "#d5bd94",
+    "#f6e6bd",
+    "#b49c00"
+   ]
+  }
+ },
+ "0063A0": {
+  "name": "Abra",
+  "dex": 63,
+  "normal": {
+   "primary": "#ffe629",
+   "secondary": "#cdbd20",
+   "accent": "#835a10",
+   "highlights": [
+    "#ffe629",
+    "#cdbd20",
+    "#835a10",
+    "#aa8b2a",
+    "#f6f5a9",
+    "#594d2c"
+   ]
+  },
+  "shiny": {
+   "primary": "#fff683",
+   "secondary": "#eecd31",
+   "accent": "#ac6a29",
+   "highlights": [
+    "#fff683",
+    "#eecd31",
+    "#ac6a29"
+   ]
+  }
+ },
+ "0064A0": {
+  "name": "Kadabra",
+  "dex": 64,
+  "normal": {
+   "primary": "#d5bd08",
+   "secondary": "#ffee29",
+   "accent": "#7b5208",
+   "highlights": [
+    "#d5bd08",
+    "#ffee29",
+    "#7b5208",
+    "#a17332",
+    "#df4033",
+    "#dedede"
+   ]
+  },
+  "shiny": {
+   "primary": "#e6b441",
+   "secondary": "#fff683",
+   "accent": "#83525a",
+   "highlights": [
+    "#e6b441",
+    "#fff683",
+    "#83525a"
+   ]
+  }
+ },
+ "0065A0": {
+  "name": "Alakazam",
+  "dex": 65,
+  "normal": {
+   "primary": "#ffee18",
+   "secondary": "#cdb410",
+   "accent": "#7b5a08",
+   "highlights": [
+    "#ffee18",
+    "#cdb410",
+    "#7b5a08",
+    "#b18335",
+    "#dedede",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffd500",
+   "secondary": "#d59408",
+   "accent": "#ac2973",
+   "highlights": [
+    "#ffd500",
+    "#d59408",
+    "#ac2973"
+   ]
+  }
+ },
+ "0106A0": {
+  "name": "Hitmonlee",
+  "dex": 106,
+  "normal": {
+   "primary": "#a47b73",
+   "secondary": "#cda483",
+   "accent": "#eee5b7",
+   "highlights": [
+    "#a47b73",
+    "#cda483",
+    "#eee5b7",
+    "#292929",
+    "#ffffff",
+    "#e7d99c"
+   ]
+  },
+  "shiny": {
+   "primary": "#94ac29",
+   "secondary": "#627b08",
+   "accent": "#292929",
+   "highlights": [
+    "#94ac29",
+    "#627b08",
+    "#292929"
+   ]
+  }
+ },
+ "0107A0": {
+  "name": "Hitmonchan",
+  "dex": 107,
+  "normal": {
+   "primary": "#cdb47b",
+   "secondary": "#a48b73",
+   "accent": "#c5b4c5",
+   "highlights": [
+    "#cdb47b",
+    "#a48b73",
+    "#c5b4c5"
+   ]
+  },
+  "shiny": {
+   "primary": "#c5d562",
+   "secondary": "#94a441",
+   "accent": "#bdb4c5",
+   "highlights": [
+    "#c5d562",
+    "#94a441",
+    "#bdb4c5"
+   ]
+  }
+ },
+ "0113A0": {
+  "name": "Chansey",
+  "dex": 113,
+  "normal": {
+   "primary": "#ffd5d5",
+   "secondary": "#ffacac",
+   "accent": "#ffffff",
+   "highlights": [
+    "#ffd5d5",
+    "#ffacac",
+    "#ffffff",
+    "#e6debf",
+    "#f98561",
+    "#e85e3c"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffeecd",
+   "secondary": "#eecd94",
+   "accent": "#5a8341",
+   "highlights": [
+    "#ffeecd",
+    "#eecd94",
+    "#5a8341"
+   ]
+  }
+ },
+ "0122A0": {
+  "name": "Mr. Mime",
+  "dex": 122,
+  "normal": {
+   "primary": "#104a73",
+   "secondary": "#ff5a6a",
+   "accent": "#cdcdd5",
+   "highlights": [
+    "#104a73",
+    "#ff5a6a",
+    "#cdcdd5"
+   ]
+  },
+  "shiny": {
+   "primary": "#105273",
+   "secondary": "#83d531",
+   "accent": "#cdd5d5",
+   "highlights": [
+    "#105273",
+    "#83d531",
+    "#cdd5d5"
+   ]
+  }
+ },
+ "0124A0": {
+  "name": "Jynx",
+  "dex": 124,
+  "normal": {
+   "primary": "#f6315a",
+   "secondary": "#904fba",
+   "accent": "#fee561",
+   "highlights": [
+    "#f6315a",
+    "#904fba",
+    "#fee561",
+    "#dbac41",
+    "#f97777",
+    "#b73763"
+   ]
+  },
+  "shiny": {
+   "primary": "#de528b",
+   "secondary": "#ff7bb4",
+   "accent": "#dec594",
+   "highlights": [
+    "#de528b",
+    "#ff7bb4",
+    "#dec594"
+   ]
+  }
+ },
+ "0125A0": {
+  "name": "Electabuzz",
+  "dex": 125,
+  "normal": {
+   "primary": "#ffe639",
+   "secondary": "#c5a410",
+   "accent": "#3b3b35",
+   "highlights": [
+    "#ffe639",
+    "#c5a410",
+    "#3b3b35",
+    "#101010",
+    "#ffffff",
+    "#e06794"
+   ]
+  },
+  "shiny": {
+   "primary": "#c57300",
+   "secondary": "#ffa410",
+   "accent": "#292920",
+   "highlights": [
+    "#c57300",
+    "#ffa410",
+    "#292920"
+   ]
+  }
+ },
+ "0126A0": {
+  "name": "Magmar",
+  "dex": 126,
+  "normal": {
+   "primary": "#f8503c",
+   "secondary": "#df3a5b",
+   "accent": "#e4bc44",
+   "highlights": [
+    "#f8503c",
+    "#df3a5b",
+    "#e4bc44",
+    "#feed5c",
+    "#eb3824",
+    "#c33728"
+   ]
+  },
+  "shiny": {
+   "primary": "#ff6a7b",
+   "secondary": "#de4152",
+   "accent": "#ffcdde",
+   "highlights": [
+    "#ff6a7b",
+    "#de4152",
+    "#ffcdde"
+   ]
+  }
+ },
+ "0133A0": {
+  "name": "Eevee",
+  "dex": 133,
+  "normal": {
+   "primary": "#a4624a",
+   "secondary": "#d59c4a",
+   "accent": "#e6c594",
+   "highlights": [
+    "#a4624a",
+    "#d59c4a",
+    "#e6c594"
+   ]
+  },
+  "shiny": {
+   "primary": "#aca49c",
+   "secondary": "#d5d5c5",
+   "accent": "#d5deff",
+   "highlights": [
+    "#aca49c",
+    "#d5d5c5",
+    "#d5deff"
+   ]
+  }
+ },
+ "0134A0": {
+  "name": "Vaporeon",
+  "dex": 134,
+  "normal": {
+   "primary": "#5ac5e6",
+   "secondary": "#104a62",
+   "accent": "#83deff",
+   "highlights": [
+    "#5ac5e6",
+    "#104a62",
+    "#83deff"
+   ]
+  },
+  "shiny": {
+   "primary": "#e694e6",
+   "secondary": "#621041",
+   "accent": "#ffbdff",
+   "highlights": [
+    "#e694e6",
+    "#621041",
+    "#ffbdff"
+   ]
+  }
+ },
+ "0135A0": {
+  "name": "Jolteon",
+  "dex": 135,
+  "normal": {
+   "primary": "#ffde52",
+   "secondary": "#cdac4a",
+   "accent": "#836a29",
+   "highlights": [
+    "#ffde52",
+    "#cdac4a",
+    "#836a29"
+   ]
+  },
+  "shiny": {
+   "primary": "#c5ee4a",
+   "secondary": "#9ccd39",
+   "accent": "#628b08",
+   "highlights": [
+    "#c5ee4a",
+    "#9ccd39",
+    "#628b08"
+   ]
+  }
+ },
+ "0136A0": {
+  "name": "Flareon",
+  "dex": 136,
+  "normal": {
+   "primary": "#ffeea4",
+   "secondary": "#c5a46a",
+   "accent": "#f6734a",
+   "highlights": [
+    "#ffeea4",
+    "#c5a46a",
+    "#f6734a"
+   ]
+  },
+  "shiny": {
+   "primary": "#fff694",
+   "secondary": "#cda452",
+   "accent": "#dea439",
+   "highlights": [
+    "#fff694",
+    "#cda452",
+    "#dea439"
+   ]
+  }
+ },
+ "0143A0": {
+  "name": "Snorlax",
+  "dex": 143,
+  "normal": {
+   "primary": "#f6e6bd",
+   "secondary": "#e6c5ac",
+   "accent": "#315a7b",
+   "highlights": [
+    "#f6e6bd",
+    "#e6c5ac",
+    "#315a7b"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6e6ac",
+   "secondary": "#e6cd9c",
+   "accent": "#204aa4",
+   "highlights": [
+    "#f6e6ac",
+    "#e6cd9c",
+    "#204aa4"
+   ]
+  }
+ },
+ "0147A0": {
+  "name": "Dratini",
+  "dex": 147,
+  "normal": {
+   "primary": "#ffffff",
+   "secondary": "#7383d5",
+   "accent": "#ded5de",
+   "highlights": [
+    "#ffffff",
+    "#7383d5",
+    "#ded5de"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffffff",
+   "secondary": "#d55abd",
+   "accent": "#ded5de",
+   "highlights": [
+    "#ffffff",
+    "#d55abd",
+    "#ded5de"
+   ]
+  }
+ },
+ "0148A0": {
+  "name": "Dragonair",
+  "dex": 148,
+  "normal": {
+   "primary": "#5a8bee",
+   "secondary": "#ded5de",
+   "accent": "#ffffff",
+   "highlights": [
+    "#5a8bee",
+    "#ded5de",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#de83c5",
+   "secondary": "#ded5de",
+   "accent": "#ffffff",
+   "highlights": [
+    "#de83c5",
+    "#ded5de",
+    "#ffffff"
+   ]
+  }
+ },
+ "0149A0": {
+  "name": "Dragonite",
+  "dex": 149,
+  "normal": {
+   "primary": "#ee9c39",
+   "secondary": "#de7339",
+   "accent": "#38a27c",
+   "highlights": [
+    "#ee9c39",
+    "#de7339",
+    "#38a27c",
+    "#ebbd8f",
+    "#ffeebd",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#527b31",
+   "secondary": "#73a45a",
+   "accent": "#f6e6cd",
+   "highlights": [
+    "#527b31",
+    "#73a45a",
+    "#f6e6cd"
+   ]
+  }
+ },
+ "0172A0": {
+  "name": "Pichu",
+  "dex": 172,
+  "normal": {
+   "primary": "#f6e652",
+   "secondary": "#c5ac10",
+   "accent": "#524141",
+   "highlights": [
+    "#f6e652",
+    "#c5ac10",
+    "#524141",
+    "#e17e95",
+    "#363030",
+    "#c4ab2d"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffd500",
+   "secondary": "#de9c39",
+   "accent": "#524141",
+   "highlights": [
+    "#ffd500",
+    "#de9c39",
+    "#524141"
+   ]
+  }
+ },
+ "0173A0": {
+  "name": "Cleffa",
+  "dex": 173,
+  "normal": {
+   "primary": "#ffa494",
+   "secondary": "#ffc5ac",
+   "accent": "#622018",
+   "highlights": [
+    "#ffa494",
+    "#ffc5ac",
+    "#622018"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6b4d5",
+   "secondary": "#ffd5f6",
+   "accent": "#94395a",
+   "highlights": [
+    "#f6b4d5",
+    "#ffd5f6",
+    "#94395a"
+   ]
+  }
+ },
+ "0174A0": {
+  "name": "Igglybuff",
+  "dex": 174,
+  "normal": {
+   "primary": "#ffacbd",
+   "secondary": "#e6839c",
+   "accent": "#9c1852",
+   "highlights": [
+    "#ffacbd",
+    "#e6839c",
+    "#9c1852"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffbdf6",
+   "secondary": "#e683b4",
+   "accent": "#9c3152",
+   "highlights": [
+    "#ffbdf6",
+    "#e683b4",
+    "#9c3152"
+   ]
+  }
+ },
+ "0175A0": {
+  "name": "Togepi",
+  "dex": 175,
+  "normal": {
+   "primary": "#f0dfc7",
+   "secondary": "#f3efdd",
+   "accent": "#f5f5f5",
+   "highlights": [
+    "#f0dfc7",
+    "#f3efdd",
+    "#f5f5f5",
+    "#4f84c2",
+    "#bf4545",
+    "#d5d4d3"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6bd94",
+   "secondary": "#c5b4b4",
+   "accent": "#cd8b6a",
+   "highlights": [
+    "#f6bd94",
+    "#c5b4b4",
+    "#cd8b6a"
+   ]
+  }
+ },
+ "0176A0": {
+  "name": "Togetic",
+  "dex": 176,
+  "normal": {
+   "primary": "#ffffff",
+   "secondary": "#e1e3e5",
+   "accent": "#acc5bd",
+   "highlights": [
+    "#ffffff",
+    "#e1e3e5",
+    "#acc5bd",
+    "#d84740",
+    "#b72219",
+    "#3895e3"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffffff",
+   "secondary": "#83735a",
+   "accent": "#c5b49c",
+   "highlights": [
+    "#ffffff",
+    "#83735a",
+    "#c5b49c"
+   ]
+  }
+ },
+ "0183A0": {
+  "name": "Marill",
+  "dex": 183,
+  "normal": {
+   "primary": "#5a9cee",
+   "secondary": "#316aac",
+   "accent": "#ffffff",
+   "highlights": [
+    "#5a9cee",
+    "#316aac",
+    "#ffffff",
+    "#5b83c8",
+    "#1c222c",
+    "#d84756"
+   ]
+  },
+  "shiny": {
+   "primary": "#94ff94",
+   "secondary": "#4acd73",
+   "accent": "#317b39",
+   "highlights": [
+    "#94ff94",
+    "#4acd73",
+    "#317b39"
+   ]
+  }
+ },
+ "0184A0": {
+  "name": "Azumarill",
+  "dex": 184,
+  "normal": {
+   "primary": "#5a9cee",
+   "secondary": "#ffffff",
+   "accent": "#ebebeb",
+   "highlights": [
+    "#5a9cee",
+    "#ffffff",
+    "#ebebeb",
+    "#4784ca",
+    "#d84756",
+    "#8f1818"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffde00",
+   "secondary": "#e6ac08",
+   "accent": "#d5c5c5",
+   "highlights": [
+    "#ffde00",
+    "#e6ac08",
+    "#d5c5c5"
+   ]
+  }
+ },
+ "0185A0": {
+  "name": "Sudowoodo",
+  "dex": 185,
+  "normal": {
+   "primary": "#c5a44a",
+   "secondary": "#8b7341",
+   "accent": "#5a8b5a",
+   "highlights": [
+    "#c5a44a",
+    "#8b7341",
+    "#5a8b5a"
+   ]
+  },
+  "shiny": {
+   "primary": "#cde65a",
+   "secondary": "#839c31",
+   "accent": "#cd4120",
+   "highlights": [
+    "#cde65a",
+    "#839c31",
+    "#cd4120"
+   ]
+  }
+ },
+ "0196A0": {
+  "name": "Espeon",
+  "dex": 196,
+  "normal": {
+   "primary": "#e6a4d5",
+   "secondary": "#eebdee",
+   "accent": "#5a6996",
+   "highlights": [
+    "#e6a4d5",
+    "#eebdee",
+    "#5a6996",
+    "#4d74b1",
+    "#784c7a",
+    "#bf2a54"
+   ]
+  },
+  "shiny": {
+   "primary": "#7bd539",
+   "secondary": "#187b00",
+   "accent": "#a4ff41",
+   "highlights": [
+    "#7bd539",
+    "#187b00",
+    "#a4ff41"
+   ]
+  }
+ },
+ "0197A0": {
+  "name": "Umbreon",
+  "dex": 197,
+  "normal": {
+   "primary": "#414152",
+   "secondary": "#29314a",
+   "accent": "#62627b",
+   "highlights": [
+    "#414152",
+    "#29314a",
+    "#62627b"
+   ]
+  },
+  "shiny": {
+   "primary": "#52525a",
+   "secondary": "#313141",
+   "accent": "#62626a",
+   "highlights": [
+    "#52525a",
+    "#313141",
+    "#62626a"
+   ]
+  }
+ },
+ "0202A0": {
+  "name": "Wobbuffet",
+  "dex": 202,
+  "normal": {
+   "primary": "#3194ee",
+   "secondary": "#73bdf6",
+   "accent": "#a4deff",
+   "highlights": [
+    "#3194ee",
+    "#73bdf6",
+    "#a4deff"
+   ]
+  },
+  "shiny": {
+   "primary": "#bd52a4",
+   "secondary": "#e67bd5",
+   "accent": "#ffa4ee",
+   "highlights": [
+    "#bd52a4",
+    "#e67bd5",
+    "#ffa4ee"
+   ]
+  }
+ },
+ "0226A0": {
+  "name": "Mantine",
+  "dex": 226,
+  "normal": {
+   "primary": "#ac9cc5",
+   "secondary": "#decde6",
+   "accent": "#5a6ade",
+   "highlights": [
+    "#ac9cc5",
+    "#decde6",
+    "#5a6ade"
+   ]
+  },
+  "shiny": {
+   "primary": "#a4ace6",
+   "secondary": "#cddeff",
+   "accent": "#2962de",
+   "highlights": [
+    "#a4ace6",
+    "#cddeff",
+    "#2962de"
+   ]
+  }
+ },
+ "0236A0": {
+  "name": "Tyrogue",
+  "dex": 236,
+  "normal": {
+   "primary": "#eec5ff",
+   "secondary": "#c59cbd",
+   "accent": "#a27b46",
+   "highlights": [
+    "#eec5ff",
+    "#c59cbd",
+    "#a27b46",
+    "#d29c53",
+    "#dbdbe1",
+    "#ededed"
+   ]
+  },
+  "shiny": {
+   "primary": "#d5d5bd",
+   "secondary": "#62624a",
+   "accent": "#aca49c",
+   "highlights": [
+    "#d5d5bd",
+    "#62624a",
+    "#aca49c"
+   ]
+  }
+ },
+ "0237A0": {
+  "name": "Hitmontop",
+  "dex": 237,
+  "normal": {
+   "primary": "#bda452",
+   "secondary": "#e6cd7b",
+   "accent": "#836210",
+   "highlights": [
+    "#bda452",
+    "#e6cd7b",
+    "#836210"
+   ]
+  },
+  "shiny": {
+   "primary": "#aca49c",
+   "secondary": "#d5d5c5",
+   "accent": "#736a52",
+   "highlights": [
+    "#aca49c",
+    "#d5d5c5",
+    "#736a52"
+   ]
+  }
+ },
+ "0238A0": {
+  "name": "Smoochum",
+  "dex": 238,
+  "normal": {
+   "primary": "#ffe652",
+   "secondary": "#ddcc45",
+   "accent": "#fa96a5",
+   "highlights": [
+    "#ffe652",
+    "#ddcc45",
+    "#fa96a5",
+    "#d8507c",
+    "#f5e5b0",
+    "#fcc6a7"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffff94",
+   "secondary": "#f67394",
+   "accent": "#a43973",
+   "highlights": [
+    "#ffff94",
+    "#f67394",
+    "#a43973"
+   ]
+  }
+ },
+ "0239A0": {
+  "name": "Elekid",
+  "dex": 239,
+  "normal": {
+   "primary": "#fccc47",
+   "secondary": "#e3ac33",
+   "accent": "#313131",
+   "highlights": [
+    "#fccc47",
+    "#e3ac33",
+    "#313131",
+    "#101010",
+    "#7b5200",
+    "#f5f5f5"
+   ]
+  },
+  "shiny": {
+   "primary": "#d5b408",
+   "secondary": "#e6de39",
+   "accent": "#736a08",
+   "highlights": [
+    "#d5b408",
+    "#e6de39",
+    "#736a08"
+   ]
+  }
+ },
+ "0240A0": {
+  "name": "Magby",
+  "dex": 240,
+  "normal": {
+   "primary": "#d55239",
+   "secondary": "#ff7b62",
+   "accent": "#943120",
+   "highlights": [
+    "#d55239",
+    "#ff7b62",
+    "#943120"
+   ]
+  },
+  "shiny": {
+   "primary": "#ee8b00",
+   "secondary": "#ffde31",
+   "accent": "#ac4a00",
+   "highlights": [
+    "#ee8b00",
+    "#ffde31",
+    "#ac4a00"
+   ]
+  }
+ },
+ "0242A0": {
+  "name": "Blissey",
+  "dex": 242,
+  "normal": {
+   "primary": "#ffacc5",
+   "secondary": "#fcc6ce",
+   "accent": "#ffffff",
+   "highlights": [
+    "#ffacc5",
+    "#fcc6ce",
+    "#ffffff",
+    "#f7f7f7",
+    "#de83a4",
+    "#c36084"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffd5d5",
+   "secondary": "#dedeff",
+   "accent": "#ffacb4",
+   "highlights": [
+    "#ffd5d5",
+    "#dedeff",
+    "#ffacb4"
+   ]
+  }
+ },
+ "0298A0": {
+  "name": "Azurill",
+  "dex": 298,
+  "normal": {
+   "primary": "#4a7be6",
+   "secondary": "#6ab4ff",
+   "accent": "#314a8b",
+   "highlights": [
+    "#4a7be6",
+    "#6ab4ff",
+    "#314a8b"
+   ]
+  },
+  "shiny": {
+   "primary": "#52a441",
+   "secondary": "#94f683",
+   "accent": "#31734a",
+   "highlights": [
+    "#52a441",
+    "#94f683",
+    "#31734a"
+   ]
+  }
+ },
+ "0315A0": {
+  "name": "Roselia",
+  "dex": 315,
+  "normal": {
+   "primary": "#5a9452",
+   "secondary": "#7bc361",
+   "accent": "#a5b39d",
+   "highlights": [
+    "#5a9452",
+    "#7bc361",
+    "#a5b39d",
+    "#387bcc",
+    "#295a94",
+    "#ef5f84"
+   ]
+  },
+  "shiny": {
+   "primary": "#316a00",
+   "secondary": "#73ac20",
+   "accent": "#41394a",
+   "highlights": [
+    "#316a00",
+    "#73ac20",
+    "#41394a"
+   ]
+  }
+ },
+ "0358A0": {
+  "name": "Chimecho",
+  "dex": 358,
+  "normal": {
+   "primary": "#c5e6ff",
+   "secondary": "#9cc5e6",
+   "accent": "#f6527b",
+   "highlights": [
+    "#c5e6ff",
+    "#9cc5e6",
+    "#f6527b",
+    "#af455b",
+    "#fdd466",
+    "#e2a454"
+   ]
+  },
+  "shiny": {
+   "primary": "#cdffcd",
+   "secondary": "#ffbd29",
+   "accent": "#94e694",
+   "highlights": [
+    "#cdffcd",
+    "#ffbd29",
+    "#94e694"
+   ]
+  }
+ },
+ "0360A0": {
+  "name": "Wynaut",
+  "dex": 360,
+  "normal": {
+   "primary": "#6abdde",
+   "secondary": "#4a9cbd",
+   "accent": "#d85e65",
+   "highlights": [
+    "#6abdde",
+    "#4a9cbd",
+    "#d85e65",
+    "#395262",
+    "#000000",
+    "#cdcdc5"
+   ]
+  },
+  "shiny": {
+   "primary": "#e67bd5",
+   "secondary": "#bd41c5",
+   "accent": "#73005a",
+   "highlights": [
+    "#e67bd5",
+    "#bd41c5",
+    "#73005a"
+   ]
+  }
+ },
+ "0406A0": {
+  "name": "Budew",
+  "dex": 406,
+  "normal": {
+   "primary": "#7bd55a",
+   "secondary": "#b4ee73",
+   "accent": "#73a44a",
+   "highlights": [
+    "#7bd55a",
+    "#b4ee73",
+    "#73a44a",
+    "#feed75",
+    "#e4bc49",
+    "#529374"
+   ]
+  },
+  "shiny": {
+   "primary": "#a4de52",
+   "secondary": "#7bac41",
+   "accent": "#eef673",
+   "highlights": [
+    "#a4de52",
+    "#7bac41",
+    "#eef673"
+   ]
+  }
+ },
+ "0407A0": {
+  "name": "Roserade",
+  "dex": 407,
+  "normal": {
+   "primary": "#aae4ae",
+   "secondary": "#779b8b",
+   "accent": "#ffffff",
+   "highlights": [
+    "#aae4ae",
+    "#779b8b",
+    "#ffffff",
+    "#d4cddd",
+    "#f86785",
+    "#5476ea"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffffff",
+   "secondary": "#73a46a",
+   "accent": "#528300",
+   "highlights": [
+    "#ffffff",
+    "#73a46a",
+    "#528300"
+   ]
+  }
+ },
+ "0433A0": {
+  "name": "Chingling",
+  "dex": 433,
+  "normal": {
+   "primary": "#ffd55a",
+   "secondary": "#bd9c4a",
+   "accent": "#e06557",
+   "highlights": [
+    "#ffd55a",
+    "#bd9c4a",
+    "#e06557",
+    "#a85437",
+    "#d5d6f5",
+    "#a4a5cb"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6f662",
+   "secondary": "#bdb452",
+   "accent": "#8b3900",
+   "highlights": [
+    "#f6f662",
+    "#bdb452",
+    "#8b3900"
+   ]
+  }
+ },
+ "0438A0": {
+  "name": "Bonsly",
+  "dex": 438,
+  "normal": {
+   "primary": "#ac835a",
+   "secondary": "#c2a556",
+   "accent": "#5bc34b",
+   "highlights": [
+    "#ac835a",
+    "#c2a556",
+    "#5bc34b",
+    "#5a8b5a",
+    "#a2dc80",
+    "#feed84"
+   ]
+  },
+  "shiny": {
+   "primary": "#bdac5a",
+   "secondary": "#e65a73",
+   "accent": "#c52962",
+   "highlights": [
+    "#bdac5a",
+    "#e65a73",
+    "#c52962"
+   ]
+  }
+ },
+ "0439A0": {
+  "name": "Mime Jr.",
+  "dex": 439,
+  "normal": {
+   "primary": "#ffc5d5",
+   "secondary": "#d97eac",
+   "accent": "#536dd1",
+   "highlights": [
+    "#ffc5d5",
+    "#d97eac",
+    "#536dd1",
+    "#314a94",
+    "#e85e42",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffd5de",
+   "secondary": "#5ac58b",
+   "accent": "#39946a",
+   "highlights": [
+    "#ffd5de",
+    "#5ac58b",
+    "#39946a"
+   ]
+  }
+ },
+ "0440A0": {
+  "name": "Happiny",
+  "dex": 440,
+  "normal": {
+   "primary": "#ffc5d5",
+   "secondary": "#de6a9c",
+   "accent": "#ffffff",
+   "highlights": [
+    "#ffc5d5",
+    "#de6a9c",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffd5f6",
+   "secondary": "#e694cd",
+   "accent": "#ffffff",
+   "highlights": [
+    "#ffd5f6",
+    "#e694cd",
+    "#ffffff"
+   ]
+  }
+ },
+ "0446A0": {
+  "name": "Munchlax",
+  "dex": 446,
+  "normal": {
+   "primary": "#317b9c",
+   "secondary": "#205a73",
+   "accent": "#eee58a",
+   "highlights": [
+    "#317b9c",
+    "#205a73",
+    "#eee58a",
+    "#b4b368",
+    "#104141",
+    "#ffffff"
+   ]
+  },
+  "shiny": {
+   "primary": "#4183de",
+   "secondary": "#3962bd",
+   "accent": "#314a83",
+   "highlights": [
+    "#4183de",
+    "#3962bd",
+    "#314a83"
+   ]
+  }
+ },
+ "0447A0": {
+  "name": "Riolu",
+  "dex": 447,
+  "normal": {
+   "primary": "#4a9cee",
+   "secondary": "#29739c",
+   "accent": "#5a5a5a",
+   "highlights": [
+    "#4a9cee",
+    "#29739c",
+    "#5a5a5a",
+    "#393939",
+    "#838383",
+    "#d84747"
+   ]
+  },
+  "shiny": {
+   "primary": "#527383",
+   "secondary": "#e6ee7b",
+   "accent": "#aca429",
+   "highlights": [
+    "#527383",
+    "#e6ee7b",
+    "#aca429"
+   ]
+  }
+ },
+ "0448A0": {
+  "name": "Lucario",
+  "dex": 448,
+  "normal": {
+   "primary": "#5a5a5a",
+   "secondary": "#393939",
+   "accent": "#29739c",
+   "highlights": [
+    "#5a5a5a",
+    "#393939",
+    "#29739c"
+   ]
+  },
+  "shiny": {
+   "primary": "#527383",
+   "secondary": "#39525a",
+   "accent": "#aca429",
+   "highlights": [
+    "#527383",
+    "#39525a",
+    "#aca429"
+   ]
+  }
+ },
+ "0458A0": {
+  "name": "Mantyke",
+  "dex": 458,
+  "normal": {
+   "primary": "#b4deff",
+   "secondary": "#9cb4de",
+   "accent": "#1052ac",
+   "highlights": [
+    "#b4deff",
+    "#9cb4de",
+    "#1052ac",
+    "#679cd2",
+    "#143a79",
+    "#000000"
+   ]
+  },
+  "shiny": {
+   "primary": "#0083ac",
+   "secondary": "#9cd5ee",
+   "accent": "#6aacde",
+   "highlights": [
+    "#0083ac",
+    "#9cd5ee",
+    "#6aacde"
+   ]
+  }
+ },
+ "0466A0": {
+  "name": "Electivire",
+  "dex": 466,
+  "normal": {
+   "primary": "#ffde20",
+   "secondary": "#c5ac41",
+   "accent": "#312929",
+   "highlights": [
+    "#ffde20",
+    "#c5ac41",
+    "#312929",
+    "#131010",
+    "#ef5742",
+    "#fddd40"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6ac20",
+   "secondary": "#312929",
+   "accent": "#c57320",
+   "highlights": [
+    "#f6ac20",
+    "#312929",
+    "#c57320"
+   ]
+  }
+ },
+ "0467A0": {
+  "name": "Magmortar",
+  "dex": 467,
+  "normal": {
+   "primary": "#ffc539",
+   "secondary": "#ac3952",
+   "accent": "#e64131",
+   "highlights": [
+    "#ffc539",
+    "#ac3952",
+    "#e64131",
+    "#fa96a5",
+    "#c05d6c",
+    "#4a4a41"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffb4cd",
+   "secondary": "#a43952",
+   "accent": "#f66273",
+   "highlights": [
+    "#ffb4cd",
+    "#a43952",
+    "#f66273"
+   ]
+  }
+ },
+ "0468A0": {
+  "name": "Togekiss",
+  "dex": 468,
+  "normal": {
+   "primary": "#eeeeff",
+   "secondary": "#bdc5de",
+   "accent": "#4a5a73",
+   "highlights": [
+    "#eeeeff",
+    "#bdc5de",
+    "#4a5a73"
+   ]
+  },
+  "shiny": {
+   "primary": "#ffffff",
+   "secondary": "#d5d59c",
+   "accent": "#83735a",
+   "highlights": [
+    "#ffffff",
+    "#d5d59c",
+    "#83735a"
+   ]
+  }
+ },
+ "0470A0": {
+  "name": "Leafeon",
+  "dex": 470,
+  "normal": {
+   "primary": "#eed59c",
+   "secondary": "#bd9462",
+   "accent": "#319c73",
+   "highlights": [
+    "#eed59c",
+    "#bd9462",
+    "#319c73",
+    "#55be91",
+    "#916236",
+    "#594123"
+   ]
+  },
+  "shiny": {
+   "primary": "#f6d594",
+   "secondary": "#18c573",
+   "accent": "#d5944a",
+   "highlights": [
+    "#f6d594",
+    "#18c573",
+    "#d5944a"
+   ]
+  }
+ },
+ "0471A0": {
+  "name": "Glaceon",
+  "dex": 471,
+  "normal": {
+   "primary": "#94e6ee",
+   "secondary": "#415a6a",
+   "accent": "#7b9cb4",
+   "highlights": [
+    "#94e6ee",
+    "#415a6a",
+    "#7b9cb4"
+   ]
+  },
+  "shiny": {
+   "primary": "#e6ffff",
+   "secondary": "#1073c5",
+   "accent": "#a4c5cd",
+   "highlights": [
+    "#e6ffff",
+    "#1073c5",
+    "#a4c5cd"
+   ]
+  }
+ },
+ "0700A0": {
+  "name": "Sylveon",
+  "dex": 700,
+  "normal": {
+   "primary": "#fff5f5",
+   "secondary": "#fa8caa",
+   "accent": "#d85a7a",
+   "highlights": [
+    "#fff5f5",
+    "#fa8caa",
+    "#d85a7a",
+    "#f48fab",
+    "#6ec8f0",
+    "#5790c9"
+   ]
+  },
+  "shiny": {
+   "primary": "#f5f5ff",
+   "secondary": "#76dbf1",
+   "accent": "#44a6be",
+   "highlights": [
+    "#f5f5ff",
+    "#76dbf1",
+    "#44a6be"
+   ]
+  }
+ },
+ "0848A0": {
+  "name": "Toxel",
+  "dex": 848,
+  "normal": {
+   "primary": "#9e30cd",
+   "secondary": "#481f63",
+   "accent": "#781d9a",
+   "highlights": [
+    "#9e30cd",
+    "#481f63",
+    "#781d9a"
+   ]
+  },
+  "shiny": {
+   "primary": "#d3447b",
+   "secondary": "#772149",
+   "accent": "#b62257",
+   "highlights": [
+    "#d3447b",
+    "#772149",
+    "#b62257"
+   ]
+  }
+ },
+ "0849A0": {
+  "name": "Toxtricity (Amped Form)",
+  "dex": 849,
+  "normal": {
+   "primary": "#8d4fae",
+   "secondary": "#6a4277",
+   "accent": "#f0c810",
+   "highlights": [
+    "#8d4fae",
+    "#6a4277",
+    "#f0c810",
+    "#ffdb57",
+    "#c585c2",
+    "#b078ae"
+   ]
+  },
+  "shiny": {
+   "primary": "#ae4f6f",
+   "secondary": "#77424d",
+   "accent": "#f0c810",
+   "highlights": [
+    "#ae4f6f",
+    "#77424d",
+    "#f0c810"
+   ]
+  }
+ },
+ "0849B0": {
+  "name": "Toxtricity (Low Key Form)",
+  "dex": 849,
+  "normal": {
+   "primary": "#8d4fae",
+   "secondary": "#6a4277",
+   "accent": "#f0c810",
+   "highlights": [
+    "#8d4fae",
+    "#6a4277",
+    "#f0c810",
+    "#ffdb57",
+    "#c585c2",
+    "#b078ae"
+   ]
+  },
+  "shiny": {
+   "primary": "#ae4f6f",
+   "secondary": "#77424d",
+   "accent": "#f0c810",
+   "highlights": [
+    "#ae4f6f",
+    "#77424d",
+    "#f0c810"
+   ]
+  }
+ }
+}

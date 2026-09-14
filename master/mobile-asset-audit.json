@@ -1,10 +1,10 @@
 {
   "summary": {
-    "build": "1f66f397d97b",
+    "build": "9ec36e38dfd5",
     "pngCount": 2640,
-    "pngBefore": 18548483,
-    "pngAfter": 8418674,
-    "runtimeBytes": 9471570,
+    "pngBefore": 18554188,
+    "pngAfter": 8419984,
+    "runtimeBytes": 9473178,
     "files": 2681,
     "resized": [
       "assets/eggs/egg_phase_1.png",
@@ -26408,8 +26408,8 @@
     },
     {
       "path": "assets/ui/professor_oak.png",
-      "before": 2117,
-      "after": 2117,
+      "before": 7822,
+      "after": 3427,
       "size": [
         96,
         96

@@ -181,12 +181,15 @@
 <button id="auth-google" type="button" data-i18n="auth.google"></button>
 <form id="auth-form">
 <label id="auth-email-row"><span data-i18n="auth.email"></span><input id="auth-email" type="email" autocomplete="email" required></label>
-<label id="auth-password-row"><span data-i18n="auth.password"></span><input id="auth-password" type="password" autocomplete="current-password" minlength="6" required><small id="auth-password-hint" class="auth-hint" data-i18n="auth.passwordHint"></small></label>
+<label id="auth-password-row"><span data-i18n="auth.password"></span><input id="auth-password" type="password" autocomplete="current-password" minlength="8" required><small id="auth-password-hint" class="auth-hint" data-i18n="auth.passwordHint"></small></label>
 <button id="auth-submit" type="submit" data-i18n="auth.signIn"></button>
 </form>
 <nav class="auth-links" data-i18n-aria="auth.access"><button id="auth-login" type="button" data-i18n="auth.signIn"></button><button id="auth-signup" type="button" data-i18n="auth.signUp"></button><button id="auth-recover" type="button" data-i18n="auth.forgotPassword"></button></nav>
 </div>
-<noscript>Activa JavaScript para iniciar sesión.</noscript>
+<!-- Sin JavaScript no hay catálogo i18n que consultar, así que este aviso va escrito en las dos
+     lenguas del juego. Por eso no existe una clave `auth.noScript`: tendría que resolverse en
+     runtime, justo lo que aquí no se puede hacer. Excepción registrada en tests/i18n-audit.cjs. -->
+<noscript>Activa JavaScript para iniciar sesión. · Enable JavaScript to sign in.</noscript>
 </section>
 <div id="game-root" hidden>
 <main class="console">
@@ -404,7 +407,7 @@ function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
     averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
-    trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('heatHint')};
+    trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('oak.eggEarly')};
 }
 let state=freshState();
 const clamp=n=>Math.max(0,Math.min(100,n));

@@ -37856,5 +37856,20 @@
     "outputHash": "a45c20921e5919864a604e71bdde526b5ebbc6b708e6ae47b16d5e71538320c2",
     "losslessPixels": true,
     "codec": 2
+  },
+  "assets/ui/professor_oak.png": {
+    "before": 7822,
+    "after": 3427,
+    "originalSize": [
+      96,
+      96
+    ],
+    "size": [
+      96,
+      96
+    ],
+    "outputHash": "d54412eedcf7c6fa917f83d4cf9eb14388c0769a07d2cddc1e6630832d43d439",
+    "losslessPixels": true,
+    "codec": 2
   }
 }

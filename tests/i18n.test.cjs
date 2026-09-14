@@ -25,7 +25,7 @@ test('Connect, QR and breeding use localized UI and validation messages',async()
 });
 test('authentication and system messages have English catalog entries and use presentation keys',()=>{
  const document={documentElement:{lang:'es'},querySelectorAll:()=>[]},context=vm.createContext({document,globalThis:{}});vm.runInContext(fs.readFileSync('i18n.js','utf8'),context);const i18n=context.globalThis.HatchI18n;
- i18n.setLanguage('en');for(const [key,value] of [['auth.signIn','Sign in'],['auth.loadingSession','Checking session…'],['auth.sessionExpired','Your session has expired. Sign in again.'],['errors.network','Could not connect. Check your internet connection and reload the page.'],['system.unsynced','Not synced. Progress is saved on this device.']])assert.equal(i18n.t(key),value);
+ i18n.setLanguage('en');for(const [key,value] of [['auth.signIn','Sign in'],['auth.loadingSession','Checking session…'],['auth.sessionExpired','Your session has expired. Sign in again.'],['errors.network','No internet connection. Check it and reload the page.'],['system.unsynced','Not synced. Progress is saved on this device.']])assert.equal(i18n.t(key),value);
  const bootstrap=fs.readFileSync('appBootstrap.mjs','utf8'),cloud=fs.readFileSync('cloudSaveService.mjs','utf8'),auth=fs.readFileSync('authService.mjs','utf8');
  // Keys can reach t() directly or through a helper, so presence of the key is what is asserted.
  for(const key of ['auth.verifyingAccount','auth.loadingTitle','auth.loadingSession','auth.sessionCheckFailed'])assert.ok(bootstrap.includes(`'${key}'`),key);

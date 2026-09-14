@@ -1,7 +1,7 @@
 const fs=require('node:fs');
 const runtimeFiles=['index.html','appBootstrap.mjs','authService.mjs','cloudSaveService.mjs','appEnvironment.js','pokemonDataAdapter.js','socialEngine.js','vitalSimulation.js','relationship.js','attentionEngine.js','pokedex.js','shiny.js','shellSkins.js','pokemonRenderer.js','pmdRenderer.js','trainingActivities.js','styleTracing.js'];
 // Exact, reviewed technical markers; never use broad file or language exemptions.
-const exceptions=[{file:'trainingActivities.js',text:"['A','B','C','D']",reason:'Language-independent memory pad symbols.'},{file:'index.html',text:'<noscript>Activa JavaScript para iniciar sesión.</noscript>',reason:'JavaScript is disabled; the JavaScript catalog cannot run.'},{file:'index.html',text:'hatch.mon',reason:'Product name.'},{file:'index.html',text:'Hatch.mon',reason:'Product name.'}];
+const exceptions=[{file:'trainingActivities.js',text:"['A','B','C','D']",reason:'Language-independent memory pad symbols.'},{file:'index.html',text:'<noscript>Activa JavaScript para iniciar sesión. · Enable JavaScript to sign in.</noscript>',reason:'JavaScript is disabled; the JavaScript catalog cannot run.'},{file:'index.html',text:'hatch.mon',reason:'Product name.'},{file:'index.html',text:'Hatch.mon',reason:'Product name.'}];
 function scanSource(source,file='snippet.js'){
  const results=[];let code=source;
  if(file.endsWith('.html')){

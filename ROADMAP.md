@@ -90,6 +90,23 @@ Pendiente por decidir, no aplicado:
   1256→832 con nearest en ratio no entero, lo que duplica píxeles de forma irregular: merece
   revisión propia.
 
+### A4 · Recarga automática del servidor local
+**Estado:** Pendiente
+
+`tools/serveLocal.py` ya impide que el navegador cachee nada (`Cache-Control: no-store`), así que
+editar un fichero y recargar a mano basta para ver el cambio. Falta que recargue solo al guardar:
+un watcher sobre los ficheros de runtime que empuje un evento al navegador, por SSE o por un
+WebSocket, y una línea en `index.html` que solo se active sirviendo desde localhost.
+
+Se aplaza a propósito. Hoy el repositorio no compila nada y no tiene `package.json`; esto metería
+la primera dependencia de desarrollo, o bien un watcher escrito a mano. Vale la pena cuando editar
+textos y estilos a mano se vuelva pesado, no antes. Alternativa sin dependencias: `watchdog` no,
+sino `os.scandir` con mtimes desde el propio `serveLocal.py`, que ya es un servidor en marcha.
+
+Ojo con `dist/`: el servidor puede servir el árbol de fuentes o `dist/`, y solo el primero refleja
+una edición sin pasar por `buildMobileRuntime.py`. La recarga automática solo tiene sentido en el
+modo fuentes; en modo `--dist` confundiría más que ayudaría.
+
 ---
 
 ## Bloque B · Features de producto

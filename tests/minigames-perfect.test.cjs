@@ -10,7 +10,7 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
    if(attribute==='iq'){const c=buttons.find(b=>b.textContent==='C');if(c&&!c.disabled)for(let i=0;i<6;i++)c.fire('click');}
    if(attribute==='strength'){const b=buttons[0],marker=b?.children.find(c=>c.className==='timing-marker'),at=marker&&parseFloat(marker.style.left);
     if(b&&!b.disabled&&Number.isFinite(at)&&Math.abs(at-50)<=3)b.fire('pointerdown');}
-   if(attribute==='kindness')for(const b of buttons)if(!b.disabled&&['PAPEL','LATA','BOTELLA'].includes(b.textContent))b.fire('click');
+   if(attribute==='kindness')for(const b of buttons)if(!b.disabled&&['papel','lata','botella'].includes(b.dataset.object))b.fire('click');
    if(attribute==='style'){const marker=field.children[0]?.children[1];if(marker&&parseFloat(marker.style.left)>=40&&parseFloat(marker.style.left)<=60){const b=buttons.find(b=>b.classList.contains('lit'));b?.fire('click');}}
   }
   assert.equal(run('result'),5,`${attribute}: all content perfectly played must earn +5`);
@@ -19,5 +19,5 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
   assert.equal(run('buzz.at(-1).length'),5,`${attribute}: three buzzes with two gaps`);
  }
  const {run}=await setup();for(const [score,gain]of [[0,1],[.25,2],[.5,3],[.75,4],[.99,4],[1,5]])assert.equal(run(`TrainingActivities.grade(${score})`),gain);
- console.log('PASS playable perfect runs: five memory rounds, strength, all 30 trash targets and 16 rhythm beats each award +5; imperfect grades 1–4.');
+ console.log('PASS playable perfect runs: five memory rounds, strength, every trash tile and 16 rhythm beats each award +5; imperfect grades 1–4.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -160,6 +160,8 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 **Intelecto.** La secuencia se alarga añadiendo una luz cada ronda en vez de rehacerse entera, que es lo que la hace memorizable y convierte cada ronda en la anterior más un paso. La ventana de respuesta es proporcional (`memoryBase + memoryStep × luces`, 2,8 s con dos luces y 5,6 s con seis) en lugar de 4 s planos para cualquier longitud, que sobraban al principio y no llegaban al final. Fallar cierra la ronda en el acto y lo dice, en vez de dejarte teclear el resto sabiendo que ya la has perdido, y el avance se muestra mientras tecleas.
 
+**Amabilidad.** Siete rondas en lugar de diez, con la ventana estrechándose de 1,8 s a 1,1 s: era el minijuego más largo y el único sin ninguna curva. Las casillas de basura se eligen al azar y su número varía entre dos y cuatro; antes ocupaban siempre tres posiciones consecutivas, lo que dejaba solo seis disposiciones posibles y se aprendía en dos partidas. Las casillas muestran el icono sin rótulo — era una prueba de lectura, no de reconocimiento — y conservan el nombre en `aria-label`.
+
 **Háptica.** Cada veredicto se acompaña de un pulso por `navigator.vibrate`: corto al acertar, doble al quedarse a medias, largo al fallar, y un patrón de tres pulsos si la nota llega a +4. Es el único canal de respuesta inmediata que tiene el juego — no hay sonido, y en móvil el dedo tapa justo la casilla que acaba de cambiar. `prefers-reduced-motion: reduce` lo apaga entero, así que el interruptor es el que el jugador ya tiene en el sistema.
 
 **Repetir.** La pantalla de resultado ofrece *Otra vez*, que relanza la misma actividad sin pasar por el panel; solo aparece si la siguiente sesión se puede pagar, y la cobra como cualquier otra.

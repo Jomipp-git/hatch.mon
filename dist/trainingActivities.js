@@ -15,7 +15,10 @@ globalThis.TrainingActivities=(()=>{
   strengthBasePeriod:420,strengthPeriodStep:60,
   // Pausa para leer el veredicto de la ronda antes de que cambie la pantalla.
   verdictDelay:700,
-  cleanupRounds:10,cleanupWindow:1500,prepare:600,resolveDelay:300});
+  // Siete rondas con la ventana estrechandose, en vez de diez todas iguales: era el minijuego mas
+  // largo y el unico sin ninguna curva.
+  cleanupRounds:7,cleanupBase:1800,cleanupStep:120,cleanupTiles:6,cleanupMinTrash:2,cleanupMaxTrash:4,
+  prepare:600,resolveDelay:300});
  const launchers={};let active=null;
  // Un toque corto confirma, uno largo corrige. Es el unico canal de respuesta inmediata que tiene
  // el juego: no hay sonido, y en movil el dedo tapa justo la casilla que acaba de cambiar. Se
@@ -26,6 +29,7 @@ globalThis.TrainingActivities=(()=>{
   if(pattern===undefined)return false;try{return globalThis.navigator?.vibrate?.(pattern)===true;}catch{return false;}};
  const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
  const memoryWindow=length=>config.memoryBase+config.memoryStep*length;
+ const cleanupWindow=round=>config.cleanupBase-config.cleanupStep*round;
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
  const strengthPrecision=position=>{
   const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
@@ -98,7 +102,7 @@ globalThis.TrainingActivities=(()=>{
    targets=[marker];total=config.strengthRounds;
   }else if(attribute==='kindness'){
    setText(hint,t('minigame.kindness.instructions'));
-   for(let i=0;i<6;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=config.cleanupWindow)||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;haptic(targets[i]?'good':'bad');setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
+   for(let i=0;i<config.cleanupTiles;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=cleanupWindow(round))||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;haptic(targets[i]?'good':'bad');setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
   }
 
   function beginRound(){
@@ -111,9 +115,19 @@ globalThis.TrainingActivities=(()=>{
    }else{
     phase='play';if(attribute==='strength'){visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls.forEach(b=>b.disabled=false);
     if(attribute==='kindness'){
-     const offset=Math.floor(Math.random()*6);targets=controls.map((_,i)=>(i+offset)%6<3);total+=3;
+     // La basura ocupaba siempre tres casillas consecutivas (solo seis disposiciones posibles, y
+     // todas un bloque), asi que se aprendia el patron en dos partidas. Ahora las casillas se
+     // eligen al azar y cuantas hay tambien varia.
+     const count=config.cleanupMinTrash+Math.floor(Math.random()*(config.cleanupMaxTrash-config.cleanupMinTrash+1));
+     const slots=controls.map((_,i)=>i);
+     for(let i=slots.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[slots[i],slots[j]]=[slots[j],slots[i]];}
+     const chosen=new Set(slots.slice(0,count));
+     targets=controls.map((_,i)=>chosen.has(i));total+=count;
      const trash=[['papel','minigame.kindness.paper'],['lata','minigame.kindness.can'],['botella','minigame.kindness.bottle']],keep=[['flor','minigame.kindness.flower'],['hoja','minigame.kindness.leaf']];
-     controls.forEach((b,i)=>{const [id,key]=(targets[i]?trash:keep)[i%(targets[i]?trash.length:keep.length)];b.disabled=false;delete b.dataset.result;b.textContent=t(key);b.dataset.object=id;});
+     controls.forEach((b,i)=>{const pool=targets[i]?trash:keep,[id,key]=pool[Math.floor(Math.random()*pool.length)];
+      // Sin rotulo: era una prueba de lectura, no de reconocimiento. El nombre sigue estando para
+      // quien navega con lector de pantalla.
+      b.disabled=false;delete b.dataset.result;b.textContent='';b.setAttribute('aria-label',t(key));b.dataset.object=id;});
     }
    }
   }
@@ -138,7 +152,7 @@ globalThis.TrainingActivities=(()=>{
      if(elapsed>=sequence.length*config.memoryFlash){phase='answer';phaseStart=performance.now();controls.forEach(b=>{b.disabled=false;b.classList.remove('lit');});}
     }else{if(!answer)setText(hint,t('minigame.iq.repeat'));if(elapsed>=memoryWindow(sequence.length)){haptic('bad');setText(hint,t('minigame.iq.tooSlow'));verdict();}}
    }else{
-    const duration=attribute==='strength'?config.strengthWindow:config.cleanupWindow;
+    const duration=attribute==='strength'?config.strengthWindow:cleanupWindow(round);
     if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
      // Dejar pasar la ventana tambien se cuenta y se dice: antes la ronda cambiaba sin explicar
      // que el marcador se habia escapado.

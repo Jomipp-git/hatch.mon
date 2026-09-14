@@ -2,8 +2,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs');const {setup}=r
 (async()=>{const {run,els,advance,flush}=await setup();
 assert.equal(run('PMD_STATE_FALLBACKS.startled.join(",")'),'Hurt,Cringe,Pain,Idle');
 run('TrainingActivities.launch("kindness",{commit:()=>true})');advance(640);
-const field=els['training-game-content'].children[3],buttons=field.children.filter(b=>b.tagName==='button'),b=buttons.find(b=>['PAPEL','LATA','BOTELLA'].includes(b.textContent)),labels=buttons.map(b=>b.textContent);
-b.fire('pointerdown');advance(1800);assert.deepEqual(buttons.map(b=>b.textContent),labels);b.fire('pointerup');b.fire('click');assert.equal(b.dataset.result,'correct');advance(100);assert.deepEqual(buttons.map(b=>b.textContent),labels);advance(400);assert.equal(b.disabled,false);run('TrainingActivities.cancel()');
+// Las casillas ya no llevan rotulo: se identifican por el objeto, que es lo que dibuja el icono.
+const field=els['training-game-content'].children[3],buttons=field.children.filter(b=>b.tagName==='button'),b=buttons.find(b=>['papel','lata','botella'].includes(b.dataset.object)),labels=buttons.map(b=>b.dataset.object);
+b.fire('pointerdown');advance(1800);assert.deepEqual(buttons.map(b=>b.dataset.object),labels);b.fire('pointerup');b.fire('click');assert.equal(b.dataset.result,'correct');advance(100);assert.deepEqual(buttons.map(b=>b.dataset.object),labels);advance(400);assert.equal(b.disabled,false);run('TrainingActivities.cancel()');
 run('collectionTab="pokedex";renderPokedex()');const grid=els['panel-content'].children.find(e=>e.className==='dex-grid');assert.equal(grid.children.length,run('obtainableRoster.total'));
 // National-dex order: Growlithe and Arcanine are adjacent, and no tile goes backwards.
 const dexNumbers=run('obtainableRoster.dexOrder.map(e=>PokemonData.get(e.id).DexNo)');

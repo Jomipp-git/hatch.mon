@@ -22,6 +22,20 @@ assert.equal(spriteLabel('Eevee'),'Eevee');
 assert.equal(run('POKEMON_RENDER_CONFIG.silhouette.length'),3);
 assert.match(fs.readFileSync('pokemonRenderer.js','utf8'),/if\(silhouette\)flatten\(\);/);
 const mass=run(`['togepi','togetic','togekiss'].map(id=>{const g=PokemonRenderer.geometry(id,true),m=PMD_LIST_METRICS[PokemonData.canonicalId(id)];return m.opaqueArea*g.scale*g.scale})`);assert.ok(Math.max(...mass)/Math.min(...mass)<1.5);
-assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).patternType'),'triangles');
-console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, collection slots, comparable trio mass and Togekiss triangles.');
+// Las carcasas: la forma base va monocroma y cada evolucion de la linea suma un color del sprite.
+assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togepi")).motif'),'plain');
+assert.equal(run('ShellSkins.theme(PokemonData.canonicalId("togepi")).motifColors.length'),0);
+for(const form of ['togetic','togekiss']){
+ const theme=`ShellSkins.theme(PokemonData.canonicalId("${form}"))`;
+ assert.equal(run(`${theme}.motif`),'diamonds',`${form} conserva su motivo a mano`);
+ assert.ok(run(`${theme}.motifColors.length`)>0,`${form} lleva color de motivo`);
+}
+assert.ok(run('ShellSkins.theme(PokemonData.canonicalId("togekiss")).motifColors.length')>run('ShellSkins.theme(PokemonData.canonicalId("togetic")).motifColors.length'),'y la ultima forma, uno mas');
+// Todo tema apunta a un motivo que existe, y el liso no pinta nada.
+const unknown=run('Object.values(SHELL_THEMES).filter(theme=>theme.motif!=="plain"&&!ShellSkins.motifs.includes(theme.motif)).map(theme=>theme.name)');
+assert.deepEqual([...unknown],[],`motivos sin implementar: ${unknown.join(', ')}`);
+assert.equal(run('ShellSkins.motifImage({motif:"plain",motifColors:[]})'),'none');
+assert.ok(run('ShellSkins.motifImage({motif:"waves",motifColors:["#123456"]})').startsWith('url("data:image/svg+xml,'));
+assert.equal(run('ShellSkins.motifImage({motif:"inventado",motifColors:["#123456"]})'),'none','un motivo desconocido deja la carcasa lisa');
+console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, collection slots, comparable trio mass and shell palettes that grow with the evolution line.');
 })().catch(e=>{console.error(e);process.exitCode=1});

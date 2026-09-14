@@ -1,5 +1,4 @@
 {
-  "0175A0":{"patternType":"triangles","motifColors":["#b94a48","#416f9d"]},
-  "0176A0":{"patternType":"triangles","motifColors":["#b94a48","#416f9d"]},
-  "0468A0":{"patternType":"triangles","motifColors":["#b94a48","#416f9d"]}
+  "0176A0": {"motif": "diamonds", "motifColors": ["#b94a48"]},
+  "0468A0": {"motif": "diamonds", "motifColors": ["#b94a48", "#416f9d"]}
 }

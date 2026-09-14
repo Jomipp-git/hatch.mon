@@ -8,6 +8,7 @@
 - `hatchmonData_v2.js`, `evolutionTable.js` y `master/legacyIds.json` también son generados: se regeneran con `python3 tools/syncCanonical.py`, que propaga el Excel a datos, repertorio, assets PMD, carcasas, métricas y `dist/`. Solo entran al runtime las reglas con `MinAgeDays` informado y las especies que conectan. Los IDs legacy son claves de save: se anclan en `master/legacyIds.json` y nunca se reescriben.
 - `master/` guarda fuentes archivadas (Excel canónico, originales de assets, informes) y no participa en runtime. `assets/pmd/` contiene las 75 formas con variante `shiny/`; `tools/` las utilidades Python/Node.
 - `.rgignore` excluye `dist/`, catálogos, manifiestos y sprites, de modo que `rg` busca solo en fuente. Para inspeccionar lo excluido, usa rutas explícitas.
+- El repositorio vive en `~/Projects/HATCH.MON` y **no debe colocarse en una carpeta sincronizada por iCloud** (Escritorio o Documentos con «Carpetas Escritorio y Documentos» activado). iCloud resuelve los conflictos duplicando el fichero con « 2» en el nombre, y `.git` no lo tolera: una copia dentro de `refs/` es un nombre de referencia inválido y deja el repositorio ilegible para GitHub Desktop. Regenerar `dist/` escribe miles de ficheros y dispara justo ese conflicto. Si aparecen ficheros acabados en « 2», « 3»…, es este problema.
 
 ## Prioridades y método
 

@@ -23,7 +23,9 @@ const {setup}=require('./uiHarness.cjs');
   born();run(`state.pokerus=true;state.phase='${action==='auxiliar'?'critical':'alive'}';state.trainer.energy=0;render()`);
   assert.equal(run(`allowed('${action}')`),action==='luz');
   run('state.trainer.energy=6;render()');const cost=action==='luz'?0:1;
-  assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action===action).title,run(`t(COST.${action}===1?'ui.actionCost.one':'ui.actionCost.other',{cost:${cost}})`));
+  // Apagar la luz no cuesta puntos, asi que su tooltip no anuncia un coste de cero: queda libre
+  // para el motivo por el que el companero no puede dormir.
+  assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action===action).title,cost?run(`t('ui.actionCost.one',{cost:${cost}})`):'');
   assert.equal(run(`careAction('${action}',()=>1)`),true);assert.equal(run('state.trainer.energy'),6-cost);
  }
  born();run('showPanel("inventory")');assert.ok(walk(els['panel-content']).some(e=>e.textContent===run("t('ui.inventory.itemCost',{care:CARE_CONFIG.itemAP,evolution:CARE_CONFIG.evolutionItemAP})")));

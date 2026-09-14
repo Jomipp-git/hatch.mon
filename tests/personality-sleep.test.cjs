@@ -20,28 +20,34 @@ const night=new Date(2026,0,1,22).getTime(),day=new Date(2026,0,2,14).getTime(),
   born(first.run);first.run(`state.care.hambre=100;state.sleep.fatigue=60;state.lightsOff=false;minuteStep(${night})`);const awakeHunger=first.run('state.care.hambre');
   assert.ok(sleepingHunger<100);assert.ok((100-sleepingHunger)/(100-awakeHunger)>.44&&(100-sleepingHunger)/(100-awakeHunger)<.46);assert.equal(recovered,60);
   born(first.run);first.run(`state.lightsOff=true;state.sleep.fatigue=80;advanceGameTime(2*${HOUR},${night})`);assert.equal(first.run('state.age'),2*HOUR);assert.ok(first.run('state.care.hambre')<100);assert.equal(first.run('state.sleep.fatigue'),80);
-  // The Sleep button says no before it is pressed: disabled by day with a rested companion.
+  // The Sleep button says no before it is pressed: greyed out by day with a rested companion.
   const awake=await setup({startTime:day});
   awake.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.care.energia=80;render()');
   const sleepButton=awake.doc.querySelectorAll('[data-action]').find(b=>b.dataset.action==='luz');
   assert.equal(awake.run('Vital.isNight(Date.now())'),false);
   assert.equal(awake.run("allowed('luz')"),false);
-  assert.equal(sleepButton.disabled,true,'the Sleep button is disabled when it would be refused');
+  // Inert, not disabled: it reads as unavailable but still accepts the press that explains why,
+  // because a title tooltip never shows on a touch screen.
+  assert.equal(sleepButton['aria-disabled'],'true','the Sleep button reads as unavailable');
+  assert.equal(sleepButton.disabled,false,'but it stays pressable so it can say why');
   assert.equal(sleepButton.title,awake.run("t('sleep.notSleepy',{name:current().name})"),'and says why');
+  awake.run('state.message=""');
+  sleepButton.fire('click');
+  assert.equal(awake.run('state.message'),awake.run("t('sleep.notSleepy',{name:current().name})"),'pressing it explains the refusal');
+  assert.equal(awake.run('state.lightsOff'),false,'and changes nothing');
+  assert.equal(awake.run('state.trainer.energy'),awake.run('CARE_CONFIG.trainerMax'),'and costs no action point');
   assert.equal(awake.run("careAction('luz')"),false);
-  assert.equal(awake.run('state.message'),awake.run("t('sleep.notSleepy',{name:current().name})"));
-  assert.equal(awake.run('state.lightsOff'),false);
   // Tired enough to rest: the button comes back, and waking up is never blocked.
   awake.run('state.care.energia=10;Vital.energyResting(state);render()');
-  assert.equal(sleepButton.disabled,false);
+  assert.equal(sleepButton.disabled,false);assert.equal(sleepButton['aria-disabled'],'false');
   awake.run("careAction('luz');render()");
   assert.equal(awake.run('state.lightsOff'),true);
   assert.equal(awake.run("allowed('luz')"),true,'waking up is always available');
-  assert.equal(sleepButton.disabled,false);
+  assert.equal(sleepButton.disabled,false);assert.equal(sleepButton['aria-disabled'],'false');
   awake.run("careAction('luz')");assert.equal(awake.run('state.lightsOff'),false);
   // At night it is available regardless of how rested the companion is.
   const dark=await setup({startTime:night});
   dark.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.care.energia=100;render()');
   assert.equal(dark.run("allowed('luz')"),true);
-  console.log('PASS personality/sleep: legacy migration, persistence, evolution, night sleep, Energy rest, ignored Fatigue, hunger, offline recovery and a Sleep button disabled before it refuses.');
+  console.log('PASS personality/sleep: legacy migration, persistence, evolution, night sleep, Energy rest, ignored Fatigue, hunger, offline recovery and a Sleep button that reads as unavailable and explains itself.');
 })().catch(error=>{console.error(error);process.exitCode=1});

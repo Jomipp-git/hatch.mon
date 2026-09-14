@@ -12,7 +12,7 @@
      while leaving panning and pinch zoom —the accessible gestures— untouched. */
   body{margin:0;min-height:100svh;display:grid;place-items:center;padding:28px 16px;background:#e9e7ed;color:var(--ink);font:16px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;touch-action:manipulation}
   button{font:inherit;color:inherit;cursor:pointer;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--paper);padding:10px 12px;transition:background .15s,transform .15s}
-  button:hover:enabled{background:#fff} button:active:enabled{transform:translateY(2px)} button:disabled{opacity:.45;cursor:not-allowed}
+  button:hover:enabled:not([aria-disabled="true"]){background:#fff} button:active:enabled:not([aria-disabled="true"]){transform:translateY(2px)} button:disabled,button[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
   button:focus-visible{outline:3px solid #466a4e;outline-offset:4px}
   .console{width:min(100%,480px);padding:24px;background:var(--shell);border:2px solid var(--border);border-radius:22px 22px 40px 22px;box-shadow:inset 0 2px #ffffff70,inset 0 -6px #00000012,0 8px var(--border),0 20px 40px #30284018}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;gap:12px}
@@ -511,8 +511,12 @@ let actionsExhausted=false;
 function spend(cost){if(!canSpend(cost))return false;state.trainer.energy=Math.max(0,state.trainer.energy-cost);return true;}
 function denied(){state.message=t('care.noActions');}
 const COST=CARE_CONFIG.costs;
-// Why the companion cannot be put to bed right now; also the disabled button's tooltip.
+// Why the companion cannot be put to bed right now; also the inert button's tooltip.
 const sleepBlockedText=()=>t(`sleep.${Vital.sleepPermission(state).reason}`,{name:current().name});
+// Acostar es la unica accion que se niega por una condicion que el jugador no ve en la pantalla.
+// Por eso no se deshabilita del todo: queda inerte (aria-disabled), se pinta igual de apagada y
+// admite la pulsacion, que no gasta nada y escribe el motivo. En tactil el title nunca aparece.
+const sleepInert=()=>alive()&&!interactionLocked()&&!state.lightsOff&&!Vital.sleepPermission(state).ok;
 function allowed(action){
   // Despertar nunca cuesta AP ni se bloquea; acostar exige que sea de noche o que ya tenga sueño,
   // así el botón queda deshabilitado en vez de aceptar la pulsación y responder que no puede.
@@ -1094,7 +1098,7 @@ function render(forceFeedback=false){
   if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label',t('ui.poopAria'));poopLayer.append(node);}
   $('health').textContent=health;$('health').hidden=!health;$('health').dataset.attention=attention?state.attentionEvent.severity:'';
   if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
-  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]});if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));if(b.disabled&&alive()&&!state.lightsOff&&!interactionLocked())b.title=sleepBlockedText();}});
+  document.querySelectorAll('[data-action]').forEach(b=>{const a=b.dataset.action;b.disabled=!allowed(a);b.title=COST[a]?t(COST[a]===1?'ui.actionCost.one':'ui.actionCost.other',{cost:COST[a]}):'';if(a==='curar')b.hidden=!state.pokerus||egg||dead||birth;if(a==='auxiliar')b.hidden=!critical||birth;if(a==='luz'){b.setAttribute('aria-pressed',String(state.lightsOff));b.replaceChildren(pixelIcon('light'),el('span',state.lightsOff?t('ui.lightsOn'):t('ui.lightsOff')));const inert=sleepInert();b.setAttribute('aria-disabled',String(inert));if(inert){b.disabled=false;b.title=sleepBlockedText();}}});
   document.querySelectorAll('[data-panel]').forEach(b=>{b.disabled=interactionLocked();});
   const actionPoints=Math.floor(state.trainer.energy+1e-8),actionIndicator=$('trainer-energy');
   const depleted=actionPoints===0&&alive();

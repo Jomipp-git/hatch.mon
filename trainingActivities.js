@@ -3,13 +3,18 @@ globalThis.TrainingActivities=(()=>{
  const t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
  const modes=Object.freeze({iq:'minigame.attribute.iq',strength:'minigame.attribute.strength',kindness:'minigame.attribute.kindness',style:'minigame.attribute.style'});
  const modeName=attribute=>t(modes[attribute]);
- const config=Object.freeze({tick:40,memoryRounds:5,memoryResponse:4000,memoryFlash:550,
+ const config=Object.freeze({tick:40,memoryRounds:5,memoryFlash:550,
+  // La ventana crece con la secuencia. Era fija en 4 s para longitudes de 2 a 6, asi que sobraba
+  // tiempo en la primera ronda y no llegaba para la ultima.
+  memoryBase:1400,memoryStep:700,
   strengthRounds:5,strengthWindow:3000,strengthPerfectMin:.4,strengthPerfectMax:.6,
   // Clavarla es el 4 % central; el resto de la zona pintada baja hasta .7 y fuera de +-20 % no
   // puntua. Antes la zona entera valia 1 y justo fuera se seguia puntuando casi 1, asi que
   // rozarla y centrarla daban lo mismo y la banda dibujada no significaba nada.
   strengthCoreRadius:.04,strengthEdgeScore:.7,strengthMissRadius:.2,
-  strengthBasePeriod:420,strengthPeriodStep:60,strengthResolve:700,
+  strengthBasePeriod:420,strengthPeriodStep:60,
+  // Pausa para leer el veredicto de la ronda antes de que cambie la pantalla.
+  verdictDelay:700,
   cleanupRounds:10,cleanupWindow:1500,prepare:600,resolveDelay:300});
  const launchers={};let active=null;
  // Un toque corto confirma, uno largo corrige. Es el unico canal de respuesta inmediata que tiene
@@ -20,6 +25,7 @@ globalThis.TrainingActivities=(()=>{
  const haptic=name=>{if(stillPatterns())return false;const pattern=typeof name==='string'?HAPTICS[name]:name;
   if(pattern===undefined)return false;try{return globalThis.navigator?.vibrate?.(pattern)===true;}catch{return false;}};
  const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
+ const memoryWindow=length=>config.memoryBase+config.memoryStep*length;
  const grade=score=>score>=1-1e-9?5:1+Math.floor(Math.max(0,Math.min(1,score))*4);
  const strengthPrecision=position=>{
   const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
@@ -66,10 +72,13 @@ globalThis.TrainingActivities=(()=>{
   if(attribute==='iq'){
    setText(hint,t('minigame.iq.instructions'));
    for(let i=0;i<4;i++)button(['A','B','C','D'][i],()=>{
-    if(done||phase!=='answer'||performance.now()-phaseStart>=config.memoryResponse)return;
-    haptic('tap');
-    if(i!==sequence[answer])roundCorrect=false;answer++;
-    if(answer===sequence.length){if(roundCorrect)earned++;haptic(roundCorrect?'good':'bad');nextRound();}
+    if(done||phase!=='answer'||performance.now()-phaseStart>=memoryWindow(sequence.length))return;
+    answer++;
+    // Fallar cortaba la ronda solo por dentro: seguias tecleando cuatro luces mas sabiendo que ya
+    // la habias perdido. Ahora se dice y se pasa, como en cualquier Simon.
+    if(i!==sequence[answer-1]){roundCorrect=false;haptic('bad');setText(hint,t('minigame.iq.wrong'));verdict();return;}
+    haptic('tap');setText(hint,t('minigame.iq.entered',{done:answer,total:sequence.length}));
+    if(answer===sequence.length){earned++;haptic('good');setText(hint,t('minigame.iq.right'));verdict();}
    });total=config.memoryRounds;
   }else if(attribute==='strength'){
    setText(hint,t('minigame.strength.instructions'));
@@ -95,7 +104,10 @@ globalThis.TrainingActivities=(()=>{
   function beginRound(){
    phaseStart=performance.now();hit=false;
    if(attribute==='iq'){
-    phase='show';answer=0;roundCorrect=true;sequence=Array.from({length:round+2},()=>Math.floor(Math.random()*4));
+    // La secuencia crece anadiendo una luz, no rehaciendose entera: es lo que hace memorizable un
+    // Simon y lo que convierte cada ronda en la anterior mas un paso.
+    phase='show';answer=0;roundCorrect=true;
+    sequence=round?[...sequence,Math.floor(Math.random()*4)]:Array.from({length:2},()=>Math.floor(Math.random()*4));
    }else{
     phase='play';if(attribute==='strength'){visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls.forEach(b=>b.disabled=false);
     if(attribute==='kindness'){
@@ -105,6 +117,7 @@ globalThis.TrainingActivities=(()=>{
     }
    }
   }
+  const verdict=()=>{phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);};
   function nextRound(){
    round++;const count=attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:total;
    if(round>=count){finish();return;}if(attribute==='strength'){phase='prepare';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}else beginRound();
@@ -115,15 +128,15 @@ globalThis.TrainingActivities=(()=>{
     setText(hint,t('minigame.common.prepare'));controls.forEach(b=>b.disabled=true);if(elapsed>=config.prepare)beginRound();
    }else if(phase==='resolve'){
     // Fuerza deja su veredicto en el hint, asi que aqui no se pisa: solo se le da tiempo a leerlo.
-    if(attribute!=='strength')setText(hint,t('minigame.common.nextRound'));
-    if(elapsed>=(attribute==='strength'?config.strengthResolve:config.resolveDelay)&&!held.size)nextRound();
+    if(attribute==='kindness')setText(hint,t('minigame.common.nextRound'));
+    if(elapsed>=(attribute==='kindness'?config.resolveDelay:config.verdictDelay)&&!held.size)nextRound();
    }else if(attribute==='iq'){
     if(phase==='show'){
      setText(hint,t('minigame.common.observeRound',{round:round+1,total:config.memoryRounds}));
      const lit=sequence[Math.floor(elapsed/config.memoryFlash)];
      controls.forEach((b,i)=>{b.disabled=true;b.classList.toggle('lit',i===lit&&elapsed%config.memoryFlash<380);});
      if(elapsed>=sequence.length*config.memoryFlash){phase='answer';phaseStart=performance.now();controls.forEach(b=>{b.disabled=false;b.classList.remove('lit');});}
-    }else{setText(hint,t('minigame.iq.repeat'));if(elapsed>=config.memoryResponse)nextRound();}
+    }else{if(!answer)setText(hint,t('minigame.iq.repeat'));if(elapsed>=memoryWindow(sequence.length)){haptic('bad');setText(hint,t('minigame.iq.tooSlow'));verdict();}}
    }else{
     const duration=attribute==='strength'?config.strengthWindow:config.cleanupWindow;
     if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
@@ -135,7 +148,7 @@ globalThis.TrainingActivities=(()=>{
     else if(hint.textContent!==t('minigame.kindness.collected')&&hint.textContent!==t('minigame.kindness.keep'))setText(hint,t('minigame.kindness.reminder'));
    }
    if(done)return;
-   setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((config.memoryResponse-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds}):t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
+   setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((memoryWindow(sequence.length)-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds}):t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
    if(!done){if(attribute==='strength')frame=requestFrame(tick);else timer=setTimeout(tick,config.tick);}
   }
   tick();return true;

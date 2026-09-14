@@ -15,7 +15,7 @@ test('Strength: visual perfect zone, pointerdown, stale frame tolerance, five pe
   h.advance(1000);button.events.pointerdown[0]({button:0,pointerId:1,preventDefault(){}});button.events.click[0]({detail:1});
   assert.equal(h.els['training-game-content'].children[1].textContent,'¡En el centro!');
   // Acertar corta la ronda: ya no hay que agotar la ventana de tres segundos mirando la pantalla.
-  h.advance(cfg('strengthResolve')+1);frame();
+  h.advance(cfg('verdictDelay')+1);frame();
  }
  assert.equal(h.run('gains.join()'),'5');assert.equal(h.run('frames.size'),0);
  const precision=pos=>h.run(`TrainingActivities.strengthPrecision(${pos})`);

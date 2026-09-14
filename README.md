@@ -158,6 +158,8 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 `TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad identificación y Estilo trazado mediante `styleTracing.js`. Costes y requisitos permanecen en el motor de entrenamiento.
 
+**Intelecto.** La secuencia se alarga añadiendo una luz cada ronda en vez de rehacerse entera, que es lo que la hace memorizable y convierte cada ronda en la anterior más un paso. La ventana de respuesta es proporcional (`memoryBase + memoryStep × luces`, 2,8 s con dos luces y 5,6 s con seis) en lugar de 4 s planos para cualquier longitud, que sobraban al principio y no llegaban al final. Fallar cierra la ronda en el acto y lo dice, en vez de dejarte teclear el resto sabiendo que ya la has perdido, y el avance se muestra mientras tecleas.
+
 **Háptica.** Cada veredicto se acompaña de un pulso por `navigator.vibrate`: corto al acertar, doble al quedarse a medias, largo al fallar, y un patrón de tres pulsos si la nota llega a +4. Es el único canal de respuesta inmediata que tiene el juego — no hay sonido, y en móvil el dedo tapa justo la casilla que acaba de cambiar. `prefers-reduced-motion: reduce` lo apaga entero, así que el interruptor es el que el jugador ya tiene en el sistema.
 
 **Repetir.** La pantalla de resultado ofrece *Otra vez*, que relanza la misma actividad sin pasar por el panel; solo aparece si la siguiente sesión se puede pagar, y la cobra como cualquier otra.

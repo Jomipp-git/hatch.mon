@@ -74,5 +74,36 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  run('state.trainer.energy=1;closePanel();showPanel("training")');practice().fire('click');advance(40000);
  assert.equal(again(),undefined,'y no se ofrece si la siguiente sesion no se puede pagar');
 }
+// Intelecto: la ventana crece con la secuencia, la secuencia se alarga en vez de rehacerse, y
+// fallar corta la ronda en vez de dejarte teclear el resto a ciegas.
+{
+ const {run,els,advance}=await setup();
+ const content=els['training-game-content'];
+ const hint=()=>content.children[1].textContent,status=()=>content.children[2].textContent;
+ const keys=()=>content.children[3].children.filter(b=>b.tagName==='button');
+ const settle=probe=>{for(let i=0;i<400&&!probe();i++)advance(40);};
+ const seconds=()=>Number(status().match(/(\d+) s/)?.[1]);
+ run(`globalThis.lit=[];TrainingActivities.launch('iq',{commit:()=>true})`);
+ settle(()=>status().includes('s para responder'));
+ assert.equal(seconds(),3,'dos luces dan una ventana de 3 s, no los 4 s planos de antes');
+ // Math.random esta fijado en .5 en el arnes, asi que toda la secuencia es la tercera luz.
+ keys()[2].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.entered',{done:1,total:2})"),'y se ve cuanto llevas tecleado');
+ keys()[2].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.right')"));
+ settle(()=>status().includes('Ronda 2'));
+ settle(()=>status().includes('s para responder'));
+ assert.equal(seconds(),4,'tres luces, cuatro segundos');
+ // Fallar cierra la ronda ahi mismo.
+ keys()[0].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.wrong')"));
+ assert.ok(keys().every(b=>b.disabled),'y deja de aceptar pulsaciones');
+ settle(()=>status().includes('Ronda 3'));
+ settle(()=>status().includes('s para responder'));
+ assert.equal(seconds(),5,'cuatro luces, cinco segundos');
+ // La secuencia se alarga anadiendo una luz: el prefijo de la ronda anterior sigue estando.
+ for(let i=0;i<4;i++)keys()[2].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.right')"),'repetir el prefijo mas una luz sigue valiendo');
+}
 console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again and no duplicate completion.');
 })().catch(e=>{console.error(e);process.exitCode=1});

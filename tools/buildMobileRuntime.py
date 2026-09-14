@@ -13,6 +13,13 @@ STATE=ROOT/'master/asset-optimization.json'
 # Bumped when the optimiser learns a new trick, so files recorded by an older pass are revisited.
 CODEC=2
 def digest(data):return hashlib.sha256(data).hexdigest()
+def writeAtomic(path, text):
+    """Replace a file in one step. A reader must never catch it half-written: the tests parse
+    these artifacts while a build may be rewriting them."""
+    temp = path.with_name(path.name + '.tmp')
+    temp.write_text(text)
+    temp.replace(path)
+
 def palettize(image):
     """Exact-palette copy of an RGBA image, or None when it needs more than 256 entries."""
     colors=image.getcolors(1<<24)
@@ -57,7 +64,7 @@ def stampServiceWorker(files):
     build=fingerprint.hexdigest()[:12]
     worker=ROOT/'sw.js';text=worker.read_text()
     stamped=re.sub(r"const BUILD = '[^']*';",f"const BUILD = '{build}';",text,count=1)
-    if stamped!=text:worker.write_text(stamped)
+    if stamped!=text:writeAtomic(worker,stamped)
     return build
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--optimize',action='store_true');parser.add_argument('--output',default='dist');args=parser.parse_args()
@@ -86,7 +93,7 @@ def main():
                 records[name]={'before':(previous or {}).get('before',len(raw)),'after':len(data),'originalSize':(previous or {}).get('originalSize',list(size)),'size':list(target),'outputHash':digest(data),'losslessPixels':target==size and (previous or {}).get('losslessPixels',True),'codec':CODEC}
         im=Image.open(path);record=records.get(name)
         rows.append({'path':name,'before':record['before'] if record else path.stat().st_size,'after':path.stat().st_size,'size':list(im.size),'resized':bool(record and record['originalSize']!=record['size'])})
-    if args.optimize:STATE.parent.mkdir(exist_ok=True);STATE.write_text(json.dumps(records,indent=2)+'\n')
+    if args.optimize:STATE.parent.mkdir(exist_ok=True);writeAtomic(STATE,json.dumps(records,indent=2)+'\n')
     build=stampServiceWorker(files)
     output=Path(args.output).resolve()
     if output==ROOT or ROOT not in output.parents:raise ValueError('Output must be a child of project root')
@@ -97,5 +104,5 @@ def main():
     for name in files:
         dest=output/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/name,dest)
     summary={'build':build,'pngCount':len(rows),'pngBefore':sum(r['before'] for r in rows),'pngAfter':sum(r['after'] for r in rows),'runtimeBytes':sum((ROOT/f).stat().st_size for f in files),'files':len(files),'resized':[r['path'] for r in rows if r['resized']]}
-    report=ROOT/'master/mobile-asset-audit.json';report.write_text(json.dumps({'summary':summary,'assets':rows},indent=2)+'\n');print(json.dumps(summary))
+    report=ROOT/'master/mobile-asset-audit.json';writeAtomic(report,json.dumps({'summary':summary,'assets':rows},indent=2)+'\n');print(json.dumps(summary))
 if __name__=='__main__':main()

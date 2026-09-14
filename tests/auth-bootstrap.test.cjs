@@ -1,8 +1,9 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
+const {gameSource,runtimeHtml}=require('./uiHarness.cjs');
 async function boot(session=null,{fail=false,search='',runtimeHarness=null,loginError=null}={}){
  const nodes=new Map(),calls=[],events={},history=[],storage=new Map();let listener;
  const el=id=>{if(!nodes.has(id))nodes.set(id,{hidden:id==='game-root',textContent:'',value:'',dataset:{},events:{},addEventListener(k,f){this.events[k]=f}});return nodes.get(id)};
- el('game-source').textContent=runtimeHarness?fs.readFileSync('index.html','utf8').match(/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/)[1]:'window.HatchRuntime={stop(){},save(){}}';
+ el('game-source').textContent=runtimeHarness?gameSource():'window.HatchRuntime={stop(){},save(){}}';
  const window=runtimeHarness?.win||{addEventListener(k,f){events[k]=f}},location={search,pathname:'/index.html',replace:p=>history.push(p),reload:()=>history.push('reload')};
  const document={addEventListener(k,f){events[k]=f},getElementById:el,querySelectorAll:()=>[{dataset:{gameSrc:'dummy.js'}}],createElement:()=>({}),head:{append(s){if(s.src){calls.push('script');s.onload()}else{calls.push('game');if(runtimeHarness){try{runtimeHarness.run(s.textContent)}catch{}}else Function('window',s.textContent)(window)}}}};
  const auth={};for(const key of ['login','signup','recover','update','google','logout','resendConfirmation'])auth[key]=async()=>{calls.push(key);return{data:{session:key==='signup'?null:session},error:key==='login'?loginError:null}};
@@ -17,7 +18,7 @@ test('the gate shows one thing at a time and never repeats the button you alread
  // No session: the form is what you see, and the loading block is out of the flow.
  assert.equal(signedOut.el('auth-gate').dataset.state,'form');
  // Submit and the login link carry the same label, which is why one of them has to go.
- const markup=fs.readFileSync('index.html','utf8');
+ const markup=runtimeHtml();
  assert.match(markup,/id="auth-submit"[^>]*data-i18n="auth\.signIn"/);
  assert.match(markup,/id="auth-login"[^>]*data-i18n="auth\.signIn"/);
  assert.equal(signedOut.el('auth-login').hidden,true,'the duplicate is hidden, not shown twice');

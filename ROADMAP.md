@@ -331,17 +331,25 @@ Canal dentro del juego para que los jugadores envíen consejos y recomendaciones
 
 ## Incidencias abiertas
 
-### Flake intermitente en `tests/vital.test.cjs`
-Falla ~3 de cada 40 pasadas de la suite completa, nunca en aislado (0/60) ni reproducible a
-demanda (0/41 pasadas completas seguidas). **Las tres veces ocurrió inmediatamente después de
-ejecutar `buildMobileRuntime.py` en la misma orden**, y la última murió en 69 ms —muy por debajo
-de los ~450 ms que tarda—, así que revienta al arrancar, no en una aserción. Sospecha principal:
-agotamiento transitorio de descriptores de fichero mientras el build acaba de escribir 2681
-archivos y la suite abre cientos de PNG en paralelo. El fichero no usa `test()`, así que el runner solo
-reporta `'test failed'` sin el texto del error. `vital.test.cjs` no estabiliza el reloj —su
-contexto no sustituye `Date`—, así que hay tiempo real filtrándose al estado; la longitud del
-código QR que imprime varía entre ejecuciones por eso. Es la hipótesis, no un diagnóstico:
-capturar la salida completa la próxima vez que ocurra antes de tocar nada.
+### ~~Flake intermitente en `tests/vital.test.cjs`~~ · Resuelto · 2026-09-14
+
+**Causa, reproducida:** los ficheros de prueba leían `index.html` con `readFileSync` y extraían el
+bloque `game-source` con una expresión regular. Si algo reescribía `index.html` en ese instante
+—una pasada de generador, un guardado del editor— la lectura devolvía el fichero a medias, el
+`match` daba `null` y `[1]` reventaba en la primera línea con un `TypeError` sin relación. De ahí
+el fallo en 42–69 ms y el `'test failed'` sin texto: el error ocurría antes del `try/catch`.
+
+Se reprodujo a voluntad reescribiendo `index.html` con contenido idéntico mientras corría la suite.
+No era un fallo del juego, sino de las pruebas.
+
+**Arreglo:** la extracción vivía copiada en cinco sitios; ahora es `gameSource()`/`runtimeHtml()` en
+`tests/uiHarness.cjs`, que reintenta la lectura y, si aún así no aparece el bloque, falla diciendo
+que el fichero se está reescribiendo y cuántos bytes leyó. Además, `generateCanonicalData.py` y
+`buildMobileRuntime.py` escriben ahora mediante fichero temporal y `replace`, así que un lector
+nunca puede pillarlos a medias.
+
+**Verificación:** con `index.html` reescribiéndose cinco veces por segundo —mucho más agresivo que
+cualquier build o guardado real— la suite pasa 5 de 5; antes bastaba una sola reescritura.
 
 ---
 

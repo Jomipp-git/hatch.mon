@@ -22,7 +22,7 @@
 
 ## Verificación
 
-- Suite completa desde la raíz: `node --test tests/*.test.cjs` (44 archivos, 104 pruebas). `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
+- Suite completa desde la raíz: `node --test tests/*.test.cjs` (44 archivos, 107 pruebas). Para leer `index.html` desde una prueba usa `gameSource()`/`runtimeHtml()` de `tests/uiHarness.cjs`: una lectura directa puede pillar el fichero a medio reescribir. `tests/canonical-pipeline.test.cjs` falla si un artefacto generado está desfasado respecto al workbook. `tests/i18n-audit.cjs` y `tests/uiHarness.cjs` no son suites: son módulos auxiliares de los que dependen otras pruebas.
 - Comprobaciones aparte: `node tools/projectStatus.cjs` (roster y cobertura de assets) y `PLAYWRIGHT_MODULE="$(npm root -g)/playwright" node tests/browser-recovery.cjs`, que abre Chrome real con todas las peticiones interceptadas y valida la build de `dist/`.
 - Servidor local: `python3 tools/serveLocal.py --offline` para pruebas aisladas; sin `--offline` la página habla con el Supabase de producción aunque sirvas desde localhost. Nunca `file://`; no existe `npm run dev`.
 - Si una verificación no se puede ejecutar, dilo en la entrega y márcala como no ejecutada; no la des por hecha ni la deduzcas del código.

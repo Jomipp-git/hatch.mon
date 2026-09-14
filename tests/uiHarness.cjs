@@ -1,5 +1,20 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
-const html=fs.readFileSync('index.html','utf8'),script=html.match(/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/)[1];
+const GAME_SOURCE=/<script type="text\/plain" id="game-source">([\s\S]*?)<\/script>/;
+// index.html gets read while something may be rewriting it: a build, a generator, an editor save.
+// A truncating write makes readFileSync return a partial file, so the match comes back null and the
+// whole test dies on line one with an unrelated TypeError. Re-read, then say what actually happened.
+const pause=ms=>Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,ms);
+function runtimeHtml(){
+ let text='';
+ for(let attempt=0;attempt<5;attempt++){
+  text=fs.readFileSync('index.html','utf8');
+  if(GAME_SOURCE.test(text))return text;
+  pause(40);
+ }
+ throw Error(`index.html carries no game-source block after 5 reads (${text.length} bytes): it is being rewritten`);
+}
+const gameSource=()=>runtimeHtml().match(GAME_SOURCE)[1];
+const html=runtimeHtml(),script=html.match(GAME_SOURCE)[1];
 async function setup({encapsulated=false,development=true,missing=false,reduced=false,initialSave=null,initialDisplayMode=null,initialLanguage=null,initialShells=null,cloud=false,storageMap=null,runtimeSource=script,vitalSource=null,startTime=1000000}={}){
  // startTime is local wall-clock for the run; the default lands at night, so day/night behaviour
  // has to be set up front rather than advanced into, which would fire every scheduled timer.
@@ -24,4 +39,4 @@ async function setup({encapsulated=false,development=true,missing=false,reduced=
  return {run,flush,advance,els,timeouts,intervals,images,doc,win,motion,storage};
 }
 
-module.exports={setup};
+module.exports={setup,runtimeHtml,gameSource};

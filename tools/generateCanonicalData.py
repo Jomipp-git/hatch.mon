@@ -24,6 +24,13 @@ def table(book, name):
         raise ValueError(f'{name}: invalid headers')
     return [dict(zip(headers, row)) for row in rows if any(v is not None for v in row)]
 
+def writeAtomic(path, text):
+    """Replace a file in one step. A reader must never catch it half-written: the tests parse
+    these artifacts while a build may be rewriting them."""
+    temp = path.with_name(path.name + '.tmp')
+    temp.write_text(text)
+    temp.replace(path)
+
 def slug(name):
     plain = unicodedata.normalize('NFD', name)
     return re.sub(r'[^a-z0-9]', '', ''.join(c for c in plain if not unicodedata.combining(c)).lower())
@@ -132,7 +139,7 @@ if __name__ == '__main__':
             if not path.exists() or path.read_text() != content:
                 raise SystemExit(f'Outdated generated artifact: {path.name}')
         else:
-            path.write_text(content)
+            writeAtomic(path, content)
     print(json.dumps({'pokemon': len(runtime['pokemon']), 'roster': len(resolved), 'rules': len(runtime['evolutionRules']),
                       'archivedPokemon': len(archive['pokemon']), 'archivedRules': len(archive['evolutionRules']),
                       'withMinBond': sum(r.get('MinBond') is not None for r in runtime['evolutionRules']),

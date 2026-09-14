@@ -294,9 +294,11 @@ Estilo puntúa cobertura × precisión espacial, promediada sobre las cinco rond
 
 ## Acceso y guardado cloud
 
-Ejecutar `python3 -m http.server 8080 --bind 127.0.0.1` en la raíz y abrir http://127.0.0.1:8080. No usar `file://` ni `npm run dev`: no hay package.json. Producción requiere HTTPS y conservar los módulos ES y assets junto a index.
+Ejecutar `python3 tools/serveLocal.py` en la raíz y abrir http://127.0.0.1:8080. No usar `file://` ni `npm run dev`: no hay package.json. Producción requiere HTTPS y conservar los módulos ES y assets junto a index.
 
-Email usa `signUp`/`signInWithPassword`; si se exige confirmación, se espera el correo antes de iniciar. Google usa `signInWithOAuth`. Recuperación usa `resetPasswordForEmail`, vuelve con `?recovery=1` y permite `updateUser` sin arrancar el juego. La sesión persistida y su renovación las gestiona el SDK. Solo se incluye la publishable key pública; nunca contraseñas ni secretos de proveedores en el save.
+La puerta de acceso tiene dos estados excluyentes. `data-state="loading"` muestra un bloque con spinner y título neutro mientras se comprueba la sesión y se carga el compañero, y saca el formulario del flujo para que no acepte clics; `data-state="form"` lo devuelve. Un fallo de carga devuelve el formulario, nunca deja el spinner girando. En la barra de enlaces se oculta el del modo activo: el botón de envío ya lleva esa misma etiqueta.
+
+Email usa `signUp`/`signInWithPassword`; el proyecto exige confirmación por correo (`mailer_autoconfirm: false`), así que la cuenta no sirve hasta abrir el enlace. Cuando el login responde `email_not_confirmed`, o cuando un alta queda pendiente, se ofrece reenviar ese correo. `humanError` traduce cada código de error de Supabase y, ante uno desconocido, muestra el mensaje del servidor en lugar de una frase genérica: un acceso roto tiene que poder distinguirse de una contraseña equivocada. Google usa `signInWithOAuth`. Recuperación usa `resetPasswordForEmail`, vuelve con `?recovery=1` y permite `updateUser` sin arrancar el juego. La sesión persistida y su renovación las gestiona el SDK. Solo se incluye la publishable key pública; nunca contraseñas ni secretos de proveedores en el save.
 
 `game_saves.game_state` contiene `{game, preferences: {shells, displayMode}}`, con `schema_version=1`; `game` conserva el esquema actual 12 y todos sus sistemas, incluidas identidades shiny, Pokédex, Memorias, huevos y entrenamiento. Se excluye el feedback temporal y se normaliza un nacimiento interrumpido para ofrecer el mote al volver. Las animaciones, DOM y temporizadores no se serializan. Una versión o partida inválida bloquea el arranque y no se reemplaza por un huevo.
 

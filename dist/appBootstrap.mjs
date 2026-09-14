@@ -1,9 +1,18 @@
-import {client,auth,humanError} from './authService.mjs';
+import {client,auth,humanError,needsConfirmation} from './authService.mjs';
 import {createCloudSaveService,userStorage,snapshotCache} from './cloudSaveService.mjs';
 // Asset cache only; see sw.js. A registration failure must never block the game from starting.
 if('serviceWorker' in navigator&&isSecureContext)
  addEventListener('load',()=>void navigator.serviceWorker.register('sw.js').catch(()=>{}));
 const $=id=>document.getElementById(id),t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key,gate=$('auth-gate'),game=$('game-root'),message=$('auth-message');
+// The gate is either working or asking. Never both: a form under a spinner invites a misclick.
+function gateState(state,textKey){
+ gate.dataset.state=state;
+ if(state!=='loading')return;
+ const node=$('auth-loading-text');node.dataset.i18n=textKey;node.textContent=t(textKey);
+ // The heading is part of the disguise: "Your companion is waiting" reads like an invitation to act.
+ $('auth-title').dataset.i18n='auth.loadingTitle';$('auth-title').textContent=t('auth.loadingTitle');
+}
+const showForm=()=>{gateState('form');$('auth-form').hidden=false;formMode(mode);};
 const ADMIN_UID='a81c13f7-a9d6-46d5-aa5c-66512b25ed68';
 let started=false,starting=false,userId=null,service=null,recovery=new URLSearchParams(location.search).has('recovery'),mode=recovery?'update':'login',busy=false,leaving=false;
 const notify=text=>{const node=$('cloud-status');if(node){node.textContent=text;node.hidden=!text;}};
@@ -15,11 +24,16 @@ delete message.dataset.i18n;
 const formKeys={login:['auth.title.login','auth.signIn'],signup:['auth.title.signup','auth.signUp'],recover:['auth.title.recover','auth.sendRecovery'],update:['auth.title.update','auth.savePassword']};
 function formMode(next){
  mode=next;const [title,submit]=formKeys[mode];$('auth-title').dataset.i18n=title;$('auth-submit').dataset.i18n=submit;$('auth-title').textContent=t(title);$('auth-password-row').hidden=mode==='recover';$('auth-email-row').hidden=mode==='update';$('auth-password').required=mode!=='recover';$('auth-password').autocomplete=mode==='login'?'current-password':'new-password';$('auth-email').required=mode!=='update';$('auth-submit').textContent=t(submit);$('auth-google').hidden=mode==='update';
+ // The submit button already says "Sign in"; the link that only switches to the mode you are
+ // already in would read the same and do nothing, so it is hidden instead of duplicated.
+ for(const other of ['login','signup','recover'])$('auth-'+other).hidden=mode==='update'||other===mode;
+ $('auth-password-hint').hidden=mode!=='signup'&&mode!=='update';
 }
 function lock(){game.hidden=true;gate.hidden=false;window.HatchRuntime?.stop();}
+function offerResend(email){$('auth-resend').hidden=!email;$('auth-resend').dataset.email=email||'';}
 async function scripts(){for(const tag of document.querySelectorAll('script[data-game-src]'))await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=tag.dataset.gameSrc;script.onload=resolve;script.onerror=reject;document.head.append(script);});}
 async function start(session){
- if(started||starting||leaving||recovery)return;starting=true;message.textContent=t('auth.loadingCompanion');$('auth-form').hidden=true;
+ if(started||starting||leaving||recovery)return;starting=true;offerResend('');gateState('loading','auth.verifyingAccount');
  try{
   userId=session.user.id;installAdminAccess(session);const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
   service=createCloudSaveService({client,session,cache,notify,onRemote:(game,preferences)=>window.HatchRuntime?.applyCloudSave(game,preferences)});
@@ -41,30 +55,44 @@ async function start(session){
   if(window.HatchLoadError)throw Error(window.HatchLoadError);
   if(!window.HatchRuntime)throw Error('game-start-failed');
   started=true;gate.hidden=true;game.hidden=false;service.startRealtime?.();service.queue();
- }catch(error){service?.close();lock();message.textContent=t(error.message==='save-read-failed'?'system.storageUnavailable':error.message==='game-start-failed'?'auth.runtimeStartFailed':error.message==='invalid-save'?'system.incompatibleSave':error.message==='unsupported-save'?'auth.unsupportedSave':error.message==='session-changed'?'auth.sessionExpired':'auth.companionLoadFailed');$('auth-form').hidden=true;$('auth-google').hidden=true;$('auth-retry').hidden=false;}
+ }catch(error){service?.close();lock();showForm();message.textContent=t(error.message==='save-read-failed'?'system.storageUnavailable':error.message==='game-start-failed'?'auth.runtimeStartFailed':error.message==='invalid-save'?'system.incompatibleSave':error.message==='unsupported-save'?'auth.unsupportedSave':error.message==='session-changed'?'auth.sessionExpired':'auth.companionLoadFailed');$('auth-form').hidden=true;$('auth-google').hidden=true;$('auth-retry').hidden=false;}
  finally{starting=false;}
 }
 client.auth.onAuthStateChange((event,session)=>{
- if(event==='PASSWORD_RECOVERY'){recovery=true;lock();formMode('update');$('auth-form').hidden=false;}
+ if(event==='PASSWORD_RECOVERY'){recovery=true;lock();formMode('update');showForm();}
  if(started&&(event==='SIGNED_OUT'||session?.user.id!==userId)){lock();service?.close();if(!leaving){message.textContent=t('auth.sessionExpired');location.replace(location.pathname);}}
  if(session&&!recovery&&!started)setTimeout(()=>void start(session),0);
 });
 $('auth-form').addEventListener('submit',async event=>{
  event.preventDefault();if(busy||starting||leaving)return;busy=true;$('auth-submit').disabled=true;message.textContent='';
  const email=$('auth-email').value.trim(),password=$('auth-password').value;
+ offerResend('');
  try{
   const result=await ({login:()=>auth.login(email,password),signup:()=>auth.signup(email,password),recover:()=>auth.recover(email),update:()=>auth.update(password)})[mode]();
   if(result.error)throw result.error;
-  if(mode==='signup'&&!result.data.session)message.textContent=t('auth.confirmEmail');
+  if(mode==='signup'&&!result.data.session){message.textContent=t('auth.confirmEmail');offerResend(email);}
   else if(mode==='recover')message.textContent=t('auth.recoverySent');
   else if(mode==='update'){recovery=false;history.replaceState(null,'',location.pathname);location.reload();}
   else if(result.data?.session)await start(result.data.session);
- }catch(error){message.textContent=humanError(error);}finally{$('auth-password').value='';busy=false;$('auth-submit').disabled=false;}
+ }catch(error){message.textContent=humanError(error);if(needsConfirmation(error))offerResend(email);}
+ finally{$('auth-password').value='';busy=false;$('auth-submit').disabled=false;}
 });
 $('auth-google').addEventListener('click',async()=>{if(starting||busy)return;try{const {error}=await auth.google();if(error)throw error;}catch(error){message.textContent=humanError(error);}});
-for(const next of ['login','signup','recover'])$('auth-'+next).addEventListener('click',()=>{if(starting||busy||leaving)return;message.textContent='';formMode(next);});
+$('auth-resend').addEventListener('click',async()=>{
+ const email=$('auth-resend').dataset.email;if(!email||busy||starting)return;
+ busy=true;$('auth-resend').disabled=true;
+ try{const {error}=await auth.resendConfirmation(email);if(error)throw error;message.textContent=t('auth.confirmationResent');}
+ catch(error){message.textContent=humanError(error);}
+ finally{busy=false;$('auth-resend').disabled=false;}
+});
+for(const next of ['login','signup','recover'])$('auth-'+next).addEventListener('click',()=>{if(starting||busy||leaving)return;message.textContent='';offerResend('');formMode(next);});
 window.addEventListener('online',()=>{if(service?.isBlocked())notify(t('system.connectionRecovered'));else{void service?.reconcile();void service?.flush();}});
 function flushOnLeave(){window.HatchRuntime?.save();queueMicrotask(()=>{service?.queue();void service?.flush();});}
 window.addEventListener('pagehide',flushOnLeave);document.addEventListener('visibilitychange',()=>{if(document.hidden)flushOnLeave();});
 formMode(mode);
-try{const {data:{session},error}=await client.auth.getSession();if(error)throw error;if(session&&!recovery)await start(session);else message.textContent=recovery?t('auth.choosePassword'):'';}catch{message.textContent=t('auth.sessionCheckFailed');}
+gateState('loading','auth.loadingSession');
+try{
+ const {data:{session},error}=await client.auth.getSession();if(error)throw error;
+ if(session&&!recovery)await start(session);
+ else{showForm();message.textContent=recovery?t('auth.choosePassword'):'';}
+}catch{showForm();message.textContent=t('auth.sessionCheckFailed');}

@@ -182,6 +182,42 @@ progresivamente más. Definir la curva **después** de analizar el cálculo actu
 
 ## Bloque D · Segunda tanda de testers
 
+### D10 · Login por email y contraseña
+**Estado:** Hecho en cliente · 2026-09-14 · **falta una comprobación en Supabase**
+
+La sonda pública del proyecto (`/auth/v1/settings`) devuelve `email: true` y `disable_signup:
+false`, así que el proveedor de email **está activo**; y `mailer_autoconfirm: false`, es decir, la
+cuenta **no sirve hasta confirmar el correo**. Google funciona porque OAuth llega ya confirmado.
+Esa es la explicación que encaja con «solo entran con Google».
+
+Hecho en el cliente:
+- `humanError` mapea todos los códigos de Supabase relevantes y, ante uno desconocido, muestra el
+  mensaje del servidor en vez de una frase genérica. Antes casi cualquier fallo se veía igual.
+- Botón de **reenviar el correo de confirmación** cuando el login responde `email_not_confirmed`
+  o cuando el alta queda pendiente. Antes no había salida.
+- Pista de contraseña (mínimo 6) visible antes de enviar, en alta y en cambio de contraseña.
+
+Pendiente y **no arreglable desde el cliente**: si los correos de confirmación no llegan, ninguna
+de estas mejoras da acceso. Comprobar en el panel de Supabase → Authentication:
+1. **SMTP propio configurado.** El mailer por defecto tiene un límite muy bajo por hora y se
+   comparte por proyecto; con varios testers se agota enseguida y los correos no salen.
+2. **URL Configuration.** `Site URL` y `Redirect URLs` deben incluir la URL publicada de GitHub
+   Pages; si no, el enlace de confirmación falla aunque el correo llegue.
+3. Alternativa, si se acepta: activar *Confirm email* = off (`mailer_autoconfirm: true`) para que
+   el alta con contraseña entre directa, como hace Google.
+
+### D11 · Pantalla de carga separada del login
+**Estado:** Hecho · 2026-09-14
+
+El botón «Entrar» aparecía dos veces: el de envío del formulario y el enlace de la barra inferior
+que solo cambia al modo en el que ya estabas. Ahora se oculta el enlace del modo activo.
+
+Mientras se verificaba cuenta y compañero, el formulario seguía en pantalla y aceptaba clics.
+Ahora la puerta tiene dos estados excluyentes: `loading` muestra un bloque con spinner y título
+neutro («Un momento»), y saca el formulario del flujo; `form` lo devuelve. Un fallo de carga
+devuelve el formulario en vez de dejar el spinner girando.
+
+
 ### D1 · Doble toque no debe hacer zoom en iPhone
 **Estado:** Hecho · 2026-09-14 (`7d190f1`)
 

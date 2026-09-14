@@ -149,6 +149,13 @@
   .auth-console{width:min(100%,480px);padding:28px;background:var(--shell);border:2px solid var(--border);border-radius:22px;box-shadow:0 8px var(--border)}
   #auth-google{width:100%;margin:0 0 16px}
   .auth-console form,.auth-console label{display:grid;gap:8px}.auth-console form{gap:16px}.auth-console input{width:100%;font:inherit;padding:10px;border:1px solid var(--border);border-radius:6px}.auth-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.auth-links button{font-size:.8rem}.auth-message{min-height:3em;font-size:.85rem}#cloud-status{font-size:.75rem;text-align:center;max-width:460px;margin:14px auto 0}
+  .auth-hint{font-size:.72rem;color:#4b4458}#auth-resend{width:100%;margin:0 0 16px;font-size:.8rem}
+  /* Loading and sign-in must not look alike: while one shows, the other is not in the document flow. */
+  .auth-loading{display:none;gap:14px;align-items:center;padding:26px 4px;justify-content:center}
+  [data-state="loading"] .auth-loading{display:flex}[data-state="loading"] #auth-form-block{display:none}
+  .auth-spinner{width:22px;height:22px;flex-shrink:0;border:3px solid var(--border);border-right-color:transparent;border-radius:50%;animation:authSpin .9s linear infinite}
+  @keyframes authSpin{to{rotate:360deg}}
+  @media(prefers-reduced-motion:reduce){.auth-spinner{animation-duration:2.4s}}
 </style>
 </head>
 <body id="display-root">
@@ -162,17 +169,21 @@
     </feComponentTransfer>
   </filter>
 </defs></svg>
-<section id="auth-gate" class="auth-console" aria-labelledby="auth-title">
+<section id="auth-gate" class="auth-console" data-state="loading" aria-labelledby="auth-title">
 <h1>hatch.mon</h1><h2 id="auth-title" data-i18n="auth.title.login"></h2>
-<p id="auth-message" class="auth-message" role="status" data-i18n="auth.loadingSession"></p>
+<div id="auth-loading" class="auth-loading" role="status"><span class="auth-spinner" aria-hidden="true"></span><p id="auth-loading-text" data-i18n="auth.loadingSession"></p></div>
+<div id="auth-form-block">
+<p id="auth-message" class="auth-message" role="status"></p>
 <button id="auth-retry" type="button" hidden onclick="location.reload()" data-i18n="auth.retryLoad"></button>
+<button id="auth-resend" type="button" hidden data-i18n="auth.resendConfirmation"></button>
 <button id="auth-google" type="button" data-i18n="auth.google"></button>
 <form id="auth-form">
 <label id="auth-email-row"><span data-i18n="auth.email"></span><input id="auth-email" type="email" autocomplete="email" required></label>
-<label id="auth-password-row"><span data-i18n="auth.password"></span><input id="auth-password" type="password" autocomplete="current-password" minlength="6" required></label>
+<label id="auth-password-row"><span data-i18n="auth.password"></span><input id="auth-password" type="password" autocomplete="current-password" minlength="6" required><small id="auth-password-hint" class="auth-hint" data-i18n="auth.passwordHint"></small></label>
 <button id="auth-submit" type="submit" data-i18n="auth.signIn"></button>
 </form>
 <nav class="auth-links" data-i18n-aria="auth.access"><button id="auth-login" type="button" data-i18n="auth.signIn"></button><button id="auth-signup" type="button" data-i18n="auth.signUp"></button><button id="auth-recover" type="button" data-i18n="auth.forgotPassword"></button></nav>
+</div>
 <noscript>Activa JavaScript para iniciar sesión.</noscript>
 </section>
 <div id="game-root" hidden>

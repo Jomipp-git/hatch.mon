@@ -52,10 +52,12 @@ export const auth = {
  google: async () => ({data: {}, error: null}),
  recover: async () => ({data: {}, error: null}),
  update: async () => ({data: {}, error: null}),
+ resendConfirmation: async () => ({data: {}, error: null}),
  logout: async () => ({error: null}),
 };
 
 const authText = (key, vars) => globalThis.HatchI18n?.t(key, vars) ?? key;
+export const needsConfirmation = () => false;
 export function humanError() {return authText('auth.requestFailed');}
 
 // This module is deferred, so DOMContentLoaded may already have fired by now.

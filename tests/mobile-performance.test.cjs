@@ -1,29 +1,48 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');const {setup}=require('./uiHarness.cjs');
-test('Strength: visual perfect zone, pointerdown, stale frame tolerance, five perfect rounds, no duplicate click',async()=>{
+test('Strength: zona movil que se estrecha, tiempo visible, pointerdown, cinco rondas perfectas',async()=>{
  const h=await setup();h.run('var frames=new Map(),frameId=0;globalThis.requestAnimationFrame=fn=>{frames.set(++frameId,fn);return frameId};globalThis.cancelAnimationFrame=id=>frames.delete(id);var gains=[];TrainingActivities.launch("strength",{commit:(a,g)=>{gains.push(g);return true}})');
  const frame=()=>h.run('var batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn(performance.now()))');
- // La pista es el control: un unico boton que contiene zona, nucleo, marcador y rotulo.
- const field=h.els['training-game-content'].children[3],button=field.children[0],marker=button.children[2];
+ // La pista es el control: un unico boton con zona, nucleo, marcador, barra de tiempo y rotulo.
+ const field=h.els['training-game-content'].children[3],button=field.children[0];
+ const [zone,core,marker,time]=button.children;
  const cfg=key=>h.run(`TrainingActivities.config.${key}`);
- const at=()=>parseFloat(marker.style.left);
+ const at=()=>parseFloat(marker.style.left),centre=()=>parseFloat(core.style.left)+parseFloat(core.style.width)/2;
+ const centres=[],widths=[];
  for(let round=0;round<5;round++){
-  const period=cfg('strengthBasePeriod')-round*cfg('strengthPeriodStep');
   h.advance(cfg('prepare'));frame();
-  assert.ok(Math.abs(at()-50)>45,'la ronda arranca en un extremo, no sobre el centro');
-  h.advance(period*Math.PI/2);frame();assert.ok(Math.abs(at()-50)<1,'y el marcador cruza el centro');
+  const target=centre();centres.push(target);widths.push(parseFloat(zone.style.width));
+  // El marcador entra por el extremo opuesto a la zona: no hay ronda que se gane al habilitarse.
+  assert.ok(Math.abs(at()-target)>40,'la ronda arranca lejos de la zona');
+  assert.equal(parseFloat(time.style.width),100,'y con la barra de tiempo entera');
+  // Recorrido lineal: llegar cuesta exactamente la distancia, sin frenadas en los extremos.
+  h.advance(Math.abs(target-at())/100*cfg('strengthSweep'));frame();
+  assert.ok(Math.abs(at()-target)<1e-9,'y avanza a velocidad constante');
+  assert.ok(parseFloat(time.style.width)<100,'mientras la barra de tiempo se vacia');
   // Event arrives a second after the last frame; score the position actually displayed.
   h.advance(1000);button.events.pointerdown[0]({button:0,pointerId:1,preventDefault(){}});button.events.click[0]({detail:1});
   assert.equal(h.els['training-game-content'].children[1].textContent,'¡En el centro!');
-  // Acertar corta la ronda: ya no hay que agotar la ventana de tres segundos mirando la pantalla.
+  // Acertar corta la ronda: ya no hay que agotar la ventana mirando la pantalla.
   h.advance(cfg('verdictDelay')+1);frame();
  }
  assert.equal(h.run('gains.join()'),'5');assert.equal(h.run('frames.size'),0);
- const precision=pos=>h.run(`TrainingActivities.strengthPrecision(${pos})`);
- for(const pos of [.46,.5,.54])assert.equal(precision(pos),1,'el nucleo del 4 % puntua 1 exacto');
- for(const pos of [.4,.6])assert.ok(Math.abs(precision(pos)-cfg('strengthEdgeScore'))<1e-9,'y el borde de la zona pintada, .7');
- assert.ok(precision(.45)<1&&precision(.45)>precision(.42),'entre medias baja de forma continua');
- for(const pos of [.3,.7,.05,.95])assert.equal(precision(pos),0,'fuera de +-20 % no puntua');
+ // La zona salta de sitio cada ronda y nunca repite vecindario.
+ for(let i=1;i<centres.length;i++)assert.ok(Math.abs(centres[i]-centres[i-1])>=cfg('strengthZoneShift')*100-1e-9,`la ronda ${i+1} mueve la zona`);
+ for(const c of centres)assert.ok(c>=cfg('strengthZoneMin')*100-1e-9&&c<=cfg('strengthZoneMax')*100+1e-9,'dentro de la banda util');
+ // Y la curva de dificultad es el estrechamiento, no la velocidad.
+ for(let i=1;i<widths.length;i++)assert.ok(Math.abs(widths[i]-widths[i-1]*cfg('strengthZoneShrink'))<1e-9,`la ronda ${i+1} estrecha la zona`);
+ const precision=(pos,...rest)=>h.run(`TrainingActivities.strengthPrecision(${[pos,...rest].join(',')})`);
+ const core0=cfg('strengthCoreRadius'),zone0=cfg('strengthZoneRadius'),miss0=cfg('strengthMissRadius');
+ for(const pos of [.5-core0,.5,.5+core0])assert.equal(precision(pos),1,'el nucleo puntua 1 exacto');
+ for(const pos of [.5-zone0,.5+zone0])assert.ok(Math.abs(precision(pos)-cfg('strengthEdgeScore'))<1e-9,'y el borde de la zona pintada, .7');
+ assert.ok(precision(.47)<1&&precision(.47)>precision(.44),'entre medias baja de forma continua');
+ for(const pos of [.5-miss0,.5+miss0,.05,.95])assert.equal(precision(pos),0,'fuera del radio de fallo no puntua');
  assert.ok(precision(.35)>0&&precision(.35)<cfg('strengthEdgeScore'));
+ // La misma curva, movida y a escala: es lo unico que cambia entre rondas.
+ const scale=cfg('strengthZoneShrink');
+ assert.equal(precision(.3+core0*scale,.3,scale),1,'el nucleo viaja con la zona y encoge con ella');
+ assert.ok(Math.abs(precision(.3+zone0*scale,.3,scale)-cfg('strengthEdgeScore'))<1e-9);
+ assert.equal(precision(.3+miss0*scale,.3,scale),0);
+ assert.ok(precision(.3+core0,.3,scale)<1,'lo que en la ronda 1 era clavarla ya no lo es en la 2');
 });
 test('Strength continuous frames stop on cancel/background; same position scores equally at 60/90/120 Hz',async()=>{
  const seen=[];

@@ -3,16 +3,36 @@ globalThis.TrainingActivities=(()=>{
  const t=(key,vars)=>globalThis.HatchI18n?.t(key,vars)??key;
  const modes=Object.freeze({iq:'minigame.attribute.iq',strength:'minigame.attribute.strength',kindness:'minigame.attribute.kindness',style:'minigame.attribute.style'});
  const modeName=attribute=>t(modes[attribute]);
- const config=Object.freeze({tick:40,memoryRounds:5,memoryFlash:550,
-  // La ventana crece con la secuencia. Era fija en 4 s para longitudes de 2 a 6, asi que sobraba
-  // tiempo en la primera ronda y no llegaba para la ultima.
-  memoryBase:1400,memoryStep:700,
-  strengthRounds:5,strengthWindow:3000,strengthPerfectMin:.4,strengthPerfectMax:.6,
-  // Clavarla es el 4 % central; el resto de la zona pintada baja hasta .7 y fuera de +-20 % no
-  // puntua. Antes la zona entera valia 1 y justo fuera se seguia puntuando casi 1, asi que
+ // Una luz mas por ronda, hasta seis. Con cadenas nuevas cada ronda esto ya no es "la anterior mas
+ // un paso" sino memorizar seis luces de cero, y ese es justamente el reto que se busca.
+ const MEMORY_LENGTHS=Object.freeze([2,3,4,5,6]);
+ const config=Object.freeze({tick:40,memoryRounds:MEMORY_LENGTHS.length,memoryLengths:MEMORY_LENGTHS,memoryFlash:550,
+  // La ventana crece con la secuencia. Era fija en 4 s para cualquier longitud, asi que sobraba
+  // tiempo en la primera ronda y no llegaba para la ultima. Con cadenas nuevas se recuerda todo de
+  // cero cada vez, asi que el tramo por luz pesa mas que la base.
+  memoryBase:1200,memoryStep:900,
+  strengthRounds:5,
+  // Barrido lineal a velocidad constante. Con la sinusoide de antes el marcador corria por el
+  // centro y se frenaba en los extremos, asi que mover la zona habria movido tambien la
+  // dificultad: la misma anchura vale casi el doble de tiempo pegada a una pared.
+  strengthSweep:1200,
+  // La ventana crece con la ronda, y no es mas espera: con el barrido constante son ~2,5 pasadas
+  // por la zona en la primera y ~3,5 en la ultima, que es donde el objetivo ya es minusculo.
+  strengthWindowBase:3000,strengthWindowStep:300,
+  // Clavarla es el nucleo; el resto de la zona pintada baja hasta .7 y fuera del radio de fallo
+  // no puntua. Antes la zona entera valia 1 y justo fuera se seguia puntuando casi 1, asi que
   // rozarla y centrarla daban lo mismo y la banda dibujada no significaba nada.
-  strengthCoreRadius:.04,strengthEdgeScore:.7,strengthMissRadius:.2,
-  strengthBasePeriod:420,strengthPeriodStep:60,
+  strengthCoreRadius:.028,strengthZoneRadius:.1,strengthMissRadius:.2,strengthEdgeScore:.7,
+  // Los tres radios se estrechan juntos por ronda, asi que la curva de nota conserva su forma y
+  // solo se afila: 67 ms de "en el centro" en la primera ronda, 35 ms en la quinta. Es la curva
+  // que antes daba la aceleracion, que con la zona movil habria dejado de ser medible.
+  strengthZoneShrink:.85,
+  // Y la zona cambia de sitio cada ronda. Fuera de esta banda el radio de fallo se saldria de la
+  // pista y truncaria el acercamiento por un lado; el salto minimo evita que la nueva posicion
+  // pase por la de la ronda anterior.
+  strengthZoneMin:.22,strengthZoneMax:.78,strengthZoneShift:.18,
+  // El ultimo segundo de la barra de tiempo avisa con color.
+  strengthTimeWarning:1000,
   // Pausa para leer el veredicto de la ronda antes de que cambie la pantalla.
   verdictDelay:700,
   // Siete rondas con la ventana estrechandose, en vez de diez todas iguales: era el minijuego mas
@@ -30,20 +50,24 @@ globalThis.TrainingActivities=(()=>{
   if(pattern===undefined)return false;try{return globalThis.navigator?.vibrate?.(pattern)===true;}catch{return false;}};
  const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
  const memoryWindow=length=>config.memoryBase+config.memoryStep*length;
+ const newChain=length=>Array.from({length},()=>Math.floor(Math.random()*4));
  const cleanupWindow=round=>config.cleanupBase-config.cleanupStep*round;
+ const strengthWindow=round=>config.strengthWindowBase+config.strengthWindowStep*round;
  // El 5 pedia un 1,0 exacto. Con la precision continua de Fuerza y el trazo a pulso de Estilo eso
  // no es "excelente", es irrepetible, y la sesion se cobra igual salga como salga: un tramo
  // inalcanzable solo convierte el mejor resultado posible en una perdida neta. Estos umbrales son
  // los unicos del juego; Estilo entrega su media y se puntua aqui, para no llevar dos curvas.
  const GRADE_THRESHOLDS=Object.freeze([.92,.78,.58,.32]);
  const grade=score=>{const value=Math.max(0,Math.min(1,score));const step=GRADE_THRESHOLDS.findIndex(min=>value>=min);return step<0?1:5-step;};
- const strengthPrecision=position=>{
-  const centre=(config.strengthPerfectMin+config.strengthPerfectMax)/2,zone=(config.strengthPerfectMax-config.strengthPerfectMin)/2;
-  // El margen solo abre el borde del nucleo: sin el, .46 cae fuera por 4e-17 de coma flotante.
+ // La zona ya no vive fija en el centro: se le pasan su centro y la escala de la ronda. Los
+ // valores por defecto son la geometria de la primera ronda.
+ const strengthPrecision=(position,centre=.5,scale=1)=>{
+  const core=config.strengthCoreRadius*scale,zone=config.strengthZoneRadius*scale,miss=config.strengthMissRadius*scale;
+  // El margen solo abre el borde del nucleo: sin el, el limite cae fuera por coma flotante.
   const offset=Math.abs(position-centre);
-  if(offset<=config.strengthCoreRadius+1e-9)return 1;
-  if(offset<=zone)return 1-(1-config.strengthEdgeScore)*(offset-config.strengthCoreRadius)/(zone-config.strengthCoreRadius);
-  const score=config.strengthEdgeScore*(1-(offset-zone)/(config.strengthMissRadius-zone));return score>1e-9?score:0;
+  if(offset<=core+1e-9)return 1;
+  if(offset<=zone)return 1-(1-config.strengthEdgeScore)*(offset-core)/(zone-core);
+  const score=config.strengthEdgeScore*(1-(offset-zone)/(miss-zone));return score>1e-9?score:0;
  };
  const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
  const roundsFor=attribute=>attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:config.strengthRounds;
@@ -92,10 +116,25 @@ globalThis.TrainingActivities=(()=>{
   host.append(title,hint,status,field,exit);if(!dialog.open)dialog.showModal();
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
-  let visibleStrengthPosition=.5;
-  // El marcador arranca en un extremo, alternando lado por ronda. Antes empezaba justo en el
-  // centro, asi que pulsar en el instante en que se habilitaba el control era siempre perfecto.
-  const strengthPosition=t=>(Math.sin(t/(config.strengthBasePeriod-round*config.strengthPeriodStep)+(round%2?Math.PI/2:-Math.PI/2))+1)/2;
+  let visibleStrengthPosition=.5,zoneCentre=.5,zoneScale=1,zoneStart=1,strengthView=null;
+  // Ida y vuelta lineal. El marcador arranca en el extremo mas lejano a la zona de la ronda: asi
+  // no se entra nunca ya encima del objetivo, y queda un recorrido entero para leer donde ha
+  // caido la banda antes de la primera pasada.
+  const strengthPosition=elapsed=>{const leg=(elapsed%(config.strengthSweep*2))/config.strengthSweep,x=leg<=1?leg:2-leg;return zoneStart?1-x:x;};
+  // La zona salta a un sitio nuevo cada ronda, dentro de la banda util y lejos de la anterior. Se
+  // sortea sobre el hueco permitido en vez de reintentar hasta acertar: reintentar no termina si
+  // el generador esta fijado, como en las pruebas.
+  const pickZone=previous=>{const lo=config.strengthZoneMin,hi=config.strengthZoneMax;
+   if(previous===null)return lo+Math.random()*(hi-lo);
+   const left=Math.max(0,previous-config.strengthZoneShift-lo),right=Math.max(0,hi-previous-config.strengthZoneShift),span=left+right;
+   if(span<=0)return previous>(lo+hi)/2?lo:hi;
+   const pick=Math.random()*span;return pick<left?lo+pick:previous+config.strengthZoneShift+(pick-left);};
+  const paintZone=()=>{const zone=config.strengthZoneRadius*zoneScale,core=config.strengthCoreRadius*zoneScale;
+   strengthView.zone.style.left=`${(zoneCentre-zone)*100}%`;strengthView.zone.style.width=`${zone*200}%`;
+   strengthView.core.style.left=`${(zoneCentre-core)*100}%`;strengthView.core.style.width=`${core*200}%`;};
+  const paintTime=remaining=>{const left=Math.max(0,remaining);
+   strengthView.time.style.width=`${left/strengthWindow(round)*100}%`;
+   const warn=left<=config.strengthTimeWarning?'1':'0';if(strengthView.time.dataset.warn!==warn)strengthView.time.dataset.warn=warn;};
   const button=(label,fn,onPress=false)=>{const b=node('button',label);b.type='button';b.addEventListener('pointerdown',event=>{if(event.button!==undefined&&event.button!==0)return;if(onPress){event.preventDefault();fn();return;}b.setPointerCapture?.(event.pointerId);held.add(b);presses.set(b,{round,valid:phase==='play'});});b.addEventListener('pointerup',()=>held.delete(b));b.addEventListener('pointercancel',()=>{held.delete(b);presses.delete(b);});b.addEventListener('lostpointercapture',()=>held.delete(b));b.addEventListener('click',event=>{if(onPress){if(event.detail===0)fn();return;}const press=presses.get(b);presses.delete(b);if(press&&press.round!==round)return;fn(press);});field.append(b);controls.push(b);return b;};
   const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());
    if(ok)gradeHaptic(gain);
@@ -119,18 +158,19 @@ globalThis.TrainingActivities=(()=>{
    setText(hint,t('minigame.strength.instructions'));
    // La pista entera es el control: con el dedo miras la barra, no un boton pequeno en una
    // esquina, asi que el objetivo tactil tiene que ser la barra.
-   const track=button('',()=>{if(done||hit||phase!=='play')return;hit=true;const precision=strengthPrecision(visibleStrengthPosition);earned+=precision;
+   const track=button('',()=>{if(done||hit||phase!=='play')return;hit=true;const precision=strengthPrecision(visibleStrengthPosition,zoneCentre,zoneScale);earned+=precision;
     haptic(precision===1?'good':precision>0?'fair':'bad');
     setText(hint,precision===1?t('minigame.strength.perfect'):precision>=config.strengthEdgeScore?t('minigame.strength.close'):precision>0?t('minigame.strength.edge'):t('minigame.strength.miss'));
     // Sin esto la ronda seguia corriendo hasta agotar la ventana: acertar pronto premiaba con
     // dos segundos y medio de pantalla quieta.
     phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);},true);
    track.className='timing-track';
-   const zone=node('div',undefined,'timing-zone'),core=node('div',undefined,'timing-core'),marker=node('div',undefined,'timing-marker'),caption=node('span',t('minigame.strength.action'),'timing-caption');
-   zone.style.left=`${config.strengthPerfectMin*100}%`;zone.style.width=`${(config.strengthPerfectMax-config.strengthPerfectMin)*100}%`;
-   core.style.left=`${(.5-config.strengthCoreRadius)*100}%`;core.style.width=`${config.strengthCoreRadius*200}%`;
-   track.append(zone,core,marker,caption);
-   targets=[marker];total=config.strengthRounds;
+   const zone=node('div',undefined,'timing-zone'),core=node('div',undefined,'timing-core'),marker=node('div',undefined,'timing-marker'),time=node('div',undefined,'timing-time'),caption=node('span',t('minigame.strength.action'),'timing-caption');
+   // El tiempo se agota EN la pista: en un juego de pulsacion exacta no se puede apartar la vista
+   // de la barra para leer una linea de texto, y hasta ahora la ronda se cortaba sin aviso.
+   // Zona y nucleo los coloca cada ronda `paintZone`, que es quien sabe donde ha caido.
+   track.append(zone,core,marker,time,caption);
+   strengthView={zone,core,time};targets=[marker];total=config.strengthRounds;
   }else if(attribute==='kindness'){
    setText(hint,t('minigame.kindness.instructions'));
    for(let i=0;i<config.cleanupTiles;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=cleanupWindow(round))||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;haptic(targets[i]?'good':'bad');setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
@@ -139,12 +179,15 @@ globalThis.TrainingActivities=(()=>{
   function beginRound(){
    phaseStart=performance.now();hit=false;
    if(attribute==='iq'){
-    // La secuencia crece anadiendo una luz, no rehaciendose entera: es lo que hace memorizable un
-    // Simon y lo que convierte cada ronda en la anterior mas un paso.
+    // Cada ronda es una cadena nueva, no la anterior mas una luz: alargar un prefijo ya memorizado
+    // dejaba las ultimas rondas en recordar un solo paso.
     phase='show';answer=0;roundCorrect=true;
-    sequence=round?[...sequence,Math.floor(Math.random()*4)]:Array.from({length:2},()=>Math.floor(Math.random()*4));
+    sequence=newChain(config.memoryLengths[round]??config.memoryLengths.at(-1));
    }else{
-    phase='play';if(attribute==='strength'){visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls.forEach(b=>b.disabled=false);
+    phase='play';
+    if(attribute==='strength'){zoneCentre=pickZone(round?zoneCentre:null);zoneScale=config.strengthZoneShrink**round;zoneStart=zoneCentre<=.5?1:0;
+     paintZone();paintTime(strengthWindow(round));visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}
+    controls.forEach(b=>b.disabled=false);
     if(attribute==='kindness'){
      // La basura ocupaba siempre tres casillas consecutivas (solo seis disposiciones posibles, y
      // todas un bloque), asi que se aprendia el patron en dos partidas. Ahora las casillas se
@@ -188,17 +231,21 @@ globalThis.TrainingActivities=(()=>{
      if(elapsed>=sequence.length*config.memoryFlash){phase='answer';phaseStart=performance.now();controls.forEach(b=>{b.disabled=false;b.classList.remove('lit');});}
     }else{if(!answer)setText(hint,t('minigame.iq.repeat'));if(elapsed>=memoryWindow(sequence.length)){haptic('bad');setText(hint,t('minigame.iq.tooSlow'));verdict();}}
    }else{
-    const duration=attribute==='strength'?config.strengthWindow:cleanupWindow(round);
+    const duration=attribute==='strength'?strengthWindow(round):cleanupWindow(round);
     if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
-     // Dejar pasar la ventana tambien se cuenta y se dice: antes la ronda cambiaba sin explicar
-     // que el marcador se habia escapado.
-     else{hit=true;haptic('bad');setText(hint,t('minigame.strength.miss'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
-    else if(attribute==='strength'){if(!hit)setText(hint,t('minigame.strength.now'));if(!hit){visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;}controls[0].disabled=hit;}
+     // Dejar pasar la ventana tambien se cuenta, y se dice con sus palabras: "fuera de zona"
+     // describia un fallo de punteria que en realidad no se ha llegado a cometer.
+     else{hit=true;haptic('bad');paintTime(0);setText(hint,t('minigame.strength.timeout'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
+    else if(attribute==='strength'){if(!hit){setText(hint,t('minigame.strength.now'));visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;paintTime(duration-elapsed);}controls[0].disabled=hit;}
 
     else if(hint.textContent!==t('minigame.kindness.collected')&&hint.textContent!==t('minigame.kindness.keep'))setText(hint,t('minigame.kindness.reminder'));
    }
    if(done)return;
-   setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((memoryWindow(sequence.length)-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds}):t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
+   // Fuerza tenia ventana de ronda pero no la enseñaba: se podia esperar a estar seguro y que la
+   // ronda cambiara sola. Ahora la cuenta atras esta en la pista y tambien aqui, como en Intelecto.
+   setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((memoryWindow(sequence.length)-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds})
+    :attribute==='strength'&&phase==='play'?t('minigame.common.timedRound',{round:round+1,total,seconds:Math.max(0,Math.ceil((strengthWindow(round)-(performance.now()-phaseStart))/1000))})
+    :t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
    if(!done){if(attribute==='strength')frame=requestFrame(tick);else timer=setTimeout(tick,config.tick);}
   }
   // Detras de los controles para no mover sus indices; Estilo no la lleva porque no tiene rondas

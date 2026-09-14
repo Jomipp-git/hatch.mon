@@ -3,13 +3,16 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
  for(const attribute of ['iq','strength','kindness']){
   const {run,els,advance}=await setup();run(`globalThis.result=null;globalThis.buzz=[];globalThis.navigator={vibrate:p=>{buzz.push(p);return true}};TrainingActivities.launch('${attribute}',{commit:(k,g)=>{result=g;return true}})`);
   // Fuerza necesita muestreo fino: la precision ya no es plana dentro de la zona, asi que hay que
-  // esperar a que el marcador cruce el centro en vez de pulsar en cuanto se habilita el control.
+  // esperar a que el marcador cruce el nucleo en vez de pulsar en cuanto se habilita el control.
   const step=attribute==='strength'?5:20;
   for(let elapsed=0;elapsed<60000&&run('result')===null;elapsed+=step){
    advance(step);const field=els['training-game-content'].children[3],buttons=field.children.filter(b=>b.tagName==='button');
    if(attribute==='iq'){const c=buttons.find(b=>b.textContent==='C');if(c&&!c.disabled)for(let i=0;i<6;i++)c.fire('click');}
-   if(attribute==='strength'){const b=buttons[0],marker=b?.children.find(c=>c.className==='timing-marker'),at=marker&&parseFloat(marker.style.left);
-    if(b&&!b.disabled&&Number.isFinite(at)&&Math.abs(at-50)<=3)b.fire('pointerdown');}
+   // La zona ya no esta siempre en el centro ni mide siempre lo mismo: se lee del propio nucleo
+   // pintado, que es exactamente lo que el jugador ve y lo que puntua 1.
+   if(attribute==='strength'){const b=buttons[0],marker=b?.children.find(c=>c.className==='timing-marker'),core=b?.children.find(c=>c.className==='timing-core');
+    const at=marker&&parseFloat(marker.style.left),half=core&&parseFloat(core.style.width)/2,centre=core&&parseFloat(core.style.left)+half;
+    if(b&&!b.disabled&&Number.isFinite(at)&&Number.isFinite(centre)&&Math.abs(at-centre)<=half)b.fire('pointerdown');}
    if(attribute==='kindness')for(const b of buttons)if(!b.disabled&&['papel','lata','botella'].includes(b.dataset.object))b.fire('click');
    if(attribute==='style'){const marker=field.children[0]?.children[1];if(marker&&parseFloat(marker.style.left)>=40&&parseFloat(marker.style.left)<=60){const b=buttons.find(b=>b.classList.contains('lit'));b?.fire('click');}}
   }

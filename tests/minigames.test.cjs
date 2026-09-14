@@ -84,8 +84,8 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  run('state.trainer.energy=1;closePanel();showPanel("training")');practice().fire('click');advance(60000);
  assert.equal(again(),undefined,'y no se ofrece si la siguiente sesion no se puede pagar');
 }
-// Intelecto: la ventana crece con la secuencia, la secuencia se alarga en vez de rehacerse, y
-// fallar corta la ronda en vez de dejarte teclear el resto a ciegas.
+// Intelecto: cada ronda sortea una cadena nueva de 2 a 6 luces en vez de alargar la anterior, la
+// ventana crece con ella, y fallar corta la ronda en vez de dejarte teclear el resto a ciegas.
 {
  const {run,els,advance}=await setup();
  const content=els['training-game-content'];
@@ -96,6 +96,7 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  run(`globalThis.lit=[];TrainingActivities.launch('iq',{commit:()=>true})`);
  settle(()=>status().includes('s para responder'));
  assert.equal(seconds(),3,'dos luces dan una ventana de 3 s, no los 4 s planos de antes');
+ assert.equal(run("TrainingActivities.config.memoryLengths.join(',')"),'2,3,4,5,6','una luz mas por ronda, hasta seis');
  // Math.random esta fijado en .5 en el arnes, asi que toda la secuencia es la tercera luz.
  keys()[2].fire('click');
  assert.equal(hint(),run("t('minigame.iq.entered',{done:1,total:2})"),'y se ve cuanto llevas tecleado');
@@ -111,9 +112,12 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  settle(()=>status().includes('Ronda 3'));
  settle(()=>status().includes('s para responder'));
  assert.equal(seconds(),5,'cuatro luces, cinco segundos');
- // La secuencia se alarga anadiendo una luz: el prefijo de la ronda anterior sigue estando.
- for(let i=0;i<4;i++)keys()[2].fire('click');
- assert.equal(hint(),run("t('minigame.iq.right')"),'repetir el prefijo mas una luz sigue valiendo');
+ // La cadena se rehace entera cada ronda, asi que estas cuatro luces son nuevas: no queda prefijo
+ // de la ronda anterior del que tirar.
+ for(let i=0;i<3;i++)keys()[2].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.entered',{done:3,total:4})"));
+ keys()[2].fire('click');
+ assert.equal(hint(),run("t('minigame.iq.right')"));
 }
 // Dos botones de la tarjeta, dos cosas distintas: el interrogante explica y nunca cobra, Empezar
 // arranca la partida sin repetir las reglas. Y empezar DESDE las reglas tiene que entrar en el

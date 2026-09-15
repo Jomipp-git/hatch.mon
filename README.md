@@ -146,6 +146,18 @@ Aumenta con comida útil/limpieza necesaria (+0,6), juego/entrenamiento (+1,5), 
 
 Tocar al compañero reacciona según sueño, enfermedad y atención acumulada; ya no existe una reacción específica de cansancio. Los tres primeros toques tolerados son positivos (+0,5 Ánimo, máximo 100); la carga baja 0,2 por minuto y tiene techo 12. Tras insistir, pide espacio sin dar vínculo. Despertarlo tocando enciende la luz y provoca sorpresa. Molestarlo o despertarlo puede restar 1 de Ánimo, con un máximo de una penalización por 5 minutos de vida: cien toques no dan cien recompensas ni cien penalizaciones. No cuesta AP. Huevos mantienen su calentamiento; los muertos y diálogos narrativos no admiten caricias.
 
+## Avisos de atención
+
+`attentionEngine.js` prioriza una sola necesidad a la vez (enfermedad 500, hambre crítica 400, suciedad 300, hambre 200, aburrimiento 100) y la presenta en la franja de Oak. `ATTENTION_CONFIG` centraliza el balance.
+
+La severidad es **el máximo entre el umbral y el tiempo**: los umbrales de cuidados fijan el nivel de entrada y cada 4 h de necesidad desatendida (`escalationStepMs`) sube un escalón hasta `serious`. El paso es el mismo para los cuatro tipos y para las ocho personalidades: mide la desatención del jugador, no el carácter del compañero, que ya se nota en **cuándo** empieza la necesidad (`socialDemand` sobre `boredomWaitMs`, `hungerPrompt` sobre los umbrales de hambre). Escalarlo otra vez por personalidad contaría lo mismo dos veces y no tendría equivalente en suciedad ni enfermedad. Por eso una necesidad que nace urgente nunca se anuncia como leve, y una que se ignora escala aunque sus números no se muevan. Antes la severidad solo leía el valor actual: el aburrimiento se quedaba en `warning` para siempre y «lleva un buen rato esperando comida» significaba en realidad «hambre por debajo de 30».
+
+Consecuencia de esa regla: `hunger` y `bored` recorren los tres niveles; `poop` y `sick` entran ya en `needsAttention`, así que su `warning` no se produce nunca **por diseño**, no por omisión. El catálogo `attention.*` tiene exactamente las diez claves alcanzables.
+
+`persistenceMs` retrasa el aviso 15 min en `warning` y 10 min en `needsAttention` para que un bajón momentáneo no lo dispare; `serious` y las necesidades inmediatas no esperan. Un aviso `serious` se repite cada 4 h (`seriousRepeatMs`) en lugar de callarse hasta la muerte; los no críticos comparten un enfriamiento de 2 h. Las horas de silencio (23–8 por defecto) solo bloquean la entrega web, no el aviso en pantalla, y las notificaciones exigen permiso explícito, desactivado de origen. Con una excepción: un aviso `serious` con el compañero en fase `critical` atraviesa el silencio **una vez por evento** (`quietBreak`, normalizado en `ensure` sin tocar el esquema 12); las repeticiones posteriores vuelven a esperar al amanecer. Sin esa excepción, entrar en crítico a medianoche significaba morir sin un solo aviso.
+
+La franja distingue los tres niveles por color, en rampa monótona sobre el fondo `#c8d2c3`: `warning` #4a5a2e (4,8:1), `needsAttention` #3a4d33 (5,9:1) y `serious` #263b30 en negrita (7,7:1). Antes `warning` no tenía estilo —era indistinguible del estado normal— y `needsAttention` se quedaba en 3,9:1, por debajo del mínimo AA.
+
 ## Pokédex y apariciones
 
 Pendiente para futuro: badges Visto, Cuidado, Evolucionado y Criado; sin rediseño actual.

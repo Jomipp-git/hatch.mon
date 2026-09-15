@@ -37,7 +37,7 @@ lo que aparece ahí cae en uno de estos cuatro moldes, y ninguno pasa de una lí
 | Canal | Qué es | Molde |
 |---|---|---|
 | Estado (`#health`) | se queda mientras dure la situación | nombra al compañero y apunta a la siguiente acción |
-| Aviso (`#health`) | reemplaza al estado y escala en tres niveles | el mismo, subiendo la urgencia sin repetir palabras |
+| Aviso (`#health`) | reemplaza al estado y escala por umbral y por tiempo desatendido | el mismo, subiendo la urgencia sin repetir palabras |
 | Resultado (`#toast`) | aparece tras una acción tuya | cuenta qué ha pasado, en pasado |
 | Bloqueo (`#toast`) | la acción no se ha podido hacer | por qué, y qué hacer para desbloquearla |
 

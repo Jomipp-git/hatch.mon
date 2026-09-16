@@ -44,7 +44,7 @@ test('rest blocks Play/Training without spending and permits non-energy care',as
 test('zero Energy and legacy Fatigue/exposure cannot cause sickness, critical or earlier death',async()=>{
  const h=await setup();let lifespan;
  for(const energy of [100,0]){
-  born(h);h.run(`state.care.energia=${energy};state.sleep.fatigue=100;state.vital.baseLifespan=4*24*60*60*1000;state.vital.exposure.energy=10000;for(let i=0;i<180;i++){state.care={hambre:100,felicidad:100,energia:${energy},higiene:100};minuteStep(${day}+i*${MINUTE})}`);
+  born(h);h.run(`state.care.energia=${energy};state.sleep.fatigue=100;state.vital.baseLifespan=4*24*60*60*1000;state.vital.lifespan=4*24*60*60*1000;state.vital.exposure.energy=10000;for(let i=0;i<180;i++){state.care={hambre:100,felicidad:100,energia:${energy},higiene:100};minuteStep(${day}+i*${MINUTE})}`);
   assert.equal(h.run('state.phase'),'alive');assert.equal(h.run('state.pokerus'),false);
   if(lifespan===undefined)lifespan=h.run('state.vital.lifespan');else near(h.run('state.vital.lifespan'),lifespan);
  }

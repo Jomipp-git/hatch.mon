@@ -3,8 +3,10 @@
 const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays:5,
   normalQuality:65,poorAdjustmentDays:-.35,excellentAdjustmentDays:.75,
   stages:[{id:'CRÍA',until:.20,hunger:1.10,hygiene:.95,recovery:1.15,play:1,risk:1},
-    {id:'JOVEN',until:.45,hunger:1,hygiene:1,recovery:1,play:1.10,risk:1},
-    {id:'MADURO',until:.80,hunger:1,hygiene:1,recovery:1,play:1,risk:1},
+    // JOVEN y MADURO eran 2,4 de los 4 dias de vida con todos los multiplicadores a 1 salvo un
+    // play 1.10 en JOVEN: dos nombres para la misma etapa. Fusionadas en ADULTO, que es la linea
+    // base contra la que CRIA y SENIOR se definen. Se pierde ese play 1.10 del 20-45% de la vida.
+    {id:'ADULTO',until:.80,hunger:1,hygiene:1,recovery:1,play:1,risk:1},
     {id:'SENIOR',until:Infinity,hunger:1.08,hygiene:1.10,recovery:.85,play:1,risk:1.15}]};
 const CARE_CONFIG={hour:3600000,minute:60000,max:100,
   decay:{hambre:8,felicidad:4,energia:0,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:2},sleepRecovery:24,awakeRecovery:2,restRecovery:8,
@@ -24,7 +26,7 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
     energy:'illness.energy',
     poops:'illness.poops',
     food:'illness.food'}};
-const BREEDING_CONFIG={lifeStage:'MADURO',happiness:70,minCare:40,maxPoops:1,maxDirt:50,oncePerLife:true};
+const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50,oncePerLife:true};
 const PERSONALITY_CONFIG=Object.freeze({
   sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},
   glutton:{labelKey:'personality.glutton',socialDemand:1,hungerPrompt:1.15},
@@ -121,9 +123,16 @@ globalThis.Vital=(()=>{
     energyResting(s);
     v.qualitySum+=(s.care.hambre+s.care.felicidad+s.care.higiene)/3;v.qualityMinutes++;
     const quality=v.qualitySum/v.qualityMinutes,normal=LIFE_CONFIG.normalQuality;
-    const adjustment=quality<normal?(1-quality/normal)*LIFE_CONFIG.poorAdjustmentDays:
-      (quality-normal)/(100-normal)*LIFE_CONFIG.excellentAdjustmentDays;
-    v.lifespan=bound(v.baseLifespan+adjustment*LIFE_CONFIG.day,LIFE_CONFIG.minDays*LIFE_CONFIG.day,LIFE_CONFIG.maxDays*LIFE_CONFIG.day);
+    // La vida se acumula minuto a minuto en vez de recalcularse desde la media de toda la vida. Con
+    // la media, el minuto 4.300 pesaba 1/4.300 y cuidar solo el ultimo tercio valia lo mismo que no
+    // cuidar nunca (-3,6 h frente a -3,4 h). Ahora cada minuto aporta su parte del rango completo,
+    // asi que cuidar cuenta siempre que se haga: toda la vida da el rango entero, el ultimo tercio
+    // da su tercio. Y no es una ventana: los minutos buenos del principio no se pierden.
+    const sample=(s.care.hambre+s.care.felicidad+s.care.higiene)/3;
+    const rate=sample<normal?(1-sample/normal)*LIFE_CONFIG.poorAdjustmentDays:
+      (sample-normal)/(100-normal)*LIFE_CONFIG.excellentAdjustmentDays;
+    const share=CARE_CONFIG.minute/v.baseLifespan;
+    v.lifespan=bound(v.lifespan+rate*share*LIFE_CONFIG.day,LIFE_CONFIG.minDays*LIFE_CONFIG.day,LIFE_CONFIG.maxDays*LIFE_CONFIG.day);
     for(const [cause,key,threshold] of [['hygiene','higiene',SICKNESS_CONFIG.hygieneThreshold]])
       v.exposure[cause]=s.care[key]<threshold?v.exposure[cause]+1:0;
     const cause=v.exposure.hygiene>=SICKNESS_CONFIG.exposureMinutes?'hygiene':

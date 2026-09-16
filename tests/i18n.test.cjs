@@ -18,7 +18,7 @@ test('Connect, QR and breeding use localized UI and validation messages',async()
  const text=node=>String(node.textContent||'')+node.children.map(text).join(' ');const output=text(els['panel-content']);
  for(const expected of ['Share companion','Breed','Receive Egg','Share Egg','Generate QR'])assert.match(output,new RegExp(expected));
  assert.equal(run("PokemonData.genderLabel('male')"),'Male');
- assert.equal(run('Vital.breedingReason(state)'),'It can only breed at the MATURE life stage.');
+ assert.equal(run('Vital.breedingReason(state)'),'It can only breed at the ADULT life stage.');
  assert.throws(()=>run("HatchMonSocial.unpack('bad',()=>true)"),/incomplete or corrupt/);
  run("selectSocialFlow('receive');socialAction(()=>importEntity('bad'))");
  assert.match(doc.getElementById('social-status').textContent,/incomplete or corrupt/);

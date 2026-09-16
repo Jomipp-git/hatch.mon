@@ -29,8 +29,15 @@ born();run('const beforeTraining=JSON.parse(JSON.stringify(state));train("iq")')
 run('state.care.higiene=82;state.care.felicidad=50;careAction("limpiar")');assert.equal(run('state.care.higiene'),100);assert.equal(run('state.care.felicidad'),53);assert.equal(run('state.vital.dirt'),0);
 // Lifespan configuration and stable seed output remain at the approved C values.
 assert.equal(run('LIFE_CONFIG.baseDays'),4);assert.equal(run('LIFE_CONFIG.variationDays'),.15);assert.equal(run('LIFE_CONFIG.minDays'),3.5);assert.equal(run('LIFE_CONFIG.maxDays'),5);assert.equal(run('LIFE_CONFIG.poorAdjustmentDays'),-.35);assert.equal(run('LIFE_CONFIG.excellentAdjustmentDays'),.75);
-// Explicitly reproduce the quality formula using the actually sampled care.
-born();run('const base=state.vital.baseLifespan;Vital.tick(state);const q=state.vital.qualitySum/state.vital.qualityMinutes;const expected=base+(q<65?(1-q/65)*-.35:(q-65)/35*.75)*DAY');approx(run('state.vital.lifespan'),run('expected'));
+// Bond no longer fills itself: the passive drip is a trickle, not the engine. At the old .04 a
+// companion reached 100 points on day 1,15 of a 4,5 day life with the player barely involved.
+assert.equal(run('RELATIONSHIP_CONFIG.goodCarePerMinute'),.005);
+born();run(`state.relationship.points=0;for(let i=0;i<1440;i++){state.care={hambre:100,felicidad:100,energia:100,higiene:100};Relationship.tick(state)}`);
+approx(run('state.relationship.points'),1440*.005);
+
+// Lifespan accrues per minute from its current value, so reproduce one minute of that accrual with
+// the actually sampled care. It is no longer a function of the running mean: every minute counts once.
+born();run('const base=state.vital.baseLifespan;const before=state.vital.lifespan;Vital.tick(state);const q=(state.care.hambre+state.care.felicidad+state.care.higiene)/3;const share=CARE_CONFIG.minute/base;const expected=before+(q<65?(1-q/65)*-.35:(q-65)/35*.75)*share*DAY');approx(run('state.vital.lifespan'),run('expected'));
 // Same mechanics awake/asleep when batch simulated, stepped or reloaded.
 for(const asleep of [false,true]){
  born();run(`state.lightsOff=${asleep};state.vital.digestion=2;const checkpoint${asleep}=JSON.stringify(state);advanceGameTime(8*HOUR);const result${asleep}=JSON.stringify(state);state=JSON.parse(checkpoint${asleep});for(let i=0;i<480;i++){advanceGameTime(MINUTE);if(i===240)state=JSON.parse(JSON.stringify(state));}`);

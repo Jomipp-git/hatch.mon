@@ -1,7 +1,12 @@
 /* Persistent relationship; care rules stay in Vital. No asset dependency. */
 'use strict';
+// goodCarePerMinute era .04, o sea +57,6 al dia: el Vinculo se llenaba solo el dia 1,15 de una vida
+// de 4,5 y el ritmo de juego apenas influia (0,14 d entre cuidar cada media hora y cada dos horas).
+// Con .005 el goteo deja de ser el motor y las acciones mandan: 5 corazones el dia 2,9 cuidando cada
+// 30 min, el 4,0 cada 2 h y el 4,3 cada 4 h. Sigue llegando en todas las cadencias, pero ahora es la
+// meta del tramo final en vez de un tramite del primer dia.
 const RELATIONSHIP_CONFIG={max:100,perHeart:20,closeBond:60,positiveMood:.5,attentionMax:12,attentionDecayPerMinute:.2,positiveTapLimit:3,penaltyCooldownMs:300000,
-  goodCareMinimum:70,goodCarePerMinute:.04,rewards:{care:.6,play:1.5,train:1.5,cure:3,evolve:5,touch:.25}};
+  goodCareMinimum:70,goodCarePerMinute:.005,rewards:{care:.6,play:1.5,train:1.5,cure:3,evolve:5,touch:.25}};
 globalThis.Relationship=(()=>{
  const t=(key,vars)=>globalThis.HatchI18n.t(key,vars);
  const fresh=()=>({points:0,attention:0,lastPenaltyAge:null});

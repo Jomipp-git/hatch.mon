@@ -6,7 +6,7 @@ run(gameSource().split('// UI:')[0]);
 function born(){run('state=freshState();state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")')}
 assert.equal(run('state.vital'),null);assert.equal(run('validSave(state)'),true);born();assert.equal(run('validSave(state)'),true);
 assert.equal(run('JSON.stringify(Vital.fresh("fixed"))===JSON.stringify(Vital.fresh("fixed"))'),true);
-for(const [fraction,stage] of [[0,'CRÍA'],[.2,'JOVEN'],[.45,'MADURO'],[.8,'SENIOR']]){run(`state.age=state.vital.lifespan*${fraction}`);assert.equal(run('Vital.getLifeStage(state)'),stage)}
+for(const [fraction,stage] of [[0,'CRÍA'],[.2,'ADULTO'],[.45,'ADULTO'],[.8,'SENIOR']]){run(`state.age=state.vital.lifespan*${fraction}`);assert.equal(run('Vital.getLifeStage(state)'),stage)}
 born();run('careAction("alimentar");careAction("alimentar")');assert.equal(run('state.care.hambre'),100);assert.equal(run('state.pokerus'),false);assert.equal(run('state.vital.poops.length'),0);assert.equal(run('state.vital.recentFeedingLoad'),2);assert.equal(run('state.vital.dirt'),12);
 run('const due=state.vital.nextPoopAt;advanceGameTime(44*MINUTE)');assert.equal(run('state.vital.poops.length'),0);run('advanceGameTime(77*MINUTE)');assert.ok(run('state.vital.poops.length')>=1);
 run('state.vital.digestion=DIGESTION_CONFIG.max;advanceGameTime(8*HOUR)');assert.equal(run('state.vital.poops.length'),3);assert.equal(run('validSave(state)'),true);

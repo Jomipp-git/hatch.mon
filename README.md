@@ -74,7 +74,7 @@ Pokérus depende de exposición y riesgos de la fisiología, no de una penalizac
 
 Lifespan mantiene base 4 días, variación inicial ±0,15 días y ajuste por calidad de cuidados con límites 3,5–5 días. C.2 no altera ninguna fórmula ni el balance C.1.
 
-`LifeStage` depende exclusivamente de **edad/lifespan**: CRÍA hasta 20%, JOVEN hasta 45%, MADURO hasta 80%, SENIOR después. `EvolutionStage` se lee de la especie canónica y es independiente: un Pichu puede ser MADURO y un Raichu JOVEN.
+`LifeStage` depende exclusivamente de **edad/lifespan**: CRÍA hasta 20%, ADULTO hasta 80%, SENIOR después. Eran cuatro etapas, pero JOVEN y MADURO tenían todos los multiplicadores a 1 salvo un juego ×1,10: dos nombres para la misma etapa, 2,4 de los 4 días de vida sin identidad mecánica. ADULTO es la línea base contra la que se definen las otras dos. `EvolutionStage` se lee de la especie canónica y es independiente: un Pichu puede ser MADURO y un Raichu JOVEN.
 
 ## Feedback y gráficos
 
@@ -241,7 +241,7 @@ La creación ocurre en el dispositivo de quien determina la descendencia: la hem
 
 Se mantiene el sobre **HM1**, QR/manual, checksum de corrupción e historial de IDs. Los códigos de huevos se importan a la reserva. Los códigos de criaturas vivas se usan **solo como perfiles remotos de crianza**: importar como compañero se rechaza y no se almacenan snapshots vivos. La exportación no transfiere propiedad ni elimina al compañero; sin servidor no existe control global de copias o propiedad.
 
-La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendencia canónicos; mantiene MADURO, Ánimo, salud y un huevo por criatura en este dispositivo. El resultado es siempre un huevo guardado. Historial de códigos y progenitores impide repetir operaciones; forma parte del guardado cloud de la cuenta. El intercambio de códigos sigue siendo offline, sin transacciones entre cuentas.
+La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendencia canónicos; mantiene ADULTO, Ánimo, salud y un huevo por criatura en este dispositivo. El resultado es siempre un huevo guardado. Historial de códigos y progenitores impide repetir operaciones; forma parte del guardado cloud de la cuenta. El intercambio de códigos sigue siendo offline, sin transacciones entre cuentas.
 
 **Schema de partida 12.** Los saves de otras versiones se invalidan y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
 

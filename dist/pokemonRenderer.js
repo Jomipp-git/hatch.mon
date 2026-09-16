@@ -28,6 +28,22 @@ const POKEMON_RENDER_CONFIG={maxWidth:112,maxHeight:120,placeholderScale:4,
   ]},
   memorial:{type:'matrix',pixels:['00111100','01222210','12311321','12311321','12111121','12311321','12333321','12333321','12222221','11111111']}
 };
+// Mismo cálculo que el filtro SVG `#lcd-palette`: luminancia y cuatro bandas discretas. Vive fuera
+// de `create()` porque lo piden dos sitios —el sprite del compañero y el retrato de Memorias— y dos
+// copias del mismo cálculo se separarían en cuanto se tocara una.
+function quantiseCanvas(canvas){
+  const ctx=canvas.getContext('2d');
+  if(typeof ctx?.getImageData!=='function')return false;
+  const frame=ctx.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+  const tones=POKEMON_RENDER_CONFIG.lcdPalette;
+  for(let i=0;i<data.length;i+=4){
+    if(!data[i+3])continue;
+    const luma=(.2126*data[i]+.7152*data[i+1]+.0722*data[i+2])/255;
+    const tone=tones[Math.min(tones.length-1,Math.floor(luma*tones.length))];
+    data[i]=tone[0];data[i+1]=tone[1];data[i+2]=tone[2];
+  }
+  ctx.putImageData(frame,0,0);return true;
+}
 globalThis.PokemonRenderer=(()=>{
   const cache=new Map();
   function definition(speciesId){return POKEMON_RENDER_CONFIG.placeholder;}
@@ -71,20 +87,7 @@ globalThis.PokemonRenderer=(()=>{
       for(let i=0;i<data.length;i+=4){if(!data[i+3])continue;data[i]=r;data[i+1]=g;data[i+2]=b;data[i+3]=255;}
       ctx.putImageData(frame,0,0);
     }
-    // Mismo cálculo que el filtro SVG: luminancia y cuatro bandas discretas.
-    function quantise(){
-      const ctx=canvas.getContext('2d');
-      if(typeof ctx.getImageData!=='function')return;
-      const frame=ctx.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
-      const tones=POKEMON_RENDER_CONFIG.lcdPalette;
-      for(let i=0;i<data.length;i+=4){
-        if(!data[i+3])continue;
-        const luma=(.2126*data[i]+.7152*data[i+1]+.0722*data[i+2])/255;
-        const tone=tones[Math.min(tones.length-1,Math.floor(luma*tones.length))];
-        data[i]=tone[0];data[i+1]=tone[1];data[i+2]=tone[2];
-      }
-      ctx.putImageData(frame,0,0);
-    }
+    const quantise=()=>quantiseCanvas(canvas);
     const cancel=()=>{if(timer!==null)clearTimeout(timer);timer=null;};
     const stop=()=>{serial++;cancel();key=null;currentDraw=null;host.replaceChildren();};
     function matrix(def){
@@ -233,5 +236,5 @@ function createEggController(sprite){
 }
     return createEggController(sprite);
   }
-  return Object.freeze({create,createEgg,definition,geometry});
+  return Object.freeze({create,createEgg,definition,geometry,quantiseCanvas});
 })();

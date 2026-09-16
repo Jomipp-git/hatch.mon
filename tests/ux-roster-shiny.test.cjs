@@ -26,6 +26,12 @@ assert.equal(folded.run(`state.pokedex['${staleKey}'].seen`),true);
 assert.deepEqual(folded.run(`state.pokedex['${staleKey}'].ownedIds`),folded.run(`state.pokedex['${staleKey}'].shiny.ownedIds`));
 assert.equal(run('Object.hasOwn(activeEntity(),"isShiny")'),false);
 run('die("natural")');assert.equal(run('state.social.memorials[0].isShiny'),true);
-run('collectionTab="memories";renderPokedex()');await flush();assert.ok(run('memorialRenderers.length')>0);
+run('collectionTab="memories";renderPokedex()');await flush();
+// Memorias pinta el retrato, no el sprite, asi que ya no hay renderer que registrar. Lo que importa
+// aqui es que un recuerdo shiny coja la variante shiny del retrato y no la normal.
+assert.equal(run('memorialRenderers.length'),0);
+assert.ok(run("memorialPortrait(state.social.memorials[0].canonicalSpeciesId,true).className.includes('memory-portrait')"));
+assert.notEqual(run("PMD_ASSETS[state.social.memorials[0].canonicalSpeciesId].shiny.portraits.Normal"),
+ run("PMD_ASSETS[state.social.memorials[0].canonicalSpeciesId].portraits.Normal"));
 console.log('PASS runtime roster, shiny probability 1–5, prepared identity save/evolution/memories, separate dex and unchanged QR field shape.');
 })().catch(e=>{console.error(e);process.exitCode=1});

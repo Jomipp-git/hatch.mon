@@ -120,7 +120,7 @@
   .time-controls button::before,.time-controls button::after{content:none!important;display:none!important}.time-controls button{background-image:none;box-shadow:none}
   #sprite[data-reaction="happy"]{animation:petSway .65s ease-in-out}@keyframes petSway{25%{translate:-2px 0}75%{translate:2px 0}}
   @media(prefers-reduced-motion:reduce){#sprite[data-reaction="happy"]{animation:none}}
-  .memory-card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #c5ccbd}.memory-card h3{font-size:.95rem;margin:0 0 6px}.memory-card p{font-size:.8rem;margin:5px 0;overflow-wrap:anywhere}.memory-sprite{display:flex;align-items:center;justify-content:center;min-width:0}.memory-sprite{width:80px;height:80px}.memory-sprite canvas{width:80px!important;height:80px!important}.memory-hearts{display:flex;gap:3px;margin:8px 0}.memory-hearts .pixel-icon{font-size:12px;width:12px;height:12px;color:#395947}.memory-hearts .empty{opacity:.25}
+  .memory-card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #c5ccbd}.memory-card h3{font-size:.95rem;margin:0 0 6px}.memory-card p{font-size:.8rem;margin:5px 0;overflow-wrap:anywhere}.memory-sprite{display:flex;align-items:center;justify-content:center;min-width:0}.memory-sprite{width:80px;height:80px}.memory-portrait canvas{display:block;width:80px;height:80px;image-rendering:pixelated}.memory-card:not([data-frame]) .memory-portrait canvas{border:1px solid #8d9a86}.memory-sprite canvas{width:80px!important;height:80px!important}.memory-hearts{display:flex;gap:3px;margin:8px 0}.memory-hearts .pixel-icon{font-size:12px;width:12px;height:12px;color:#395947}.memory-hearts .empty{opacity:.25}
   /* Fixed hardware slots: content and sprite bounds cannot size the shell. */
   .console{height:684px;display:grid;grid-template-rows:32px 358px 56px 60px 18px 44px 16px;gap:8px;overflow:hidden}
   .console>header{grid-row:1;margin:0;min-width:0}.bezel{grid-row:2;height:358px;min-width:0}.screen{height:334px;padding:16px 12px}
@@ -392,7 +392,7 @@ const EGG_SHOWCASE=Object.freeze({eggNamed:{price:600},eggShiny:{price:2500}});
 const SHELL_PRICE=450;
 // Cambiar el mote se paga. Es sumidero de entrenador y se repite con cada compañero, asi que absorbe
 // ingreso de forma continua, que es lo que le faltaba a la economia.
-const RENAME_PRICE=120,NICKNAME_MAX=20;
+const RENAME_PRICE=120,NICKNAME_MAX=20,MEMORIAL_PORTRAIT=80;
 // El marco se compra POR recuerdo, no una vez: escala con el juego, asi que es un sumidero
 // recurrente disfrazado de cosmetico. Es estado de la partida, no preferencia del entrenador,
 // porque pertenece a un compañero concreto.
@@ -1514,6 +1514,35 @@ function interactWithPokemon(){const response=Relationship.interact(state);if(!r
 let dexVariant='normal';
 let collectionTab='companion',memorialRenderers=[];
 function disposeMemorialSprites(){for(const renderer of memorialRenderers)renderer.stop();memorialRenderers=[];}
+// Memorias enseña el RETRATO, no el sprite. Un recuerdo es una foto enmarcada, y el retrato ya es
+// una foto —cuadrada, con fondo propio y autocontenida—, mientras que el sprite es una criatura viva
+// y animada. Siempre la emoción `Normal`: es la única con las 77 formas, así que ningún recuerdo se
+// ve distinto de otro por un hueco del catálogo.
+// Va en canvas y no en <img> por el modo LCD: en iOS el filtro SVG del ancestro no llega a lo que se
+// pinta dentro, igual que le pasaba al sprite, así que se cuantiza aquí.
+function memorialPortrait(id,isShiny=false){
+  //  es un  de script clasico: existe como binding global pero NO como propiedad
+  // de globalThis, asi que hay que nombrarlo a secas. El resto del proyecto ya lo hace con typeof.
+  const canonical=PokemonData.canonicalId(id);
+  const entry=typeof PMD_ASSETS==='undefined'?null:PMD_ASSETS[canonical];
+  const variant=isShiny&&entry?.shiny?entry.shiny:entry;
+  const src=variant?.portraits?.Normal;
+  if(!src)return collectionSprite(id,isShiny);
+  const name=PokemonData.get(id)?.DisplayName||id;
+  const visual=el('div',undefined,'memory-sprite memory-portrait');
+  visual.setAttribute('role','img');visual.setAttribute('aria-label',name);
+  const canvas=el('canvas');canvas.width=MEMORIAL_PORTRAIT;canvas.height=MEMORIAL_PORTRAIT;
+  visual.append(canvas);
+  const image=new Image();
+  image.onload=()=>{
+    const ctx=canvas.getContext('2d');if(!ctx)return;
+    ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(image,0,0,canvas.width,canvas.height);
+    if(displayMode==='lcd')PokemonRenderer.quantiseCanvas(canvas);
+  };
+  image.src=src;
+  return visual;
+}
 function collectionSprite(id,isShiny=false,silhouette=false){
   const name=PokemonData.get(id)?.DisplayName||id;
   const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');
@@ -1646,7 +1675,7 @@ function renderPokedex(){
   if(!state.social.memorials.length)content.append(el('p',t('memories.empty')));
   for(const memory of state.social.memorials){
     const snap=memory.snapshot,id=memory.canonicalSpeciesId||memory.speciesId,data=PokemonData.get(id);
-    const card=el('article',undefined,'memory-card'),visual=collectionSprite(id,memory.isShiny===true);
+    const card=el('article',undefined,'memory-card'),visual=memorialPortrait(id,memory.isShiny===true);
     const copy=el('div');copy.append(el('h3',`${data?.DisplayName||memory.speciesId} ${PokemonData.genderSymbol(snap.gender)}`));
     if(snap.nickname)copy.append(el('p',`“${snap.nickname}”`,'memory-nickname'));
     const hearts=el('div',undefined,'memory-hearts'),filled=Relationship.hearts({relationship:{points:memory.bond||0}});hearts.setAttribute('role','img');hearts.setAttribute('aria-label',t('memories.bond',{hearts:filled}));

@@ -269,6 +269,16 @@ El plástico oscuro además aporta `shellText`: el texto de chrome —el logotip
 
 Se valoró mover los seis botones a un cajón lateral, que sí lo resolvía —liberaba 73 y 62 px en iPhone SE—, y se descartó: habría costado un toque más en los seis destinos, incluidos Entrenamiento y Mochila, que se abren cada sesión, a cambio de mobiliario opcional. La línea de suelo que quedó de esa pasada también salió: sin objetos ni alfombra no tenía a qué anclar. Todo queda en el historial de git.
 
+## El retrato de Memorias
+
+Memorias enseña el **retrato**, no el sprite. Un recuerdo es una foto enmarcada, y el retrato ya es una foto —cuadrada, con fondo propio y autocontenida—, mientras que el sprite es una criatura viva y animada. Con los marcos delante, el par encaja.
+
+**Siempre la emoción `Normal`.** Es la única de las nueve con las 77 formas —el resto falla en 7 a 11—, así que ningún recuerdo se ve distinto de otro por un hueco del catálogo. Los recuerdos shiny cogen la variante shiny, que también tiene cobertura completa.
+
+Va en **canvas y no en `<img>`** por el modo LCD: en iOS el filtro SVG del ancestro no llega a lo que se pinta dentro, igual que le pasaba al sprite, así que se cuantiza en el propio canvas con `PokemonRenderer.quantiseCanvas`. 40×40 escalado a 80 es un 2× exacto, sin interpolación. Si la forma no tuviera retrato, cae al sprite de siempre en vez de dejar el hueco.
+
+Un retrato es un canvas quieto, así que **no registra ningún renderer**: `disposeMemorialSprites` ya no tiene nada que parar en esa pestaña. La Pokédex sigue usando el sprite animado.
+
 ## Marcos de Memorias
 
 `memorialFrames.js` dibuja seis marcos —clásico, escuadra, festón, hojas, piedra y estrellas— como **9-slice de 8 px servido en `border-image`**, que es el mismo contrato que usan los cuadros de texto de los Pokémon de GBA: cuatro esquinas fijas y cuatro lados que se repiten. Una esquina dibujada, cuatro usadas por espejo.

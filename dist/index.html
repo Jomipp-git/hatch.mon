@@ -120,7 +120,7 @@
   .time-controls button::before,.time-controls button::after{content:none!important;display:none!important}.time-controls button{background-image:none;box-shadow:none}
   #sprite[data-reaction="happy"]{animation:petSway .65s ease-in-out}@keyframes petSway{25%{translate:-2px 0}75%{translate:2px 0}}
   @media(prefers-reduced-motion:reduce){#sprite[data-reaction="happy"]{animation:none}}
-  .memory-card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #c5ccbd}.memory-card h3{font-size:.95rem;margin:0 0 6px}.memory-card p{font-size:.8rem;margin:5px 0;overflow-wrap:anywhere}.memory-sprite{display:flex;align-items:center;justify-content:center;min-width:0}.memory-sprite{width:80px;height:80px}.memory-sprite canvas{width:80px!important;height:80px!important}.dex-card{padding:8px 0;grid-template-columns:80px minmax(0,1fr);gap:10px}.memory-hearts{display:flex;gap:3px;margin:8px 0}.memory-hearts .pixel-icon{font-size:12px;width:12px;height:12px;color:#395947}.memory-hearts .empty{opacity:.25}
+  .memory-card{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #c5ccbd}.memory-card h3{font-size:.95rem;margin:0 0 6px}.memory-card p{font-size:.8rem;margin:5px 0;overflow-wrap:anywhere}.memory-sprite{display:flex;align-items:center;justify-content:center;min-width:0}.memory-sprite{width:80px;height:80px}.memory-sprite canvas{width:80px!important;height:80px!important}.memory-hearts{display:flex;gap:3px;margin:8px 0}.memory-hearts .pixel-icon{font-size:12px;width:12px;height:12px;color:#395947}.memory-hearts .empty{opacity:.25}
   /* Fixed hardware slots: content and sprite bounds cannot size the shell. */
   .console{height:684px;display:grid;grid-template-rows:32px 358px 56px 60px 18px 44px 16px;gap:8px;overflow:hidden}
   .console>header{grid-row:1;margin:0;min-width:0}.bezel{grid-row:2;height:358px;min-width:0}.screen{height:334px;padding:16px 12px}
@@ -337,7 +337,6 @@ const LABELS=Object.fromEntries([...CARE,...TRAIN].map(k=>[k,k]));
 for(const k of [...CARE,...TRAIN])Object.defineProperty(LABELS,k,{get:()=>t(`stat.${k}`)});
 const itemLabel=id=>t(`item.${id}`)||itemCatalog[id]?.name||id;
 const evolutionActionLabel=id=>t(`oak.requirement.action.${id}`)||id;
-const DECAY=CARE_CONFIG.decay;
 // Las tasas configuradas conservan decimales en cada muestra de un minuto.
 const MAX_AP=CARE_CONFIG.trainerMax, DROP_CHANCE=CARE_CONFIG.dropChance;
 // Cinco PNG transparentes 4×4; celda calculada desde naturalWidth/4 y naturalHeight/4.
@@ -1238,9 +1237,6 @@ function stopSocialCamera(){
   socialCameraStream?.getTracks().forEach(track=>track.stop());socialCameraStream=null;
   const video=document.getElementById('social-video');if(video){video.srcObject=null;video.hidden=true;}
 }
-function socialEntryButton(){const b=el('button',t('open'));b.type='button';b.addEventListener('click',()=>{
-  sync();save();render();if(interactionLocked())return;stopSocialCamera();panelName='social';$('panel-content').dataset.socialReady='';renderPanel();
-});return b;}
 function socialStatus(message){const node=document.getElementById('social-status');if(node)node.textContent=String(message);}
 function socialAction(callback){
   sync();try{if(interactionLocked())throw Error(t('connect.interactionLocked'));const message=callback();if(message)socialStatus(message);}

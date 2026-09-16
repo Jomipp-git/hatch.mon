@@ -22,25 +22,10 @@
   .scene-layer{position:relative;z-index:0;width:100%;min-width:0}
   .habitat{width:100%;text-align:center;min-height:218px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
   /* Nunca roban toques: el del compañero es el gesto del Vínculo y no se puede pisar. */
-  /* Misma tinta que los iconos de los botones, y cambia con la luz igual que ellos: la capa no se
-     atenua, cambia de color, que es la logica del resto de la pantalla. */
-  #room-layer{position:absolute;inset:0;pointer-events:none;color:#4a6350}
-  .lights-off #room-layer{color:#9fb79c}
-  #room-layer::before{content:'';position:absolute;left:0;right:0;bottom:118px;height:1px;background:currentColor;opacity:.22}
-  .room-object{position:absolute}
-  .room-object::before{content:'';position:absolute;left:0;top:0;width:3px;height:3px;background:transparent;box-shadow:var(--pixels)}
-  /* Perspectiva: cuanto más atrás, más arriba y más pequeño. Es lo único que separa un cuarto con
-     fondo y suelo de cuatro iconos pegados a los bordes. El escalado va sobre la esquina de apoyo. */
-  .room-object[data-depth="back"]{transform:scale(.6);transform-origin:bottom center}
-  .room-object[data-depth="mid"]{transform:scale(.62);transform-origin:bottom center}
-  .room-object[data-slot="wall-left"]{left:44px;top:18px}
-  .room-object[data-slot="wall-right"]{right:44px;top:18px}
-  .room-object[data-depth="front"]{transform:scale(.72);transform-origin:bottom center}
-  .room-object[data-slot="floor-left"]{left:44px;bottom:94px}
-  /* Un escalón más atrás que la izquierda: dos objetos en la misma línea exacta matan la profundidad. */
-  .room-object[data-slot="floor-right"]{right:46px;bottom:104px}
-  /* El compañero se planta DENTRO de la alfombra: la mitad de arriba le queda detrás. */
-  .room-object[data-slot="rug"]{left:50%;transform:translateX(calc(-50% + var(--spriteOffsetX,0px)));bottom:98px}
+  /* Línea donde la pared se junta con el suelo. Es decorado del cuarto, no un objeto que se compre:
+     sin ella el compañero flota en un vacío en vez de estar de pie en algún sitio. */
+  .habitat::after{content:'';position:absolute;left:0;right:0;bottom:92px;height:1px;background:#4a6350;opacity:.22;pointer-events:none}
+  .lights-off .habitat::after{background:#9fb79c}
   #creature-button{border:0;background:transparent;box-shadow:none;padding:0;width:var(--sprite-size);height:var(--sprite-size);min-width:0;flex-shrink:0;display:grid;place-items:center}#creature-button:disabled{opacity:1}
   #sprite{display:flex;align-items:center;justify-content:center;width:var(--sprite-size);height:var(--sprite-size);font-size:calc(var(--sprite-size) * .45);line-height:1;filter:drop-shadow(0 6px 0 #526b3920)}
   h2{font-size:1.05rem;margin:8px 0} #health{font-size:.875rem;margin:0 0 12px}.subtle{font-size:.875rem;color:#555065}
@@ -233,7 +218,6 @@
     <nav class="screen-tools settings-tool" data-i18n-aria="ui.settingsShop"><button type="button" data-panel="settings" data-i18n-aria="settings" data-i18n-title="settings"><span class="pixel-icon" data-icon="settings" aria-hidden="true"></span></button><button type="button" data-panel="shop" data-i18n-aria="shop" data-i18n-title="shop"><span class="pixel-icon" data-icon="shop" aria-hidden="true"></span></button><button type="button" data-panel="social" data-i18n-aria="breeding" data-i18n-title="breeding"><span class="pixel-icon" data-icon="egg" aria-hidden="true"></span></button></nav>
     <div class="scene-layer">
     <div class="habitat">
-      <div id="room-layer" aria-hidden="true"></div>
       <button id="creature-button" type="button"><span id="sprite" role="img"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
       <div id="poop-layer" data-i18n-aria="ui.habitatDirt" hidden></div>
       <p id="nickname" hidden></p>
@@ -292,7 +276,6 @@
 <script type="text/plain" data-game-src="assets/skins/themes.js"></script>
 <script type="text/plain" data-game-src="shellSkins.js"></script>
 <script type="text/plain" data-game-src="memorialFrames.js"></script>
-<script type="text/plain" data-game-src="roomObjects.js"></script>
 <script type="text/plain" data-game-src="styleTracing.js"></script>
 <script type="text/plain" data-game-src="trainingActivities.js"></script>
 <script type="text/plain" data-game-src="assets/pmd/manifest.js"></script>
@@ -361,21 +344,18 @@ const itemCatalog={
   tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50},
   // Ditto no es un compañero al que cuidar: es el objeto que hace de pareja cuando no hay otra
   // persona. Se gasta al crear el huevo, así que la crianza es un sumidero recurrente de monedas.
-  ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300},
-  rug:{get name(){return t('item.rug');},icon:'bag',kind:'home',price:150}
+  ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300}
 };
 // Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
-const ITEM_GROUPS=['berry','stone','medicine','drink','breeding','home'];
+const ITEM_GROUPS=['berry','stone','medicine','drink','breeding'];
 const itemDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.goodFood')):
     item.kind==='drink'?t('ui.inventory.tea'):item.kind==='medicine'?t('ui.inventory.medicineAmmo'):
-    item.kind==='breeding'?t('ui.inventory.breeding'):
-    item.kind==='home'?t('ui.inventory.placed'):t('ui.inventory.evolution');};
+    item.kind==='breeding'?t('ui.inventory.breeding'):t('ui.inventory.evolution');};
 const shopDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):
     item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):
-    item.kind==='breeding'?t('ui.shop.ditto'):
-    item.kind==='home'?t(`ui.shop.${id}`):t('ui.shop.evolutionItem');};
+    item.kind==='breeding'?t('ui.shop.ditto'):t('ui.shop.evolutionItem');};
 // Indexado por nota 1..5. Antes el array empezaba en 0 y ese hueco era inalcanzable, porque
 // Math.max(1,...) fijaba el indice minimo en 1.
 const COIN_REWARDS=Object.freeze([2,4,7,11,16]);
@@ -1434,7 +1414,6 @@ function render(forceFeedback=false){
   const hint=$('egg-hint');hint.hidden=!egg;if(egg&&hint.textContent!==eggStage().message)hint.textContent=eggStage().message;
   const attention=attentionMessage(),health=attention||companionStatus();
   const poopLayer=$('poop-layer');poopLayer.replaceChildren();poopLayer.hidden=egg||birth||dead;
-  renderRoom();
   if(!poopLayer.hidden)for(const poop of state.vital.poops){const node=el('span',undefined,'poop');node.setAttribute('role','img');node.setAttribute('aria-label',t('ui.poopAria'));poopLayer.append(node);}
   $('health').textContent=health;$('health').hidden=!health;$('health').dataset.attention=attention?state.attentionEvent.severity:'';
   if(!egg)for(const k of CARE){const changed=Number($(k).value)!==state.care[k];$(k).value=state.care[k];$(k).dataset.level=state.care[k]<=20?'low':state.care[k]<=50?'warning':'good';$(k).textContent=`${Math.round(state.care[k])}%`;$(`value-${k}`).textContent=Math.round(state.care[k]);if(changed&&forceFeedback){$(k).classList.remove('meter-changed');void $(k).offsetWidth;$(k).classList.add('meter-changed');}}
@@ -1492,35 +1471,6 @@ function interactWithPokemon(){const response=Relationship.interact(state);if(!r
 let dexVariant='normal';
 let collectionTab='companion',memorialRenderers=[];
 function disposeMemorialSprites(){for(const renderer of memorialRenderers)renderer.stop();memorialRenderers=[];}
-// Solo se dibuja lo que tienes: con dos objetos la habitación se ve tranquila y la versión llena es
-// de final de partida. Uno por ranura, y el que no quepa no se dibuja en vez de solaparse.
-function renderRoom(){
-  const layer=document.getElementById('room-layer');if(!layer)return;
-  layer.replaceChildren();
-  if(!alive())return;
-  // 72 de las 77 formas caen dentro de 1 px del centro de su marco, pero Dratini se va 3, que a
-  // tamaño de pantalla son 13. El dato lo aporta el generador de metricas, asi que en runtime esto
-  // es una multiplicacion y una variable CSS.
-  const metrics=PMD_LIST_METRICS[PokemonData.canonicalId(state.pokemonId)];
-  // El tamaño se lee del boton del compañero, no de la variable CSS: `--sprite-size` es un clamp()
-  // y una propiedad personalizada devuelve su texto sin resolver, asi que parseFloat daba NaN.
-  const rendered=document.getElementById('creature-button')?.getBoundingClientRect().width||0;
-  layer.style.setProperty('--spriteOffsetX',`${(metrics?.offsetX||0)*rendered}px`);
-  const taken=new Set();
-  for(const id of RoomObjects.list()){
-    if(!(state.inventory[id]>0))continue;
-    const slot=RoomObjects.slot(id);
-    if(!slot||taken.has(slot))continue;
-    taken.add(slot);
-    const node=el('div',undefined,'room-object'),box=RoomObjects.size(id);
-    node.dataset.slot=slot;node.dataset.depth=RoomObjects.depth(id);
-    node.style.setProperty('--pixels',RoomObjects.pixels(id));
-    // El ::before dibuja desde la esquina inferior izquierda, asi que la caja tiene que medir lo
-    // que mide el dibujo o el anclaje al suelo se desplaza.
-    node.style.width=`${box.width}px`;node.style.height=`${box.height}px`;
-    layer.append(node);
-  }
-}
 function collectionSprite(id,isShiny=false,silhouette=false){
   const name=PokemonData.get(id)?.DisplayName||id;
   const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');

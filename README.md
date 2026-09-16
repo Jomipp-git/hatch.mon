@@ -263,31 +263,13 @@ Dos cosas que el sistema de carcasas no tenía y que estas piden:
 
 El plástico oscuro además aporta `shellText`: el texto de chrome —el logotipo y la línea del entrenador— estaba fijado en un gris oscuro y era ilegible sobre el neón.
 
-## Objetos de la habitación
+## La habitación
 
-`roomObjects.js` solo dibuja y coloca; la mecánica de cada objeto vive donde vive su balance —el desgaste del aspirador, en `HOME_CONFIG` junto a la digestión—. El dibujo es **rejilla de píxeles en `box-shadow`**, el mismo idioma que los iconos de los botones: un solo color, y ese color es `currentColor`. Eso es lo que hace que al apagar la luz sigan la misma lógica que el resto de la pantalla —la capa cambia de tinta, no de opacidad— y lo que los mantiene sin protagonismo: son mobiliario, no personajes. El SVG multicolor se queda para las carcasas y los marcos, que sí tienen que destacar.
+Una línea de 1 px a la altura de los pies del compañero, al 22 % de opacidad, dibujada por `.habitat::after` y con su color propio cuando la luz está apagada. Sin ella el compañero flota en un vacío en vez de estar de pie en algún sitio.
 
-**Las ranuras salen de medir la pantalla, no de suponerla.** En móvil la LCD son 322 × 334 px y las dos columnas de botones ocupan los flancos hasta 148 px de alto, así que el sitio libre es:
+**Los objetos de habitación se retiraron enteros el 16-09-2026**, después de construirlos y mirarlos en pantalla: aspiradora, comedero y alfombra, con sus mecánicas —desgaste, parcialidad, coste recurrente— funcionando y probadas. El motivo no fue la mecánica sino el sitio. Medido sobre la pantalla real, el hueco libre a cada lado del compañero es de **31 y 20 px en iPhone SE** (38 y 28 en iPhone 14), porque las dos columnas de botones ocupan los flancos hasta 148 px de alto; un mueble apoyado necesita 47. Abajo no hay suelo, hay el nombre, la especie y las barras, y ahí se leían como un botón más.
 
-```
-pared izq / der    30 × 62    la franja entre los botones y el compañero
-suelo izq / der    52 × 50    por debajo de los botones, a los lados del nombre (centrado)
-alfombra           150 × 24   bajo el compañero, detrás; no pide sitio nuevo
-```
-
-Tres reglas que la habitación no puede romper: **uno por ranura** —el que no quepa no se dibuja en vez de solaparse—; **solo se dibuja lo que tienes**, así que con dos objetos la habitación se ve tranquila y la versión llena es de final de partida; y **`pointer-events:none`**, porque el toque sobre el compañero es el gesto del Vínculo. La capa baja con `.lights-off` junto al resto del cuarto.
-
-No se gana alto ni se mueven los botones: medido, en iPhone SE la página ya scrollea y en iPhone 14 encaja con 0 px de margen, así que cualquier metro cuadrado extra saldría de empujar los botones de cuidado por debajo del pliegue.
-
-**Línea de suelo.** Una línea de 1 px a lo ancho del hábitat, al 22 % de opacidad, dibujada por el propio `#room-layer`. No es un objeto que se compre: es el cuarto, así que está siempre. Sin ella «más al fondo» y «flotando» se parecen demasiado, y es lo que convierte el escalado en perspectiva de verdad.
-
-**Alfombra.** Cosmética pura, sin mecánica. Óvalo en escorzo y **el compañero se planta dentro**: la mitad de atrás le queda tras el cuerpo. El relleno va con **trama al 50 %** —el damero clásico de 1 bit—, que es como se pinta un medio tono cuando solo hay una tinta: ni maciza, que se leía como una vía de tren, ni hueca, que se leía como un charco. El borde sí va macizo, que es lo que la cierra.
-
-Va **alineada con el bicho dibujado, no con su caja**. El sprite PMD no está centrado en su propio marco: medido sobre las 77 formas, 72 caen dentro de 1 px del centro, pero Dratini se va 3 y Azurill 2 —13 y 12 px a tamaño de pantalla—. `tools/generateListMetrics.py` ya calculaba `getbbox()` y solo guardaba el tamaño; ahora guarda también `offsetX`, el desvío horizontal como fracción del marco. En runtime es una multiplicación y una variable CSS, así que el coste en móvil es cero.
-
-El tamaño se lee del ancho renderizado del botón del compañero y no de `--sprite-size`: esa variable es un `clamp()`, y una propiedad personalizada devuelve su texto sin resolver.
-
-**Aspirador y comedero: retirados el 16-09-2026.** Se construyeron y se quitaron al verlos en pantalla. Medido: la franja que es habitación son los 322 px de la LCD **menos las dos columnas de botones, o sea 234**, y la alfombra ocupa **144**. Los 45 px que quedan a cada lado no dan para un mueble que se apoye en el suelo, y abajo no hay suelo sino el nombre, la especie y las barras, donde se leían como un botón más. Las ranuras de pared siguen definidas: un objeto **colgado** no necesita suelo, y es el camino si se retoma.
+Se valoró mover los seis botones a un cajón lateral, que sí lo resolvía —liberaba 73 y 62 px en iPhone SE—, y se descartó: habría costado un toque más en los seis destinos, incluidos Entrenamiento y Mochila, que se abren cada sesión, a cambio de mobiliario opcional. Todo queda en el historial de git.
 
 ## Marcos de Memorias
 

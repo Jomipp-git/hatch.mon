@@ -1272,23 +1272,21 @@ Lo aplicado en su lugar:
 modal y no existe una tira de objetos en la pantalla principal; crearla saldría del margen vertical,
 que está medido en **cero** —en iPhone SE la página ya scrollea—, o sea de los botones de cuidado.
 
-- **Automatizadores.** Empezados y **parados** el 16-09-2026. El aspirador y el comedero llegaron a
-  funcionar —desgaste, parcialidad, coste— y se retiraron al verlos en pantalla: no por la mecánica
-  sino por el sitio. Medido, la franja que es habitación son 322 px menos las dos columnas de botones
-  = **234**, y la alfombra ocupa **144**; los 45 px por lado no dan para un mueble apoyado, y la zona
-  de abajo no es suelo sino el nombre y las barras, donde se leían como un botón. Queda en el
-  historial y las ranuras de pared siguen definidas: **un objeto colgado no necesita suelo**, así que
-  interruptor y termostato siguen siendo viables cuando se retome.
-  Lo que sí se queda de esa pasada: la habitación con perspectiva, la línea de suelo y la alfombra. **Dos de los siete propuestos se
-  eliminan, y el código da el motivo:**
-  - **Despertador** — «avisa al cruzar un umbral, sin actuar» es literalmente lo que ya hace
-    `attentionEngine.js` **gratis**: cuatro tipos de aviso, tres severidades, escalada por tiempo
-    desatendido, horas de silencio y notificación web, con sus ajustes en `attentionSettings`.
-    Venderlo sería cobrar por algo que el jugador ya tiene.
-  - **Botiquín** — sería la **tercera** vía a la misma cura: «Curar» ya es una acción del juego
-    cuando hay Pokérus, y la medicina de 70 hace lo mismo con un objeto. Y es la única de las tres
-    que funciona estando fuera, así que premia la ausencia — lo que esta auditoría ya descartó al
-    rechazar acumular acciones offline.
+- **Automatizadores y decoración: cancelados enteros** el 16-09-2026, por el autor y con razón. Se
+  construyeron aspiradora, comedero y alfombra —con desgaste, parcialidad y coste recurrente, todo
+  probado— y se retiraron al verlos en pantalla. **El problema nunca fue la mecánica, fue el sitio.**
+  Medido: el hueco libre a cada lado del compañero es de 31 y 20 px en iPhone SE, porque las dos
+  columnas de botones ocupan los flancos hasta 148 px de alto, y un mueble apoyado necesita 47. Abajo
+  no hay suelo, hay el nombre y las barras.
+
+  Se valoró un cajón lateral para los seis botones, que sí lo resolvía —73 y 62 px libres en iPhone
+  SE—, y se descartó: un toque más en los seis destinos, incluidos Entrenamiento y Mochila que se
+  abren cada sesión, a cambio de mobiliario opcional. Cambiar navegación que funciona a diario por un
+  adorno ocasional es un mal trato.
+
+  **Lección para el próximo intento:** antes de dibujar nada, medir el hueco. Las tres piezas estaban
+  bien hechas y ninguna cabía. Lo único que sobrevive es la línea de suelo.
+
 - ~~**Incienso o cebo (~150).**~~ **Retirado por el autor.** Su nivel de «control parcial» quedó
   estrujado entre el Ditto de 300, que da tu línea, y el huevo de 600, que da especie exacta. No llegó
   a existir en código, así que retirarlo es no construirlo.

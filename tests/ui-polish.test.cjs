@@ -9,6 +9,11 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  run('showToast("Una comida. 🍎")');assert.equal(els.toast.textContent,'Una comida.');
  const html=fs.readFileSync('index.html','utf8');assert.ok(!/\p{Extended_Pictographic}/u.test(html));
  for(const [,src] of html.matchAll(/url\("(assets\/ui\/[^" ]+)"\)/g))assert.ok(fs.existsSync(src));
+ // El `display` del panel va siempre con `[open]`: en el propio dialogo pisa el
+ // `dialog:not([open]){display:none}` del navegador y el menu cerrado se dibuja bajo la consola.
+ for(const rule of html.match(/#panel(\[open\])?\{[^}]*\}/g)||[])
+  assert.ok(!/display:/.test(rule)||rule.startsWith('#panel[open]{'),`#panel cerrado sigue ocupando sitio: ${rule}`);
+ assert.ok(/#panel\[open\]\{[^}]*display:flex/.test(html),'el panel abierto sigue siendo la columna que scrollea su contenido');
  // Menu closes on a backdrop tap; a drag that merely ends outside does not, and a minigame never does.
  const panel=els['panel'],tap=(x,y,from=[x,y])=>{panel.fire('pointerdown',{clientX:from[0],clientY:from[1]});panel.fire('click',{clientX:x,clientY:y});};
  run('collectionTab="companion";showPanel("pokedex")');assert.equal(panel.open,true);

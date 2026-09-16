@@ -35,6 +35,13 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
  // Se deja el recuerdo como estaba: la comprobacion de mas abajo exige que no cambie con el tiempo,
  // y un marco puesto aqui la rompe por un motivo que no tiene que ver con lo que mide.
  run('delete state.social.memorials[0].frame;state.coins=0');
+ // El recuerdo elegido en Memorias no puede quedarse pegado al cerrar: la tienda volvia a abrirse
+ // en modo marco hasta que se pulsaba Volver sin poner marco.
+ run('framingMemorialId=state.social.memorials[0].id;showPanel("shop")');
+ assert.ok(text(els['panel-content']).includes('Marcos'),'desde Memorias la tienda abre en modo marco');
+ run('closePanel()');assert.equal(run('framingMemorialId'),null);
+ run('showPanel("shop")');assert.ok(!text(els['panel-content']).includes('Marcos'),'y despues vuelve a la tienda normal');
+ run('closePanel()');
  run('showPanel("pokedex");collectionTab="memories";renderPokedex()');
  // El retrato es un canvas quieto: no hay renderer que registrar ni que parar. La pestaña Pokedex
  // sigue usando el sprite animado, que si lo necesita.

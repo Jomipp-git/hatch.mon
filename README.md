@@ -249,6 +249,15 @@ La crianza no cambia: consulta EggGroup, Breedable, Ditto, género y descendenci
 
 **Schema de partida 12.** Los saves de otras versiones se invalidan y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
 
+## Utilidades de diseño
+
+`tools/design/` reúne los scripts de medición que salieron de la auditoría (`DESIGN_AUDIT.md`). No
+participan en runtime ni en build: cargan el juego con `tests/uiHarness.cjs` y responden preguntas de
+balance con el código real. El par `save-generate.cjs` + `save-load.cjs` comprueba que los saves del
+build publicado siguen cargando con el runtime actual, y conviene pasarlo antes de cada push que toque
+estado persistido. Su `README.md` documenta qué mide cada uno y el límite del método: el harness fija
+`Math.random` en 0,5, así que nada probabilístico se ejercita.
+
 ## Verificación
 
 Desde la raíz:

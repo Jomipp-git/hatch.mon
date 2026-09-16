@@ -982,3 +982,8 @@ runtime los validadores del save completo y de los snapshots comparten texto cas
 mirar en qué función se está editando.
 
 **Capa 1 cerrada.**
+
+# Utilidades de medición
+
+Los scripts que produjeron las cifras de este documento viven en `tools/design/`, con su propio
+README. Cualquier número de aquí se puede reproducir ejecutándolos.

@@ -317,6 +317,14 @@ snapshots no llevan campos del entrenador.
 Seis botones en la columna de la pantalla: Mochila, Entrenamiento, **Pokédex**, Ajustes, Tienda y
 **Crianza**.
 
+La pestaña **Especies** trae ficha factual por forma descubierta: número, tipos, región, etapa
+evolutiva, rareza, dificultad de cuidado, grupo huevo, ratio de género y si puede criar. Todo sale del
+catálogo canónico, así que no hay contenido nuevo que mantener. **Las entradas de Pokédex oficiales no
+se pueden embarcar**: son texto creativo de terceros y ninguna fuente concede licencia sobre él, ni
+Bulbapedia ni PokéAPI, que sirven literalmente el texto de los juegos. Si algún día se quiere prosa,
+se escribe propia en la voz de `VOICE.md`. La tarjeta abierta ocupa la fila entera del grid, porque
+dentro de una celda de 110 px las etiquetas se partían en dos líneas.
+
 - **Pokédex** (antes «Profesor Oak», icono `dex`) tiene tres pestañas y abre en la primera:
   **Compañero** (etapa, edad, personalidad, crianza sí/no, barras y la línea evolutiva completa),
   **Especies** y **Memorias**. Las tres pestañas salen por su cuenta con `return`, porque Memorias no

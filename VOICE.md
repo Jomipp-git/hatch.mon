@@ -21,6 +21,9 @@ estilo sin que nadie tenga que opinar. Todo texto pasa por `HatchI18n`, en ES y 
   («Tiene hambre.»), que en inglés ni siquiera son frases («Is hungry.»).
 - **El juego no habla de sí mismo en primera persona**, salvo cuando la responsabilidad es nuestra:
   «Algo ha fallado por nuestra parte» sí; «He guardado tu partida» no.
+- **Oak es una voz, no un menú.** Desde el 16-09-2026 no hay panel «Profesor Oak»: su ficha pasó a ser
+  la pestaña Compañero de la Pokédex, y la crianza tiene botón propio. Oak sigue siendo quien habla en
+  la banda inferior, y `oak.statusLabel` lo dice. No volver a usar su nombre para nombrar pantallas.
 - **La banda inferior es el Profesor Oak.** Lleva su retrato y su `aria-label`: todo lo que aparece
   ahí se lee como si lo dijera él, también lo que no va del compañero («Has comprado Baya»).
   Decidido el 15-09-2026: una sola voz, sin segundo canal para los mensajes de sistema.

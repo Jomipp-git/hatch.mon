@@ -11,7 +11,7 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  for(const [,src] of html.matchAll(/url\("(assets\/ui\/[^" ]+)"\)/g))assert.ok(fs.existsSync(src));
  // Menu closes on a backdrop tap; a drag that merely ends outside does not, and a minigame never does.
  const panel=els['panel'],tap=(x,y,from=[x,y])=>{panel.fire('pointerdown',{clientX:from[0],clientY:from[1]});panel.fire('click',{clientX:x,clientY:y});};
- run('showPanel("oak")');assert.equal(panel.open,true);
+ run('collectionTab="companion";showPanel("pokedex")');assert.equal(panel.open,true);
  tap(200,200);assert.equal(panel.open,true,'a tap inside keeps the menu open');
  tap(5,5,[200,200]);assert.equal(panel.open,true,'a drag that ends outside keeps the menu open');
  tap(5,5);assert.equal(panel.open,false,'a backdrop tap closes the menu');

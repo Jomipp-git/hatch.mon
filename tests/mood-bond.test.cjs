@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
  assert.equal(run('LABELS.felicidad'),'Ánimo');
  // minMood se retiro: no existia como columna del workbook, asi que nunca podia cumplirse.
  for(const [b,expected]of [[null,true],[3,false],[2,true]]){run(`r.minBond=${b}`);assert.equal(run('conditionsMet(r)'),expected)}
- run('r.minBond=3;var others=JSON.stringify({h:state.care.hambre,e:state.care.energia,y:state.care.higiene,v:state.vital});showPanel("oak")');
+ run('r.minBond=3;var others=JSON.stringify({h:state.care.hambre,e:state.care.energia,y:state.care.higiene,v:state.vital});collectionTab="companion";showPanel("pokedex")');
  const text=n=>n.textContent+n.children.map(text).join(' ');assert.ok(text(els['panel-content']).includes('Vínculo ≥ 3 ♥'));
  run('showPanel("settings")');const skip=els['panel-content'].querySelectorAll('button').filter(b=>b.dataset.key?.startsWith('skip-'));assert.deepEqual(skip.map(b=>b.textContent),['+1 h','+3 h','+6 h']);assert.ok(skip.every(b=>b.children.length===0));
  run('closePanel();forceEvolution("pikachu")');assert.equal(run('state.care.felicidad'),80);assert.ok(run('state.relationship.points')>=60);assert.equal(run('JSON.stringify({h:state.care.hambre,e:state.care.energia,y:state.care.higiene,v:state.vital})===others'),true);

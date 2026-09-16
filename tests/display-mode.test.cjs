@@ -4,7 +4,7 @@ run('window.setDisplayMode("lcd")');assert.equal(els['display-root'].dataset.dis
 const reloaded=await setup({initialDisplayMode:storage.get('hatch.mon.displayMode')});assert.equal(reloaded.els['display-root'].dataset.displayMode,'lcd');
 assert.throws(()=>run('window.setDisplayMode("bad")'));run('showPanel("settings")');const keys=()=>els['panel-content'].querySelectorAll('button').map(b=>b.dataset.key);
 for(const key of ['display-color','display-lcd','skip-1','skip-3','skip-6','testing-reset'])assert.ok(keys().includes(key),key);
-run('showPanel("oak")');assert.ok(!keys().some(k=>k?.startsWith('skip-')||k?.startsWith('force-')||k==='testing-reset'));
+run('collectionTab="companion";showPanel("pokedex")');assert.ok(!keys().some(k=>k?.startsWith('skip-')||k?.startsWith('force-')||k==='testing-reset'));
 run('window.setDisplayMode("color")');assert.equal(els['display-root'].dataset.displayMode,'color');
 const remote=JSON.parse(run('JSON.stringify(state)'));remote.incubationRemaining=Math.max(0,remote.incubationRemaining-1);assert.equal(run(`window.HatchRuntime.applyCloudSave(${JSON.stringify(remote)},{displayMode:'lcd',shells:{unlocked:[],selected:'default'}})`),true);assert.equal(els['display-root'].dataset.displayMode,'lcd');
 run('panelName="pokedex";renderPanel()');assert.equal(els.panel.dataset.lcdSurface,'true');

@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
 (async()=>{const {run,els,advance}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.pokemonId="pichu";render();hideToast()');assert.equal(els.health.textContent,'Todo tranquilo.');
 run('showToast("Buen trabajo.")');assert.equal(els.toast.textContent,'Buen trabajo.');advance(2180);assert.equal(els.toast.hidden,true);assert.equal(els.health.textContent,'Todo tranquilo.');
 run('state.age=state.vital.lifespan*.5;render()');assert.equal(els.health.textContent,'Todo tranquilo.','Baby is not a breeding prompt');
-run('state.pokemonId="pikachu";render()');assert.equal(els.health.textContent,'Pikachu ya puede criar. Habla con el Profesor Oak.');
+run('state.pokemonId="pikachu";render()');assert.equal(els.health.textContent,'Pikachu ya puede criar. Ábrele Crianza.');
 run('state.care.hambre=20;render()');assert.equal(els.health.textContent,'Pikachu tiene hambre.');
 run('state.care.hambre=100;state.vital.hasProducedEgg=true;render()');assert.equal(els.health.textContent,'Todo tranquilo.');
 run('state.vital.dirt=60;render()');assert.equal(els.health.textContent,'A Pikachu le vendría bien una limpieza.');

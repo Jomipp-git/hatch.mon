@@ -15,7 +15,7 @@ assert.equal(loaded.run('state.inventory.berryStrength'),undefined);assert.equal
  const id=run('dailyShop()[0]'),price=run(`itemCatalog['${id}'].price`);run(`state.coins=${price};const before=state.inventory['${id}']||0;buyShopItem('${id}')`);assert.equal(run('state.coins'),0);assert.equal(run(`state.inventory['${id}']`),1);assert.equal(run(`buyShopItem('${id}')`),false);
  run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("");state.trainer.energy=6;const beforeCoins=state.coins;train("iq",5)');assert.equal(run('state.coins-beforeCoins'),16);
  const before=run('state.incubationRemaining');run('state=freshState();const eggBefore=state.incubationRemaining;heat()');assert.equal(run('eggBefore-state.incubationRemaining'),run('HEAT_REDUCTION_MS'));
- run('state=freshState();showPanel("oak")');assert.match(els['panel-content'].children.at(-1).textContent,/tocar el huevo|calor/i);assert.ok(before>=0);
+ run('state=freshState();collectionTab="companion";showPanel("pokedex")');assert.match(els['panel-content'].children.at(-1).textContent,/tocar el huevo|calor/i);assert.ok(before>=0);
  const html=require('node:fs').readFileSync('index.html','utf8');assert.match(html,/data-panel="shop"[^>]*><span class="pixel-icon" data-icon="shop"/);assert.ok(html.includes('.pixel-icon[data-icon="shop"]{--pixels:'));assert.ok(!html.includes('title="Tienda">SHOP</button>'));
  console.log('PASS content update: canonical roots/rules, legacy coins migration, daily shop, purchase, minigame coins and egg tutorial.');
 })().catch(error=>{console.error(error);process.exitCode=1});

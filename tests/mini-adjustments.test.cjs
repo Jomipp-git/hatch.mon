@@ -12,7 +12,7 @@ const {setup}=require('./uiHarness.cjs');
   run(`state.pokemonId='${id}';render()`);await flush();assert.equal(els.sprite.dataset.visual,hasIdle?'asset':'placeholder',id);
   if(hasIdle)assert.ok(els.sprite.children[0].context.draws.length,id);
  }
- born();run('state.care={hambre:99,felicidad:100,energia:94,higiene:100};state.averages={sum:{hambre:84,felicidad:96,energia:86,higiene:92},count:1};showPanel("oak")');
+ born();run('state.care={hambre:99,felicidad:100,energia:94,higiene:100};state.averages={sum:{hambre:84,felicidad:96,energia:86,higiene:92},count:1};collectionTab="companion";showPanel("pokedex")');
  const walk=e=>[e,...e.children.flatMap(walk)];
  for(const k of ['hambre','felicidad','energia','higiene']){
   const label=run(`LABELS.${k}`),bar=walk(els['panel-content']).find(e=>e.tagName==='progress'&&e['aria-label']===label);

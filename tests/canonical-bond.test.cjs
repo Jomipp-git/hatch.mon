@@ -12,7 +12,7 @@ for(let i=0;i<run('bondRules.length');i++){
  run('state.pokemonId=from;state.age=r.ageMs;state.training={iq:0,strength:0,kindness:0,style:0,...r.training};state.care.felicidad=100;state.sustained={};for(const c of r.sustained){state.care[c.estadistica]=100;state.sustained[sustainedKey(c)]=c.duracionMs;}state.relationship.points=0;var minimum=source.MinBond*RELATIONSHIP_CONFIG.perHeart;');
  assert.equal(run('PokemonData.rules(source.FromId).includes(source)'),true);
  for(const delta of [-.01,0,1]){
-  run(`state.relationship.points=minimum+${delta};panelName='oak';renderPanel()`);
+  run(`state.relationship.points=minimum+${delta};collectionTab='companion';panelName='pokedex';renderPanel()`);
   const expected=delta>=0;assert.equal(run('Relationship.evaluateMinBond(state,source.MinBond).met'),expected);assert.equal(run('conditionsMet(r)'),expected,run('source.RuleId'));
   // La ficha de Oak ya no plega cada paso en <details>: cada uno es un div.evolution-step.
   const section=els['panel-content'].children.find(n=>String(n.className||'').includes('evolution-step')&&text(n).includes(run('evolutionConfig[to].name')));

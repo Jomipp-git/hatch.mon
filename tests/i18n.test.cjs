@@ -5,7 +5,7 @@ test('responsive layout declares supported narrow and tablet breakpoints',()=>{c
 
 test('Oak and evolution diagnostics render from centralized keys in English',async()=>{
  const {run,els}=await setup();
- run("HatchI18n.setLanguage('en');state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('');state.age=DAY;state.relationship.points=40;showPanel('oak')");
+ run("HatchI18n.setLanguage('en');state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('');state.age=DAY;state.relationship.points=40;collectionTab='companion';showPanel('pokedex')");
  const text=node=>String(node.textContent||'')+node.children.map(text).join(' ');const output=text(els['panel-content']);
  for(const expected of ['Life stage','Age','Breeding','Evolution','Hunger'])assert.match(output,new RegExp(expected));
  assert.doesNotMatch(output,/oak\.|Evolución|Etapa|Edad/);

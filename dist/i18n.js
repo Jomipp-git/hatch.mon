@@ -3,6 +3,9 @@ globalThis.HatchI18n=(()=>{
  const catalog={
   "es": {
     "settings": "Configuración",
+    "breeding": "Crianza",
+    "pokedex": "Pokédex",
+    "dex.companionTab": "Compañero",
     "shop": "Tienda",
     "inventory": "Mochila",
     "training": "Entrenamiento",
@@ -72,7 +75,7 @@ globalThis.HatchI18n=(()=>{
     "attention.bored.serious": "{name} está perdiendo ánimo deprisa. Dedícale un rato ya.",
     "oak.breeding": "Crianza",
     "oak.breedingDone": "Completada",
-    "oak.breedingReady": "{name} ya puede criar. Habla con el Profesor Oak.",
+    "oak.breedingReady": "{name} ya puede criar. Ábrele Crianza.",
     "oak.unavailable": "No disponible",
     "oak.available": "Disponible",
     "oak.evolution": "Evolución",
@@ -536,6 +539,9 @@ globalThis.HatchI18n=(()=>{
   },
   "en": {
     "settings": "Settings",
+    "breeding": "Breeding",
+    "pokedex": "Pokédex",
+    "dex.companionTab": "Companion",
     "shop": "Shop",
     "inventory": "Bag",
     "training": "Training",
@@ -605,7 +611,7 @@ globalThis.HatchI18n=(()=>{
     "attention.bored.serious": "{name} is losing heart fast. Spend some time together now.",
     "oak.breeding": "Breeding",
     "oak.breedingDone": "Complete",
-    "oak.breedingReady": "{name} can breed now. Talk to Professor Oak.",
+    "oak.breedingReady": "{name} can breed now. Open Breeding.",
     "oak.unavailable": "Unavailable",
     "oak.available": "Available",
     "oak.evolution": "Evolution",

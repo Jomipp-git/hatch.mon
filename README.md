@@ -312,6 +312,25 @@ llega a 100 y el entrenamiento se cierra, la marca sigue siendo superable. `reco
 `migrateSave` sin subir el esquema 12, y `validSnapshot` le inyecta un valor válido porque los
 snapshots no llevan campos del entrenador.
 
+## Botones y reparto de paneles
+
+Seis botones en la columna de la pantalla: Mochila, Entrenamiento, **Pokédex**, Ajustes, Tienda y
+**Crianza**.
+
+- **Pokédex** (antes «Profesor Oak», icono `dex`) tiene tres pestañas y abre en la primera:
+  **Compañero** (etapa, edad, personalidad, crianza sí/no, barras y la línea evolutiva completa),
+  **Especies** y **Memorias**. Las tres pestañas salen por su cuenta con `return`, porque Memorias no
+  es un `else` sino la caída posterior al `return` de Especies.
+- **Crianza** es el panel social con sus cuatro flujos más **Mis huevos**, la lista de huevos guardados
+  con su sprite estático. Antes los huevos solo existían como un código dentro de «Compartir huevo».
+  `eggListRows` es el único renderizador de esa lista y lo comparten Crianza y el flujo de empezar de
+  nuevo tras una muerte.
+- **Mochila** lleva solo objetos. Las entradas a la colección y a los huevos que tenía se fueron a sus
+  paneles.
+
+**El Profesor Oak deja de ser un menú y sigue siendo la voz**: la banda inferior es suya, según
+`VOICE.md`, y `oak.statusLabel` no cambia. Lo que se retiró es el panel que llevaba su nombre.
+
 ## Colecciones y presentación
 
 El criador de la banda inferior ofrece consejos breves según cuidados; no altera estadísticas. Entrenamiento muestra barras y los menús resumen costes y requisitos. Pokédex conserva tabs de especies y Memorias, con variantes NORMAL/SHINY separadas.

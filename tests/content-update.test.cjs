@@ -33,6 +33,24 @@ assert.equal(loaded.run('state.inventory.berryStrength'),undefined);assert.equal
  assert.equal(ana,oferta('11111111-2222-3333-4444-555555555555'),'y para el mismo, estable');
  // Sin identidad —pruebas y herramientas— el sorteo sigue siendo determinista.
  const sinId=oferta(null);assert.equal(sinId,oferta(null));
+ // Modo vender: mitad del precio de tienda, ticket antes de confirmar y nada a medias.
+ run("state.inventory={berry:3,thunder:1};state.coins=0;shopMode='sell';sellDraft={}");
+ assert.equal(run("sellPrice('berry')"),Math.floor(run("itemCatalog.berry.price")/2));
+ assert.equal(run('sellTotal()'),0,'sin seleccion no hay ticket');
+ assert.equal(run('sellDrafted()'),false,'y no se puede confirmar');
+ run("sellDraft={berry:2,thunder:1}");
+ assert.equal(run('sellTotal()'),run("sellPrice('berry')*2+sellPrice('thunder')"));
+ assert.equal(run('sellDrafted()'),true);
+ assert.equal(run('state.inventory.berry'),1,'solo se van las seleccionadas');
+ assert.equal(run('state.inventory.thunder'),undefined,'y el objeto agotado sale del inventario');
+ assert.equal(run('state.coins'),run("sellPrice('berry')*2+sellPrice('thunder')"));
+ assert.equal(run('JSON.stringify(sellDraft)'),'{}','el ticket se vacia al cobrarlo');
+ // Pedir mas de lo que hay no cobra nada ni toca la Mochila.
+ run("state.inventory={berry:1};state.coins=0;sellDraft={berry:5}");
+ assert.equal(run('sellDrafted()'),false);
+ assert.equal(run('state.inventory.berry'),1);assert.equal(run('state.coins'),0);
+ run("shopMode='buy';sellDraft={}");
+ assert.equal(run('validSave(state)'),true);
  // El hueco de Evolucion deja de ser loteria: Growlithe pide Piedra Fuego y es lo que se ofrece,
  // y Eevee pide cinco, que son justo su decision.
  // Llega aqui con berryStrength en la Mochila, que se retiro del catalogo: se limpia para que las

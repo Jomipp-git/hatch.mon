@@ -106,6 +106,10 @@
   .social-flows{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.social-flows [aria-pressed="true"]{background:#d5dfd0;border-color:#46654c}
   .shop-egg-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
   .rename-row{display:flex;gap:8px;align-items:stretch;margin-bottom:12px}.rename-row input{flex:1;min-width:0}
+  .sell-controls{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  .sell-controls button{min-width:40px;padding:6px 8px}
+  .sell-count{font-size:.78rem;min-width:44px;text-align:center}
+  .sell-total{font-size:1rem;font-weight:bold;margin:4px 0 12px}
   .shell-chip{width:26px;height:26px;border:2px solid;border-radius:5px;flex:0 0 auto;background-size:26px 26px}
   .frame-chip{width:28px;height:28px;flex:0 0 auto;border-style:solid;border-width:8px}
   /* Con marco la tarjeta deja de necesitar la linea divisoria, pero dos marcos seguidos se tocaban
@@ -412,6 +416,25 @@ const RENAME_PRICE=120,NICKNAME_MAX=20,MEMORIAL_PORTRAIT=80;
 // recurrente disfrazado de cosmetico. Es estado de la partida, no preferencia del entrenador,
 // porque pertenece a un compañero concreto.
 let framingMemorialId=null;
+// Modo vender. La seleccion es estado de pantalla, no de partida: no se guarda ni sobrevive a cerrar.
+let shopMode='buy',sellDraft={};
+// A mitad del precio de tienda, redondeando hacia abajo: vender nunca puede ser negocio frente a
+// comprar, o la tienda se convierte en una maquina de monedas.
+const sellPrice=id=>Math.floor((itemCatalog[id]?.price||0)/2);
+const sellTotal=()=>Object.entries(sellDraft).reduce((sum,[id,n])=>sum+sellPrice(id)*n,0);
+function sellDrafted(){
+  const total=sellTotal(),lines=Object.entries(sellDraft).filter(([,n])=>n>0);
+  if(!lines.length)return false;
+  for(const [id,n] of lines){
+    if(!(state.inventory[id]>=n))return false;   // La Mochila cambio por debajo: no se cobra a medias.
+  }
+  for(const [id,n] of lines){
+    state.inventory[id]-=n;if(state.inventory[id]<=0)delete state.inventory[id];
+  }
+  state.coins+=total;sellDraft={};
+  state.message=t('shop.sold',{coins:total});
+  return true;
+}
 const boutiqueShells=()=>Object.keys(SHELL_THEMES).filter(id=>SHELL_THEMES[id].boutique===true);
 const shellStyle=id=>id.slice('boutique:'.length).split('-')[0];
 // Un estilo al dia con sus tres variantes, en vez de las 21 de golpe: asi la tienda se lee como una
@@ -1089,7 +1112,7 @@ const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
 function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();
   // Cada menu empieza arriba: el dialogo conservaba el desplazamiento del que se cerro antes.
   dialog.scrollTop=0;$('panel-content').scrollTop=0;}
-function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
+function closePanel(){shopMode='buy';sellDraft={};disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=I18n?.localize(text)??text;}if(cls)n.className=cls;return n;}
 // La fecha limite se escribe en el idioma activo y con la zona del dispositivo, que es la misma
 // con la que se compara el precio.
@@ -1124,6 +1147,30 @@ window.setDisplayMode=function(mode){
   render();
   return mode;
 };
+// Ticket de venta: cada linea suma y el total se ve ANTES de confirmar, que es lo que separa vender
+// de regalar por accidente.
+function renderSellMode(content){
+  const owned=Object.entries(state.inventory).filter(([id,n])=>n>0&&itemCatalog[id]);
+  if(!owned.length){content.append(el('p',t('ui.shop.sellEmpty')));return;}
+  content.append(el('p',t('ui.shop.sellHint'),'panel-note'));
+  for(const [id,have] of owned){
+    const chosen=sellDraft[id]||0,item=itemCatalog[id];
+    const head=el('div',undefined,'shop-egg-head');
+    head.append(iconLabel(item.icon,t('ui.shop.sellLine',{name:itemLabel(id),price:sellPrice(id)})));
+    const controls=el('div',undefined,'sell-controls');
+    const step=(delta,key)=>panelButton(delta<0?'−':'+',()=>{
+      sellDraft[id]=Math.max(0,Math.min(have,(sellDraft[id]||0)+delta));
+      if(!sellDraft[id])delete sellDraft[id];
+      renderPanel();
+    },delta<0?chosen<1:chosen>=have,key);
+    controls.append(step(-1,`sell-minus-${id}`),el('span',`${chosen} / ${have}`,'sell-count'),step(1,`sell-plus-${id}`));
+    content.append(row(head,chosen?t('ui.shop.sellSubtotal',{coins:sellPrice(id)*chosen}):'',controls));
+  }
+  const total=sellTotal();
+  content.append(el('h3',t('ui.shop.sellTicket'),'panel-group'));
+  content.append(el('p',t('ui.shop.sellTotal',{coins:total}),'sell-total'));
+  content.append(panelButton(t('ui.shop.sellConfirm'),()=>{if(sellDrafted()){save();render();renderPanel();}},total<1,'sell-confirm'));
+}
 function renderPanel(){
   if(!panelName)return;
   disposeMemorialSprites();
@@ -1159,6 +1206,16 @@ function renderPanel(){
   }
   if(panelName==='shop'){
     content.append(el('p',t('ui.shop.summary',{coins:state.coins}), 'panel-note'));
+    // Viniendo de un recuerdo no hay pestañas: se viene a una cosa concreta.
+    if(!framingMemorialId){
+      const modes=el('nav',undefined,'social-flows');modes.setAttribute('aria-label',t('shop'));
+      for(const [mode,label] of [['buy','ui.shop.buyMode'],['sell','ui.shop.sellMode']]){
+        const button=socialButton(t(label),()=>{shopMode=mode;sellDraft={};renderPanel();});
+        button.setAttribute('aria-pressed',String(shopMode===mode));modes.append(button);
+      }
+      content.append(modes);
+      if(shopMode==='sell'){renderSellMode(content);return;}
+    }
     // Marcos de Memorias. Solo salen si vienes de un recuerdo: comprar un marco sin saber a quien
     // se lo pones no es una decision que se pueda tomar.
     const framed=state.social.memorials.find(m=>m.id===framingMemorialId);

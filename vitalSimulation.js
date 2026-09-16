@@ -1,6 +1,6 @@
 /* Bloque C: configuración y simulación por minutos, sin catálogo Pokémon propio. */
 'use strict';
-const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays:5,
+const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays:4.9,
   normalQuality:65,poorAdjustmentDays:-.35,excellentAdjustmentDays:.75,
   stages:[{id:'CRÍA',until:.20,hunger:1.10,hygiene:.95,recovery:1.15,play:1,risk:1},
     // JOVEN y MADURO eran 2,4 de los 4 dias de vida con todos los multiplicadores a 1 salvo un
@@ -14,7 +14,11 @@ const CARE_CONFIG={hour:3600000,minute:60000,max:100,
   feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:5},
   play:{happiness:20,energy:5,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
   training:{gain:5,energy:8,hunger:4,dirt:3,ap:1},itemAP:1,evolutionItemAP:0,trainerMax:6,trainerRecoveryPerMinute:.1,
-  costs:{alimentar:1,jugar:1,luz:0,limpiar:1,curar:1,auxiliar:1},dropChance:.10,
+  // Alimentar y limpiar no cuestan acciones. El mantenimiento cobraba lo mismo que la eleccion
+  // interesante, asi que a las 4 h de ausencia se llevaba 4 de las 6 acciones y a las 8 h las seis:
+  // los jugadores gastaban el presupuesto entero sin llegar a jugar a nada. Se autolimitan solos,
+  // porque usefulCare ya impide alimentar a 100 de hambre y la carga de digestion castiga el atracon.
+  costs:{alimentar:0,jugar:1,luz:0,limpiar:0,curar:1,auxiliar:1},dropChance:.10,
   aid:{steps:3,restore:40},cure:{restore:40},epsilon:1e-8};
 const DIGESTION_CONFIG={max:6,maxPoops:3,minDelayMinutes:45,maxDelayMinutes:120,
   perPoop:1,dirtPerPoop:4,hygieneFactors:[1,1.25,1.6,2],dirtMaxPenalty:.35,

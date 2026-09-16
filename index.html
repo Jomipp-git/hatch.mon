@@ -314,17 +314,17 @@ const EGG_SPRITES={columns:4,rows:4,phases:{
   5:{url:'assets/eggs/egg_phase_5.png',frames:16,fps:5.5,pause:null,revealPauseMs:250,sequence:Array.from({length:16},(_,i)=>i)}
 }};
 const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
-const RETIRED_ITEM_IDS=Object.freeze(['alola','galar','dawn','oval']);
+// Las cuatro bayas de atributo se retiran: 75 monedas por +5 cuando entrenar da +1..5 y encima paga.
+// Sus textos se conservan para que el historial de consumo siga legible, y validSave admite los ids
+// retirados, asi que las partidas que ya las consumieron siguen siendo validas.
+const RETIRED_ITEM_IDS=Object.freeze(['alola','galar','dawn','oval','berryStrength','berryIQ','berryKindness','berryStyle']);
 const itemCatalog={
   thunder:{get name(){return t('item.thunder');},icon:'stone',kind:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',kind:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',kind:'stone',price:180},
   leaf:{get name(){return t('item.leaf');},icon:'stone',kind:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',kind:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',kind:'stone',price:185},
   shiny:{get name(){return t('item.shiny');},icon:'light',kind:'stone',price:190},
   electirizer:{get name(){return t('item.electirizer');},icon:'stone',kind:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',kind:'stone',price:170},
   berry:{get name(){return t('item.berry');},icon:'food',kind:'berry',food:true,price:35},
-  berryStrength:{get name(){return t('item.berryStrength');},icon:'food',kind:'berry',food:true,attribute:'strength',price:75},
-  berryIQ:{get name(){return t('item.berryIQ');},icon:'food',kind:'berry',food:true,attribute:'iq',price:75},
-  berryKindness:{get name(){return t('item.berryKindness');},icon:'food',kind:'berry',food:true,attribute:'kindness',price:75},
-  berryStyle:{get name(){return t('item.berryStyle');},icon:'food',kind:'berry',food:true,attribute:'style',price:75},medicine:{get name(){return t('item.medicine');},icon:'medicine',kind:'medicine',heal:true,price:70},
+  medicine:{get name(){return t('item.medicine');},icon:'medicine',kind:'medicine',heal:true,price:70},
   tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50}
 };
 // Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
@@ -335,19 +335,28 @@ const itemDetail=id=>{const item=itemCatalog[id];
 const shopDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):
     item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):t('ui.shop.evolutionItem');};
-const COIN_REWARDS=Object.freeze([0,2,4,7,11,16]);
-const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))];
+// Indexado por nota 1..5. Antes el array empezaba en 0 y ese hueco era inalcanzable, porque
+// Math.max(1,...) fijaba el indice minimo en 1.
+const COIN_REWARDS=Object.freeze([2,4,7,11,16]);
+const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))-1];
 const shopDayKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+// Los tres consumibles basicos estan siempre: comida, energia y salud. El te era el sumidero mejor
+// disenado de la tienda y salia el 5% de los dias, asi que comprar energia para entrenar mas no era
+// una decision que se pudiera tomar. La rotacion queda para lo interesante.
+const SHOP_STAPLES=Object.freeze(['berry','tea','medicine']);
 function dailyShop(date=new Date()){
-  const ids=Object.keys(itemCatalog),key=shopDayKey(date);let seed=[...key].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
+  const ids=Object.keys(itemCatalog).filter(id=>!SHOP_STAPLES.includes(id)),key=shopDayKey(date);
+  let seed=[...key].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
   for(let i=ids.length-1;i>0;i--){seed=(seed*1664525+1013904223)>>>0;const j=seed%(i+1);[ids[i],ids[j]]=[ids[j],ids[i]];}
-  return ids.slice(0,3);
+  return [...SHOP_STAPLES,...ids.slice(0,3)];
 }
 // Normalizador del formato de reglas del motor. La fuente v2 aporta los valores;
 // los cuidados sostenidos exigen continuidad y el entrenamiento usa valores fijos.
 const ITEM_ALIASES={piedra_trueno:'thunder',piedra_agua:'water',piedra_fuego:'fire',piedra_hoja:'leaf',piedra_hielo:'ice',piedra_lunar:'moon',piedra_dia:'shiny',Electrizador:'electirizer',Magmatizador:'magmarizer'};
 const FIXED_FIELDS={minIQ:'iq',minStrength:'strength',minStyle:'style',minKindness:'kindness'};
 function normalizeRule(r){
+  // careMean sigue vivo: el normalizador lo produce si `estadisticas` trae una barra de cuidados.
+  // Hoy ninguna regla del repertorio lo usa, pero la via de datos existe.
   const careMean={},training={};
   for(const[k,v]of Object.entries(r.estadisticas||{})){
     if(CARE.includes(k))careMean[k]=v;
@@ -373,9 +382,11 @@ function canonicalRule(r){
     raw.sostenidas=[{estadistica:PokemonData.careKey(r.SustainedStat),minimo:minimum,duracionMs:r.SustainedHours*HOUR}];
   }
   const optionalMinimum=field=>{const value=r[field];if(value===null||value===undefined||value==='')return null;if(typeof value!=='number'||!Number.isFinite(value)||value<0||value>100)throw Error(`${field} debe ser un número entre 0 y 100`);return value;};
-  const minMood=optionalMinimum('MinMood'),minBond=Relationship.evaluateMinBond(null,r.MinBond).minimumHearts;
+  // MinMood no existe como columna en el workbook canonico, asi que optionalMinimum solo podia
+  // devolver null: la condicion se evaluaba en cada comprobacion de evolucion sin poder cumplirse.
+  const minBond=Relationship.evaluateMinBond(null,r.MinBond).minimumHearts;
   const configured=['MinMood','MinBond','MinAgeDays','MinIQ','MinStrength','MinStyle','MinKindness','RequiredItem','SustainedStat','RequiredAction'].some(k=>r[k]!==null&&r[k]!==undefined&&r[k]!=='');
-  return {...normalizeRule(raw),enabled:configured,minMood,minBond,canonicalRuleId:r.RuleId};
+  return {...normalizeRule(raw),enabled:configured,minBond,canonicalRuleId:r.RuleId};
 }
 const evolutionConfig=Object.fromEntries(Object.entries(evolutionTable).map(([id])=>{
   const data=PokemonData.get(id);
@@ -428,7 +439,7 @@ function updateSustained(elapsed=0,before=state.care){
   }
 }
 function conditionsMet(r,testing=null){return r.enabled!==false&&alive()&&state.age>=r.ageMs&&
-  (r.minMood==null||state.care.felicidad>=r.minMood)&&Relationship.evaluateMinBond(state,r.minBond).met&&
+  Relationship.evaluateMinBond(state,r.minBond).met&&
   Object.entries(r.careMean).every(([k,v])=>mean(k)!==null&&mean(k)>=v)&&
   Object.entries(r.training).every(([k,v])=>state.training[k]>=v)&&
   r.sustained.every(c=>(testing?.sustainedValues?.[sustainedKey(c)]??state.care[c.estadistica])>=c.minimo&&(state.sustained[sustainedKey(c)]||0)>=c.duracionMs)&&
@@ -455,7 +466,6 @@ function forceEvolution(destination){
   const before=HatchMonSocial.copy(state);
   // Evidencia histórica de testing: no altera las barras instantáneas ni tickea fisiología.
   const testing={sustainedValues:{}};
-  if(r.minMood!=null)state.care.felicidad=Math.max(state.care.felicidad,r.minMood);
   const bondRequirement=Relationship.evaluateMinBond(state,r.minBond);
   if(!bondRequirement.met)state.relationship.points=bondRequirement.minimumPoints;
   const delta=Math.max(0,r.ageMs-state.age);state.age+=delta;state.stageAge+=delta;
@@ -780,8 +790,16 @@ function save({immediate=false}={}){
 function migrateSave(data){
   if(!data||typeof data!=='object')return data;
   if(!Number.isSafeInteger(data.coins)||data.coins<0)data.coins=0;
+  // Las bayas de atributo se retiraron despues de estar en venta a 75 monedas, asi que las que un
+  // jugador tuviera en la mochila se devuelven en monedas en vez de desaparecer. El resto de ids
+  // retirados nunca se vendieron.
+  const REFUNDED={berryStrength:75,berryIQ:75,berryKindness:75,berryStyle:75};
   for(const id of RETIRED_ITEM_IDS){
-    if(data.inventory&&typeof data.inventory==='object')delete data.inventory[id];
+    if(data.inventory&&typeof data.inventory==='object'){
+      const held=data.inventory[id];
+      if(REFUNDED[id]&&Number.isSafeInteger(held)&&held>0)data.coins=Math.min(Number.MAX_SAFE_INTEGER,data.coins+held*REFUNDED[id]);
+      delete data.inventory[id];
+    }
     if(data.foundItem===id)data.foundItem=null;
   }
   const migrateIndividual=s=>{
@@ -967,7 +985,6 @@ function renderPanel(){
       if(!done){
         const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`)),r=step.rule;
         req(actionable&&state.age>=r.ageMs,requirementAge(r.ageMs));
-        if(r.minMood!=null)req(actionable&&state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));
         if(r.minBond!=null)req(actionable&&Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
         for(const[k,v]of Object.entries(r.careMean))req(actionable&&mean(k)!==null&&mean(k)>=v,t('oak.requirement.average',{stat:stat(k),value:v}));
         for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,t('oak.requirement.stat',{stat:stat(k),value:v}));

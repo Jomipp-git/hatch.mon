@@ -934,3 +934,36 @@ Efecto medido sobre los datos regenerados:
 ```
 
 La tabla completa está en `minagedays-propuesta.csv`.
+
+---
+
+# CAPA 1 · LO APLICADO EN LA SEGUNDA PASADA · 2026-09-16
+
+**1.4 Acciones.** `costs.alimentar` y `costs.limpiar` a 0. Medido: al volver tras 10 h, la rutina
+completa de mantenimiento (1 limpieza + 4 comidas + 2 juegos) deja **4 de 6 acciones** libres en vez
+de 0. Solo los dos juegos cuestan.
+
+**1.5 Declaraciones muertas.**
+- `minMood` **retirado**. No existe como columna en el workbook —el `DataDictionary` de
+  `EvolutionRules` no la lista— así que `optionalMinimum('MinMood')` solo podía devolver null: se
+  evaluaba en cada comprobación de evolución sin poder cumplirse nunca. Fuera del normalizador, de
+  `conditionsMet`, de `forceEvolution`, de la ficha de Oak y del catálogo i18n.
+- `careMean` **se conserva**, corrigiendo la decisión que habíamos tomado: a diferencia de `minMood`,
+  el normalizador sí puede producirlo si `estadisticas` trae una barra de cuidados. Es una vía de
+  datos real sin usuarios hoy, no una rama imposible. Queda comentado en el código.
+- `maxDays` de 5 a **4,9**, que es el techo alcanzable de verdad. `minDays` ya era 3,5, el suelo real.
+- `COIN_REWARDS` pasa a indexarse por nota 1..5 (`[2,4,7,11,16]` con `-1`), sin el hueco inalcanzable.
+
+**1.8 Objetos y tienda.** Las cuatro bayas de atributo salen del catálogo y entran en
+`RETIRED_ITEM_IDS`. **Con devolución**: `migrateSave` reembolsa 75 monedas por unidad en lugar de
+borrarlas, porque estuvieron en venta y quitarle a alguien algo que pagó no es aceptable. Verificado:
+un save con 3 bayas y 100 monedas carga con 325 y el inventario limpio. Sus textos i18n se conservan
+para el historial. Y `SHOP_STAPLES` fija `berry`, `tea` y `medicine`, con tres objetos rotando: la
+tienda pasa de 3 entradas a 6.
+
+**Verificación.** Suite 107/107 con once pruebas actualizadas, auditoría i18n limpia, y los cinco
+saves generados por el build anterior cargan, validan y sobreviven a ida y vuelta.
+
+**Pendiente de la capa 1:** solo **1.9**, el score 0–1000 con mejor marca personal. Es la única que
+añade estado persistido y necesita decidir una fórmula continua para Intelecto, que cuenta rondas
+ganadas en vez de normalizar un rendimiento.

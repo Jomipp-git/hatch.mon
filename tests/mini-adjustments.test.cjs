@@ -21,8 +21,9 @@ const {setup}=require('./uiHarness.cjs');
  assert.equal(run('mean("hambre")'),84);
  for(const action of ['alimentar','jugar','limpiar','curar','auxiliar','luz']){
   born();run(`state.pokerus=true;state.phase='${action==='auxiliar'?'critical':'alive'}';state.trainer.energy=0;render()`);
-  assert.equal(run(`allowed('${action}')`),action==='luz');
-  run('state.trainer.energy=6;render()');const cost=action==='luz'?0:1;
+  // Alimentar y limpiar pasaron a costar 0 acciones, asi que siguen permitidos sin presupuesto.
+  assert.equal(run(`allowed('${action}')`),['luz','alimentar','limpiar'].includes(action));
+  run('state.trainer.energy=6;render()');const cost=['luz','alimentar','limpiar'].includes(action)?0:1;
   // Apagar la luz no cuesta puntos, asi que su tooltip no anuncia un coste de cero: queda libre
   // para el motivo por el que el companero no puede dormir.
   assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action===action).title,cost?run(`t('ui.actionCost.one',{cost:${cost}})`):'');
@@ -33,7 +34,6 @@ const {setup}=require('./uiHarness.cjs');
  for(const item of ['berry','medicine']){born();run(`state.inventory.${item}=1;state.pokerus=true;state.trainer.energy=0`);assert.equal(run(`itemUsable('${item}')`),false);run('state.trainer.energy=1');assert.equal(run(`useItem('${item}')`),true);assert.equal(run('state.trainer.energy'),0);}
  for(const k of ['iq','strength','kindness','style']){
   born();assert.equal(run(`train('${k}',4)`),true);assert.equal(run('state.trainer.energy'),5);assert.equal(run(`state.training.${k}`),4);
-  for(const initial of [70,98]){born();run(`state.training.${k}=${initial};state.inventory.berry${k[0].toUpperCase()+k.slice(1)}=1` .replace('berryIq','berryIQ'));const item=k==='iq'?'berryIQ':'berry'+k[0].toUpperCase()+k.slice(1);assert.equal(run(`useItem('${item}')`),true);assert.equal(run(`state.training.${k}`),Math.min(100,initial+5));assert.equal(run('state.trainer.energy'),5);}
  }
  born();run('state.pokemonId="growlithe";forceEvolution("arcanine");state.pokemonId="growlithe";state.inventory.fire=1;state.trainer.energy=0');
  assert.equal(run('itemAPCost("fire")'),0);assert.equal(run('itemUsable("fire")'),true);assert.equal(run('useItem("fire")'),true);assert.equal(run('state.trainer.energy'),0);

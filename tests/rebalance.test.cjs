@@ -24,11 +24,11 @@ for(const [count,expected] of [[3,.15],[4,.30],[5,.50]]){
 }
 born();run('state.care.hambre=100;const rngBefore=state.vital.rng;Vital.tick(state)');assert.equal(run('state.vital.rng===rngBefore'),true);assert.equal(run('state.pokerus'),false);
 born();run('state.vital.recentFeedingLoad=3;advanceGameTime(HOUR)');approx(run('state.vital.recentFeedingLoad'),2.25);
-born();run('state.care.hambre=100;state.inventory.berryStrength=2;useItem("berryStrength");useItem("berryStrength")');assert.equal(run('state.vital.recentFeedingLoad'),2);assert.equal(run('state.pokerus'),false);assert.equal(run('state.training.strength'),10);
+born();run('state.care.hambre=100;state.inventory.berry=2;useItem("berry");useItem("berry")');assert.equal(run('state.vital.recentFeedingLoad'),2);assert.equal(run('state.pokerus'),false);assert.equal(run('state.training.strength'),0);
 born();run('const beforeTraining=JSON.parse(JSON.stringify(state));train("iq")');assert.equal(run('state.training.iq'),5);approx(run('state.care.energia'),42);approx(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.equal(run('state.trainer.energy'),5);
 run('state.care.higiene=82;state.care.felicidad=50;careAction("limpiar")');assert.equal(run('state.care.higiene'),100);assert.equal(run('state.care.felicidad'),53);assert.equal(run('state.vital.dirt'),0);
 // Lifespan configuration and stable seed output remain at the approved C values.
-assert.equal(run('LIFE_CONFIG.baseDays'),4);assert.equal(run('LIFE_CONFIG.variationDays'),.15);assert.equal(run('LIFE_CONFIG.minDays'),3.5);assert.equal(run('LIFE_CONFIG.maxDays'),5);assert.equal(run('LIFE_CONFIG.poorAdjustmentDays'),-.35);assert.equal(run('LIFE_CONFIG.excellentAdjustmentDays'),.75);
+assert.equal(run('LIFE_CONFIG.baseDays'),4);assert.equal(run('LIFE_CONFIG.variationDays'),.15);assert.equal(run('LIFE_CONFIG.minDays'),3.5);assert.equal(run('LIFE_CONFIG.maxDays'),4.9);assert.equal(run('LIFE_CONFIG.poorAdjustmentDays'),-.35);assert.equal(run('LIFE_CONFIG.excellentAdjustmentDays'),.75);
 // Bond no longer fills itself: the passive drip is a trickle, not the engine. At the old .04 a
 // companion reached 100 points on day 1,15 of a 4,5 day life with the player barely involved.
 assert.equal(run('RELATIONSHIP_CONFIG.goodCarePerMinute'),.005);

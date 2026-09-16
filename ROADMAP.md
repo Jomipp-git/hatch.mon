@@ -150,12 +150,15 @@ actual de cada amigo.
 Renombrar al Pokémon a través del Prof. Oak por un coste en monedas.
 
 ### B7 · Familia de crianza en la interfaz de Oak
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
 
-Mostrar la familia evolutiva del Pokémon en la sección del Prof. Oak.
+Mostrar la familia evolutiva del Pokémon en la sección del Prof. Oak. La ficha muestra la línea
+completa, no solo el paso inmediato.
 
 ### B8 · Regalo e intercambio de huevos
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
+
+El panel Crianza tiene el flujo «Compartir huevo», separado de los perfiles vivos.
 
 Poder enviar huevos del inventario a un amigo como regalo o intercambio.
 
@@ -179,7 +182,11 @@ Revisar los minijuegos en conjunto: dificultad, ritmo, claridad, controles, feed
 sensación de juego. Salida esperada: qué minijuegos necesitan retoques concretos y cuáles.
 
 ### C3 · Carcasas con más personalidad
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
+
+`MOTIF_COLORS_BY_DEPTH` en `tools/generateShellThemes.py` implementa el criterio literal: la base va
+monocroma y cada evolución suma un color. Las 21 carcasas de boutique (16-09-2026) son un set aparte
+de pago, no sustituyen a esto.
 
 Alejar la estética principal del LCD monocromo. Criterio acordado:
 
@@ -189,7 +196,11 @@ Alejar la estética principal del LCD monocromo. Criterio acordado:
 - Siempre sencillo, nunca recargado. El objetivo es que cada carcasa se sienta coleccionable.
 
 ### C4 · Curva de Bond más exigente
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
+
+La capa 1 bajó `goodCarePerMinute` de .04 a .005. Medido con `tools/design/bond-curve.cjs`: los cinco
+corazones llegan el día 2,88 cuidando cada 30 min, el 4,00 cada 2 h y el 4,39 cada 4 h. El objetivo
+era «alrededor del 3,5».
 
 Hoy se llega al Bond máximo el día 2. Objetivo: alcanzarlo alrededor del día 3.5 jugando bien.
 Curva no lineal: los primeros niveles suben relativamente rápido, los altos cuestan
@@ -300,7 +311,19 @@ objetos al día elegidos al azar por fecha, así que agrupar ahí no aporta. La 
 filas compactas. La rotación diaria de la tienda no cambia.
 
 ### D5 · El sprite no entra en el modo LCD del juego en iPhone
-**Estado:** Bloqueado (falta evidencia del dispositivo)
+**Estado:** En curso · diagnóstico acotado el 2026-09-16, pendiente de decidir el arreglo
+
+**La sonda se pasó en WebKit de escritorio (Playwright) y los cinco casos salen filtrados**, igual
+que en Chromium. Eso descarta las hipótesis 1, 2, 4 y 5: el motor aplica el filtro SVG, el canvas
+hereda el del ancestro y la imagen también. Lo que queda es **específico de iOS**, y el sospechoso es
+la hipótesis 3 —la promoción a capa de composición—, que el WebKit de escritorio no hace igual que
+el de iOS.
+
+Arreglo propuesto, que además quita la dependencia de plataforma: **cuantizar dentro del canvas**
+cuando el modo LCD está activo, en vez de esperar a que el filtro del ancestro llegue hasta él, y
+excluir el canvas del filtro del ancestro (`filter:none`). Así se aplica exactamente una vez en todas
+las plataformas y el problema de la doble pasada desaparece. El filtro CSS se queda para todo lo
+demás —colores planos y texto—, donde está demostrado que funciona.
 
 Confirmado que se trata del **modo LCD del propio juego**, no del filtro de accesibilidad de iOS.
 El modo aplica `filter:url(#lcd-palette)` —un filtro SVG con cuantización discreta a cuatro
@@ -334,7 +357,9 @@ especie: al obtenerla si es primera fase, y en cuanto se evolucione en las sigui
 Memorias debe reservarse para los que llegaron al final de su vida, no para los abandonados.
 
 ### D8 · Pantalla propia de crianza y huevos
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
+
+Crianza tiene su botón propio y su panel, con cuatro flujos, separado de la ficha de Oak.
 
 Botón nuevo debajo de Tienda que abre una pantalla dedicada a crianza y huevos, en lugar de
 repartir eso por otros paneles.

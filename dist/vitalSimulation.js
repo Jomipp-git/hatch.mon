@@ -37,10 +37,6 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
 // Sin oncePerLife: el tope de un huevo por compañero era gratis y el freno real pasa a ser el
 // precio del Ditto. hasProducedEgg y social.bredIds se siguen escribiendo como registro, pero ya
 // no vetan. Con la crianza en el 2,5% nadie llegó nunca a chocar contra este tope.
-// Objetos de casa. El aspirador cumple la regla de los automatizadores por las tres vias a la vez:
-// se gasta (40 cargas), es parcial (solo recoge la deposicion que lleva una hora ahi, asi que la
-// recien hecha sigue siendo tuya) y cuesta lo que se nota. Toca deposiciones, NUNCA higiene: las
-// cacas son la tarea mecanica, la higiene alimenta la calidad de cuidados y no debe automatizarse.
 const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50};
 const PERSONALITY_CONFIG=Object.freeze({
   sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},

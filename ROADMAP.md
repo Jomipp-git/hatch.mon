@@ -313,6 +313,18 @@ Safari iOS amplía al doble toque. En un juego de toques repetidos eso interrump
 Los popups que hoy solo se cierran con la X deben cerrarse también al tocar fuera del panel.
 **Excepción: los minijuegos**, para no salir por accidente a media partida.
 
+### D16 · Scroll roto en los paneles en iOS
+**Estado:** Hecho · 2026-09-16 · confirmado en iPhone real
+
+Al desplazarse dentro de un panel el texto se rompía y aparecía fondo en blanco. El panel hacía
+scroll **él mismo** y llevaba encima `filter:url(#lcd-palette)`; en iOS un filtro SVG sobre un
+contenedor con scroll se cachea como capa y no se repinta al desplazarse. Encajaba con que solo
+ocurriera en la Pokédex, el único panel con ese filtro.
+
+El scroll pasa a `#panel-content`, así que el filtro queda sobre un elemento quieto, y la cabecera
+deja de necesitar `sticky` por el mismo motivo. De paso, abrir un menú lo sitúa arriba: el diálogo
+conservaba el desplazamiento del panel anterior.
+
 ### D3 · Pokédex ordenada por número de Pokédex
 **Estado:** Hecho · 2026-09-14 (`4a2cbce`)
 
@@ -327,7 +339,7 @@ objetos al día elegidos al azar por fecha, así que agrupar ahí no aporta. La 
 filas compactas. La rotación diaria de la tienda no cambia.
 
 ### D5 · El sprite no entra en el modo LCD del juego en iPhone
-**Estado:** Hecho · 2026-09-16 · pendiente de confirmar en un iPhone real
+**Estado:** Hecho · 2026-09-16 · **confirmado en iPhone real**
 
 **Lo que desbloqueó esto fue descubrir que la nota de arriba era falsa.** Decía que la cuantización
 no es idempotente y que por eso no se podía aplicar el filtro dos veces; de ahí salía el bloqueo.
@@ -346,7 +358,12 @@ el mismo cálculo de luminancia y bandas que el filtro SVG). El filtro CSS se qu
 estaba**: donde sí llega al canvas se aplica dos veces, que está probado que es inofensivo. Así iOS
 obtiene el resultado correcto sin depender del compositor y ninguna otra plataforma cambia.
 
-Falta lo único que no se puede hacer aquí: **abrirlo en un iPhone y confirmarlo**.
+Confirmado en un iPhone por el autor: el sprite entra en la paleta.
+
+**Y la causa estaba mal documentada.** La nota original decía que la cuantización no es idempotente,
+y ese era el bloqueo. Comprobado en Chromium y WebKit con diez colores: dos pasadas devuelven los
+mismos píxeles, porque la luminancia de cada tono cae dentro de su propia banda. Conviene recordarlo:
+lo que bloqueó esta entrada durante días no fue el fallo, fue una afirmación sin verificar sobre él.
 
 ### D6 · Carcasa al obtener el Pokémon, no al madurar
 **Estado:** Hecho · 2026-09-14 (`d41f6da`)

@@ -22,7 +22,7 @@ const assert=require('node:assert/strict'),fs=require('fs');const {setup}=requir
  const bag=els['panel-content'].children;
  assert.deepEqual(bag.filter(n=>n.className==='panel-group').map(n=>n.textContent),['Bayas','Objetos de evolución','Bebidas'],'only owned groups, in catalogue order');
  const kinds=run('ITEM_GROUPS');
- assert.deepEqual([...kinds],['berry','stone','medicine','drink']);
+ assert.deepEqual([...kinds],['berry','stone','medicine','drink','breeding']);
  assert.equal(run('Object.values(itemCatalog).every(i=>ITEM_GROUPS.includes(i.kind))'),true,'every item declares a group');
  const afterFirstGroup=bag.slice(bag.findIndex(n=>n.className==='panel-group')+1,bag.findIndex(n=>n.className==='panel-group')+2);
  assert.ok(afterFirstGroup.every(n=>n.className.includes('compact')),'item rows are compact');

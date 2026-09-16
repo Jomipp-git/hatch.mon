@@ -2,6 +2,11 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),{setup}=require('./uiHarness.cjs');
 const origin='http://127.0.0.1:8081';
+// Del catalogo y no escrito a mano: este script no entra en `node --test`, asi que una reescritura
+// de copy lo rompia en silencio.
+const companionLoadFailed=(()=>{const vm=require('node:vm'),ctx={globalThis:{}};vm.createContext(ctx);
+ vm.runInContext(fs.readFileSync(path.join(__dirname,'..','i18n.js'),'utf8'),ctx);
+ ctx.globalThis.HatchI18n.setLanguage?.('en');return ctx.globalThis.HatchI18n.t('auth.companionLoadFailed');})();
 const authSource=`const session={user:{id:'recovery-fixture',email:'test@example.test'}};
 export const auth={logout:async()=>({error:null})},humanError=()=>'';
 export const needsConfirmation=()=>false;
@@ -28,7 +33,7 @@ export const client={auth:{getSession:async()=>({data:{session}}),onAuthStateCha
    const page=await context.newPage();await page.goto(origin+'/index.html');return {page,context};
   }
   const before=await pageFor(true);await before.page.locator('#auth-retry').waitFor({state:'visible'});
-  assert.match(await before.page.locator('#auth-message').textContent(),/Could not load your companion/);assert.equal(writes,0);await before.context.close();console.log('BEFORE: reproduced companion-load error in Chrome from committed runtime.');
+  assert.equal(await before.page.locator('#auth-message').textContent(),companionLoadFailed);assert.equal(writes,0);await before.context.close();console.log('BEFORE: reproduced companion-load error in Chrome from committed runtime.');
   for(let attempt=0;attempt<2;attempt++){
    const {page,context}=await pageFor();await page.locator('#game-root').waitFor({state:'visible'});
    await page.waitForFunction(()=>!!window.HatchRuntime);

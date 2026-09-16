@@ -30,7 +30,10 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
     energy:'illness.energy',
     poops:'illness.poops',
     food:'illness.food'}};
-const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50,oncePerLife:true};
+// Sin oncePerLife: el tope de un huevo por compañero era gratis y el freno real pasa a ser el
+// precio del Ditto. hasProducedEgg y social.bredIds se siguen escribiendo como registro, pero ya
+// no vetan. Con la crianza en el 2,5% nadie llegó nunca a chocar contra este tope.
+const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50};
 const PERSONALITY_CONFIG=Object.freeze({
   sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},
   glutton:{labelKey:'personality.glutton',socialDemand:1,hungerPrompt:1.15},
@@ -150,7 +153,6 @@ globalThis.Vital=(()=>{
   }
   function breedingReason(s){
     if(!s.vital||getLifeStage(s)!==BREEDING_CONFIG.lifeStage)return vitalText('breeding.matureOnly');
-    if(BREEDING_CONFIG.oncePerLife&&s.vital.hasProducedEgg)return vitalText('breeding.alreadyProduced');
     if(s.phase!=='alive'||s.pokerus||s.care.felicidad<BREEDING_CONFIG.happiness||Object.values(s.care).some(n=>n<BREEDING_CONFIG.minCare)||
       s.vital.poops.length>BREEDING_CONFIG.maxPoops||s.vital.dirt>BREEDING_CONFIG.maxDirt)return vitalText('breeding.needsCare');
     return null;

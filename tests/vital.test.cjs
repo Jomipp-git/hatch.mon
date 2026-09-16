@@ -40,11 +40,28 @@ for(const quality of [0,65,100]){
 }
 born();run('state.age=5*DAY;checkHealth()');assert.equal(run('state.phase'),'dead');assert.equal(run('state.vital.deathCause'),'natural');assert.equal(run('validSave(state)'),true);
 born();run('state.care.hambre=0;state.care.felicidad=0;checkHealth()');assert.equal(run('state.vital.deathCause'),'neglect');
-// Breeding gate for both parents and lifetime restriction, even with a new code.
+// Breeding gate for both parents. There is no longer a once-per-life cap: the Ditto price is
+// the only brake, so a second egg from a fresh code has to go through.
 born();run('state.pokemonId="pikachu";state.gender="male";state.age=state.vital.lifespan*.5;const male=activeEntity();const code=exportEntity()');
 born();run('state.pokemonId="pikachu";state.gender="female"');assert.equal(run('breedingCheck(code).ok'),false);run('state.age=state.vital.lifespan*.5;state.care.felicidad=69');assert.equal(run('breedingCheck(code).ok'),false);run('state.care.felicidad=100;breedFromCode(code)');assert.equal(run('state.social.eggs.length'),1);assert.equal(run('state.vital.hasProducedEgg'),true);assert.equal(run('state.social.bredIds.length'),2);assert.equal(run('validSave(state)'),true);
-assert.equal(run('breedingCheck(HatchMonSocial.pack(PokemonData.convertEntity(male,true))).ok'),false);run('state=JSON.parse(JSON.stringify(state))');assert.equal(run('breedingCheck(HatchMonSocial.pack(PokemonData.convertEntity(male,true))).ok'),false);
+assert.equal(run('breedingCheck(HatchMonSocial.pack(PokemonData.convertEntity(male,true))).ok'),true);run('state=JSON.parse(JSON.stringify(state))');assert.equal(run('breedingCheck(HatchMonSocial.pack(PokemonData.convertEntity(male,true))).ok'),true);
+// Ditto: no second person, no gender pairing, and the offspring is the base form of the player's
+// own line. It costs one Ditto from the Bag and the vital gate still applies.
+run('state.social.eggs=[];state.inventory.ditto=0');
+assert.equal(run('dittoBreedingCheck().ok'),true);
+assert.equal(run('dittoBreedingCheck().offspring'),'pichu');
+assert.throws(()=>run('breedWithDitto()'),/dittoMissing|Ditto/);
+run('state.inventory.ditto=2;breedWithDitto()');
+assert.equal(run('state.social.eggs.length'),1);assert.equal(run('state.inventory.ditto'),1);
+assert.equal(run('state.social.eggs[0].parents[1].name'),'Ditto');
+assert.equal(run('state.social.eggs[0].offspring'),'pichu');
+assert.equal(run('validSave(state)'),true);
+// The vital gate is shared: outside ADULTO the button has a reason, and it is the same one.
+run('state.age=state.vital.lifespan*.95');
+assert.equal(run('dittoBreedingCheck().ok'),false);
+assert.equal(run('dittoBreedingCheck().reason'),run('Vital.breedingReason(state)'));
+run('state.age=state.vital.lifespan*.5');assert.equal(run('breedingBlocker()'),null);
 run('const exported=exportEntity();const qr=qrcode(0,"M");qr.addData(exported,"Byte");qr.make()');console.log('QR bytes',run('exported.length'));
 // Modern profiles retain physiology for breeding validation, but cannot be banked.
 run('const modern=readSocialCode(exported)');assert.equal(run('modern.entity.snapshot.vital.hasProducedEgg'),true);
-console.log('PASS C: stages, modifiers, difficulty, digestion, poops, cleaning, berries/training, sleep, fullness, abuse, offline equivalence, lifespan/death, mature once-per-life breeding and QR.');
+console.log('PASS C: stages, modifiers, difficulty, digestion, poops, cleaning, berries/training, sleep, fullness, abuse, offline equivalence, lifespan/death, breeding by QR and by Ditto.');

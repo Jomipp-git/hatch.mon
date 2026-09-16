@@ -326,16 +326,21 @@ const itemCatalog={
   electirizer:{get name(){return t('item.electirizer');},icon:'stone',kind:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',kind:'stone',price:170},
   berry:{get name(){return t('item.berry');},icon:'food',kind:'berry',food:true,price:35},
   medicine:{get name(){return t('item.medicine');},icon:'medicine',kind:'medicine',heal:true,price:70},
-  tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50}
+  tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50},
+  // Ditto no es un compañero al que cuidar: es el objeto que hace de pareja cuando no hay otra
+  // persona. Se gasta al crear el huevo, así que la crianza es un sumidero recurrente de monedas.
+  ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300}
 };
 // Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
-const ITEM_GROUPS=['berry','stone','medicine','drink'];
+const ITEM_GROUPS=['berry','stone','medicine','drink','breeding'];
 const itemDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.food')):
-    item.kind==='drink'?t('ui.inventory.tea'):item.kind==='medicine'?t('ui.inventory.medicine'):t('ui.inventory.evolution');};
+    item.kind==='drink'?t('ui.inventory.tea'):item.kind==='medicine'?t('ui.inventory.medicine'):
+    item.kind==='breeding'?t('ui.inventory.breeding'):t('ui.inventory.evolution');};
 const shopDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):
-    item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):t('ui.shop.evolutionItem');};
+    item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):
+    item.kind==='breeding'?t('ui.shop.ditto'):t('ui.shop.evolutionItem');};
 // Indexado por nota 1..5. Antes el array empezaba en 0 y ese hueco era inalcanzable, porque
 // Math.max(1,...) fijaba el indice minimo en 1.
 const COIN_REWARDS=Object.freeze([2,4,7,11,16]);
@@ -344,7 +349,9 @@ const shopDayKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMont
 // Los tres consumibles basicos estan siempre: comida, energia y salud. El te era el sumidero mejor
 // disenado de la tienda y salia el 5% de los dias, asi que comprar energia para entrenar mas no era
 // una decision que se pudiera tomar. La rotacion queda para lo interesante.
-const SHOP_STAPLES=Object.freeze(['berry','tea','medicine']);
+// El Ditto entra aquí y no en la rotación: un objeto rotando sale el 11-44% de los días, y la
+// mecánica que abre no puede depender de que la tienda diga que sí.
+const SHOP_STAPLES=Object.freeze(['berry','tea','medicine','ditto']);
 function dailyShop(date=new Date()){
   const ids=Object.keys(itemCatalog).filter(id=>!SHOP_STAPLES.includes(id)),key=shopDayKey(date);
   let seed=[...key].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
@@ -756,7 +763,6 @@ function importEntity(code){
 }
 function breedingCheck(code){
   const payload=readSocialCode(code);HatchMonSocial.assertNew(state.social,payload);
-  if(BREEDING_CONFIG.oncePerLife&&[state.social.active.id,payload.entity.id].some(id=>state.social.bredIds.includes(id)))return {payload,ok:false,reason:t('breeding.oncePerLife')};
   const result=HatchMonSocial.compatibility(activeEntity(),payload.entity);
   if(result.ok)result.offspring=PokemonData.legacyId(result.offspring);
   if(result.ok&&!STARTERS.includes(result.offspring))return {payload,ok:false,reason:t('breeding.rootUnavailable')};
@@ -766,16 +772,59 @@ function generatorInstruction(result){
   const remote=result.payload.entity,hasDitto=[state.pokemonId,remote.speciesId].some(id=>PokemonData.get(id)?.EggGroup==='Ditto');
   return t(hasDitto?'breeding.dittoGenerator':'breeding.femaleGenerator');
 }
+// evolutionConfig se indexa por ID legacy y Ditto no tiene uno: su ficha solo existe en el adapter.
+const parentOrigin=e=>({id:e.id,speciesId:e.speciesId,
+  name:e.snapshot.nickname||evolutionConfig[e.speciesId]?.name||PokemonData.get(e.speciesId)?.DisplayName||e.speciesId});
+function storeBredEgg(offspring,parents){
+  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error(t('connect.eggStorageFull',{max:HatchMonSocial.MAX_EGGS}));
+  state.social.eggs.push({id:HatchMonSocial.uid(),kind:'egg',speciesId:offspring,offspring,
+    createdAt:Date.now(),parents,snapshot:snapshotOf(freshState())});
+  // Ya no vetan, pero siguen siendo el registro de quien ha criado: la ficha de Oak los lee y la
+  // herencia de la capa 2 los necesita para la marca de linaje.
+  state.vital.hasProducedEgg=true;
+  Pokedex.record(state.pokedex,offspring,'bred');
+}
 function breedFromCode(code){
   if(interactionLocked())throw Error(t('connect.interactionLocked'));
   const result=breedingCheck(code);if(!result.ok)throw Error(result.reason);
   if(result.generatorId!==state.social.active.id)throw Error(generatorInstruction(result));
-  if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error(t('connect.eggStorageFull',{max:HatchMonSocial.MAX_EGGS}));
-  const origin=e=>({id:e.id,speciesId:e.speciesId,name:e.snapshot.nickname||evolutionConfig[e.speciesId].name});
-  const egg={id:HatchMonSocial.uid(),kind:'egg',speciesId:result.offspring,offspring:result.offspring,
-    createdAt:Date.now(),parents:[origin(activeEntity()),origin(result.payload.entity)],snapshot:snapshotOf(freshState())};
-  state.vital.hasProducedEgg=true;for(const id of [state.social.active.id,result.payload.entity.id])if(!state.social.bredIds.includes(id))state.social.bredIds.push(id);
-  state.social.eggs.push(egg);state.social.importedIds.push(result.payload.id);Pokedex.record(state.pokedex,result.offspring,'bred');
+  storeBredEgg(result.offspring,[parentOrigin(activeEntity()),parentOrigin(result.payload.entity)]);
+  for(const id of [state.social.active.id,result.payload.entity.id])if(!state.social.bredIds.includes(id))state.social.bredIds.push(id);
+  state.social.importedIds.push(result.payload.id);
+  return t('breeding.eggCreated',{name:companionName()});
+}
+// Crianza en solitario. Ditto es un objeto, no un compañero, así que entra por la regla de especie
+// del adapter y no por HatchMonSocial.compatibility, que exige requisitos vitales a las dos partes.
+// Las 58 formas que pueden criar son compatibles con el, y la cria es siempre BaseOffspringId del
+// progenitor: devuelve la base de TU linea, no una especie nueva.
+const DITTO_ID='0132A0';
+const dittoPartner=()=>({id:`ditto-${HatchMonSocial.uid()}`,kind:'creature',speciesId:DITTO_ID,offspring:null,
+  createdAt:Date.now(),parents:[],
+  snapshot:{phase:'alive',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,pokerus:false,
+    gender:'genderless',nickname:''}});
+// Un solo sitio donde se decide por que no se puede criar, para que la ficha de Oak y el boton de
+// Ditto digan lo mismo. Devuelve null cuando si se puede.
+function breedingBlocker(){
+  if(state.phase!=='alive')return t('breeding.availability');
+  if(PokemonData.get(state.pokemonId)?.Breedable!==true)return t('breeding.notBreedable',{name:companionName()});
+  return Vital.breedingReason(state);
+}
+function dittoBreedingCheck(){
+  const blocked=breedingBlocker();if(blocked)return {ok:false,reason:blocked};
+  const result=PokemonData.compatibility(activeEntity(),dittoPartner());
+  if(!result.ok)return result;
+  const offspring=PokemonData.legacyId(result.offspring);
+  if(!STARTERS.includes(offspring))return {ok:false,reason:t('breeding.rootUnavailable')};
+  return {ok:true,offspring};
+}
+function breedWithDitto(){
+  if(interactionLocked())throw Error(t('connect.interactionLocked'));
+  if(!(state.inventory.ditto>0))throw Error(t('breeding.dittoMissing'));
+  const result=dittoBreedingCheck();if(!result.ok)throw Error(result.reason);
+  const partner=dittoPartner();
+  storeBredEgg(result.offspring,[parentOrigin(activeEntity()),parentOrigin(partner)]);
+  state.inventory.ditto--;
+  if(!state.social.bredIds.includes(state.social.active.id))state.social.bredIds.push(state.social.active.id);
   return t('breeding.eggCreated',{name:companionName()});
 }
 function rememberDeath(){
@@ -1053,6 +1102,19 @@ async function copySocialCode(){
   try{await navigator.clipboard.writeText(output.value);socialStatus(t('qr.copied'));}
   catch{$('social-manual').open=true;output.focus();output.select();socialStatus(t('qr.copyFallback'));}
 }
+// El Animo >=70 estaba calibrado justo por encima de lo que deja una ausencia de 8 h (68) y nadie
+// sabia que existia: fallaba por dos puntos sin explicacion. breedingBlocker ya tiene el motivo;
+// aqui solo hay que ensenarlo junto al boton, que es donde el jugador esta mirando.
+function dittoBreedingRows(){
+  const held=state.inventory.ditto||0,blocked=breedingBlocker();
+  const rows=[el('h4',t('breeding.dittoTitle'),'panel-group'),el('p',t('breeding.dittoGuide'),'panel-note')];
+  const button=socialButton(t('breeding.createEgg'),()=>socialAction(breedWithDitto));
+  button.disabled=held<1||!!blocked;
+  rows.push(el('p',t('breeding.dittoHeld',{count:held,price:itemCatalog.ditto.price}),'panel-note'),button);
+  if(blocked)rows.push(el('p',blocked,'panel-note'));
+  else if(held<1)rows.push(el('p',t('breeding.dittoMissing'),'panel-note'));
+  return rows;
+}
 function renderSocialPanel(){
   const content=$('panel-content');content.replaceChildren();content.dataset.socialReady='true';$('panel-title').textContent=t('breeding');
   const nav=el('nav',undefined,'social-flows');nav.setAttribute('aria-label',t('connect.socialActions'));const flows={companion:'connect.shareCompanion',breed:'connect.breed',receive:'connect.receiveEgg',egg:'connect.shareEgg'};
@@ -1067,7 +1129,11 @@ function renderSocialPanel(){
     const details=el('details');details.id='social-manual';details.append(el('summary',t('qr.viewAlternate')));const output=el('textarea');output.id='social-export-code';output.readOnly=true;output.rows=2;output.setAttribute('aria-label',t('qr.alternateCode'));details.append(output);section.append(details);select.addEventListener('change',()=>{output.value='';qr.replaceChildren();});
     if(socialFlow==='companion'&&state.phase!=='alive')section.append(el('p',t('connect.noLiveCompanion')));if(socialFlow==='egg'&&!state.social.eggs.length)section.append(el('p',t('connect.noStoredEggs')));refreshSocialCollection();
   }else{
-    const breed=socialFlow==='breed';section.append(el('p',t(breed?'connect.breedGuide':'connect.receiveGuide'),'panel-note'));section.append(socialButton(t('qr.scan'),scanSocialCode),socialButton(t('qr.stopCamera'),()=>{stopSocialCamera();socialStatus(t('qr.cameraStopped'));}));
+    const breed=socialFlow==='breed';
+    // El Ditto va primero: es la via que no necesita a otra persona, y la mayoria juega sola.
+    if(breed)section.append(...dittoBreedingRows());
+    if(breed)section.append(el('h4',t('breeding.qrTitle'),'panel-group'));
+    section.append(el('p',t(breed?'connect.breedGuide':'connect.receiveGuide'),'panel-note'));section.append(socialButton(t('qr.scan'),scanSocialCode),socialButton(t('qr.stopCamera'),()=>{stopSocialCamera();socialStatus(t('qr.cameraStopped'));}));
     const video=el('video');video.id='social-video';video.muted=true;video.playsInline=true;video.hidden=true;section.append(video);const label=el('label',t(breed?'qr.companionCode':'qr.eggCode'));label.htmlFor='social-input';const input=el('textarea');input.id='social-input';input.rows=2;input.maxLength=HatchMonSocial.MAX_CODE;input.spellcheck=false;section.append(label,input);
     section.append(socialButton(t(breed?'breeding.check':'connect.receiveEgg'),breed?showBreedingResult:()=>socialAction(()=>importEntity(input.value))));if(breed){const card=el('div',undefined,'breeding-result');card.id='breeding-result';card.hidden=true;card.setAttribute('role','status');card.setAttribute('aria-live','polite');section.append(card);}
   }
@@ -1157,7 +1223,9 @@ function companionStatus(){
   if(state.care.felicidad<40)return t('ui.wantsPlay',{name});
   if(!state.lightsOff&&!interactionLocked()){
     if(current().rules.some(r=>r.item&&itemUsable(r.item)))return t('oak.ready',{name});
-    if(PokemonData.get(state.pokemonId)?.Breedable===true&&Vital.breedingReason(state)===null)return t('oak.breedingReady',{name});
+    // hasProducedEgg ya no impide criar otra vez, pero sigue silenciando el aviso: avisar durante
+    // el 60% de la vida a quien ya ha criado es ruido, y Crianza esta a un boton de distancia.
+    if(!state.vital.hasProducedEgg&&!breedingBlocker())return t('oak.breedingReady',{name});
   }
   return t('ui.calm');
 }
@@ -1280,7 +1348,7 @@ function renderCompanionTab(content){
     disposeMemorialSprites();
     const stat=k=>t(`stat.${k}`),stage=value=>t(`stage.${String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'')}`);
     if(state.phase==='egg'){content.append(el('p',t(state.heat<3?'oak.eggEarly':'oak.eggLate')));return;}
-    const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=state.vital.hasProducedEgg?t('oak.breedingDone'):Vital.breedingReason(state)?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
+    const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=breedingBlocker()?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
     for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.personality'),t(PERSONALITY_CONFIG[state.personality].labelKey)],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
     const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=state.care[k],cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',stat(k));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
     for(const step of evolutionLine(state.pokemonId)){

@@ -28,9 +28,9 @@ con qué script y con qué cadencia salió.
 | `lifespan-range.cjs` | Rango real de esperanza de vida sobre 4.000 compañeros, y qué compra cada nivel de calidad de cuidados. Encontró que `minDays`/`maxDays` no se alcanzaban |
 | `lifespan-payoff.cjs` | Si un empujón de atención vale lo mismo al principio, en medio o al final de la vida |
 | `shop-catalog.cjs` | Catálogo, precios y frecuencia de aparición de cada objeto en la rotación diaria |
-| `coin-income.cjs` | Monedas por día y tiempo hasta poder comprar cada cosa, por nivel de habilidad |
+| `coin-income.cjs` | Monedas por día y tiempo hasta poder comprar cada cosa, por nivel de habilidad. Rota los cuatro atributos: entrenando solo uno, `beginTraining` lo rechaza a 100 y la fuente se cierra sola |
 | `evolution-pacing.cjs` | En qué día termina de evolucionar cada línea, y cuánta vida queda después |
-| `breeding-gate.cjs` | Probabilidad de que dos jugadores al azar puedan criar, condición a condición |
+| `breeding-gate.cjs` | Probabilidad de poder criar, condición a condición, por las dos vías: QR entre dos jugadores y Ditto en solitario. La ventana de etapa se lee de `LIFE_CONFIG`, no escrita a mano |
 | `minigame-duration.cjs` | Duración, pago por minuto y curva de dificultad de los cuatro minijuegos |
 | `kindness-luck.cjs` | Cuánto de la nota de Amabilidad es habilidad y cuánto el sorteo de basura por ronda |
 

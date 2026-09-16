@@ -983,6 +983,103 @@ mirar en qué función se está editando.
 
 **Capa 1 cerrada.**
 
+# CAPA 2 · DITTO Y LA PUERTA DE CRIANZA · 2026-09-16
+
+Primer paso de la capa 2, por delante de la herencia: al elegir crianza literal como vía, arreglar la
+crianza pasó de opcional a requisito.
+
+## Dos cifras del plan estaban mal, y eran de mis propios scripts
+
+- **La puerta de dos jugadores no estaba en 0,84 %.** `breeding-gate.cjs` llevaba `const maduro=0.35`
+  escrito a mano, de cuando JOVEN y MADURO eran etapas distintas. La capa 1 las fusionó en ADULTO
+  (20–80 %), así que la ventana real es el **60 %** de la vida y la conjunción el 36 %, no el 12,2 %.
+  La puerta estaba en **2,46 % — 1 de cada 41**. Sigue siendo inviable, pero el número publicado era
+  tres veces más pesimista de lo que el código hacía. El script ahora lee la ventana de `LIFE_CONFIG`.
+- **El ingreso real es 4× lo que decía `coin-income.cjs`.** El script entrenaba solo `strength`, así
+  que `beginTraining` lo rechazaba a 100 y la fuente se cerraba sola: daba 29–46 mon/día. Rotando los
+  cuatro atributos salen **396 / 735 / 1.280 monedas por vida** (flojo / medio / experto), que es
+  exactamente la cifra del bloque 0. El bloque 0 estaba bien; el script, mal.
+
+## Lo que Ditto abre, medido
+
+Preguntando al adapter forma por forma, no reimplementando `contract.dittoRule`:
+
+```
+formas compatibles con Ditto ............. 58 de 77  (75,3 %)   ← las 58 que pueden criar
+...con descendencia dentro de STARTERS ... 58 de 58             ← ninguna excepción
+en ADULTO ................................ 60,0 %
+producto ................................. 45,2 %  = 1 de cada 2,2
+```
+
+De 1 entre 41 a 1 entre 2,2: **x18**.
+
+Dos consecuencias que no estaban en el plan:
+
+- **El objeto «ampliar compatibilidad» de los sumideros se queda sin trabajo.** El filtro del 9,1 % no
+  se amplía: desaparece. Ditto ya lo hace todo.
+- **Ditto no da Pokédex, da linaje.** La cría es siempre `BaseOffspringId` del progenitor: Pikachu →
+  Pichu, Vaporeon → Eevee. Devuelve la base de *tu* línea, nunca una especie nueva. No compite con el
+  huevo de 600, que vende una especie distinta y nombrada; es su complemento, y es exactamente el
+  soporte que la herencia necesita.
+
+## Decisiones cerradas
+
+| Decisión | Resuelto |
+|---|---|
+| `oncePerLife` | **retirado del todo**, las dos vías |
+| Tope de la vía QR | **ninguno**: criar entre personas es gratis e ilimitado |
+| Freno de la vía Ditto | su precio, y nada más |
+| Precio y sitio | **300**, fijo en la estantería (`SHOP_STAPLES`), no en la rotación |
+| `hasProducedEgg` y `bredIds` | **se conservan como registro**; ya no vetan |
+| Ventana de etapa | **no se toca**: ADULTO al 60 % ya es ancho |
+| Ánimo ≥ 70 | **no se toca**: se dice qué falta |
+
+## Aplicado
+
+**Ditto como objeto.** `itemCatalog.ditto`, `kind:'breeding'`, 300 monedas, icono de huevo, grupo
+propio en la Mochila. Fijo en `SHOP_STAPLES` porque un objeto de la rotación sale el 11–44 % de los
+días y la mecánica que abre no puede depender de un sorteo. La tienda pasa de 6 entradas a 7; la
+rotación no cambia. **Sin tocar el esquema 12**: es una clave más en `inventory`.
+
+**Vía de crianza en solitario.** Ditto es un objeto, no un compañero, así que `dittoBreedingCheck`
+entra por `PokemonData.compatibility` y no por `HatchMonSocial.compatibility`, que exige requisitos
+vitales a las **dos** partes y obligaría a fabricar una fisiología falsa en ADULTO con cuidados
+perfectos. El bloque va **primero** en el panel Criar, por delante del QR: es la vía que no necesita a
+otra persona, y la mayoría juega sola.
+
+**`oncePerLife` fuera**, del `BREEDING_CONFIG` y de los dos sitios que lo leían.
+
+**La puerta deja de ser invisible.** `breedingBlocker()` centraliza los tres motivos —fase, especie no
+criable y `Vital.breedingReason`— y el motivo exacto se muestra junto al botón deshabilitado. Medido:
+a las 8 h fuera el Ánimo queda en **68** y **un solo `jugar` lo sube a 88**. El umbral nunca fue una
+barrera; era un secreto. De paso, la ficha de Oak dejaba de mirar `Breedable`, así que una especie que
+no puede criar se leía como «Disponible».
+
+**El aviso de la banda sí sigue mirando `hasProducedEgg`**, aunque ya no vete: avisar durante el 60 %
+de la vida a quien ya ha criado es ruido.
+
+## Tres trampas del camino, encontradas leyendo
+
+- **`breedFromCode` reventaba con un progenitor Ditto.** `origin()` resolvía el nombre por
+  `evolutionConfig[speciesId]`, que se indexa por ID legacy — y Ditto **no tiene**: no está en
+  `evolutionTable.js` ni en `master/legacyIds.json`, y `PokemonData.legacyId('0132A0')` devuelve
+  `null`. Ahora `parentOrigin` cae al adapter.
+- **No registrar Ditto en la Pokédex.** `Pokedex.record` le habría creado una entrada *válida* pero
+  invisible, porque `roster()` se construye sobre IDs legacy. Basura silenciosa en el save.
+- `entityOK`/`validStore` sí tragan un progenitor Ditto: `originOK` solo pide tres strings.
+
+## Verificación
+
+Suite **107/107** con cuatro pruebas actualizadas al nuevo contrato (`vital`, `status-strip`,
+`ui-polish`, `content-update`), auditoría i18n limpia. Tres claves quedaron muertas al quitar el tope
+—`breeding.oncePerLife`, `breeding.alreadyProduced`, `oak.breedingDone`— y salen del catálogo. La
+comprobación visual es la página real servida en local, no una reconstrucción.
+
+**Pendiente de la capa 2:** herencia y sumideros de tienda; Pokéathlón y ranking, al final y opcional.
+
+---
+---
+
 # Utilidades de medición
 
 Los scripts que produjeron las cifras de este documento viven en `tools/design/`, con su propio

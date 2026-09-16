@@ -23,6 +23,16 @@ assert.equal(loaded.run('state.inventory.berryStrength'),undefined);assert.equal
  assert.ok(speciesByDay.size>=6,`la especie del huevo del dia varia (vistas ${speciesByDay.size} en 12 dias)`);
  assert.equal(run('namedEggSpecies({getFullYear:()=>2026,getMonth:()=>8,getDate:()=>10})'),run('namedEggSpecies({getFullYear:()=>2026,getMonth:()=>8,getDate:()=>10})'));
  assert.deepEqual(JSON.parse(today).slice(0,STAPLES.length),STAPLES,'la estanteria va siempre delante');
+ // El sorteo diario mezcla la identidad del entrenador: dos jugadores no ven lo mismo el mismo dia.
+ run('var DIA={getFullYear:()=>2026,getMonth:()=>8,getDate:()=>10}');
+ const oferta=id=>{run(id===null?'globalThis.HatchTrainer=undefined':`globalThis.HatchTrainer={id:${JSON.stringify(id)}}`);
+  return run('JSON.stringify([namedEggSpecies(DIA),boutiqueSlot(DIA)[0],evolutionSlot(DIA)])');};
+ const ana=oferta('11111111-2222-3333-4444-555555555555');
+ const beto=oferta('99999999-8888-7777-6666-555555555555');
+ assert.notEqual(ana,beto,'dos entrenadores, dos ofertas el mismo dia');
+ assert.equal(ana,oferta('11111111-2222-3333-4444-555555555555'),'y para el mismo, estable');
+ // Sin identidad —pruebas y herramientas— el sorteo sigue siendo determinista.
+ const sinId=oferta(null);assert.equal(sinId,oferta(null));
  // El hueco de Evolucion deja de ser loteria: Growlithe pide Piedra Fuego y es lo que se ofrece,
  // y Eevee pide cinco, que son justo su decision.
  // Llega aqui con berryStrength en la Mochila, que se retiro del catalogo: se limpia para que las

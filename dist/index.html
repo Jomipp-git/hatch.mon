@@ -149,6 +149,12 @@
   .minigame-field button.timing-track{grid-column:1/-1;min-height:96px;height:96px;position:relative;padding:0;background:#e4ebcf;border:2px solid #52694a;overflow:hidden;display:block}.timing-zone{position:absolute;top:0;height:100%;background:#c2d3a2}.timing-core{position:absolute;top:0;height:100%;background:#91a477;box-shadow:inset 2px 0 0 #52694a,inset -2px 0 0 #52694a}.timing-marker{position:absolute;transform:translateX(-50%);top:0;width:6px;height:100%;background:#263b30}.timing-time{position:absolute;left:0;bottom:0;height:5px;background:#263b30;pointer-events:none}.timing-time[data-warn="1"]{background:#8a3b1f}.timing-caption{position:absolute;inset:6px 0 auto;text-align:center;font-size:.68rem;letter-spacing:.08em;color:#3f5340;pointer-events:none}
   #training-game-content>p{min-height:32px;overflow-wrap:anywhere}#training-game-content button{min-width:0;white-space:normal;overflow-wrap:anywhere}.social-flows>button{min-width:0;overflow-wrap:anywhere}#training-game-content>button{margin-top:12px;width:100%}.minigame-field{outline:calc(var(--pulse,0)*4px) solid #52694a}
   [data-display-mode="lcd"] #training-game{filter:url(#lcd-palette)}
+  /* El panel no hace scroll: lo hace su contenido. En iOS un filtro SVG sobre un contenedor con
+     scroll se cachea como capa y no se repinta al desplazarse —texto roto y fondo en blanco—, y con
+     esto el filtro queda sobre un elemento quieto. La cabecera deja de necesitar sticky. */
+  #panel{display:flex;flex-direction:column;overflow:hidden}
+  #panel>header{position:static;top:auto;flex:0 0 auto}
+  #panel-content{overflow:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:0}
   .panel-note{font-size:.78rem;margin:6px 0 12px}.panel-row{padding:10px 0}.panel-row p{font-size:.78rem}.panel-row ul{padding-left:18px;font-size:.78rem}.memory-card{align-items:center}.memory-sprite{height:80px}
   .minigame-field button[data-object]{padding:0}.minigame-field button[data-object]::before{content:'';display:block;width:38px;height:44px;margin:0 auto;background:currentColor;image-rendering:pixelated}
   [data-object="papel"]::before{clip-path:polygon(10% 0,70% 0,90% 20%,90% 100%,10% 100%)}[data-object="lata"]::before{clip-path:polygon(15% 0,85% 0,85% 100%,15% 100%)}[data-object="botella"]::before{clip-path:polygon(35% 0,65% 0,65% 25%,85% 40%,85% 100%,15% 100%,15% 40%,35% 25%)}[data-object="flor"]::before{clip-path:polygon(30% 0,70% 0,70% 20%,100% 20%,100% 50%,65% 50%,65% 100%,40% 100%,40% 50%,0 50%,0 20%,30% 20%)}[data-object="hoja"]::before{clip-path:polygon(100% 0,100% 50%,70% 80%,30% 80%,10% 100%,0 90%,20% 70%,20% 30%,50% 0)}
@@ -380,7 +386,16 @@ const shopDetail=id=>{const item=itemCatalog[id];
 const COIN_REWARDS=Object.freeze([2,4,7,11,16]);
 const coinReward=gain=>COIN_REWARDS[Math.max(1,Math.min(5,Math.round(gain)))-1];
 const shopDayKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+// La tienda deja de ser la misma para todo el mundo: el sorteo mezcla la identidad del entrenador,
+// que appBootstrap deja en `window.HatchTrainer`. Sin ella —pruebas y herramientas— el sorteo sigue
+// siendo determinista, que es lo que esas comprobaciones necesitan.
+const trainerSeed=()=>{
+  let n=2166136261;
+  for(const c of String(globalThis.HatchTrainer?.id||''))n=Math.imul(n^c.charCodeAt(0),16777619)>>>0;
+  return n;
+};
 const dailySeed=(date=new Date())=>{let seed=[...shopDayKey(date)].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
+  seed=(seed^trainerSeed())>>>0;
   return ()=>(seed=(seed*1664525+1013904223)>>>0);};
 // Vitrina de huevos. No son objetos de Mochila: se compran y van directos a la reserva, asi que
 // tienen su propio catalogo y su propia compra.
@@ -1071,7 +1086,9 @@ function showToast(message,important=false,eggInteraction=false){message=I18n?.l
   toastTimer=setTimeout(()=>hideToast(false),important?FEEDBACK_CONFIG.eventMs:FEEDBACK_CONFIG.ordinaryMs);
 }
 const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
-function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();}
+function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();
+  // Cada menu empieza arriba: el dialogo conservaba el desplazamiento del que se cerro antes.
+  dialog.scrollTop=0;$('panel-content').scrollTop=0;}
 function closePanel(){disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=I18n?.localize(text)??text;}if(cls)n.className=cls;return n;}
 // La fecha limite se escribe en el idioma activo y con la zona del dispositivo, que es la misma
@@ -1158,6 +1175,9 @@ function renderPanel(){
             current||state.coins<MemorialFrames.price,`frame-buy-${id}`)));
       }
       content.append(panelButton(t('ui.shop.frameCancel'),()=>{framingMemorialId=null;renderPanel();},false,'frame-cancel'));
+      // Viniendo de un recuerdo, la tienda enseña SOLO los marcos: has venido a ponerle un marco a
+      // alguien, no a comprar bayas. Se reutiliza el menú, no el escaparate.
+      return;
     }
     // Huecos por categoria en vez de una bolsa comun. Con todo rotando en tres huecos, casi la mitad
     // de los compañeros morian sin ver la piedra que necesitaban: eso no es escasez, es un bloqueo.

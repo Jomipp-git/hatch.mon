@@ -40,6 +40,9 @@ async function start(session){
  if(started||starting||leaving||recovery)return;starting=true;offerResend('');gateState('loading','auth.verifyingAccount');
  try{
   userId=session.user.id;installAdminAccess(session);const cache=userStorage(localStorage,userId);window.HatchStorage=cache;
+  // Identidad del entrenador para el sorteo diario de la tienda. Se deja igual que HatchStorage, en
+  // una global que el runtime lee: NO entra en el guardado ni viaja en ningun codigo.
+  window.HatchTrainer=Object.freeze({id:userId});
   service=createCloudSaveService({client,session,cache,notify,onRemote:(game,preferences)=>window.HatchRuntime?.applyCloudSave(game,preferences)});
   try{await service.load();}catch(error){
    if(['unsupported-save','invalid-save'].includes(error.message))throw error;let cached;try{cached=snapshotCache(cache);}catch{throw Error('invalid-save');}if(!cached?.game)throw error;

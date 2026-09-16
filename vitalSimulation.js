@@ -51,7 +51,12 @@ globalThis.Vital=(()=>{
     v.baseLifespan=(LIFE_CONFIG.baseDays+(random(v)*2-1)*LIFE_CONFIG.variationDays)*LIFE_CONFIG.day;
     v.lifespan=v.baseLifespan;return v;
   }
-  const getLifeStage=s=>s.phase==='egg'||!s.vital?null:LIFE_CONFIG.stages.find(stage=>s.age<s.vital.lifespan*stage.until).id;
+  // Excepcion de los 19 Pokemon Baby: no alcanzan la etapa adulta por edad, solo evolucionando. El
+  // catalogo ya los marca con EvolutionStage 'Baby' y todos tienen al menos una evolucion, asi que
+  // ninguno queda encallado. Consecuencia de balance: un Baby sin evolucionar nunca entra en SENIOR,
+  // asi que se libra de sus penalizaciones, y tampoco puede criar, que es lo canonico.
+  const isBaby=s=>PokemonData.get(s.pokemonId)?.EvolutionStage==='Baby';
+  const getLifeStage=s=>s.phase==='egg'||!s.vital?null:isBaby(s)?LIFE_CONFIG.stages[0].id:LIFE_CONFIG.stages.find(stage=>s.age<s.vital.lifespan*stage.until).id;
   const getLifeModifiers=s=>LIFE_CONFIG.stages.find(stage=>stage.id===getLifeStage(s));
   function difficulty(id){
     const d=PokemonData.get(id)?.CareDifficulty;

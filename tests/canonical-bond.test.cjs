@@ -14,7 +14,8 @@ for(let i=0;i<run('bondRules.length');i++){
  for(const delta of [-.01,0,1]){
   run(`state.relationship.points=minimum+${delta};panelName='oak';renderPanel()`);
   const expected=delta>=0;assert.equal(run('Relationship.evaluateMinBond(state,source.MinBond).met'),expected);assert.equal(run('conditionsMet(r)'),expected,run('source.RuleId'));
-  const section=els['panel-content'].children.find(n=>n.children.some(c=>c.tagName==='summary'&&c.textContent===run('evolutionConfig[to].name')));
+  // La ficha de Oak ya no plega cada paso en <details>: cada uno es un div.evolution-step.
+  const section=els['panel-content'].children.find(n=>String(n.className||'').includes('evolution-step')&&text(n).includes(run('evolutionConfig[to].name')));
   assert.ok(text(section).includes(`${expected?'✓':'○'} Vínculo ≥ ${run('source.MinBond')} ♥`),run('source.RuleId'));
  }
  run('state.relationship.points=minimum;state.age=r.ageMs-1');assert.equal(run('conditionsMet(r)'),false);run('state.age=r.ageMs');

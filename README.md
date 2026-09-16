@@ -74,7 +74,7 @@ Pokérus depende de exposición y riesgos de la fisiología, no de una penalizac
 
 Lifespan mantiene base 4 días, variación inicial ±0,15 días y ajuste por calidad de cuidados con límites 3,5–5 días. C.2 no altera ninguna fórmula ni el balance C.1.
 
-`LifeStage` depende exclusivamente de **edad/lifespan**: CRÍA hasta 20%, ADULTO hasta 80%, SENIOR después. Eran cuatro etapas, pero JOVEN y MADURO tenían todos los multiplicadores a 1 salvo un juego ×1,10: dos nombres para la misma etapa, 2,4 de los 4 días de vida sin identidad mecánica. ADULTO es la línea base contra la que se definen las otras dos. `EvolutionStage` se lee de la especie canónica y es independiente: un Pichu puede ser MADURO y un Raichu JOVEN.
+`LifeStage` depende de **edad/lifespan**: CRÍA hasta 20%, ADULTO hasta 80%, SENIOR después, **con una excepción**: las 19 formas marcadas `EvolutionStage: 'Baby'` en el catálogo no salen nunca de CRÍA por edad, solo evolucionando. Todas tienen al menos una evolución, así que ninguna queda encallada. Consecuencia: un Baby sin evolucionar no entra en SENIOR y se libra de sus penalizaciones, y tampoco puede criar, que es lo canónico. Eran cuatro etapas, pero JOVEN y MADURO tenían todos los multiplicadores a 1 salvo un juego ×1,10: dos nombres para la misma etapa, 2,4 de los 4 días de vida sin identidad mecánica. ADULTO es la línea base contra la que se definen las otras dos. `EvolutionStage` se lee de la especie canónica y es independiente: un Pichu puede ser MADURO y un Raichu JOVEN.
 
 ## Feedback y gráficos
 
@@ -157,6 +157,10 @@ Consecuencia de esa regla: `hunger` y `bored` recorren los tres niveles; `poop` 
 `persistenceMs` retrasa el aviso 15 min en `warning` y 10 min en `needsAttention` para que un bajón momentáneo no lo dispare; `serious` y las necesidades inmediatas no esperan. Un aviso `serious` se repite cada 4 h (`seriousRepeatMs`) en lugar de callarse hasta la muerte; los no críticos comparten un enfriamiento de 2 h. Las horas de silencio (23–8 por defecto) solo bloquean la entrega web, no el aviso en pantalla, y las notificaciones exigen permiso explícito, desactivado de origen. Con una excepción: un aviso `serious` con el compañero en fase `critical` atraviesa el silencio **una vez por evento** (`quietBreak`, normalizado en `ensure` sin tocar el esquema 12); las repeticiones posteriores vuelven a esperar al amanecer. Sin esa excepción, entrar en crítico a medianoche significaba morir sin un solo aviso.
 
 La franja distingue los tres niveles por color, en rampa monótona sobre el fondo `#c8d2c3`: `warning` #4a5a2e (4,8:1), `needsAttention` #3a4d33 (5,9:1) y `serious` #263b30 en negrita (7,7:1). Antes `warning` no tenía estilo —era indistinguible del estado normal— y `needsAttention` se quedaba en 3,9:1, por debajo del mínimo AA.
+
+## Ficha de evolución de Oak
+
+La ficha muestra la **línea evolutiva completa** —forma inicial, la actual y todas las ramas por delante—, no solo el paso inmediato: los testers no sabían cuántas etapas le quedaban al compañero. Cada paso va sin plegar (antes era un `<details>`) y con el **sprite estático** de Memorias vía `collectionSprite`, así que `renderPanel` llama a `disposeMemorialSprites()` al repintar la ficha igual que hace el Pokédex. Los requisitos de edad se leen en **días enteros y horas** (`Edad: 2 d y 12 h`), nunca en días decimales. Los pasos que aún no toca su turno muestran sus requisitos sin marcar, porque el estado solo se puede evaluar contra la forma actual.
 
 ## Pokédex y apariciones
 

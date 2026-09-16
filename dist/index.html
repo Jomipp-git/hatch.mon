@@ -141,7 +141,7 @@
   .console{background:linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%),var(--shellBase,var(--shell));border-color:var(--shellDark,var(--border))}.bezel{background:var(--bezel,#4e4a56)}.care button{background:var(--button,var(--paper));border-color:var(--edge,var(--border));box-shadow:0 3px var(--edge,var(--border))}.care button[data-action="alimentar"]{--edge:var(--edge-alimentar)}.care button[data-action="jugar"]{--edge:var(--edge-jugar)}.care button[data-action="luz"]{--edge:var(--edge-luz)}.care button[data-action="limpiar"]{--edge:var(--edge-limpiar)}
   dialog{border-radius:10px;border:4px double var(--shellDark,#5c546b);background:#e8ecdf}dialog header{background:#e8ecdf}dialog h2{font-size:1rem}
   .diagnosis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.diagnosis .panel-row{display:block;padding:6px;border:1px solid #a9b69b;border-radius:4px}.diagnosis p{margin:3px 0}.training-card{padding:12px;margin:10px 0;border:1px solid #a9b69b;border-radius:5px}.training-card .card-actions{display:flex;gap:6px;align-items:stretch}.training-card .card-actions .card-help{flex:0 0 auto;min-width:44px;padding:0 10px;font-weight:bold}.training-card .panel-row{border:0;padding:0 0 8px}.training-card p{font-size:.72rem}
-  .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}.evolution-detail{border-top:1px solid #a9b69b;padding:10px 0}.evolution-detail summary{cursor:pointer;font-weight:bold;font-size:.8rem}
+  .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}.evolution-step{border-top:1px solid #a9b69b;padding:10px 0;display:flex;flex-direction:column;gap:6px}.evolution-step-head{display:flex;align-items:center;gap:10px;min-width:0}.evolution-step-head .memory-sprite{width:44px;height:44px;flex:0 0 44px}.evolution-step-head .memory-sprite canvas{width:44px!important;height:44px!important}.evolution-step-title{display:flex;flex-direction:column;gap:2px;min-width:0}.evolution-step-title strong{font-size:.8rem}.evolution-step-title small{font-size:.7rem;opacity:.75}.evolution-step.is-done .evolution-step-head{opacity:.6}.evolution-step.is-current .evolution-step-title strong{font-weight:bold}.evolution-step.is-next .evolution-step-title strong{text-decoration:underline}
   .minigame-field .minigame-again{grid-column:1/-1}.minigame-field[data-phase="prepare"]{border-style:dashed;opacity:.75}.minigame-field[data-phase="play"]{border-color:#263b30}.minigame-field button[data-result="correct"]{outline:3px solid #52694a;opacity:.6}.minigame-field button[data-result="wrong"]{outline:3px double #263b30;text-decoration:line-through}
   .dex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dex-tile{padding:8px 3px;text-align:center;background:#d5dfd055;border:1px solid #a9b69b;border-radius:5px;min-width:0}.dex-tile summary{cursor:pointer;list-style:none}.dex-tile strong{font-size:.7rem;display:block;overflow-wrap:anywhere}.dex-tile p,.dex-tile small{font-size:.65rem}.dex-tile .memory-sprite{margin:auto}.unknown{font-size:1.3rem;color:#6b7961}
   .console{background-image:var(--motifImage,none),linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%);background-color:var(--shellBase,var(--shell));background-repeat:repeat,no-repeat;background-position:top left,center;background-size:var(--motifSize,58px 58px),100% 100%}
@@ -947,15 +947,37 @@ function renderPanel(){
     }
   }
   if(panelName==='oak'){
+    disposeMemorialSprites();
     const stat=k=>t(`stat.${k}`),stage=value=>t(`stage.${String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'')}`);
     content.append(row(t('oak.exchange'),t('oak.exchangeDetail'),socialEntryButton()));
     if(state.phase==='egg'){content.append(el('p',t(state.heat<3?'oak.eggEarly':'oak.eggLate')));return;}
     const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=state.vital.hasProducedEgg?t('oak.breedingDone'):Vital.breedingReason(state)?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
     for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.personality'),t(PERSONALITY_CONFIG[state.personality].labelKey)],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution]])diagnosis.append(row(label,value));content.append(diagnosis);
     const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=state.care[k],cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',stat(k));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
-    for(const r of current().rules){const section=el('details',undefined,'evolution-detail');section.append(el('summary',evolutionConfig[r.to].name));const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`));
-      req(state.age>=r.ageMs,t('oak.requirement.age',{days:r.ageMs/DAY}));if(r.minMood!=null)req(state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));if(r.minBond!=null)req(Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
-      for(const[k,v]of Object.entries(r.careMean))req(mean(k)!==null&&mean(k)>=v,t('oak.requirement.average',{stat:stat(k),value:v}));for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,t('oak.requirement.stat',{stat:stat(k),value:v}));for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,t('oak.requirement.sustained',{stat:stat(c.estadistica),value:c.minimo,hours:c.duracionMs/HOUR,elapsed:(elapsed/HOUR).toFixed(1)}));}if(r.action)req((state.actions[r.action]||0)>=r.repetitions,t('oak.requirement.action',{action:evolutionActionLabel(r.action),current:state.actions[r.action]||0,required:r.repetitions}));if(r.item)req(false,t('oak.requirement.item',{item:itemLabel(r.item),count:state.inventory[r.item]||0}));section.append(list);content.append(section);}
+    for(const step of evolutionLine(state.pokemonId)){
+      const current=step.to===state.pokemonId,past=!current&&reachedForm(step.to),done=!step.rule||current||past;
+      const actionable=!!step.rule&&step.from===state.pokemonId;
+      const section=el('div',undefined,`evolution-step${current?' is-current':done?' is-done':''}${actionable?' is-next':''}`);
+      const head=el('div',undefined,'evolution-step-head');
+      head.append(collectionSprite(step.to,state.social.active.isShiny===true));
+      const title=el('div',undefined,'evolution-step-title');
+      title.append(el('strong',evolutionConfig[step.to].name));
+      title.append(el('small',current?t('oak.step.current'):past?t('oak.step.reached'):!step.rule?t('oak.step.start'):actionable?t('oak.step.next'):t('oak.step.later',{from:evolutionConfig[step.from].name})));
+      head.append(title);section.append(head);
+      if(!done){
+        const list=el('ul'),req=(ok,text)=>list.append(el('li',`${ok?'✓':'○'} ${text}`)),r=step.rule;
+        req(actionable&&state.age>=r.ageMs,requirementAge(r.ageMs));
+        if(r.minMood!=null)req(actionable&&state.care.felicidad>=r.minMood,t('oak.requirement.mood',{value:r.minMood}));
+        if(r.minBond!=null)req(actionable&&Relationship.evaluateMinBond(state,r.minBond).met,t('oak.requirement.bond',{hearts:r.minBond}));
+        for(const[k,v]of Object.entries(r.careMean))req(actionable&&mean(k)!==null&&mean(k)>=v,t('oak.requirement.average',{stat:stat(k),value:v}));
+        for(const[k,v]of Object.entries(r.training))req(state.training[k]>=v,t('oak.requirement.stat',{stat:stat(k),value:v}));
+        for(const c of r.sustained){const elapsed=state.sustained[sustainedKey(c)]||0;req(actionable&&state.care[c.estadistica]>=c.minimo&&elapsed>=c.duracionMs,t('oak.requirement.sustained',{stat:stat(c.estadistica),value:c.minimo,hours:c.duracionMs/HOUR,elapsed:(elapsed/HOUR).toFixed(1)}));}
+        if(r.action)req(actionable&&(state.actions[r.action]||0)>=r.repetitions,t('oak.requirement.action',{action:evolutionActionLabel(r.action),current:actionable?(state.actions[r.action]||0):0,required:r.repetitions}));
+        if(r.item)req(false,t('oak.requirement.item',{item:itemLabel(r.item),count:state.inventory[r.item]||0}));
+        section.append(list);
+      }
+      content.append(section);
+    }
     content.append(el('p',t('oak.itemFlow'),'panel-note'));if(state.milestones.length)content.append(el('p',t('oak.path',{path:state.milestones.map(m=>`${evolutionConfig[m.from]?.name||m.from} → ${evolutionConfig[m.to]?.name||m.to}`).join(' · ')}),'panel-note'));
   }
   if(focusKey){const target=[...content.querySelectorAll('button')].find(b=>b.dataset.key===focusKey&&!b.disabled);if(target)target.focus();else $('close-panel').focus();}
@@ -1206,6 +1228,28 @@ function collectionSprite(id,isShiny=false,silhouette=false){
   const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');
   visual.setAttribute('aria-label',silhouette?t('dex.seenSilhouette',{name}):name);
   const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny,silhouette});return visual;
+}
+// La ficha de Oak muestra la linea evolutiva COMPLETA, no solo el paso inmediato: los testers no
+// sabian cuantas etapas le quedaban a su compañero. Se recorre hacia atras hasta la raiz y hacia
+// delante por todas las ramas, con el sprite estatico de Memorias en cada paso.
+function evolutionLine(id){
+  const parent={};
+  for(const [from,cfg] of Object.entries(evolutionConfig))for(const r of cfg.rules||[])parent[r.to]=from;
+  let root=id;const visited=new Set([root]);
+  while(parent[root]&&!visited.has(parent[root])){root=parent[root];visited.add(root);}
+  const steps=[],walk=(from,seen)=>{
+    if(seen.has(from))return;seen.add(from);
+    for(const r of evolutionConfig[from]?.rules||[]){steps.push({from,to:r.to,rule:r});walk(r.to,new Set(seen));}
+  };
+  // El primer elemento es la forma raiz de la linea: sin regla, porque no se llega a ella evolucionando.
+  walk(root,new Set());return [{from:null,to:root,rule:null},...steps];
+}
+// Una forma esta alcanzada si es la actual o si consta en los hitos de esta partida.
+const reachedForm=id=>state.pokemonId===id||state.milestones.some(m=>m.to===id);
+// Los requisitos de edad se leen en dias enteros y horas, no en dias decimales.
+function requirementAge(ms){
+  const days=Math.floor(ms/DAY),hours=Math.round((ms%DAY)/HOUR);
+  return hours?t('oak.requirement.ageHours',{days,hours}):t('oak.requirement.age',{days});
 }
 function renderPokedex(){
   dialog.dataset.lcdSurface='true';disposeMemorialSprites();const content=$('panel-content');content.replaceChildren();$('panel-title').textContent=t('ui.inventory.collection');

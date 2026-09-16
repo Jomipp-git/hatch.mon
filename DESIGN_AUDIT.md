@@ -967,3 +967,18 @@ saves generados por el build anterior cargan, validan y sobreviven a ida y vuelt
 **Pendiente de la capa 1:** solo **1.9**, el score 0–1000 con mejor marca personal. Es la única que
 añade estado persistido y necesita decidir una fórmula continua para Intelecto, que cuenta rondas
 ganadas en vez de normalizar un rendimiento.
+
+**1.9 Marcador 0–1000 con mejor marca.** Los tres minijuegos que normalizan rendimiento exponen la `s`
+que ya calculaban; Intelecto usa **luces acertadas / `MEMORY_LIGHTS`**, que además le da el crédito
+parcial que no tenía. La nota y las monedas no cambian. La mejor marca es del entrenador
+(`state.records`), sobrevive al compañero y no tiene techo, así que sigue siendo superable cuando el
+atributo llega a 100. Sin subir el esquema 12: se normaliza en `migrateSave`.
+
+Dos errores propios que conviene recordar del cambio: el check de `records` se colocó primero dentro de
+`validSnapshot` —que por diseño no lleva campos del entrenador—, lo que **invalidaba todas las
+Memorias y los huevos guardados**; y `records` no se copiaba en `startNewBeginning`, así que la marca se
+perdía al empezar de nuevo, justo lo contrario de la decisión. Los dos los cazó la suite. En este
+runtime los validadores del save completo y de los snapshots comparten texto casi idéntico: hay que
+mirar en qué función se está editando.
+
+**Capa 1 cerrada.**

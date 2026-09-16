@@ -298,6 +298,20 @@ El coste habitual (1 AP, −8 energía, −4 hambre, +3 suciedad) se cobra **al 
 
 Los tres consumibles básicos están **siempre disponibles** (`SHOP_STAPLES`) y la rotación diaria ofrece **tres objetos más** sorteados del resto del catálogo, así que la tienda muestra seis entradas. El té era el sumidero mejor diseñado —50 de energía son 6,25 sesiones de entrenamiento, o sea 8 monedas por sesión, rentable solo si juegas bien— y salía el 5 % de los días, de modo que comprar energía para entrenar más no era una decisión que se pudiera tomar.
 
+## Marcador de los minijuegos
+
+Cada partida produce un **marcador de 0 a 1000** además de la nota. Los tres minijuegos que normalizan
+rendimiento ya calculaban esa `s` continua y la tiraban al colapsarla en una nota del 1 al 5; Intelecto
+no normaliza nada —cuenta rondas ganadas— así que su marcador son las **luces acertadas sobre el total
+de la partida** (`MEMORY_LIGHTS`, la suma de las cinco secuencias), con crédito parcial dentro de cada
+ronda. La nota y las monedas no cambian: la recompensa sigue siendo gruesa y el feedback se vuelve fino.
+
+La **mejor marca es del entrenador**, en `state.records`, así que sobrevive a la muerte del compañero
+igual que las monedas y el Pokédex. El marcador no tiene tope de mejora, de modo que cuando el atributo
+llega a 100 y el entrenamiento se cierra, la marca sigue siendo superable. `records` se normaliza en
+`migrateSave` sin subir el esquema 12, y `validSnapshot` le inyecta un valor válido porque los
+snapshots no llevan campos del entrenador.
+
 ## Colecciones y presentación
 
 El criador de la banda inferior ofrece consejos breves según cuidados; no altera estadísticas. Entrenamiento muestra barras y los menús resumen costes y requisitos. Pokédex conserva tabs de especies y Memorias, con variantes NORMAL/SHINY separadas.

@@ -6,6 +6,9 @@ globalThis.TrainingActivities=(()=>{
  // Una luz mas por ronda, hasta seis. Con cadenas nuevas cada ronda esto ya no es "la anterior mas
  // un paso" sino memorizar seis luces de cero, y ese es justamente el reto que se busca.
  const MEMORY_LENGTHS=Object.freeze([2,3,4,5,6]);
+ // Total de luces de una partida de Intelecto. Es el denominador de su marcador, y sale de las
+ // longitudes para que no haya un 20 a pelo.
+ const MEMORY_LIGHTS=MEMORY_LENGTHS.reduce((a,b)=>a+b,0);
  const config=Object.freeze({tick:40,memoryRounds:MEMORY_LENGTHS.length,memoryLengths:MEMORY_LENGTHS,memoryFlash:550,
   // La ventana crece con la secuencia. Era fija en 4 s para cualquier longitud, asi que sobraba
   // tiempo en la primera ronda y no llegaba para la ultima. Con cadenas nuevas se recuerda todo de
@@ -100,14 +103,14 @@ globalThis.TrainingActivities=(()=>{
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
  // Por eso `cancel` solo devuelve el gasto cuando el corte no es del jugador: pestana en segundo
  // plano, cierre de la pagina o parada del runtime. Rendirse a mano cuesta lo mismo que perder.
- function launch(attribute,{begin=()=>true,abandon=()=>{},repeat=null,canRepeat=()=>false,commit,onActive=()=>{},formatReward=()=>''}){
+ function launch(attribute,{begin=()=>true,abandon=()=>{},repeat=null,canRepeat=()=>false,commit,onActive=()=>{},formatReward=()=>'',bestScore=()=>0}){
   if(!Object.hasOwn(modes,attribute)||active||!begin(attribute))return false;
   let done=false,timer=null,frame=null,dialog=null,dispose=null;
   const requestFrame=globalThis.requestAnimationFrame||((fn)=>setTimeout(fn,16));
   const cancelFrame=globalThis.cancelAnimationFrame||clearTimeout;
   const stop=()=>{clearTimeout(timer);timer=null;if(frame!==null)cancelFrame(frame);frame=null;dispose?.();dispose=null;};
   const cancel=(refund=false)=>{if(done)return false;done=true;stop();active=null;if(dialog?.open)dialog.close();onActive(false);if(refund)abandon(attribute);return false;};
-  const complete=(gain=5)=>{if(done)return false;done=true;stop();active=null;try{return commit(attribute,Math.max(1,Math.min(5,Math.round(gain))));}finally{onActive(false);}};
+  const complete=(gain=5,score=0)=>{if(done)return false;done=true;stop();active=null;try{return commit(attribute,Math.max(1,Math.min(5,Math.round(gain))),Math.max(0,Math.min(1000,Math.round(score))));}finally{onActive(false);}};
   active={cancel};onActive(true);
   if(launchers[attribute])return launchers[attribute]({complete,cancel,attribute});
   dialog=document.getElementById('training-game');const host=document.getElementById('training-game-content');host.replaceChildren();
@@ -116,7 +119,7 @@ globalThis.TrainingActivities=(()=>{
   host.append(title,hint,status,field,exit);if(!dialog.open)dialog.showModal();
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
-  let visibleStrengthPosition=.5,zoneCentre=.5,zoneScale=1,zoneStart=1,strengthView=null;
+  let lights=0,visibleStrengthPosition=.5,zoneCentre=.5,zoneScale=1,zoneStart=1,strengthView=null;
   // Ida y vuelta lineal. El marcador arranca en el extremo mas lejano a la zona de la ronda: asi
   // no se entra nunca ya encima del objetivo, y queda un recorrido entero para leer donde ha
   // caido la banda antes de la primera pasada.
@@ -136,7 +139,14 @@ globalThis.TrainingActivities=(()=>{
    strengthView.time.style.width=`${left/strengthWindow(round)*100}%`;
    const warn=left<=config.strengthTimeWarning?'1':'0';if(strengthView.time.dataset.warn!==warn)strengthView.time.dataset.warn=warn;};
   const button=(label,fn,onPress=false)=>{const b=node('button',label);b.type='button';b.addEventListener('pointerdown',event=>{if(event.button!==undefined&&event.button!==0)return;if(onPress){event.preventDefault();fn();return;}b.setPointerCapture?.(event.pointerId);held.add(b);presses.set(b,{round,valid:phase==='play'});});b.addEventListener('pointerup',()=>held.delete(b));b.addEventListener('pointercancel',()=>{held.delete(b);presses.delete(b);});b.addEventListener('lostpointercapture',()=>held.delete(b));b.addEventListener('click',event=>{if(onPress){if(event.detail===0)fn();return;}const press=presses.get(b);presses.delete(b);if(press&&press.round!==round)return;fn(press);});field.append(b);controls.push(b);return b;};
-  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),ok=complete(gain);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());
+  // El rendimiento continuo ya se calculaba y se tiraba al colapsarlo en una nota del 1 al 5.
+  // Aqui se expone como marcador de 0 a 1000, que no tiene tope de mejora: cuando el atributo llega
+  // a 100 y el entrenamiento se cierra, la marca sigue siendo superable. Intelecto no normaliza un
+  // rendimiento sino que cuenta rondas, asi que su marcador son las luces acertadas sobre el total.
+  const performanceRatio=()=>attribute==='iq'?lights/MEMORY_LIGHTS:total?Math.max(0,Math.min(1,earned/total)):0;
+  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),score=Math.round(performanceRatio()*1000),ok=complete(gain,score);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));
+   if(ok){const best=bestScore(attribute);
+    field.append(node('p',score>=best?t('minigame.result.scoreBest',{score}):t('minigame.result.score',{score,best}),'minigame-score'));}exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());
    if(ok)gradeHaptic(gain);
    // Volver a practicar no deberia costar tres toques por el panel de Entrenamiento: es lo que se
    // hace despues de casi cada partida. Solo se ofrece si la siguiente sesion se puede pagar.
@@ -151,7 +161,7 @@ globalThis.TrainingActivities=(()=>{
     // Fallar cortaba la ronda solo por dentro: seguias tecleando cuatro luces mas sabiendo que ya
     // la habias perdido. Ahora se dice y se pasa, como en cualquier Simon.
     if(i!==sequence[answer-1]){roundCorrect=false;haptic('bad');setText(hint,t('minigame.iq.wrong'));verdict();return;}
-    haptic('tap');setText(hint,t('minigame.iq.entered',{done:answer,total:sequence.length}));
+    lights++;haptic('tap');setText(hint,t('minigame.iq.entered',{done:answer,total:sequence.length}));
     if(answer===sequence.length){earned++;haptic('good');setText(hint,t('minigame.iq.right'));verdict();}
    });total=config.memoryRounds;
   }else if(attribute==='strength'){

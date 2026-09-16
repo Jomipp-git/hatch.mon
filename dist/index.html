@@ -409,15 +409,27 @@ function startTraining(k){
   return TrainingActivities.launch(k,{
     onActive:trainingVisuals,
     formatReward:gain=>t('minigame.result.coinsSuffix',{coins:coinReward(gain)}),
+    bestScore:attribute=>state.records[attribute]||0,
     begin:attribute=>{let ok=false;dispatch(()=>{ok=beginTraining(attribute);return ok;});return ok;},
     abandon:()=>dispatch(()=>refundTraining()),
     repeat:startTraining,canRepeat:canTrain,
-    commit:(attribute,gain)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain);return result;},'train');return result;}});
+    commit:(attribute,gain,score=0)=>{if(state.social.active.id!==companionId)return false;let result=false;dispatch(()=>{result=finishTraining(attribute,gain,score);return result;},'train');return result;}});
+}
+// La mejor marca por minijuego es del entrenador, no del compañero: sobrevive a su muerte, igual
+// que las monedas y el Pokédex. Es lo unico del juego que no se pierde, asi que le da al tramo final
+// algo que perseguir cuando el atributo ya esta al tope.
+const freshRecords=()=>Object.fromEntries(TRAIN.map(k=>[k,0]));
+function normalizeRecords(data){
+  const records=data.records&&typeof data.records==='object'?data.records:{};
+  data.records=Object.fromEntries(TRAIN.map(k=>{
+    const value=records[k];
+    return [k,Number.isSafeInteger(value)&&value>=0&&value<=1000?value:0];
+  }));
 }
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
-    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,pokerus:false,heat:0,aid:0,
+    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,records:freshRecords(),pokerus:false,heat:0,aid:0,
     trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('oak.eggEarly')};
 }
 let state=freshState();
@@ -601,8 +613,9 @@ function refundTraining(){
   state.care.energia=clamp(state.care.energia+c.energy);state.care.hambre=clamp(state.care.hambre+c.hunger);
   state.vital.dirt=clamp(state.vital.dirt-c.dirt);Vital.energyResting(state);return true;
 }
-function finishTraining(k,gain){
+function finishTraining(k,gain,score=0){
   if(!Number.isInteger(gain)||gain<1||gain>5||!TRAIN.includes(k))return false;
+  if(Number.isSafeInteger(score)&&score>0&&score<=1000&&score>state.records[k])state.records[k]=score;
   state.training[k]=clamp(state.training[k]+gain);
   const coins=coinReward(gain);state.coins+=coins;Relationship.reward(state,'train',gain/5);state.message=t('training.reward',{stat:LABELS[k],gain,coins});updateSustained();checkHealth();checkEvolution();return true;
 }
@@ -676,6 +689,9 @@ function setNickname(value=''){
 function acknowledgeItem(){if(state.foundItem===null)return false;state.foundItem=null;return true;}
 // Guardado local: conserva edad, muestras, inventario y ausencia entre visitas.
 function validGameSave(s){
+  // La mejor marca es del entrenador y va en el save completo, no en los snapshots: estos no
+  // llevan el campo, y validSnapshot inyecta un valor valido para poder reutilizar esta funcion.
+  if(!TRAIN.every(k=>Number.isSafeInteger(s.records?.[k])&&s.records[k]>=0&&s.records[k]<=1000))return false;
   const finite=(n,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isFinite(n)&&n>=a&&n<=b;
   const stats=(o,keys)=>o&&keys.every(k=>finite(o[k],0,100));
   return s?.version===12&&['egg','alive','critical','dead'].includes(s.phase)&&(s.phase==='egg'?s.pokemonId===null:Object.hasOwn(evolutionConfig,s.pokemonId))&&
@@ -697,7 +713,9 @@ function activeEntity(){const {isShiny,...identity}=HatchMonSocial.copy(state.so
 function validSnapshot(s,e){
   if(!s||Object.keys(s).length!==SNAPSHOT_FIELDS.length||!SNAPSHOT_FIELDS.every(k=>Object.hasOwn(s,k)))return false;
   for(const key of ['sustained','actions'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
-  const base={...s,version:12,inventory:{},coins:0,trainer:{energy:MAX_AP},lastSync:0,message:'',attentionEvent:null,attentionMeta:Attention.freshMeta(0),attentionSettings:Attention.freshSettings()};
+  // records es del entrenador, igual que inventory, coins y trainer: el snapshot no lo lleva, asi que
+  // se inyecta un valor valido para poder reutilizar validGameSave sobre una instantanea.
+  const base={...s,version:12,inventory:{},coins:0,records:freshRecords(),trainer:{energy:MAX_AP},lastSync:0,message:'',attentionEvent:null,attentionMeta:Attention.freshMeta(0),attentionSettings:Attention.freshSettings()};
   if(!validGameSave(base)||(s.phase==='egg'?s.vital!==null:!Vital.valid(s.vital,s.age))||s.stage>10||s.stageAge>s.age||s.age>100*365*DAY)return false;
   if(e.kind==='egg'?(e.speciesId!==e.offspring||e.offspring!==null&&!STARTERS.includes(e.offspring)):e.speciesId!==s.pokemonId)return false;
   if(e.offspring!==null&&!STARTERS.includes(e.offspring))return false;
@@ -790,6 +808,7 @@ function save({immediate=false}={}){
 function migrateSave(data){
   if(!data||typeof data!=='object')return data;
   if(!Number.isSafeInteger(data.coins)||data.coins<0)data.coins=0;
+  normalizeRecords(data);
   // Las bayas de atributo se retiraron despues de estar en venta a 75 monedas, asi que las que un
   // jugador tuviera en la mochila se devuelven en monedas en vez de desaparecer. El resto de ids
   // retirados nunca se vendieron.
@@ -1086,7 +1105,7 @@ function renderSocialPanel(){
   content.append(el('p',t('connect.offlineNotice'),'panel-note'));
 }
 function startNewBeginning(eggId=null){
-  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.coins=state.coins;next.trainer=state.trainer;next.attentionSettings=state.attentionSettings;next.pokedex=state.pokedex;state=next;}
+  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.coins=state.coins;next.records=state.records;next.trainer=state.trainer;next.attentionSettings=state.attentionSettings;next.pokedex=state.pokedex;state=next;}
   cancelBirthAnimation();hideToast();clearPetReaction();if(dialog.open)closePanel();save();render();startTimer();
 }
 function renderBeginningChoices(){

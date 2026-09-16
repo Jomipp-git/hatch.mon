@@ -48,6 +48,93 @@ SPECIES_MOTIFS = {
 }
 # Sufijo de las ediciones shiny dentro de SHELL_THEMES.
 SHINY_SUFFIX = ':shiny'
+# --- Boutique: carcasas de pago, que no salen de ninguna paleta Pokemon ---
+#
+# Las de logro cuentan de quien son y por eso se derivan de la especie. Estas cuentan de que estan
+# hechas, asi que sus colores se eligen a mano: derivarlos de un algoritmo es justo lo que hacia que
+# el conjunto se leyera pre-generado. El prefijo `boutique:` las separa del espacio de IDs de
+# especie, que son claves de desbloqueo por logro.
+#
+# Cada entrada: (id, nombre ES, nombre EN, plastico, [tres colores de estampado], cantos opcionales).
+# Sin cantos, salen del propio estampado, que es lo que hace que la carcasa se lea de una pieza.
+BOUTIQUE_PREFIX = 'boutique:'
+BOUTIQUE_STYLES = {
+    'denim': ('Tejana', 'Denim', (
+        ('indigo', 'Indigo', 'Indigo', '#3b5a86', ('#20385c', '#d8c48a', '#8fa8c9')),
+        ('black', 'Negro lavado', 'Washed black', '#4a4a52', ('#24242a', '#9a9aa4', '#6f6f7a')),
+        ('sky', 'Lavado claro', 'Light wash', '#8fb2d4', ('#4d7ba6', '#e6d9b0', '#c3d7ea')),
+    )),
+    'camo': ('Camuflaje', 'Camo', (
+        ('forest', 'Bosque', 'Forest', '#6d7a53', ('#39452a', '#8b9468', '#2b3320')),
+        ('desert', 'Desierto', 'Desert', '#c2a878', ('#8a7146', '#d9c79c', '#5d4b2c')),
+        ('urban', 'Urbano', 'Urban', '#8d9196', ('#4c5054', '#c2c6ca', '#2e3134')),
+    )),
+    'neon': ('Neon', 'Neon', (
+        ('magenta', 'Magenta', 'Magenta', '#2a1030', ('#ff2d95', '#00e5ff', '#ffe600')),
+        ('cyan', 'Cian', 'Cyan', '#08222c', ('#00e5ff', '#39ff9e', '#ff2d95')),
+        ('lime', 'Lima', 'Lime', '#14260c', ('#9dff3c', '#ffe600', '#00e5ff')),
+    )),
+    'guts': ('Transparente', 'Clear', (
+        ('grape', 'Uva', 'Grape', '#9c7fc0', ('#4b3570', '#c9b3e3', '#6f5a96')),
+        ('atomic', 'Atomica', 'Atomic', '#7fb9c0', ('#2f6a72', '#bfe4e8', '#4f8f96')),
+        ('smoke', 'Ahumada', 'Smoke', '#9a9690', ('#4a4743', '#cfccc7', '#6e6b66')),
+    )),
+    'sequins': ('Lentejuelas', 'Sequins', (
+        ('rose', 'Oro rosa', 'Rose gold', '#c98f88', ('#f0c0a8', '#8d4f4a', '#f7e3d2')),
+        ('silver', 'Plata', 'Silver', '#a9b0b8', ('#e2e7ec', '#5f676f', '#f4f7fa')),
+        ('emerald', 'Esmeralda', 'Emerald', '#3f8f74', ('#8fdcbe', '#1e5544', '#d6f3e6')),
+    )),
+    'picnic': ('Mantel', 'Picnic', (
+        ('red', 'Rojo', 'Red', '#f0e6d8', ('#c2352f', '#e08a84', '#8c211c')),
+        ('blue', 'Azul', 'Blue', '#eef0e4', ('#2f5fa8', '#84a7d8', '#1c3c6e')),
+        ('yellow', 'Amarillo', 'Yellow', '#f5efd9', ('#d9a516', '#f0cf72', '#8f6b0c')),
+    )),
+    'polka': ('Topos', 'Polka', (
+        ('cream', 'Crema', 'Cream', '#f2e7d5', ('#d8503f', '#3a7fa8', '#e0a52c')),
+        ('ink', 'Tinta', 'Ink', '#2f3038', ('#f2b8c6', '#a8d8e8', '#f5e6a8')),
+        ('mint', 'Menta', 'Mint', '#cfe8dc', ('#2f6f5c', '#e8a0b8', '#f0d98c')),
+    )),
+}
+
+
+def boutique_theme(style, variant, name_es, name_en, plastic, motif_colors):
+    """Una carcasa de tienda. Mismo contrato que las de especie, mas los botones del neon."""
+    primary = hex_to_rgb(plastic)
+    dark = luminance(primary) < .35
+    theme = {
+        'name': name_es, 'nameEn': name_en, 'boutique': True,
+        # El plastico oscuro no se aclara al 48% como el claro: el neon vive de ser oscuro.
+        'shellBase': mix(primary, 255, .12) if dark else mix(primary, 255, .34),
+        'shellDark': mix(primary, 0, .55), 'shellLight': mix(primary, 255, .72),
+        'accent': mix(primary, 0, .10), 'bezel': mix(primary, 0, .68),
+        'button': mix(primary, 255, .40) if dark else mix(primary, 255, .88),
+        'pageBase': mix(primary, 255, .30) if dark else mix(primary, 255, .80),
+        # distinct_edges separa los cuatro cantos de verdad: repetir el primer color en el cuarto
+        # boton dejaba dos acciones con el mismo canto y el color dejaba de informar.
+        'buttonEdges': distinct_edges(list(motif_colors)),
+        'motif': style, 'motifColors': list(motif_colors),
+    }
+    if dark:
+        # El plastico oscuro deja ilegible el texto de chrome, que esta fijado en un gris oscuro.
+        theme['shellText'] = mix(primary, 255, .88)
+    if style == 'neon':
+        # El unico estilo con los botones a color completo: el resto solo tine el canto. Se baja
+        # cada relleno por luminancia hasta que el texto blanco se lee, en vez de por HLS: el
+        # amarillo puro salia oliva con readable() y "Apagar luz" no habia quien lo leyera.
+        theme['buttonFills'] = [
+            '#' + ''.join(f'{round(max(0, min(255, c))):02x}' for c in darken_to(hex_to_rgb(edge), .16))
+            for edge in theme['buttonEdges']]
+        theme['buttonText'] = '#ffffff'
+    return theme
+
+
+def boutique_themes():
+    themes = {}
+    for style, (_, _, variants) in BOUTIQUE_STYLES.items():
+        for variant, name_es, name_en, plastic, colors in variants:
+            themes[f'{BOUTIQUE_PREFIX}{style}-{variant}'] = boutique_theme(
+                style, variant, name_es, name_en, plastic, colors)
+    return themes
 # Colores del estampado segun escalones desde la forma base de la linea: la base va monocroma
 # (el motivo se dibuja, pero en un solo color) y cada evolucion suma uno. Si la paleta no da
 # para tantos, se usan los que haya; nunca se inventa un color para rellenar.
@@ -205,6 +292,12 @@ def main():
         if pokemon_id in themes:
             themes[pokemon_id].update(override)
 
+    boutique = boutique_themes()
+    for theme in boutique.values():
+        if theme['motif'] not in motif_names:
+            raise SystemExit(f"estampado de boutique sin dibujar en shellSkins.js: {theme['motif']}")
+    themes.update(boutique)
+
     out = ROOT / 'assets/skins'
     out.mkdir(exist_ok=True)
     (out / 'themes.js').write_text(
@@ -213,8 +306,8 @@ def main():
     normal = [t for t in themes.values() if 'shinyOf' not in t]
     own = sum(1 for t in normal if t['motif'] in SPECIES_MOTIFS.values())
     generic = sum(1 for t in normal if t['motif'] not in SPECIES_MOTIFS.values() and t['motif'] != 'plain')
-    print(f'{len(themes)} temas ({len(normal)} normales + {len(themes) - len(normal)} shiny); '
-          f'{own} con silueta propia, {generic} con familia por tipo')
+    print(f'{len(themes)} temas ({len(normal) - len(boutique)} normales + {len(themes) - len(normal)} shiny '
+          f'+ {len(boutique)} de boutique); {own} con silueta propia, {generic} con familia por tipo')
 
 
 if __name__ == '__main__':

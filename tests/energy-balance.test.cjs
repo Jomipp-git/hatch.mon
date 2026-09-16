@@ -36,7 +36,7 @@ test('rest blocks Play/Training without spending and permits non-energy care',as
  for(const action of ['careAction("jugar")','train("iq")']){assert.equal(h.run(action),false);assert.equal(h.run('state.trainer.energy'),6);assert.equal(h.run('state.care.energia'),30);assert.match(h.run('state.message'),/Está descansando/);}
  for(const action of ['alimentar','limpiar'])assert.equal(h.run(`careAction("${action}")`),true);
  h.run('state.care.energia=0');assert.equal(h.run('Relationship.interact(state).kind'),'happy');assert.equal(h.run('state.care.energia'),0);
- h.run('state.pokerus=true');assert.equal(h.run('careAction("curar")'),true);
+ h.run('state.pokerus=true;state.inventory.medicine=1');assert.equal(h.run('careAction("curar")'),true);
  born(h);h.run('careAction("jugar",()=>1)');assert.equal(h.run('state.care.energia'),95);
  born(h);h.run('train("iq")');assert.equal(h.run('state.care.energia'),92);
  born(h);h.run('state.care.energia=35;careAction("jugar",()=>1)');assert.equal(h.run('state.sleep.energyResting'),true);

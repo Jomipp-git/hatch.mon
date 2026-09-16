@@ -40,6 +40,31 @@ globalThis.ShellSkins=(()=>{
   blocks:{glyph:'<path d="M0 2h14v10H0zM10 14h14v9H10z" fill="%C"/>',accent:'<path d="M0 2h9v7H0z" fill="%C"/>'},
   eclipse:{glyph:'<path d="M12 0a12 12 0 1 0 0 24A9 9 0 0 1 12 0z" fill="%C"/>',
            accent:'<path d="M6 0a6 6 0 1 0 0 12A4 4 0 0 1 6 0z" fill="%C"/>'},
+  // --- boutique: estampados de tela y material, no de bicho ---
+  // Estos no salen de una paleta Pokemon: son de la tienda, asi que llevan mas trazos por baldosa
+  // que las familias por tipo. A 24 px eso es lo unico que separa "estampado" de "tramado".
+  denim:{glyph:'<path d="M-2 18L18-2M2 22L22 2M6 26L26 6M-2 10L10-2M10 26L26 10" stroke="%C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M0 22h24" stroke="%C" stroke-width="1.6" stroke-dasharray="3 3" fill="none"/>',
+        accent:'<circle cx="6" cy="6" r="3" fill="none" stroke="%C" stroke-width="2"/><circle cx="6" cy="6" r="1" fill="%C"/>'},
+  camo:{glyph:'<path d="M3 8c4-6 9-4 12-6 4-2 8 1 7 5s-5 4-4 8-3 8-7 7-4-5-8-5-4-6 0-9z" fill="%C"/>',
+        accent:'<path d="M1 5c2-4 5-3 7-1s3 5 0 7-6 1-7-2z" fill="%C"/>'},
+  neon:{glyph:'<path d="M2 20L12 6l10 14" fill="none" stroke="%C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12-2l10 14" fill="none" stroke="%C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>',
+        accent:'<path d="M6 0c1 4 2 5 6 6-4 1-5 2-6 6-1-4-2-5-6-6 4-1 5-2 6-6z" fill="%C"/>'},
+  // La carcasa transparente ensenaba las entranas: aqui se dibujan, no se sugieren.
+  guts:{glyph:'<rect x="5" y="7" width="14" height="10" rx="1.5" fill="none" stroke="%C" stroke-width="2"/><path d="M5 10H1M5 14H1M19 10h4M19 14h4" stroke="%C" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="10.5" r="1.4" fill="%C"/>',
+        accent:'<circle cx="6" cy="6" r="4.5" fill="none" stroke="%C" stroke-width="1.8"/><path d="M6 2.5v7M2.5 6h7" stroke="%C" stroke-width="1.6" stroke-linecap="round"/>'},
+  sequins:{tile:[0,1,2,3,4,5,6,7].map(row=>[0,1,2,3,4,5,6,7].map(col=>{
+    const x=col*8+(row%2?4:0),y=row*8;
+    return `<circle cx="${x}" cy="${y+4}" r="4.6" fill="${row%2?'%2':'%1'}" opacity=".9"/>`
+      +`<path d="M${x-2.8} ${y+2}a4.6 4.6 0 0 1 4.4-1.4" fill="none" stroke="%3" stroke-width="1.3" stroke-linecap="round" opacity=".8"/>`;
+   }).join('')).join(''),
+           glyph:'<circle cx="12" cy="12" r="9" fill="%C"/>',accent:'<circle cx="6" cy="6" r="4.5" fill="%C"/>'},
+  picnic:{tile:'<path d="M0 0h32v64H0z" fill="%1" opacity=".55"/><path d="M0 0h64v32H0z" fill="%1" opacity=".55"/>'
+    +'<path d="M0 0h32v32H0z" fill="%1"/><path d="M32 32h32v32H32z" fill="%3" opacity=".22"/>'
+    +'<path d="M0 0h64v64H0z" fill="none" stroke="%2" stroke-width="1.5" stroke-dasharray="2 6" opacity=".55"/>'
+    +'<path d="M16 0v64M48 0v64M0 16h64M0 48h64" stroke="%2" stroke-width="1" opacity=".35"/>',
+          glyph:'<path d="M0 6h24v7H0z" fill="%C"/>',accent:'<path d="M0 3h12v6H0z" fill="%C"/>'},
+  polka:{glyph:'<circle cx="9" cy="9" r="7" fill="%C"/><circle cx="19" cy="17" r="4" fill="%C" opacity=".8"/><circle cx="4" cy="20" r="2.5" fill="%C" opacity=".6"/>',
+         accent:'<circle cx="5" cy="5" r="4" fill="%C"/><circle cx="10" cy="10" r="2" fill="%C" opacity=".75"/>'},
   // --- siluetas por especie: el elemento reconocible, no el cuerpo entero ---
   bulbasaur:{glyph:'<path d="M12 5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9z" fill="%C"/><path d="M12 5c0-3-2-5-5-5 0 4 2 5 5 5z" fill="%C"/>',accent:'<path d="M11 1c0 5-3 8-8 8 0-5 3-8 8-8z" fill="%C"/>'},
   ivysaur:{glyph:'<path d="M12 9c4 0 7 3 7 7s-3 7-7 7-7-3-7-7 3-7 7-7z" fill="%C"/><path d="M12 9c-2-4 0-7 3-9 0 4-1 7-3 9zM12 9c2-4 0-7-3-9 0 4 1 7 3 9z" fill="%C"/>',accent:'<path d="M6 0c3 3 3 7 0 10-3-3-3-7 0-10z" fill="%C"/>'},
@@ -131,6 +156,11 @@ globalThis.ShellSkins=(()=>{
   const draw=MOTIFS[theme.motif],colors=theme.motifColors||[];
   if(!draw||!colors.length)return 'none';
   const main=colors[0],second=colors[1]||colors[0],third=colors[2];
+  if(draw.tile){
+   const body=draw.tile.split('%1').join(main).split('%2').join(second).split('%3').join(third||second);
+   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${MOTIF_TILE}" height="${MOTIF_TILE}" viewBox="0 0 ${MOTIF_TILE} ${MOTIF_TILE}"><g opacity="${opacity}">${body}</g></svg>`;
+   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
   const half=MOTIF_TILE/2,glyphAt=(half-GLYPH_BOX)/2,accentAt=(half-ACCENT_BOX)/2;
   const at=(x,y,shape)=>`<g transform="translate(${x} ${y})">${shape}</g>`;
   const glyph=paint(draw.glyph,main),accent=paint(draw.accent,second);
@@ -165,21 +195,34 @@ globalThis.ShellSkins=(()=>{
   if(changed)persist();
   return changed;
  }
- const SHADES=['shellBase','shellDark','shellLight','accent','bezel','button','pageBase'];
+ const SHADES=['shellBase','shellDark','shellLight','accent','bezel','button','pageBase','shellText'];
  // El mismo dibujo sirve a las dos superficies y cambia de papel segun donde cae: grande y con
  // cuerpo en el fondo de pagina, que es donde hay tela para que se lea; pequeno y tenue en la
  // carcasa, que son 16 px de marco alrededor de la pantalla y no admite mas.
  function apply(host){const theme=SHELL_THEMES[saved.selected]||defaults;
-  for(const shade of SHADES)host.style.setProperty('--'+shade,String(theme[shade]??defaults[shade]));
+  for(const shade of SHADES){const value=theme[shade]??defaults[shade];
+   if(value===undefined)host.style.removeProperty('--'+shade);else host.style.setProperty('--'+shade,String(value));}
   host.style.setProperty('--motifImage',motifTile(theme,SHELL_OPACITY));
   host.style.setProperty('--motifSize',`${SHELL_SCALE}px ${SHELL_SCALE}px`);
   host.style.setProperty('--motifImagePage',motifTile(theme,PAGE_OPACITY));
   host.style.setProperty('--motifSizePage',`${PAGE_SCALE}px ${PAGE_SCALE}px`);
   // Cada accion lleva su color en el canto, no en el fondo: el fondo sigue siendo comun para no
   // tocar ni el contraste del texto ni como se lee un boton deshabilitado.
-  const edges=theme.buttonEdges||[];
-  ACTIONS.forEach((action,index)=>host.style.setProperty(`--edge-${action}`,String(edges[index%edges.length]||theme.shellDark||defaults.shellDark)));
+  const edges=theme.buttonEdges||[],fills=theme.buttonFills||[];
+  ACTIONS.forEach((action,index)=>{
+   host.style.setProperty(`--edge-${action}`,String(edges[index%edges.length]||theme.shellDark||defaults.shellDark));
+   // Sin buttonFills el boton sigue con el fondo comun y solo cambia el canto, que es como se
+   // comportan todas las carcasas de logro.
+   host.style.setProperty(`--fill-${action}`,String(fills.length?fills[index%fills.length]:theme.button??defaults.button));
+  });
+  host.style.setProperty('--buttonText',String(theme.buttonText||'inherit'));
   host.dataset.shell=saved.selected;host.dataset.motif=theme.motif||'plain';}
+ // Las de logro se ganan; estas se pagan. Quien decide si hay monedas es index.html: aqui solo se
+ // apunta el desbloqueo, igual que hace observe().
+ function unlock(id){
+  if(!SHELL_THEMES[id]||saved.unlocked.includes(id))return false;
+  saved.unlocked.push(id);persist();return true;
+ }
  function select(id,host){if(id!=='default'&&!saved.unlocked.includes(id))return false;saved.selected=id;persist();apply(host);return true;}
- return Object.freeze({observe,apply,select,hydrate,motifs:Object.keys(MOTIFS),actions:ACTIONS,motifImage:theme=>motifTile(theme,SHELL_OPACITY),list:()=>saved.unlocked.slice(),selected:()=>saved.selected,theme:id=>SHELL_THEMES[id]||defaults});
+ return Object.freeze({observe,apply,select,unlock,hydrate,motifs:Object.keys(MOTIFS),actions:ACTIONS,motifImage:theme=>motifTile(theme,SHELL_OPACITY),list:()=>saved.unlocked.slice(),selected:()=>saved.selected,theme:id=>SHELL_THEMES[id]||defaults});
 })();

@@ -19,9 +19,17 @@ globalThis.HatchMonSocial = (() => {
   function originOK(x) {
     return object(x) && idOK(x.id) && text(x.speciesId,80) && text(x.name,40);
   }
+  // La herencia viaja dentro de la entidad, asi que llega por QR desde otro dispositivo: se valida
+  // igual que el resto. Ausente es valido —los huevos del huevo misterioso no la llevan.
+  function inheritanceOK(x) {
+    return x === undefined || object(x) && Relationship.validPotential(x.potential) &&
+      Number.isFinite(x.potential) && text(x.parent,40);
+  }
   function metadataOK(x) {
     return object(x) && idOK(x.id) && time(x.createdAt) && Array.isArray(x.parents) &&
-      x.parents.length <= 2 && x.parents.every(originOK) && (x.offspring === null || text(x.offspring,80));
+      x.parents.length <= 2 && x.parents.every(originOK) && (x.offspring === null || text(x.offspring,80)) &&
+      inheritanceOK(x.inheritance) &&
+      (x.guaranteedShiny === undefined || x.guaranteedShiny === true);
   }
   function entityOK(e,validateSnapshot) {
     return metadataOK(e) && ['egg','creature'].includes(e.kind) &&

@@ -11,7 +11,11 @@ const LIFE_CONFIG={day:86400000,baseDays:4,variationDays:.15,minDays:3.5,maxDays
 const CARE_CONFIG={hour:3600000,minute:60000,max:100,
   decay:{hambre:8,felicidad:4,energia:0,higiene:5},sleepDecay:{hambre:3.6,felicidad:.8,energia:0,higiene:2},sleepRecovery:24,awakeRecovery:2,restRecovery:8,
   difficulty:{baseline:1,minFactor:.9,maxDecay:1.20,maxRisk:1.30,decayWeight:.10,riskWeight:.15},
-  feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:5,digestion:.35,dirt:2,load:1,attribute:5},
+  // La baya era una quinta parte del pienso gratis y costaba 35 monedas: estaba dominada por una
+  // accion que no cuesta nada. Pasa a ser la comida BUENA —llena mas y ensucia menos, asi que
+  // tambien produce menos cacas—, y alimentar gratis se queda como racion basica. Asi la compra es
+  // una mejora y no un peaje: nadie se muere de hambre por ir corto de monedas.
+  feed:{hunger:25,digestion:1,dirt:6,load:1},berry:{hunger:30,digestion:.35,dirt:2,load:1,attribute:5},
   play:{happiness:20,energy:5,dirt:3},clean:{hygiene:55,happiness:3,dirt:0},
   training:{gain:5,energy:8,hunger:4,dirt:3,ap:1},itemAP:1,evolutionItemAP:0,trainerMax:6,trainerRecoveryPerMinute:.1,
   // Alimentar y limpiar no cuestan acciones. El mantenimiento cobraba lo mismo que la eleccion
@@ -33,6 +37,17 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
 // Sin oncePerLife: el tope de un huevo por compañero era gratis y el freno real pasa a ser el
 // precio del Ditto. hasProducedEgg y social.bredIds se siguen escribiendo como registro, pero ya
 // no vetan. Con la crianza en el 2,5% nadie llegó nunca a chocar contra este tope.
+// Objetos de casa. El aspirador cumple la regla de los automatizadores por las tres vias a la vez:
+// se gasta (40 cargas), es parcial (solo recoge la deposicion que lleva una hora ahi, asi que la
+// recien hecha sigue siendo tuya) y cuesta lo que se nota. Toca deposiciones, NUNCA higiene: las
+// cacas son la tarea mecanica, la higiene alimenta la calidad de cuidados y no debe automatizarse.
+// El comedero solo trabaja MIENTRAS DUERME, que es justo la ventana en la que el juego ya te
+// prohibe alimentar (con la luz apagada el boton esta bloqueado). De dia la comida sigue siendo
+// entera tuya: la comida es el reloj del juego y automatizarla de dia desactivaria el bucle, no una
+// casilla. Sirve una baya de tu reserva, asi que el coste recurrente son las bayas y no un desgaste
+// aparte. El propio umbral hace de limitador: tras servir queda en 90 y dormido decae 3,6/h, asi que
+// no vuelve a poder servir hasta ~8 h despues. Sin estado nuevo y sin tocar el esquema.
+const HOME_CONFIG={vacuum:{charges:40,delayMinutes:60},feeder:{hungerBelow:60}};
 const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50};
 const PERSONALITY_CONFIG=Object.freeze({
   sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},
@@ -151,6 +166,24 @@ globalThis.Vital=(()=>{
       v.poops.filter(p=>s.age-p.createdAge>=SICKNESS_CONFIG.poopAgeMinutes*c.minute).length>=SICKNESS_CONFIG.poopCount?'poops':null;
     if(!s.pokerus&&cause){const hourly=Math.min(SICKNESS_CONFIG.maxRiskPerHour,SICKNESS_CONFIG.riskPerHour*m.risk*d.risk);if(random(v)<1-Math.pow(1-hourly,1/60))infect(s,cause);}
   }
+  // Devuelve cuantas cargas ha gastado. Quien lleva la cuenta es el inventario, no el motor: aqui
+  // no se sabe que existe una tienda.
+  function autoClean(s,charges){
+   if(!s.vital||!charges||!['alive','critical'].includes(s.phase))return 0;
+   let used=0;
+   for(const poop of [...s.vital.poops]){
+    if(used>=charges)break;
+    if(s.age-poop.createdAge<HOME_CONFIG.vacuum.delayMinutes*CARE_CONFIG.minute)continue;
+    s.vital.poops=s.vital.poops.filter(p=>p.id!==poop.id);used++;
+   }
+   return used;
+  }
+  // Devuelve true si ha servido. Quien tiene las bayas es el inventario, no el motor.
+  function autoFeed(s,hasFeeder,hasBerry){
+   if(!hasFeeder||!hasBerry||!s.vital||!['alive','critical'].includes(s.phase))return false;
+   if(!s.lightsOff||s.care.hambre>=HOME_CONFIG.feeder.hungerBelow)return false;
+   eat(s,CARE_CONFIG.berry);return true;
+  }
   function breedingReason(s){
     if(!s.vital||getLifeStage(s)!==BREEDING_CONFIG.lifeStage)return vitalText('breeding.matureOnly');
     if(s.phase!=='alive'||s.pokerus||s.care.felicidad<BREEDING_CONFIG.happiness||Object.values(s.care).some(n=>n<BREEDING_CONFIG.minCare)||
@@ -166,5 +199,5 @@ globalThis.Vital=(()=>{
       (v.nextPoopAt===null||num(v.nextPoopAt))&&v.exposure&&num(v.exposure.hygiene)&&num(v.exposure.energy)&&typeof v.hasProducedEgg==='boolean'&&
       [null,...Object.keys(SICKNESS_CONFIG.messages)].includes(v.illnessCause)&&[null,'natural','neglect'].includes(v.deathCause);
   }
-  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,energyResting,isNight});
+  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,autoClean,autoFeed,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,energyResting,isNight});
 })();

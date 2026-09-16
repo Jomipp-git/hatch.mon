@@ -20,10 +20,16 @@ const {setup}=require('./uiHarness.cjs');
  }
  assert.equal(run('mean("hambre")'),84);
  for(const action of ['alimentar','jugar','limpiar','curar','auxiliar','luz']){
-  born();run(`state.pokerus=true;state.phase='${action==='auxiliar'?'critical':'alive'}';state.trainer.energy=0;render()`);
+  // Curar gasta una medicina desde que dejo de haber dos caminos identicos a la misma cura, asi que
+  // la reserva forma parte del escenario igual que el Pokerus.
+  born();run(`state.pokerus=true;state.inventory.medicine=1;state.phase='${action==='auxiliar'?'critical':'alive'}';state.trainer.energy=0;render()`);
   // Alimentar y limpiar pasaron a costar 0 acciones, asi que siguen permitidos sin presupuesto.
   assert.equal(run(`allowed('${action}')`),['luz','alimentar','limpiar'].includes(action));
   run('state.trainer.energy=6;render()');const cost=['luz','alimentar','limpiar'].includes(action)?0:1;
+  if(action==='curar'){run('delete state.inventory.medicine;render()');
+   assert.equal(run("allowed('curar')"),false,'sin medicina no se puede curar');
+   assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action==='curar').title,run("t('care.needsMedicine')"),'y el boton dice por que');
+   run('state.inventory.medicine=1;render()');}
   // Apagar la luz no cuesta puntos, asi que su tooltip no anuncia un coste de cero: queda libre
   // para el motivo por el que el companero no puede dormir.
   assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action===action).title,cost?run(`t('ui.actionCost.one',{cost:${cost}})`):'');
@@ -31,7 +37,15 @@ const {setup}=require('./uiHarness.cjs');
  }
  born();run('showPanel("inventory")');assert.ok(walk(els['panel-content']).some(e=>e.textContent===run("t('ui.inventory.itemCost',{care:CARE_CONFIG.itemAP,evolution:CARE_CONFIG.evolutionItemAP})")));
  run('closePanel();showPanel("training")');assert.ok(walk(els['panel-content']).some(e=>e.textContent===run("t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy})")));
- for(const item of ['berry','medicine']){born();run(`state.inventory.${item}=1;state.pokerus=true;state.trainer.energy=0`);assert.equal(run(`itemUsable('${item}')`),false);run('state.trainer.energy=1');assert.equal(run(`useItem('${item}')`),true);assert.equal(run('state.trainer.energy'),0);}
+ // La baya se sigue usando desde la Mochila y cuesta una accion. La medicina ya NO: dejo de ser un
+ // objeto que se usa —llamaba a la misma heal() que el boton Curar— y paso a ser lo que Curar gasta.
+ born();run('state.inventory.berry=1;state.trainer.energy=0');assert.equal(run("itemUsable('berry')"),false);
+ run('state.trainer.energy=1');assert.equal(run("useItem('berry')"),true);assert.equal(run('state.trainer.energy'),0);
+ born();run('state.inventory.medicine=1;state.pokerus=true;state.trainer.energy=1');
+ assert.equal(run("useItem('medicine')"),false,'la medicina ya no se usa sola');
+ assert.equal(run('state.pokerus'),true);
+ assert.equal(run('careAction("curar")'),true);assert.equal(run('state.pokerus'),false);
+ assert.equal(run('state.inventory.medicine'),undefined,'y Curar la gasta');
  for(const k of ['iq','strength','kindness','style']){
   born();assert.equal(run(`train('${k}',4)`),true);assert.equal(run('state.trainer.energy'),5);assert.equal(run(`state.training.${k}`),4);
  }

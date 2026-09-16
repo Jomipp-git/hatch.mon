@@ -7,6 +7,12 @@
 // meta del tramo final en vez de un tramite del primer dia.
 const RELATIONSHIP_CONFIG={max:100,perHeart:20,closeBond:60,positiveMood:.5,attentionMax:12,attentionDecayPerMinute:.2,positiveTapLimit:3,penaltyCooldownMs:300000,
   goodCareMinimum:70,goodCarePerMinute:.005,rewards:{care:.6,play:1.5,train:1.5,cure:3,evolve:5,touch:.25}};
+// Herencia. El Vinculo alcanzado por el progenitor fija el TECHO del sorteo y el azar decide dentro:
+// azar de entrada, no de salida. El suelo es la mitad del techo para que criar bien no pueda salir en
+// nada. Un solo numero sorteado (0..1) alimenta los dos efectos, asi que es una regla y no dos.
+// Memoria de una sola generacion: el techo lee el Vinculo de AHORA, nunca lo heredado, de modo que
+// una generacion descuidada vuelve a empezar y nada se apila.
+const INHERITANCE_CONFIG={maxLearning:.25,maxShinyMultiplier:2,floorShare:.5};
 globalThis.Relationship=(()=>{
  const t=(key,vars)=>globalThis.HatchI18n.t(key,vars);
  const fresh=()=>({points:0,attention:0,lastPenaltyAge:null});
@@ -28,6 +34,17 @@ globalThis.Relationship=(()=>{
   const minimumPoints=minimumHearts*RELATIONSHIP_CONFIG.perHeart;
   return {minimumHearts,minimumPoints,met:(s?.relationship?.points||0)>=minimumPoints};
  }
+ // El sorteo ocurre al criar, no al eclosionar: el huevo ensena lo que vale antes de que elijas
+ // cual incubar.
+ function drawPotential(s,rng=Math.random){
+  const ceiling=Math.min(1,Math.max(0,(s?.relationship?.points||0)/RELATIONSHIP_CONFIG.max));
+  const floor=ceiling*INHERITANCE_CONFIG.floorShare;
+  return floor+(ceiling-floor)*Math.max(0,Math.min(.999999999,rng()));
+ }
+ const potentialOf=value=>Number.isFinite(value)&&value>=0&&value<=1?value:0;
+ const learningRate=value=>1+potentialOf(value)*INHERITANCE_CONFIG.maxLearning;
+ const shinyMultiplier=value=>1+potentialOf(value)*(INHERITANCE_CONFIG.maxShinyMultiplier-1);
+ const validPotential=value=>value===undefined||Number.isFinite(value)&&value>=0&&value<=1;
  function valid(r){return r&&Number.isFinite(r.points)&&r.points>=0&&r.points<=RELATIONSHIP_CONFIG.max&&Number.isFinite(r.attention)&&r.attention>=0&&r.attention<=RELATIONSHIP_CONFIG.attentionMax&&(r.lastPenaltyAge===null||Number.isFinite(r.lastPenaltyAge)&&r.lastPenaltyAge>=0);}
- return Object.freeze({fresh,reward,tick,interact,hearts,evaluateMinBond,valid});
+ return Object.freeze({fresh,reward,tick,interact,hearts,evaluateMinBond,valid,drawPotential,learningRate,shinyMultiplier,validPotential});
 })();

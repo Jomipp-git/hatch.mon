@@ -19,6 +19,8 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `attentionEngine.js` | Prioridad, persistencia y entrega web de avisos de atención | Estado de partida, personalidad y `vitalSimulation.js` |
 | `pokedex.js` | Progreso normal/shiny, roster alcanzable y selección ponderada | Adapter |
 | `shellSkins.js` | Desbloqueo y selección de carcasas cosméticas | Vital, adapter, `assets/skins/themes.js` |
+| `memorialFrames.js` | Catálogo y dibujo de los marcos de Memorias | Ninguna; genera su propio SVG |
+| `roomObjects.js` | Dibujo y colocación de los objetos de la habitación | Ninguna; genera su propio SVG |
 | `shiny.js` | Probabilidad shiny y tirada de eclosión | Rareza canónica vía adapter |
 | `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
 | `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callbacks `begin`/`commit`/`abandon` |
@@ -250,6 +252,82 @@ La crianza consulta EggGroup, Breedable, Ditto, género y descendencia canónico
 
 **Schema de partida 12.** Los saves de otras versiones se invalidan y comienza un huevo nuevo. El sobre HM1 y sus snapshots de crianza no cambian; Vínculo y Pokédex no se añaden al protocolo. No hay migraciones de partidas ni relleno legacy de fisiología en códigos. No se garantiza compatibilidad con códigos antiguos; los perfiles actuales incluyen fisiología para validar breeding.
 
+## Carcasas de boutique
+
+Siete estilos de tela y material —tejana, camuflaje, neón, transparente, lentejuelas, mantel y topos— con **tres variantes cada uno**, 21 en total. Las genera `tools/generateShellThemes.py` junto a las de especie, pero con una diferencia de fondo: **sus colores se eligen a mano**. Las de logro cuentan de quién son y por eso se derivan de la paleta de la especie; estas cuentan de qué están hechas, y derivarlas de un algoritmo es justo lo que hacía que el conjunto se leyera pre-generado. El prefijo `boutique:` las separa del espacio de IDs de especie, que son claves de desbloqueo por logro.
+
+Dos cosas que el sistema de carcasas no tenía y que estas piden:
+
+- **Baldosa completa** (`motif.tile`). El teselador dibuja una figura de 24 px con hueco alrededor, que sirve para un estampado de figuras pero no para tela continua: el cuadro del mantel y el escamado de las lentejuelas se leían como marcas sueltas. Con `tile` el motivo pinta los 64 px de la baldosa. Los otros cinco siguen con glifo y acento.
+- **Botones a color completo** (`buttonFills` y `buttonText`). El tema solo teñía el canto del botón; el neón los pide rellenos con texto blanco. Sin `buttonFills`, `--fill-<acción>` cae al fondo común de siempre, así que ninguna carcasa de logro cambia.
+
+El plástico oscuro además aporta `shellText`: el texto de chrome —el logotipo y la línea del entrenador— estaba fijado en un gris oscuro y era ilegible sobre el neón.
+
+## Objetos de la habitación
+
+`roomObjects.js` solo dibuja y coloca; la mecánica de cada objeto vive donde vive su balance —el desgaste del aspirador, en `HOME_CONFIG` junto a la digestión—. El dibujo es **rejilla de píxeles en `box-shadow`**, el mismo idioma que los iconos de los botones: un solo color, y ese color es `currentColor`. Eso es lo que hace que al apagar la luz sigan la misma lógica que el resto de la pantalla —la capa cambia de tinta, no de opacidad— y lo que los mantiene sin protagonismo: son mobiliario, no personajes. El SVG multicolor se queda para las carcasas y los marcos, que sí tienen que destacar.
+
+**Las ranuras salen de medir la pantalla, no de suponerla.** En móvil la LCD son 322 × 334 px y las dos columnas de botones ocupan los flancos hasta 148 px de alto, así que el sitio libre es:
+
+```
+pared izq / der    30 × 62    la franja entre los botones y el compañero
+suelo izq / der    52 × 50    por debajo de los botones, a los lados del nombre (centrado)
+alfombra           150 × 24   bajo el compañero, detrás; no pide sitio nuevo
+```
+
+Tres reglas que la habitación no puede romper: **uno por ranura** —el que no quepa no se dibuja en vez de solaparse—; **solo se dibuja lo que tienes**, así que con dos objetos la habitación se ve tranquila y la versión llena es de final de partida; y **`pointer-events:none`**, porque el toque sobre el compañero es el gesto del Vínculo. La capa baja con `.lights-off` junto al resto del cuarto.
+
+No se gana alto ni se mueven los botones: medido, en iPhone SE la página ya scrollea y en iPhone 14 encaja con 0 px de margen, así que cualquier metro cuadrado extra saldría de empujar los botones de cuidado por debajo del pliegue.
+
+**Comedero.** Solo trabaja **mientras duerme**, que es justo la ventana en la que el juego ya prohíbe alimentar —con la luz apagada el botón está bloqueado—. De día la comida sigue siendo entera del jugador: la comida es el reloj del juego y automatizarla de día desactivaría el bucle, no una casilla. Sirve **una baya de tu reserva**, así que el coste recurrente son las bayas y el aparato no necesita desgaste propio. El umbral hace de limitador sin estado nuevo: sirve por debajo de 60, deja al compañero en 70 y dormido el hambre cae 3,6/h, así que no vuelve a poder servir hasta unas ocho horas después.
+
+**Perspectiva.** La habitación tiene profundidad, no una fila de iconos pegados a los bordes. Cada ranura declara un escalón —`back`, `mid`, `front`, `floor`— y cuanto más atrás, **más arriba y más pequeño** (`scale(.72)` y `scale(.86)`, con el origen en la esquina de apoyo). Dos objetos en la misma línea exacta matan la profundidad, así que las dos ranuras de suelo van a alturas distintas a propósito.
+
+La capa `#room-layer` es el **primer hijo** del hábitat, así que todo lo de la habitación pinta detrás del compañero y del nombre por orden de documento, sin pelearse con `z-index`. Eso es lo que permite que un objeto quede *detrás* del Pokémon de verdad.
+
+**Línea de suelo.** Una línea de 1 px a lo ancho del hábitat, al 22 % de opacidad, dibujada por el propio `#room-layer`. No es un objeto que se compre: es el cuarto, así que está siempre. Sin ella «más al fondo» y «flotando» se parecen demasiado, y es lo que convierte el escalado en perspectiva de verdad.
+
+**Alfombra.** Cosmética pura, sin mecánica. Óvalo en escorzo y **el compañero se planta dentro**: la mitad de atrás le queda tras el cuerpo. El relleno va con **trama al 50 %** —el damero clásico de 1 bit—, que es como se pinta un medio tono cuando solo hay una tinta: ni maciza, que se leía como una vía de tren, ni hueca, que se leía como un charco. El borde sí va macizo, que es lo que la cierra.
+
+Va **alineada con el bicho dibujado, no con su caja**. El sprite PMD no está centrado en su propio marco: medido sobre las 77 formas, 72 caen dentro de 1 px del centro, pero Dratini se va 3 y Azurill 2 —13 y 12 px a tamaño de pantalla—. `tools/generateListMetrics.py` ya calculaba `getbbox()` y solo guardaba el tamaño; ahora guarda también `offsetX`, el desvío horizontal como fracción del marco. En runtime es una multiplicación y una variable CSS, así que el coste en móvil es cero.
+
+El tamaño se lee del ancho renderizado del botón del compañero y no de `--sprite-size`: esa variable es un `clamp()`, y una propiedad personalizada devuelve su texto sin resolver.
+
+**Aspirador.** `state.inventory.vacuum` cuenta **cargas**, no unidades, así que no hace falta estado nuevo y `validGameSave` ya lo valida como entero. Cumple la regla de los automatizadores por las tres vías: se gasta (40 cargas), es parcial —solo recoge la deposición que lleva una hora ahí, así que la recién hecha sigue siendo tuya— y cuesta lo que se nota. Toca deposiciones, **nunca higiene**: las cacas son la tarea mecánica, la higiene alimenta la calidad de cuidados.
+
+## Marcos de Memorias
+
+`memorialFrames.js` dibuja seis marcos —clásico, escuadra, festón, hojas, piedra y estrellas— como **9-slice de 8 px servido en `border-image`**, que es el mismo contrato que usan los cuadros de texto de los Pokémon de GBA: cuatro esquinas fijas y cuatro lados que se repiten. Una esquina dibujada, cuatro usadas por espejo.
+
+Todo el adorno va en bloques alineados al píxel. El SVG se sirve con `shape-rendering: crispEdges` para dar el borde duro de GBA, y bajo esa regla una curva se aliasa en escalones sueltos: los primeros arcos del festón se leían como una fila de puntos. El lado superior tiene que encajar consigo mismo en 8 px o el marco se lee como una fila de sellos en vez de como una moldura.
+
+**El marco se compra por recuerdo, no una vez.** Escala con el juego, así que es un sumidero recurrente disfrazado de cosmético. Vive en `memorial.frame` dentro de la partida —pertenece a un compañero concreto, no al entrenador, a diferencia de las carcasas— y `validSave` lo comprueba contra el catálogo. Cada marco se serializa una vez y se cachea: la tarjeta se repinta en cada render.
+
+## Herencia
+
+El huevo criado lleva `inheritance:{potential,parent}` dentro de la entidad, al lado de `parents`, así
+que **viaja con el QR** sin tocar el sobre HM1 y se valida en `metadataOK`. Un huevo sin el campo vale
+1: el huevo misterioso no hereda nada, la herencia va solo por crianza literal.
+
+`Relationship.drawPotential` sortea al **criar**, no al eclosionar, para que el huevo enseñe lo que
+vale antes de que elijas cuál incubar. El Vínculo del progenitor fija el **techo** (`points/100`) y el
+azar cae entre la mitad del techo y el techo: azar de entrada, no de salida, y criar bien nunca puede
+salir en nada. `INHERITANCE_CONFIG` centraliza los tres valores.
+
+Un solo número sorteado alimenta los dos efectos, así que es una regla y no dos:
+
+- **Ritmo de aprendizaje**, hasta **+25 %**. `finishTraining` multiplica el atributo, nunca las
+  monedas: la economía ya va con excedente y acelerar el ingreso sería el error contrario. Los
+  atributos pasan a ser fraccionarios —`validGameSave` ya los admitía— y se redondean al mostrarlos.
+- **Probabilidad shiny**, hasta **×2**. Multiplica en vez de sumar para no aplanar la curva de rareza:
+  rareza 1 pasa del 10 % al 20 %, rareza 5 del 2 % al 4 %.
+
+**Memoria de una sola generación:** el techo lee el Vínculo de *ahora*, nunca lo heredado, así que nada
+se apila y una generación descuidada vuelve a empezar. El linaje se ve en la lista de huevos y en la
+ficha de Oak.
+
+`incubateStoredEgg` copia el campo a `social.active`, que es una lista blanca y si no lo perdería.
+
 ## Utilidades de diseño
 
 `tools/design/` reúne los scripts de medición que salieron de la auditoría (`DESIGN_AUDIT.md`). No
@@ -306,7 +384,16 @@ El coste habitual (1 AP, −8 energía, −4 hambre, +3 suciedad) se cobra **al 
 
 ## Tienda
 
-Los tres consumibles básicos y el Ditto están **siempre disponibles** (`SHOP_STAPLES`) y la rotación diaria ofrece **tres objetos más** sorteados del resto del catálogo, así que la tienda muestra siete entradas. El Ditto es fijo y no rotatorio porque un objeto de la rotación sale el 11–44 % de los días, y la mecánica que abre no puede depender de un sorteo. El té era el sumidero mejor diseñado —50 de energía son 6,25 sesiones de entrenamiento, o sea 8 monedas por sesión, rentable solo si juegas bien— y salía el 5 % de los días, de modo que comprar energía para entrenar más no era una decisión que se pudiera tomar.
+**Huecos por categoría, no una bolsa común.** Con todo rotando en tres huecos, un objeto concreto salía el 11–44 % de los días y casi la mitad de los compañeros morían sin ver la piedra que necesitaban: eso no es escasez interesante, es un bloqueo aleatorio.
+
+- **Estantería** (`SHOP_STAPLES`): baya 25, té 50, medicina 45 y Ditto 300, siempre. **La baya y la medicina estaban dominadas por acciones gratuitas** —la medicina llamaba a la misma `heal()` que el botón Curar, y la baya restauraba 5 de hambre frente a los 25 de alimentar gratis—. Ahora la medicina es **lo que Curar gasta**, no un segundo camino a la misma cura, y la baya es la **comida buena**: llena un 20 % más y deja un 65 % menos de digestión, o sea **una caca por llenado en vez de cuatro**. Alimentar gratis se queda como ración básica: la baya es la mejora, no el peaje. El té era el sumidero mejor diseñado —50 de energía son 6,25 sesiones, o sea 8 monedas por sesión, rentable solo si juegas bien— y salía el 5 % de los días. El Ditto es fijo porque la mecánica que abre no puede depender de un sorteo.
+- **Evolución** (`evolutionSlot`): los objetos que la línea del compañero activo necesita **ahora**, leídos de `current().rules`. Medido: 68 formas no piden nada y el hueco rota una piedra por si quieres adelantarte; 8 piden exactamente una; Eevee pide cinco, que son justo su decisión. Pasa de lotería a plan.
+- **Vitrina** (`EGG_SHOWCASE`): los huevos no son objetos de Mochila, van directos a la reserva, así que tienen su propio catálogo y su propia compra (`buyEgg`). El de **600** vende lo único que el misterioso no puede: saber qué es, y dice si ya has tenido esa especie —19 de las 26 raíces son formas bebé de grupo huevo `Undiscovered`, así que nombrar el grupo era ruido el 73 % de los días. El de **2.500** vende rareza y **no** especie: viaja con `offspring: null` y `guaranteedShiny`, así que `hatch()` elige forma al eclosionar y la tirada ya está ganada. Lleva distintivo propio para que se lea antes de pagarlo.
+
+- **Marcos** (`MemorialFrames`): solo aparecen si llegas desde un recuerdo, y entonces van los primeros. Comprar un marco sin saber a quién se lo pones no es una decisión que se pueda tomar, así que el botón vive en la tarjeta de Memorias y la tienda sigue siendo el único sitio donde salen monedas.
+- **Boutique** (`boutiqueSlot`): las carcasas de pago. **Un estilo al día con sus tres variantes**, no las 21 de golpe, así que la tienda se lee como una boutique y ningún estilo queda fuera más de una semana. Las de logro se siguen ganando y `buyShell` las rechaza: `SHELL_THEMES` marca las de tienda con `boutique: true`. El desbloqueo vive en las preferencias del entrenador, igual que las de logro, no en la partida.
+
+`shopPrice(id, now)` es el único sitio que decide precios. `SHINY_EGG_SALE` aplica un **50 % al huevo shiny hasta el 1 de octubre de 2026**, hora local del dispositivo —la misma con la que `shopDayKey` decide el día—. Pasado el límite el precio vuelve solo; para retirarla basta con borrar la constante y la rama de `shopPrice`.
 
 ## Marcador de los minijuegos
 

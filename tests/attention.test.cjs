@@ -36,7 +36,9 @@ function resetAttention(h,now){h.run(`state.attentionEvent=null;state.attentionM
   resetAttention(h,start);h.run('state.care.hambre=10;state.care.higiene=15;state.vital.poops=[{id:1,createdAge:0}];state.pokerus=true');
   h.run(`Attention.evaluate(state,${start});Attention.evaluate(state,${start+16*MINUTE})`);
   assert.equal(h.run('state.attentionEvent.type'),'sick','only the highest-priority active need is presented');
-  h.run('careAction("curar")');
+  // Curar gasta una medicina desde que dejo de haber dos caminos identicos a la misma cura.
+  h.run('state.inventory.medicine=1;careAction("curar")');
+  assert.equal(h.run('state.inventory.medicine'),undefined,'la medicina se gasta al curar');
   assert.equal(h.run('state.attentionEvent.type'),'hunger','after curing, the remaining urgent need takes over');
 
   resetAttention(h,start);h.run('state.care.hambre=100;state.care.higiene=30;state.vital.poops=[{id:1,createdAge:0}]');

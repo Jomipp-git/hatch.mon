@@ -734,7 +734,7 @@ morir el compañero. Así que el de 600 vende lo único que el misterioso no pue
 | Producto | Qué sabes | Qué compras |
 |---|---|---|
 | Huevo misterioso (gratis, al morir) | nada | continuidad |
-| Incienso o cebo (~150) | sesga grupo huevo o rareza | control parcial |
+| ~~Incienso o cebo (~150)~~ | ~~sesga grupo huevo o rareza~~ | **retirado** el 16-09-2026: el Ditto de 300 y el huevo de 600 le dejaron sin nivel propio |
 | **Huevo de ~600** | especie exacta y su grupo huevo | acceso: Pokédex, o la pareja compatible que te falta |
 | **Huevo shiny de ~2.500** | que es shiny; no la especie | rareza |
 
@@ -1075,7 +1075,216 @@ Suite **107/107** con cuatro pruebas actualizadas al nuevo contrato (`vital`, `s
 —`breeding.oncePerLife`, `breeding.alreadyProduced`, `oak.breedingDone`— y salen del catálogo. La
 comprobación visual es la página real servida en local, no una reconstrucción.
 
-**Pendiente de la capa 2:** herencia y sumideros de tienda; Pokéathlón y ranking, al final y opcional.
+---
+---
+
+# CAPA 2 · HERENCIA · 2026-09-16
+
+## Lo que mide el código, antes de fijar números
+
+**El +25 % es una mecánica de recuperación, no un premio al que juega bien.** Vida completa, cadencia
+horaria, rotando los cuatro atributos:
+
+| Nota | Ritmo | Media al morir | Tope a los | Monedas/vida |
+|---|---|---|---|---|
+| flojo | +0 % | 49,5 | nunca | 396 |
+| flojo | **+25 %** | **65,6** | nunca | 420 |
+| medio | +0 % | 76,5 | nunca | 714 |
+| medio | **+25 %** | **95,6** | nunca | 714 |
+| experto | +0 % | 100 | 3,08 d | 1.280 |
+| experto | **+25 %** | 100 | **2,46 d** | **1.024** |
+
+Al experto no le da nada: ya topaba. Le adelanta el tope medio día y le quita 256 monedas, porque
+`beginTraining` rechaza a 100 y la fuente se cierra antes.
+
+## Por qué NO se sube el techo de 100, todavía
+
+Se planteó que la herencia levantara el tope de atributo por encima de 100 para que el minijuego
+siguiera abierto. Medido sobre las 51 reglas de evolución: **26 exigen atributos y el máximo que pide
+cualquiera es 80** (30×2 · 40×3 · 50×8 · 70×13 · 80×4). La franja 80–100 ya no la consume nada, y
+100–125 no la consumiría dos veces. Serían ~20 sesiones más y ~320 monedas más en una economía con un
+excedente de un orden de magnitud: un número subiendo, que es el antipatrón que esta auditoría señala
+en otros sitios. Encima solo existen cinco etiquetas de rango más «Máximo», y `Math.floor(125/20)` cae
+en el fallback de error.
+
+**Se vuelve correcto el día que exista el Pokéathlón**, que es el primer consumidor de atributos más
+allá de la evolución. Entonces 100 deja de ser un tope y pasa a ser un marcador. Queda anotado como su
+acompañante, no como tarea aparte.
+
+## La decisión que crea, medida
+
+Vínculo dentro de la ventana de crianza, y ritmo que compra el huevo (suelo..techo del sorteo):
+
+| Cadencia de cuidado | ADULTO abre (20 %) | mitad (50 %) | cierra (80 %) |
+|---|---|---|---|
+| cada 30 min | 34 p → +4..9 % | 85 p → +11..21 % | 100 p → +13..25 % |
+| cada 2 h | 24 p → +3..6 % | 61 p → +8..15 % | 97 p → +12..24 % |
+| cada 4 h | 18 p → +2..4 % | 49 p → +6..12 % | 79 p → +10..20 % |
+
+**Esperar vale 3–5× más que criar pronto, en las tres cadencias**, y pasarse cierra la ventana. Ese es
+el último tercio convertido en preparación en vez de espera, y sale solo de la regla ya decidida.
+
+Matiz honesto: no lo llena entero. Cuando el Vínculo topa —día 2,88 a la mejor cadencia— y ADULTO no
+cierra hasta el 3,5, vuelve a no haber nada que subir. El Pokéathlón sigue siendo el que cierra ese
+hueco.
+
+## Decisiones cerradas
+
+| Decisión | Resuelto |
+|---|---|
+| Techo del experto | **aceptarlo**; subir el tope de atributo espera al Pokéathlón |
+| Herencia por QR | **viaja** dentro de la entidad del huevo |
+| El sorteo | entre **la mitad del techo y el techo** |
+| Shiny heredado | **multiplica hasta ×2**, no suma |
+
+## Aplicado
+
+Un solo número sorteado (`potential`, 0..1) alimenta los dos efectos: una regla, no dos. Vive en
+`INHERITANCE_CONFIG` dentro de `relationship.js`, porque el techo es el Vínculo.
+
+- **Sorteo al criar, no al eclosionar**, para que el huevo enseñe lo que vale antes de elegir cuál
+  incubar. Las dos vías pasan por `storeBredEgg`.
+- **`inheritance` va dentro de la entidad**, al lado de `parents`, así que viaja con el QR sin tocar el
+  sobre HM1, y `metadataOK` lo valida —un huevo importado podía traer `potential: 999`.
+- **`incubateStoredEgg` lo copia a `social.active`**, que es una lista blanca y si no lo perdería.
+- **El ritmo multiplica el atributo y no las monedas.** Los atributos pasan a fraccionarios;
+  `validGameSave` ya los admitía porque `stats()` usa `finite(0,100)`, no enteros. Se redondean al
+  mostrarlos y el rango máximo compara con `>=100`.
+- **Memoria de una sola generación**, sin código extra: el techo lee el Vínculo de ahora.
+
+## Verificación
+
+Suite **107/107**, con cobertura nueva del recorrido entero —sorteo, viaje al compañero, ritmo
+aplicado al atributo pero no a las monedas, no acumulación entre generaciones y rechazo de un
+`potential` inválido llegado por QR. Comprobado en la página real: criando al 78 % de la vida con el
+Vínculo lleno sale un +17 %, el huevo lo anuncia, la ficha de Oak lo marca y una nota de 4 entrega
+4,68.
+
+**Pendiente de la capa 2:** sumideros de tienda; Pokéathlón y ranking, al final y opcional.
+La idea de **«ampliar compatibilidad»** de los sumideros se retira: Ditto abre las 58 formas, no una
+parte, así que el objeto se quedó sin trabajo.
+
+---
+---
+
+# CAPA 2 · SUMIDEROS DE TIENDA · 2026-09-16
+
+## La tienda pasa de bolsa común a huecos por categoría
+
+Es el arreglo estructural que pedía la sección de tienda de la auditoría. Antes: 4 fijos y 3 sorteados
+sobre el resto, con cada piedra saliendo el 11–44 % de los días. El hueco de **Evolución** ahora lee
+`current().rules` y ofrece lo que la línea del compañero necesita.
+
+Medido sobre las 77 formas: **68 no piden ningún objeto**, **8 piden exactamente uno**, y **Eevee pide
+cinco** —que no son ruido, son su decisión. Cuando no hay nada pendiente el hueco rota una piedra, por
+si quieres adelantarte, así que nunca queda vacío.
+
+```
+Estantería   berry 35 · tea 50 · medicine 70 · ditto 300      (siempre)
+Evolución    lo que TU línea necesita hoy                     (0 → 1 piedra rotando; 1; o 5 con Eevee)
+Vitrina      huevo del día (especie nombrada) · huevo shiny
+```
+
+## Los dos huevos, y por qué no se pisan
+
+| Producto | Qué sabes | Qué compras |
+|---|---|---|
+| Huevo misterioso (gratis, al morir) | nada | continuidad |
+| Cría con Ditto (300) | tu propia línea | linaje, con la herencia dentro |
+| **Huevo de 600** | la especie exacta | acceso: Pokédex |
+| **Huevo shiny de 2.500** | que es shiny; no la especie | rareza |
+
+Cuatro niveles de control a cuatro precios, ninguno dominado. El shiny viaja con `offspring: null` y
+`guaranteedShiny`, así que es un huevo misterioso con la tirada ya ganada: eso es exactamente «sabes
+que es shiny, no la especie», y no necesita un mecanismo aparte.
+
+**Corrección a la propuesta original:** el huevo de 600 iba a nombrar el grupo huevo de la especie.
+Medido: **19 de las 26 raíces son formas bebé con `EggGroup: Undiscovered`**, así que ese dato habría
+sido ruido el 73 % de los días. Dice en su lugar si ya has tenido esa especie, que es lo que decide la
+compra.
+
+## Descuento con fecha
+
+`SHINY_EGG_SALE`: **50 % en el huevo shiny hasta el 1 de octubre de 2026**, hora local del
+dispositivo. `shopPrice(id, now)` es el único sitio que decide precios, así que pasado el límite
+vuelve solo y retirarla es borrar la constante y su rama.
+
+A 2.500 son 44 / 24 / 14 días de ahorro (flojo / medio / experto). Con el descuento, 22 / 12 / 7.
+Sigue siendo un lujo de varias vidas incluso rebajado.
+
+Anotado: el reloj es el del dispositivo, así que cambiar la hora del sistema cambia el precio. Es
+consistente con el resto —el juego entero va con ese reloj— y solo mueve moneda del juego. Se mantiene
+la restricción ya registrada: el huevo shiny queda fuera de las políticas de tienda y de los
+descriptores de edad **mientras las monedas no puedan comprarse con dinero real**.
+
+## Verificación
+
+Suite **107/107**, con cobertura nueva de los huecos, de la compra de los dos huevos y del descuento
+en sus dos lados de la fecha. Comprobado en la página real, con Growlithe (una piedra) y con Eevee
+(cinco).
+
+Una prueba dejó de tener sentido y se cambió, no se ajustó: `dailyShop` ya no tiene que cambiar cada
+día, porque el hueco de Evolución existe para ser **estable y pertinente**. La variedad diaria la
+aporta ahora la especie del huevo de la vitrina, y eso es lo que se comprueba.
+
+## Pendiente de este bloque
+
+Se entrega el núcleo. Quedan fuera, y con motivo:
+
+- ~~**Carcasas comprables.**~~ **Hechas el 16-09-2026.** Siete estilos de tela y material con tres
+  variantes cada uno, 21 en total, con el prefijo `boutique:` para no pisar el espacio de IDs de
+  especie. Sus colores se eligen **a mano**: las de logro se derivan de la paleta porque cuentan de
+  quién son, y derivar estas de un algoritmo era justo lo que hacía que el conjunto se leyera
+  pre-generado. El sistema no daba para dos cosas y se ampliaron: baldosa completa (`motif.tile`),
+  porque el cuadro del mantel y el escamado de las lentejuelas necesitan tela continua y no una
+  figura con hueco alrededor; y botones a color completo (`buttonFills`), que solo pide el neón.
+- ~~**Marco de Memorias.**~~ **Hecho el 16-09-2026.** Seis marcos en `memorialFrames.js`, 9-slice de
+  8 px en `border-image`, el mismo contrato que los cuadros de texto de GBA. Se compran **por
+  recuerdo**, que es lo que los convierte en sumidero recurrente. Dos cosas que solo se vieron en
+  pantalla: con `crispEdges` —que es lo que da el borde duro de GBA— las curvas se aliasan en
+  escalones sueltos, así que todo el adorno pasó a bloques alineados al píxel; y el adorno del lado
+  tiene que encajar consigo mismo en 8 px o el marco se lee como una fila de sellos.
+### Bayas y medicina: dos objetos dominados, 2026-09-16
+
+Verificado en el código: **`medicine` llamaba a `heal()`, exactamente la misma función que la acción
+«Curar»** —mismo efecto y misma acción gastada, y uno costaba 70 monedas—; y **la baya restauraba 5
+de hambre frente a los 25 de alimentar gratis**, o sea una quinta parte de una acción que no cuesta
+nada. Misma clase de error que las bayas de atributo retiradas en la capa 1.
+
+**Se descartó exigir comida, y la cifra lo zanja.** Medido: se alimenta **39–63 veces por vida**.
+Incluso a 10 monedas la baya, eso es el **98–159 % del ingreso de una vida entera** para el jugador
+flojo (396 monedas). A 39–63 usos no es una compra, es una suscripción, y para que le saliera la
+cuenta habría que ponerla a 3–5 monedas, que ya no es una decisión sino un impuesto con un toque
+extra. Y la comida es el reloj del juego: quedarse sin bayas no sería quedarse sin un lujo, sería
+morir de hambre por no haber ido a la tienda, que es un sentimiento peor que morir por no cuidar.
+
+Lo aplicado en su lugar:
+
+- **Curar exige medicina y la gasta.** Mismo botón y mismo coste en acciones; lo que cambia es que
+  hay que tenerla. Cobra el **descuido**, no la existencia: la enfermedad solo aparece con higiene
+  bajo 20 durante dos horas o dos cacas de tres, así que quien cuida bien no paga nunca. La medicina
+  deja de ser un objeto que se usa y pasa a ser munición. **45 monedas**, antes 70.
+- **La baya pasa a ser la comida buena.** Llena 30 frente a 25 y deja 0,35 de digestión frente a 1:
+  **una caca por llenado en vez de cuatro**. **25 monedas**, antes 35. Alimentar gratis se queda como
+  ración básica.
+
+**Arrastrar la baya al compañero: descartado.** No hay de dónde arrastrar. La Mochila es un `<dialog>`
+modal y no existe una tira de objetos en la pantalla principal; crearla saldría del margen vertical,
+que está medido en **cero** —en iPhone SE la página ya scrollea—, o sea de los botones de cuidado.
+
+- **Automatizadores.** Empezados el 16-09-2026 con el aspirador. **Dos de los siete propuestos se
+  eliminan, y el código da el motivo:**
+  - **Despertador** — «avisa al cruzar un umbral, sin actuar» es literalmente lo que ya hace
+    `attentionEngine.js` **gratis**: cuatro tipos de aviso, tres severidades, escalada por tiempo
+    desatendido, horas de silencio y notificación web, con sus ajustes en `attentionSettings`.
+    Venderlo sería cobrar por algo que el jugador ya tiene.
+  - **Botiquín** — sería la **tercera** vía a la misma cura: «Curar» ya es una acción del juego
+    cuando hay Pokérus, y la medicina de 70 hace lo mismo con un objeto. Y es la única de las tres
+    que funciona estando fuera, así que premia la ausencia — lo que esta auditoría ya descartó al
+    rechazar acumular acciones offline.
+- ~~**Incienso o cebo (~150).**~~ **Retirado por el autor.** Su nivel de «control parcial» quedó
+  estrujado entre el Ditto de 300, que da tu línea, y el huevo de 600, que da especie exacta. No llegó
+  a existir en código, así que retirarlo es no construirlo.
 
 ---
 ---

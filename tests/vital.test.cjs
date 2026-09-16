@@ -61,7 +61,74 @@ run('state.age=state.vital.lifespan*.95');
 assert.equal(run('dittoBreedingCheck().ok'),false);
 assert.equal(run('dittoBreedingCheck().reason'),run('Vital.breedingReason(state)'));
 run('state.age=state.vital.lifespan*.5');assert.equal(run('breedingBlocker()'),null);
+// Aspirador. Cumple la regla de los automatizadores por las tres vias: se gasta, es parcial y se
+// nota. Toca deposiciones, nunca higiene.
+born();run('state.pokemonId="pikachu";state.age=3*DAY;state.inventory={vacuum:2}');
+run('state.vital.poops=[{id:1,createdAge:state.age-2*HOUR},{id:2,createdAge:state.age}]');
+const hygieneBefore=run('state.care.higiene');
+assert.equal(run('Vital.autoClean(state,state.inventory.vacuum)'),1,'solo la que lleva una hora');
+assert.equal(run('state.vital.poops.length'),1,'la recien hecha sigue siendo tuya');
+assert.equal(run('state.care.higiene'),hygieneBefore,'nunca toca la higiene');
+// Sin cargas no hace nada, y el paso por minuto las descuenta y retira el objeto al agotarse.
+run('state.inventory={};state.vital.poops=[{id:3,createdAge:state.age-2*HOUR}]');
+assert.equal(run('Vital.autoClean(state,state.inventory.vacuum||0)'),0);
+run('state.inventory={vacuum:1};minuteStep()');
+assert.equal(run('state.vital.poops.length'),0);
+assert.equal(run('state.inventory.vacuum'),undefined,'gastado, fuera del inventario');
+assert.equal(run('validSave(state)'),true);
+// Comedero. Solo trabaja mientras duerme, que es la ventana en la que el juego ya prohibe alimentar;
+// de dia la comida sigue siendo entera del jugador. Sirve una baya de la reserva.
+born();run('state.pokemonId="pikachu";state.inventory={feeder:1,berry:2};state.care.hambre=40;state.lightsOff=false');
+assert.equal(run('Vital.autoFeed(state,true,true)'),false,'de dia no sirve');
+run('state.lightsOff=true');
+assert.equal(run('Vital.autoFeed(state,true,true)'),true);
+assert.equal(run('state.care.hambre'),70,'una baya, no un llenado');
+assert.equal(run('Vital.autoFeed(state,true,true)'),false,'el umbral hace de limitador');
+run('state.care.hambre=40');
+assert.equal(run('Vital.autoFeed(state,false,true)'),false,'sin comedero no sirve');
+assert.equal(run('Vital.autoFeed(state,true,false)'),false,'sin bayas tampoco');
+// Y el paso por minuto descuenta la baya de la reserva.
+// minuteStep corre sleepTick antes que el comedero, y de dia eso despierta al compañero y enciende
+// la luz: hay que darle un reloj nocturno o la prueba mide otra cosa.
+run('state.inventory={feeder:1,berry:1};state.care.hambre=40;state.lightsOff=true');
+run(`minuteStep(${new Date(2026,0,1,2,0,0).getTime()})`);
+assert.equal(run('state.inventory.berry'),undefined,'la baya sale de tu reserva');
+assert.equal(run('state.inventory.feeder'),1,'el comedero no se gasta: lo recurrente son las bayas');
+assert.equal(run('validSave(state)'),true);
+// Herencia. El Vinculo del progenitor fija el techo y el azar decide entre la mitad y el techo, asi
+// que con rng fijo en .5 un Vinculo lleno da potential .75 -> ritmo +18,75 % y shiny x1,75.
+run('state.social.eggs=[];state.relationship.points=100;state.inventory.ditto=1');
+run('storeBredEgg("pichu",[{id:state.social.active.id,speciesId:state.pokemonId,name:"Madre"},{id:"ditto-fixture-01",speciesId:"0132A0",name:"Ditto"}],()=>.5)');
+assert.equal(run('state.social.eggs[0].inheritance.potential'),.75);
+assert.equal(run('state.social.eggs[0].inheritance.parent'),'Madre');
+assert.equal(run('Relationship.learningRate(.75)'),1.1875);
+assert.equal(run('Relationship.shinyMultiplier(.75)'),1.75);
+assert.equal(run('validSave(state)'),true);
+// Sin Vinculo no hay herencia, y un huevo sin el campo vale 1: el huevo misterioso no hereda nada.
+run('state.social.eggs=[];state.relationship.points=0;storeBredEgg("pichu",[{id:state.social.active.id,speciesId:state.pokemonId,name:"Madre"}],()=>.5)');
+assert.equal(run('state.social.eggs[0].inheritance.potential'),0);
+assert.equal(run('Relationship.learningRate(undefined)'),1);
+// El huevo lleva la herencia hasta el compañero: social.active es una lista blanca y la perderia.
+run('state.social.eggs=[];state.relationship.points=100;storeBredEgg("pichu",[{id:state.social.active.id,speciesId:state.pokemonId,name:"Madre"}],()=>.5)');
+run('state.phase="dead";state.vital.deathCause="natural";incubateStoredEgg(state.social.eggs[0].id)');
+assert.equal(run('state.social.active.inheritance.potential'),.75);
+assert.equal(run('validSave(state)'),true);
+// El ritmo multiplica el ATRIBUTO y no las monedas: la economia ya va con excedente.
+run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")');
+run('state.coins=0;state.care.energia=100;state.trainer.energy=6');
+run('beginTraining("strength");finishTraining("strength",4)');
+assert.equal(run('state.training.strength'),4*1.1875);
+assert.equal(run('state.coins'),run('coinReward(4)'));
+assert.equal(run('validSave(state)'),true);
+// Memoria de una sola generacion: el techo del siguiente huevo lee el Vinculo de AHORA, no lo heredado.
+run('state.relationship.points=0;state.social.eggs=[];storeBredEgg("pichu",[{id:state.social.active.id,speciesId:state.pokemonId,name:"Hija"}],()=>.5)');
+assert.equal(run('state.social.eggs[0].inheritance.potential'),0);
+// La herencia viaja por QR, asi que llega de otro dispositivo y se valida como todo lo demas.
+assert.equal(run('HatchMonSocial.validStore(state.social,validSnapshot)'),true);
+run('state.social.eggs[0].inheritance.potential=9');
+assert.equal(run('HatchMonSocial.validStore(state.social,validSnapshot)'),false);
+run('state.social.eggs[0].inheritance.potential=.4');
 run('const exported=exportEntity();const qr=qrcode(0,"M");qr.addData(exported,"Byte");qr.make()');console.log('QR bytes',run('exported.length'));
 // Modern profiles retain physiology for breeding validation, but cannot be banked.
 run('const modern=readSocialCode(exported)');assert.equal(run('modern.entity.snapshot.vital.hasProducedEgg'),true);
-console.log('PASS C: stages, modifiers, difficulty, digestion, poops, cleaning, berries/training, sleep, fullness, abuse, offline equivalence, lifespan/death, breeding by QR and by Ditto.');
+console.log('PASS C: stages, modifiers, difficulty, digestion, poops, cleaning, berries/training, sleep, fullness, abuse, offline equivalence, lifespan/death, breeding by QR and by Ditto, and inheritance.');

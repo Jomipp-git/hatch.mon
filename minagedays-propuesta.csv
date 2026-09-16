@@ -1,0 +1,52 @@
+From,To,MinAgeDays_antes,MinAgeDays_aplicado,MinBond_hearts_sin_cambios,Banda,Requisitos
+abra,kadabra,1,1,,"paso intermedio, blando",iq>=50
+azurill,marill,1,1,2,"paso intermedio, blando",vinculo
+budew,roselia,1,1,,"paso intermedio, blando",felicidad>=70/6h
+bulbasaur,ivysaur,1.5,1,,"paso intermedio, blando",kindness>=40
+charmander,charmeleon,1.5,1,,"paso intermedio, blando",strength>=40
+cleffa,clefairy,1,1,2,"paso intermedio, blando",vinculo
+elekid,electabuzz,1,1,2,"paso intermedio, blando",strength>=50+vinculo
+igglybuff,jigglypuff,1,1,2,"paso intermedio, blando",vinculo
+magby,magmar,1,1,2,"paso intermedio, blando",style>=50+vinculo
+pichu,pikachu,1,1,2,"paso intermedio, blando",vinculo
+squirtle,wartortle,1.5,1,,"paso intermedio, blando",iq>=40
+togepi,togetic,1,1,2,"paso intermedio, blando",vinculo
+dratini,dragonair,2,2,,"paso intermedio, exigente",style>=70
+happiny,chansey,1,2,,"paso intermedio, exigente",kindness>=80+felicidad>=70/6h
+bonsly,sudowoodo,2,2.5,2,"ultima de linea, blanda",style>=50+vinculo
+chingling,chimecho,2,2.5,,"ultima de linea, blanda",felicidad>=70/6h
+clefairy,clefable,2,2.5,,"ultima de linea, blanda",objeto
+eevee,vaporeon,2,2.5,,"ultima de linea, blanda",objeto
+eevee,jolteon,2,2.5,,"ultima de linea, blanda",objeto
+eevee,flareon,2,2.5,,"ultima de linea, blanda",objeto
+eevee,leafeon,2,2.5,,"ultima de linea, blanda",objeto
+eevee,glaceon,2,2.5,,"ultima de linea, blanda",objeto
+electabuzz,electivire,2,2.5,,"ultima de linea, blanda",objeto
+growlithe,arcanine,2,2.5,,"ultima de linea, blanda",objeto
+jigglypuff,wigglytuff,2,2.5,,"ultima de linea, blanda",objeto
+magmar,magmortar,2,2.5,,"ultima de linea, blanda",objeto
+mantyke,mantine,2,2.5,,"ultima de linea, blanda",felicidad>=70/6h+accion
+marill,azumarill,2,2.5,,"ultima de linea, blanda",accion
+mimejr,mrmime,2,2.5,,"ultima de linea, blanda",iq>=50+felicidad>=70/6h
+pikachu,raichu,2,2.5,,"ultima de linea, blanda",objeto
+roselia,roserade,2,2.5,,"ultima de linea, blanda",objeto
+smoochum,jynx,2,2.5,2,"ultima de linea, blanda",iq>=50+vinculo
+togetic,togekiss,2,2.5,,"ultima de linea, blanda",objeto
+wynaut,wobbuffet,2,2.5,2,"ultima de linea, blanda",vinculo
+chansey,blissey,2,3,,"ultima de linea, exigente",kindness>=80+felicidad>=70/6h
+charmeleon,charizard,3,3,2,"ultima de linea, exigente",strength>=70+vinculo
+eevee,espeon,2,3,,"ultima de linea, exigente",iq>=70+felicidad>=80/8h
+eevee,umbreon,2,3,,"ultima de linea, exigente",strength>=70+felicidad>=80/8h
+eevee,sylveon,2,3,3,"ultima de linea, exigente",kindness>=70+vinculo
+ivysaur,venusaur,3,3,2,"ultima de linea, exigente",kindness>=70+vinculo
+kadabra,alakazam,2.5,3,2,"ultima de linea, exigente",iq>=80+vinculo
+munchlax,snorlax,2,3,,"ultima de linea, exigente",hambre>=80/12h
+pikachu,raichualola,2,3,,"ultima de linea, exigente",style>=80
+riolu,lucario,2,3,2,"ultima de linea, exigente",iq>=70 strength>=70+felicidad>=70/6h+vinculo
+toxel,toxtricityamp,2,3,,"ultima de linea, exigente",strength>=70+felicidad>=70/6h
+toxel,toxtricitylow,2,3,,"ultima de linea, exigente",style>=70+felicidad>=70/6h
+tyrogue,hitmonlee,2,3,,"ultima de linea, exigente",strength>=70 style>=30
+tyrogue,hitmonchan,2,3,,"ultima de linea, exigente",strength>=30 style>=70
+tyrogue,hitmontop,2,3,,"ultima de linea, exigente",strength>=50 style>=50
+wartortle,blastoise,3,3,2,"ultima de linea, exigente",iq>=70+vinculo
+dragonair,dragonite,3.5,3.5,5,excepcion: linea mas dura,vinculo

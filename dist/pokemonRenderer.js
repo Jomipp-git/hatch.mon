@@ -4,6 +4,12 @@ const POKEMON_RENDER_CONFIG={maxWidth:112,maxHeight:120,placeholderScale:4,
   // A form only seen through someone else's code shows as a solid shape: every visible pixel
   // becomes this one tone. Dark grey rather than black, which reads as a hole in the grid.
   silhouette:[58,58,68],
+  // Los cuatro tonos del filtro `#lcd-palette` de index.html, en 0-255. En iOS el filtro SVG del
+  // ancestro no llega al canvas —probado: en WebKit de escritorio sí, así que es cosa del
+  // compositor de iOS—, así que el sprite se cuantiza aquí. Donde el filtro SÍ llega se aplica dos
+  // veces, y eso es inofensivo: se comprobó en Chromium y WebKit que la segunda pasada devuelve los
+  // mismos píxeles, porque la luminancia de cada tono cae dentro de su propia banda.
+  lcdPalette:[[38,59,48],[82,105,74],[145,164,119],[213,223,187]],
   palette:[null,'#344e3b','#71915b','#bed09a'],
   placeholder:{type:'matrix',pixels:[
     '0000000000000000',
@@ -65,6 +71,20 @@ globalThis.PokemonRenderer=(()=>{
       for(let i=0;i<data.length;i+=4){if(!data[i+3])continue;data[i]=r;data[i+1]=g;data[i+2]=b;data[i+3]=255;}
       ctx.putImageData(frame,0,0);
     }
+    // Mismo cálculo que el filtro SVG: luminancia y cuatro bandas discretas.
+    function quantise(){
+      const ctx=canvas.getContext('2d');
+      if(typeof ctx.getImageData!=='function')return;
+      const frame=ctx.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+      const tones=POKEMON_RENDER_CONFIG.lcdPalette;
+      for(let i=0;i<data.length;i+=4){
+        if(!data[i+3])continue;
+        const luma=(.2126*data[i]+.7152*data[i+1]+.0722*data[i+2])/255;
+        const tone=tones[Math.min(tones.length-1,Math.floor(luma*tones.length))];
+        data[i]=tone[0];data[i+1]=tone[1];data[i+2]=tone[2];
+      }
+      ctx.putImageData(frame,0,0);
+    }
     const cancel=()=>{if(timer!==null)clearTimeout(timer);timer=null;};
     const stop=()=>{serial++;cancel();key=null;currentDraw=null;host.replaceChildren();};
     function matrix(def){
@@ -75,8 +95,8 @@ globalThis.PokemonRenderer=(()=>{
       const palette=def.palette||POKEMON_RENDER_CONFIG.palette;
       pixels.forEach((row,y)=>Array.from(row).forEach((value,x)=>{if(palette[Number(value)]){ctx.fillStyle=palette[Number(value)];ctx.fillRect(offsetX+x*scale,offsetY+y*scale,scale,scale);}}));
     }
-    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true,isShiny=false,silhouette=false}={}){
-      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}:${isShiny}:${silhouette}`;
+    function renderPokemon(speciesId,{dead=false,resting=false,visualState='normal',animate=true,isShiny=false,silhouette=false,lcd=false}={}){
+      const nextKey=`${speciesId}:${dead}:${resting}:${visualState}:${animate}:${isShiny}:${silhouette}:${lcd}`;
       if(key===nextKey)return;if(!list&&!dead)preloadNearby(speciesId,isShiny);stop();key=nextKey;const token=serial;
       canvas=document.createElement('canvas');canvas.className='pokemon-pixels';canvas.setAttribute('aria-hidden','true');host.append(canvas);
       const metrics=geometry(speciesId,list);canvas.width=metrics.width;canvas.height=metrics.height;canvas.style.width=`${metrics.width*1.3}px`;canvas.style.height=`${metrics.height*1.3}px`;
@@ -88,7 +108,7 @@ globalThis.PokemonRenderer=(()=>{
         if(serial!==token)return;
         const def=candidates.shift()||POKEMON_RENDER_CONFIG.placeholder;
         if(visualState==='eat'&&def.animationName==='Eat'&&!PmdVisuals.stableEat(speciesId,def)){attempt();return;}
-        if(def.type==='matrix'||def.type==='bitmap'){host.dataset.visual=dead?'memorial':'placeholder';matrix(def);if(silhouette)flatten();return;}
+        if(def.type==='matrix'||def.type==='bitmap'){host.dataset.visual=dead?'memorial':'placeholder';matrix(def);if(silhouette)flatten();if(lcd)quantise();return;}
         host.dataset.visual='loading';
         load(def.src).then(img=>{
         if(serial!==token)return;
@@ -113,6 +133,7 @@ globalThis.PokemonRenderer=(()=>{
           const y=Math.max(3,Math.min(metrics.baseline-fh*scale,metrics.baseline-(crop.y+crop.height-b[1])*scale));
           ctx.drawImage(img,frame*w+b[0],row*h+b[1],fw,fh,x,y,fw*scale,fh*scale);ctx.restore();
           if(silhouette)flatten();
+          if(lcd)quantise();
           if(animate&&frames>1&&!(visualState==='faint'&&frame===frames-1)&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
             const delay=typeof PmdVisuals==='undefined'?def.durations?.[frame]||1000/(def.fps||4):PmdVisuals.frameDuration(def,frame);frame=(frame+1)%frames;timer=setTimeout(currentDraw,delay);
           }

@@ -20,12 +20,8 @@
   .bezel{background:#4e4a56;padding:12px;border-radius:10px 10px 20px 10px}
   .screen{position:relative;isolation:isolate;overflow:hidden;background:var(--lcd);border:2px solid #303d35;padding:22px 20px;box-shadow:inset 2px 2px #00000010}
   .scene-layer{position:relative;z-index:0;width:100%;min-width:0}
-  .habitat{width:100%;text-align:center;min-height:218px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+  .habitat{width:100%;text-align:center;min-height:218px;display:flex;flex-direction:column;align-items:center;justify-content:center}
   /* Nunca roban toques: el del compañero es el gesto del Vínculo y no se puede pisar. */
-  /* Línea donde la pared se junta con el suelo. Es decorado del cuarto, no un objeto que se compre:
-     sin ella el compañero flota en un vacío en vez de estar de pie en algún sitio. */
-  .habitat::after{content:'';position:absolute;left:0;right:0;bottom:92px;height:1px;background:#4a6350;opacity:.22;pointer-events:none}
-  .lights-off .habitat::after{background:#9fb79c}
   #creature-button{border:0;background:transparent;box-shadow:none;padding:0;width:var(--sprite-size);height:var(--sprite-size);min-width:0;flex-shrink:0;display:grid;place-items:center}#creature-button:disabled{opacity:1}
   #sprite{display:flex;align-items:center;justify-content:center;width:var(--sprite-size);height:var(--sprite-size);font-size:calc(var(--sprite-size) * .45);line-height:1;filter:drop-shadow(0 6px 0 #526b3920)}
   h2{font-size:1.05rem;margin:8px 0} #health{font-size:.875rem;margin:0 0 12px}.subtle{font-size:.875rem;color:#555065}
@@ -1064,6 +1060,8 @@ window.setDisplayMode=function(mode){
   displayMode=mode;$('display-root').dataset.displayMode=mode;
   try{gameStorage.setItem(DISPLAY_PREFERENCE_KEY,mode);window.HatchCloud?.queue({immediate:true});}catch{}
   if(panelName==='settings')renderPanel();
+  // El sprite se cuantiza al dibujarlo, asi que cambiar de modo obliga a repintarlo.
+  render();
   return mode;
 };
 function renderPanel(){
@@ -1458,7 +1456,7 @@ function startTimer(){
 let temporaryVisual=null,reactionTimer=null,lastDeathId=null;
 function renderCreature(){
   const visualState=temporaryVisual||(state.lightsOff||Vital.energyResting(state)?'sleep':state.pokerus||state.phase==='critical'?'sick':state.care?.energia<20?'tired':'normal');
-  pokemonRenderer.renderPokemon(state.pokemonId,{dead:state.phase==='dead'&&temporaryVisual!=='faint',resting:state.lightsOff||state.phase==='critical',isShiny:state.social.active.isShiny===true,visualState});
+  pokemonRenderer.renderPokemon(state.pokemonId,{dead:state.phase==='dead'&&temporaryVisual!=='faint',resting:state.lightsOff||state.phase==='critical',isShiny:state.social.active.isShiny===true,visualState,lcd:displayMode==='lcd'});
 }
 function clearPetReaction(){clearTimeout(reactionTimer);reactionTimer=null;temporaryVisual=null;delete $('sprite').dataset.reaction;}
 function petReaction(kind){
@@ -1475,7 +1473,7 @@ function collectionSprite(id,isShiny=false,silhouette=false){
   const name=PokemonData.get(id)?.DisplayName||id;
   const visual=el('div',undefined,'memory-sprite');visual.setAttribute('role','img');
   visual.setAttribute('aria-label',silhouette?t('dex.seenSilhouette',{name}):name);
-  const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny,silhouette});return visual;
+  const renderer=PokemonRenderer.create(visual,{list:true});memorialRenderers.push(renderer);renderer.renderPokemon(id,{visualState:'normal',animate:false,isShiny,silhouette,lcd:displayMode==='lcd'});return visual;
 }
 // La ficha de Oak muestra la linea evolutiva COMPLETA, no solo el paso inmediato: los testers no
 // sabian cuantas etapas le quedaban a su compañero. Se recorre hacia atras hasta la raiz y hacia

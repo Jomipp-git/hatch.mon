@@ -263,13 +263,11 @@ Dos cosas que el sistema de carcasas no tenía y que estas piden:
 
 El plástico oscuro además aporta `shellText`: el texto de chrome —el logotipo y la línea del entrenador— estaba fijado en un gris oscuro y era ilegible sobre el neón.
 
-## La habitación
+## Objetos de habitación: retirados
 
-Una línea de 1 px a la altura de los pies del compañero, al 22 % de opacidad, dibujada por `.habitat::after` y con su color propio cuando la luz está apagada. Sin ella el compañero flota en un vacío en vez de estar de pie en algún sitio.
+**Se retiraron enteros el 16-09-2026**, después de construirlos y mirarlos en pantalla: aspiradora, comedero y alfombra, con sus mecánicas —desgaste, parcialidad, coste recurrente— funcionando y probadas. El motivo no fue la mecánica sino el sitio. Medido sobre la pantalla real, el hueco libre a cada lado del compañero es de **31 y 20 px en iPhone SE** (38 y 28 en iPhone 14), porque las dos columnas de botones ocupan los flancos hasta 148 px de alto; un mueble apoyado necesita 47. Abajo no hay suelo, hay el nombre, la especie y las barras, y ahí se leían como un botón más.
 
-**Los objetos de habitación se retiraron enteros el 16-09-2026**, después de construirlos y mirarlos en pantalla: aspiradora, comedero y alfombra, con sus mecánicas —desgaste, parcialidad, coste recurrente— funcionando y probadas. El motivo no fue la mecánica sino el sitio. Medido sobre la pantalla real, el hueco libre a cada lado del compañero es de **31 y 20 px en iPhone SE** (38 y 28 en iPhone 14), porque las dos columnas de botones ocupan los flancos hasta 148 px de alto; un mueble apoyado necesita 47. Abajo no hay suelo, hay el nombre, la especie y las barras, y ahí se leían como un botón más.
-
-Se valoró mover los seis botones a un cajón lateral, que sí lo resolvía —liberaba 73 y 62 px en iPhone SE—, y se descartó: habría costado un toque más en los seis destinos, incluidos Entrenamiento y Mochila, que se abren cada sesión, a cambio de mobiliario opcional. Todo queda en el historial de git.
+Se valoró mover los seis botones a un cajón lateral, que sí lo resolvía —liberaba 73 y 62 px en iPhone SE—, y se descartó: habría costado un toque más en los seis destinos, incluidos Entrenamiento y Mochila, que se abren cada sesión, a cambio de mobiliario opcional. La línea de suelo que quedó de esa pasada también salió: sin objetos ni alfombra no tenía a qué anclar. Todo queda en el historial de git.
 
 ## Marcos de Memorias
 

@@ -311,39 +311,26 @@ objetos al día elegidos al azar por fecha, así que agrupar ahí no aporta. La 
 filas compactas. La rotación diaria de la tienda no cambia.
 
 ### D5 · El sprite no entra en el modo LCD del juego en iPhone
-**Estado:** En curso · diagnóstico acotado el 2026-09-16, pendiente de decidir el arreglo
+**Estado:** Hecho · 2026-09-16 · pendiente de confirmar en un iPhone real
 
-**La sonda se pasó en WebKit de escritorio (Playwright) y los cinco casos salen filtrados**, igual
-que en Chromium. Eso descarta las hipótesis 1, 2, 4 y 5: el motor aplica el filtro SVG, el canvas
-hereda el del ancestro y la imagen también. Lo que queda es **específico de iOS**, y el sospechoso es
-la hipótesis 3 —la promoción a capa de composición—, que el WebKit de escritorio no hace igual que
-el de iOS.
+**Lo que desbloqueó esto fue descubrir que la nota de arriba era falsa.** Decía que la cuantización
+no es idempotente y que por eso no se podía aplicar el filtro dos veces; de ahí salía el bloqueo.
+Comprobado numéricamente y después en Chromium y en WebKit con diez colores de prueba: **dos pasadas
+devuelven exactamente los mismos píxeles que una**, porque la luminancia de cada uno de los cuatro
+tonos cae dentro de su propia banda. La segunda pasada no hace nada.
 
-Arreglo propuesto, que además quita la dependencia de plataforma: **cuantizar dentro del canvas**
-cuando el modo LCD está activo, en vez de esperar a que el filtro del ancestro llegue hasta él, y
-excluir el canvas del filtro del ancestro (`filter:none`). Así se aplica exactamente una vez en todas
-las plataformas y el problema de la doble pasada desaparece. El filtro CSS se queda para todo lo
-demás —colores planos y texto—, donde está demostrado que funciona.
+Antes de eso, la sonda se pasó por el WebKit de Playwright —el mismo motor que Safari— y los cinco
+casos salieron filtrados, igual que en Chromium. Eso descartó las hipótesis 1, 2, 4 y 5: el motor
+aplica el filtro SVG, el canvas lo hereda del ancestro y una imagen también. Lo que queda es del
+compositor de iOS, que el WebKit de escritorio no reproduce.
 
-Confirmado que se trata del **modo LCD del propio juego**, no del filtro de accesibilidad de iOS.
-El modo aplica `filter:url(#lcd-palette)` —un filtro SVG con cuantización discreta a cuatro
-tonos— sobre `.screen`; el sprite es un `<canvas>` descendiente que debería heredarlo. En iOS
-(Safari y Chrome comparten WebKit) el sprite se queda en color.
+**Arreglo:** el sprite se cuantiza dentro del canvas cuando el modo LCD está activo
+(`quantise()` en `pokemonRenderer.js`, con los cuatro tonos en `POKEMON_RENDER_CONFIG.lcdPalette` y
+el mismo cálculo de luminancia y bandas que el filtro SVG). El filtro CSS se queda **exactamente como
+estaba**: donde sí llega al canvas se aplica dos veces, que está probado que es inofensivo. Así iOS
+obtiene el resultado correcto sin depender del compositor y ninguna otra plataforma cambia.
 
-No se puede arreglar a ciegas: si el filtro del ancestro sí llega al canvas en algunos iOS,
-aplicarlo también al canvas lo pasaría dos veces, y esta cuantización **no es idempotente** —la
-segunda pasada vuelve a calcular luminancia sobre los cuatro tonos y los reasigna—. Hace falta
-saber qué falla exactamente antes de tocar CSS.
-
-`tools/lcdProbe.html` aísla las cinco hipótesis en una página autónoma: colores planos bajo el
-filtro, canvas heredando el filtro, canvas animado heredando el filtro, filtro aplicado al propio
-canvas e imagen heredando el filtro. Se sirve con `python3 tools/serveLocal.py --lan` y se abre
-desde el iPhone; el bloque que salga en color nombra la causa y el arreglo:
-
-- Falla el 1 → el filtro SVG no se aplica en absoluto; hay que cambiar de técnica.
-- Falla solo el 2 → WebKit no lleva el filtro del ancestro al canvas; arreglo, el caso 4.
-- Va el 2 y falla el 3 → la promoción a capa por animación; arreglo, evitarla o forzar la capa.
-- Falla el 5 igual que el 2 → no es específico del canvas sino de cualquier contenido con imagen.
+Falta lo único que no se puede hacer aquí: **abrirlo en un iPhone y confirmarlo**.
 
 ### D6 · Carcasa al obtener el Pokémon, no al madurar
 **Estado:** Hecho · 2026-09-14 (`d41f6da`)

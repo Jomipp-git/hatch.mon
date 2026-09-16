@@ -44,6 +44,8 @@ const {setup}=require('./uiHarness.cjs');
  assert.equal(run('renameCompanion("  ")'),false,'un mote vacio no vale');
  assert.equal(run('renameCompanion("Bruma")'),false,'el mismo mote no cobra');
  assert.equal(run('renameCompanion("Chispa")'),true);
+ // El atributo maxlength del formulario de nacimiento no puede leer la constante: se comprueba aqui.
+ assert.equal(Number(/name="nickname"[^>]*maxlength="(\d+)"/.exec(require('fs').readFileSync('index.html','utf8'))[1]),run('NICKNAME_MAX'));
  assert.equal(run('state.nickname'),'Chispa');assert.equal(run('state.coins'),0);
  assert.equal(run('state.nicknamePending'),false,'no se reabre la puerta del nacimiento');
  assert.equal(run('validSave(state)'),true);

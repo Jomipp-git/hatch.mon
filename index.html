@@ -392,7 +392,7 @@ const EGG_SHOWCASE=Object.freeze({eggNamed:{price:600},eggShiny:{price:2500}});
 const SHELL_PRICE=450;
 // Cambiar el mote se paga. Es sumidero de entrenador y se repite con cada compañero, asi que absorbe
 // ingreso de forma continua, que es lo que le faltaba a la economia.
-const RENAME_PRICE=120;
+const RENAME_PRICE=120,NICKNAME_MAX=20;
 // El marco se compra POR recuerdo, no una vez: escala con el juego, asi que es un sumidero
 // recurrente disfrazado de cosmetico. Es estado de la partida, no preferencia del entrenador,
 // porque pertenece a un compañero concreto.
@@ -756,7 +756,7 @@ function buyFrame(memorialId,frameId){
 // ponerla a media vida dejaria al compañero congelado hasta contestar.
 function renameCompanion(value){
   if(!alive()||interactionLocked())return false;
-  const name=String(value).trim().slice(0,20);
+  const name=String(value).trim().slice(0,NICKNAME_MAX);
   if(!name||name===state.nickname||state.coins<RENAME_PRICE)return false;
   state.coins-=RENAME_PRICE;state.nickname=name;
   state.message=t('oak.renamed',{name});
@@ -821,7 +821,7 @@ function eggStage(){
 function finishBirthScene(){if(!state.birthScene)return false;state.birthScene=false;state.nicknamePending=alive();state.message=t('ui.hatched',{name:current().name});return true;}
 function setNickname(value=''){
   if(!state.nicknamePending)return false;
-  state.nickname=String(value).trim().slice(0,20);state.nicknamePending=false;
+  state.nickname=String(value).trim().slice(0,NICKNAME_MAX);state.nicknamePending=false;
   state.message=t('birth.welcome',{name:companionName()});return true;
 }
 function acknowledgeItem(){if(state.foundItem===null)return false;state.foundItem=null;return true;}
@@ -837,7 +837,7 @@ function validGameSave(s){
     (s.phase==='egg'||(s.averages&&Number.isInteger(s.averages.count)&&finite(s.averages.count)&&s.averages.sum&&CARE.every(k=>finite(s.averages.sum[k],0,100*s.averages.count+1e-5))))&&
     s.sustained&&Object.values(s.sustained).every(n=>finite(n))&&s.actions&&Object.values(s.actions).every(n=>Number.isInteger(n)&&finite(n))&&
     s.inventory&&typeof s.inventory==='object'&&Object.entries(s.inventory).every(([id,n])=>Object.hasOwn(itemCatalog,id)&&Number.isInteger(n)&&finite(n))&&Number.isSafeInteger(s.coins)&&s.coins>=0&&
-    (s.phase==='egg'?s.gender===null:PokemonData.validGender(s.pokemonId,s.gender))&&typeof s.nickname==='string'&&s.nickname.length<=20&&
+    (s.phase==='egg'?s.gender===null:PokemonData.validGender(s.pokemonId,s.gender))&&typeof s.nickname==='string'&&s.nickname.length<=NICKNAME_MAX&&
     typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&Attention.valid(s)&&
     (s.phase==='egg'?s.personality===null:Object.hasOwn(PERSONALITY_CONFIG,s.personality))&&s.sleep&&finite(s.sleep.fatigue,0,100)&&typeof s.sleep.napDay==='string'&&s.sleep.napDay.length<=20&&Number.isInteger(s.sleep.napMinutes)&&finite(s.sleep.napMinutes,0,SLEEP_CONFIG.napLimitMinutes)&&typeof s.sleep.napping==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
     s.trainer&&finite(s.trainer.energy,0,MAX_AP)&&finite(s.lastSync)&&finite(s.remainder,0,MINUTE)&&
@@ -1235,9 +1235,9 @@ let socialCameraStream=null,socialCameraTimer=null,socialCameraToken=0;
 function stopSocialCamera(){
   socialCameraToken++;if(socialCameraTimer!==null)clearTimeout(socialCameraTimer);socialCameraTimer=null;
   socialCameraStream?.getTracks().forEach(track=>track.stop());socialCameraStream=null;
-  const video=document.getElementById('social-video');if(video){video.srcObject=null;video.hidden=true;}
+  const video=$('social-video');if(video){video.srcObject=null;video.hidden=true;}
 }
-function socialStatus(message){const node=document.getElementById('social-status');if(node)node.textContent=String(message);}
+function socialStatus(message){const node=$('social-status');if(node)node.textContent=String(message);}
 function socialAction(callback){
   sync();try{if(interactionLocked())throw Error(t('connect.interactionLocked'));const message=callback();if(message)socialStatus(message);}
   catch(error){socialStatus(I18n.errorMessage(error,'connect.operationFailed'));}
@@ -1252,7 +1252,7 @@ function eggDescription(entity){
   return bonus>0?`${origin} ${t('connect.eggInheritance',{percent:bonus})}`:origin;
 }
 function refreshSocialCollection(){
-  const select=document.getElementById('social-export-select');if(!select)return;const selected=select.value;select.replaceChildren();
+  const select=$('social-export-select');if(!select)return;const selected=select.value;select.replaceChildren();
   const entities=socialFlow==='companion'?(state.phase==='alive'?[activeEntity()]:[]):state.social.eggs;
   for(const entity of entities){const option=el('option',entity.kind==='egg'?`${eggDescription(entity)} · ${entity.id.slice(-6)}`:entityLabel(entity));option.value=entity.id;select.append(option);}
   select.value=entities.some(entity=>entity.id===selected)?selected:entities[0]?.id||'';
@@ -1554,7 +1554,7 @@ function renderCompanionTab(content){
     for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.personality'),t(PERSONALITY_CONFIG[state.personality].labelKey)],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution],[t('oak.lineage'),lineage?t('oak.lineageValue',{parent:lineage.parent,percent:learningBonus(lineage)}):t('oak.noLineage')]])diagnosis.append(row(label,value));content.append(diagnosis);
     // Cambiar el mote, donde vive la ficha del compañero: Oak es quien habla de el.
     const rename=el('div',undefined,'rename-row');
-    const field=el('input');field.id='rename-input';field.maxLength=20;field.value=state.nickname||'';
+    const field=el('input');field.id='rename-input';field.maxLength=NICKNAME_MAX;field.value=state.nickname||'';
     field.setAttribute('aria-label',t('oak.renameLabel'));
     const confirm=panelButton(t('oak.renameAction',{price:RENAME_PRICE}),()=>{
       if(renameCompanion(field.value)){save();render();renderPanel();}

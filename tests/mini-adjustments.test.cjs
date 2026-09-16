@@ -35,6 +35,18 @@ const {setup}=require('./uiHarness.cjs');
   assert.equal(doc.querySelectorAll('[data-action]').find(b=>b.dataset.action===action).title,cost?run(`t('ui.actionCost.one',{cost:${cost}})`):'');
   assert.equal(run(`careAction('${action}',()=>1)`),true);assert.equal(run('state.trainer.energy'),6-cost);
  }
+ // Cambiar el mote se paga y pasa por Oak, no por la bandera de nacimiento: esa bloquea toda la
+ // interaccion mientras esta puesta.
+ born();run('state.nickname="Bruma";state.coins=RENAME_PRICE-1');
+ assert.equal(run('renameCompanion("Chispa")'),false,'sin monedas no se cambia');
+ assert.equal(run('state.nickname'),'Bruma');
+ run(`state.coins=${run('RENAME_PRICE')}`);
+ assert.equal(run('renameCompanion("  ")'),false,'un mote vacio no vale');
+ assert.equal(run('renameCompanion("Bruma")'),false,'el mismo mote no cobra');
+ assert.equal(run('renameCompanion("Chispa")'),true);
+ assert.equal(run('state.nickname'),'Chispa');assert.equal(run('state.coins'),0);
+ assert.equal(run('state.nicknamePending'),false,'no se reabre la puerta del nacimiento');
+ assert.equal(run('validSave(state)'),true);
  born();run('showPanel("inventory")');assert.ok(walk(els['panel-content']).some(e=>e.textContent===run("t('ui.inventory.itemCost',{care:CARE_CONFIG.itemAP,evolution:CARE_CONFIG.evolutionItemAP})")));
  run('closePanel();showPanel("training")');assert.ok(walk(els['panel-content']).some(e=>e.textContent===run("t('minigame.training.cost',{ap:CARE_CONFIG.training.ap,energy:CARE_CONFIG.training.energy})")));
  // La baya se sigue usando desde la Mochila y cuesta una accion. La medicina ya NO: dejo de ser un

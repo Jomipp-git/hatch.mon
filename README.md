@@ -311,6 +311,10 @@ build publicado siguen cargando con el runtime actual, y conviene pasarlo antes 
 estado persistido. Su `README.md` documenta qué mide cada uno y el límite del método: el harness fija
 `Math.random` en 0,5, así que nada probabilístico se ejercita.
 
+## Cambio de mote
+
+Oak registra otro nombre por **120 monedas**, desde la pestaña Compañero de la Pokédex. No pasa por `nicknamePending`: esa bandera bloquea toda la interacción mientras está puesta y volver a levantarla a media vida dejaría al compañero congelado. Rechaza el mote vacío y el que ya tiene.
+
 ## Verificación
 
 Desde la raíz:

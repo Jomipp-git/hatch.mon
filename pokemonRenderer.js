@@ -141,7 +141,8 @@ globalThis.PokemonRenderer=(()=>{
       });
       }attempt();
     }
-    return {renderPokemon,stop,pause(){paused=true;cancel();},resume(){paused=false;currentDraw?.();}};
+    // `preloadNearby` ya lleva su propio registro de lo calentado, asi que llamarlo de mas no cuesta.
+    return {renderPokemon,stop,preload:preloadNearby,pause(){paused=true;cancel();},resume(){paused=false;currentDraw?.();}};
   }
   function createEgg(sprite,{config,motion:eggMotion,createFallback}){
 const eggAssets=new Map();

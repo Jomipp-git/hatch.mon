@@ -84,6 +84,8 @@
   .pokemon-pixels.feeding-idle{animation:petEat .84s ease-in-out;transform-origin:50% 75%}#sprite[data-reaction="play"]{animation:petPlay .6s steps(4)}#sprite[data-reaction="clean"]{animation:petClean .6s steps(3)}#sprite[data-reaction="train"]{animation:petTrain .6s steps(4)}#sprite[data-reaction="sick"]{animation:petSick .7s steps(4)}
   @keyframes petEat{0%,100%{translate:0 0;rotate:0deg}18%,48%,76%{translate:0 5px;rotate:3deg}32%,62%,88%{translate:0 1px;rotate:1deg}}@keyframes petPlay{25%,65%{translate:0 -3px}45%{rotate:-3deg}}@keyframes petClean{50%{filter:brightness(1.25);translate:0 -2px}}@keyframes petTrain{25%{translate:-3px 0}75%{translate:3px 0}}@keyframes petSick{25%,75%{translate:-2px 0;opacity:.65}50%{translate:2px 0}}
   @media(prefers-reduced-motion:reduce){#sprite[data-reaction],.pokemon-pixels.feeding-idle{animation:none}}
+  .pixel-icon[data-icon="sparkle"]{--pixels:0.375em 0em currentColor,0.375em 0.125em currentColor,0.25em 0.25em currentColor,0.375em 0.25em currentColor,0.5em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.375em 0.625em currentColor,0.25em 0.75em currentColor,0.5em 0.75em currentColor,0.125em 0.875em currentColor,0.625em 0.875em currentColor}
+  #shiny-mark{width:14px;height:14px;font-size:14px;margin:0;flex:0 0 auto}
   .pixel-icon[data-icon="bag"]{--pixels:0.375em 0em currentColor,0.5em 0em currentColor,0.25em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.625em 0.125em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.625em 0.25em currentColor,0.75em 0.25em currentColor,0.125em 0.375em currentColor,0.75em 0.375em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0.125em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.75em 0.625em currentColor,0.125em 0.75em currentColor,0.75em 0.75em currentColor,0.125em 0.875em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor,0.75em 0.875em currentColor}
   .pixel-icon[data-icon="food"]{--pixels:0.5em 0em currentColor,0.375em 0.125em currentColor,0.125em 0.25em currentColor,0.25em 0.25em currentColor,0.5em 0.25em currentColor,0.625em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.25em 0.375em currentColor,0.375em 0.375em currentColor,0.5em 0.375em currentColor,0.625em 0.375em currentColor,0.75em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.25em 0.5em currentColor,0.375em 0.5em currentColor,0.5em 0.5em currentColor,0.625em 0.5em currentColor,0.75em 0.5em currentColor,0em 0.625em currentColor,0.125em 0.625em currentColor,0.25em 0.625em currentColor,0.375em 0.625em currentColor,0.5em 0.625em currentColor,0.625em 0.625em currentColor,0.75em 0.625em currentColor,0.125em 0.75em currentColor,0.25em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.625em 0.75em currentColor,0.25em 0.875em currentColor,0.5em 0.875em currentColor}
   .pixel-icon[data-icon="play"]{--pixels:0.25em 0em currentColor,0.375em 0em currentColor,0.5em 0em currentColor,0.625em 0em currentColor,0.125em 0.125em currentColor,0.375em 0.125em currentColor,0.5em 0.125em currentColor,0.75em 0.125em currentColor,0em 0.25em currentColor,0.25em 0.25em currentColor,0.625em 0.25em currentColor,0.875em 0.25em currentColor,0em 0.375em currentColor,0.125em 0.375em currentColor,0.75em 0.375em currentColor,0.875em 0.375em currentColor,0em 0.5em currentColor,0.125em 0.5em currentColor,0.75em 0.5em currentColor,0.875em 0.5em currentColor,0em 0.625em currentColor,0.25em 0.625em currentColor,0.625em 0.625em currentColor,0.875em 0.625em currentColor,0.125em 0.75em currentColor,0.375em 0.75em currentColor,0.5em 0.75em currentColor,0.75em 0.75em currentColor,0.25em 0.875em currentColor,0.375em 0.875em currentColor,0.5em 0.875em currentColor,0.625em 0.875em currentColor}
@@ -103,6 +105,7 @@
   .care .pixel-icon{font-size:18px}.egg-fallback{font-size:64px}
   .social-flows{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.social-flows [aria-pressed="true"]{background:#d5dfd0;border-color:#46654c}
   .shop-egg-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .rename-row{display:flex;gap:8px;align-items:stretch;margin-bottom:12px}.rename-row input{flex:1;min-width:0}
   .shell-chip{width:26px;height:26px;border:2px solid;border-radius:5px;flex:0 0 auto;background-size:26px 26px}
   .frame-chip{width:28px;height:28px;flex:0 0 auto;border-style:solid;border-width:8px}
   /* Con marco la tarjeta deja de necesitar la linea divisoria, pero dos marcos seguidos se tocaban
@@ -217,7 +220,7 @@
       <button id="creature-button" type="button"><span id="sprite" role="img"><span class="pixel-icon egg-fallback" data-icon="egg" aria-hidden="true"></span></span></button>
       <div id="poop-layer" data-i18n-aria="ui.habitatDirt" hidden></div>
       <p id="nickname" hidden></p>
-      <div id="identity" class="identity"><h2 id="name"></h2><span id="gender" hidden></span></div>
+      <div id="identity" class="identity"><h2 id="name"></h2><span id="gender" hidden></span><span id="shiny-mark" class="pixel-icon" data-icon="sparkle" hidden></span></div>
       <div id="bond" hidden></div>
     </div>
     <p id="egg-hint" aria-live="polite"></p>
@@ -261,6 +264,27 @@
 <p id="cloud-status" role="status" hidden></p>
 <script src="appEnvironment.js"></script>
 <script src="i18n.js"></script>
+<!-- Recarga automatica del servidor local. Solo existe sirviendo desde localhost: `HatchEnvironment`
+     mira el hostname, asi que en produccion este bloque no hace ni una peticion. -->
+<script>
+(()=>{
+ if(!globalThis.HatchEnvironment?.isDevelopmentEnvironment())return;
+ let seen=null,fails=0;
+ // Se pregunta cada segundo en vez de dejar la peticion abierta: una peticion aparcada impide que la
+ // pagina llegue nunca a 'network idle', que es lo que esperan las herramientas de captura.
+ const poll=async()=>{
+  try{
+   const response=await fetch('/__reload',{cache:'no-store'});
+   if(!response.ok)return;                 // Sirviendo dist/: el endpoint no existe y se deja de sondear.
+   const stamp=Number(await response.text());
+   if(seen!==null&&stamp>seen){location.reload();return;}
+   seen=stamp;fails=0;
+  }catch{ if(++fails>5)return; }            // El servidor se ha parado: no insistir para siempre.
+  setTimeout(poll,900);
+ };
+ addEventListener('load',()=>setTimeout(poll,900));
+})();
+</script>
 <script type="text/plain" data-game-src="evolutionTable.js"></script>
 <script type="text/plain" data-game-src="hatchmonData_v2.js"></script>
 <script type="text/plain" data-game-src="pokemonDataAdapter.js"></script>
@@ -367,6 +391,9 @@ const EGG_SHOWCASE=Object.freeze({eggNamed:{price:600},eggShiny:{price:2500}});
 // Boutique. Las carcasas de logro cuentan de quien son y se ganan; estas cuentan de que estan
 // hechas y se pagan. Nunca se mezclan: SHELL_THEMES marca las de tienda con `boutique`.
 const SHELL_PRICE=450;
+// Cambiar el mote se paga. Es sumidero de entrenador y se repite con cada compañero, asi que absorbe
+// ingreso de forma continua, que es lo que le faltaba a la economia.
+const RENAME_PRICE=120;
 // El marco se compra POR recuerdo, no una vez: escala con el juego, asi que es un sumidero
 // recurrente disfrazado de cosmetico. Es estado de la partida, no preferencia del entrenador,
 // porque pertenece a un compañero concreto.
@@ -726,6 +753,16 @@ function buyFrame(memorialId,frameId){
   state.message=t('shop.boughtFrame',{name:memorialLabel(memory)});
   return true;
 }
+// No pasa por `nicknamePending`: esa bandera bloquea toda la interaccion mientras esta puesta, y
+// ponerla a media vida dejaria al compañero congelado hasta contestar.
+function renameCompanion(value){
+  if(!alive()||interactionLocked())return false;
+  const name=String(value).trim().slice(0,20);
+  if(!name||name===state.nickname||state.coins<RENAME_PRICE)return false;
+  state.coins-=RENAME_PRICE;state.nickname=name;
+  state.message=t('oak.renamed',{name});
+  return true;
+}
 function buyShell(id){
   if(!SHELL_THEMES[id]?.boutique||ShellSkins.list().includes(id))return false;
   if(state.coins<SHELL_PRICE)return false;
@@ -759,6 +796,13 @@ function hatch(rng=Math.random){
   Pokedex.record(state.pokedex,state.pokemonId,'owned',state.social.active.id,state.social.active.isShiny===true);
   ShellSkins.observe(state);
   state.birthScene=true;state.nicknamePending=false;state.message=t('egg.hatchStart');return true;
+}
+// Cuando el huevo declara especie, se calientan sus dos variantes antes de que eclosione: si sale
+// shiny y el asset no esta cargado, el primer fotograma del nacimiento sale con el marcador retro.
+function preloadHatch(){
+  const species=state.social.active.offspring;
+  if(state.phase!=='egg'||!species||typeof pokemonRenderer?.preload!=='function')return;
+  pokemonRenderer.preload(species,false);pokemonRenderer.preload(species,true);
 }
 function heat(rng=Math.random){
   if(state.phase!=='egg')return false;
@@ -1407,6 +1451,11 @@ function render(forceFeedback=false){
   $('name').textContent=egg?t('eggTitle'):birth?t('ui.eggHatching'):dead?t('death.title',{name:current().name}):current().name;
   $('gender').hidden=egg||birth;
   $('gender').textContent=PokemonData.genderSymbol(state.gender);$('gender').dataset.gender=state.gender||'';$('gender').setAttribute('aria-label',PokemonData.genderLabel(state.gender));
+  // La forma shiny se anuncia junto a la especie: hasta ahora solo se sabia por el color del sprite,
+  // que en modo LCD no se distingue de la normal.
+  preloadHatch();
+  const shinyMark=$('shiny-mark');shinyMark.hidden=egg||birth||state.social.active.isShiny!==true;
+  shinyMark.setAttribute('role','img');shinyMark.setAttribute('aria-label',t('dex.shiny'));
   $('identity').classList.toggle('has-nickname',!egg&&!birth&&!!state.nickname);
   $('nickname').textContent=state.nickname;$('nickname').hidden=egg||birth||!state.nickname;
   const hint=$('egg-hint');hint.hidden=!egg;if(egg&&hint.textContent!==eggStage().message)hint.textContent=eggStage().message;
@@ -1507,6 +1556,16 @@ function renderCompanionTab(content){
     const diagnosis=el('div',undefined,'diagnosis'),lifeStage=Vital.getLifeStage(state),breeding=breedingBlocker()?t('oak.unavailable'):t('oak.available'),evolution=!current().rules.length?t('oak.finalForm'):current().rules.some(r=>r.item)?t('oak.pendingItem'):t('oak.pending');
     const lineage=state.social.active.inheritance;
     for(const [label,value]of [[t('oak.stage'),stage(lifeStage)],[t('oak.age'),t('oak.ageValue',{days:Math.floor(state.age/DAY),hours:Math.floor(state.age/HOUR)%24})],[t('oak.personality'),t(PERSONALITY_CONFIG[state.personality].labelKey)],[t('oak.breeding'),breeding],[t('oak.evolution'),evolution],[t('oak.lineage'),lineage?t('oak.lineageValue',{parent:lineage.parent,percent:learningBonus(lineage)}):t('oak.noLineage')]])diagnosis.append(row(label,value));content.append(diagnosis);
+    // Cambiar el mote, donde vive la ficha del compañero: Oak es quien habla de el.
+    const rename=el('div',undefined,'rename-row');
+    const field=el('input');field.id='rename-input';field.maxLength=20;field.value=state.nickname||'';
+    field.setAttribute('aria-label',t('oak.renameLabel'));
+    const confirm=panelButton(t('oak.renameAction',{price:RENAME_PRICE}),()=>{
+      if(renameCompanion(field.value)){save();render();renderPanel();}
+    },state.coins<RENAME_PRICE,'rename');
+    rename.append(field,confirm);
+    content.append(el('h3',t('oak.renameTitle'),'panel-group'),
+      el('p',t(state.coins<RENAME_PRICE?'oak.renameNoCoins':'oak.renameHint',{price:RENAME_PRICE}),'panel-note'),rename);
     const averages=el('div',undefined,'diagnosis');for(const k of CARE){const value=state.care[k],cell=el('div'),bar=el('progress');bar.max=100;bar.value=value||0;bar.setAttribute('aria-label',stat(k));cell.append(el('small',`${stat(k)} · ${value===null?'—':Math.round(value)}`),bar);averages.append(cell);}content.append(averages);
     for(const step of evolutionLine(state.pokemonId)){
       const current=step.to===state.pokemonId,past=!current&&reachedForm(step.to),done=!step.rule||current||past;

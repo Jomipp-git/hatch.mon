@@ -91,31 +91,41 @@ Pendiente por decidir, no aplicado:
   revisión propia.
 
 ### A4 · Recarga automática del servidor local
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16
 
-`tools/serveLocal.py` ya impide que el navegador cachee nada (`Cache-Control: no-store`), así que
-editar un fichero y recargar a mano basta para ver el cambio. Falta que recargue solo al guardar:
-un watcher sobre los ficheros de runtime que empuje un evento al navegador, por SSE o por un
-WebSocket, y una línea en `index.html` que solo se active sirviendo desde localhost.
+Sin dependencias nuevas, como pedía la entrada: un hilo dentro de `serveLocal.py` mira cada 0,4 s la
+fecha de los ficheros que el navegador carga —los `*.html`, `*.js` y `*.mjs` de la raíz, más
+`vendor/`, `themes.js` y los manifiestos PMD— y sube una marca cuando algo cambia. La página pregunta
+por `/__reload` una vez por segundo y se recarga cuando la marca sube.
 
-Se aplaza a propósito. Hoy el repositorio no compila nada y no tiene `package.json`; esto metería
-la primera dependencia de desarrollo, o bien un watcher escrito a mano. Vale la pena cuando editar
-textos y estilos a mano se vuelva pesado, no antes. Alternativa sin dependencias: `watchdog` no,
-sino `os.scandir` con mtimes desde el propio `serveLocal.py`, que ya es un servidor en marcha.
+**Se descartó el sondeo largo**, que era la primera versión y parecía mejor: dejar la petición
+aparcada impide que la página llegue nunca a *network idle*, que es lo que esperan Playwright y los
+scripts de captura de `tools/design/`. El sondeo corto deja huecos a propósito.
 
-Ojo con `dist/`: el servidor puede servir el árbol de fuentes o `dist/`, y solo el primero refleja
-una edición sin pasar por `buildMobileRuntime.py`. La recarga automática solo tiene sentido en el
-modo fuentes; en modo `--dist` confundiría más que ayudaría.
+`assets/pmd/` queda fuera de la vigilancia: son 2.600 sprites y mirarles la fecha cada medio segundo
+sería trabajo tirado sobre lo que no cambia. El servidor pasa a `ThreadingTCPServer`.
+
+Apagada bajo `--dist`, como avisaba la entrada: solo el árbol de fuentes refleja una edición sin
+pasar por `buildMobileRuntime.py`. El bloque del navegador viaja a `dist/` pero está detrás de
+`HatchEnvironment.isDevelopmentEnvironment()`, así que en producción no hace ni una petición.
 
 ---
 
 ## Bloque B · Features de producto
 
 ### B1 · Mejoras de shiny
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16
 
-Icono pixel-art de shiny junto al nombre de especie, verificación de cobertura de assets shiny y
-precarga de sprites shiny antes de la eclosión.
+Las tres partes:
+
+- **Icono junto al nombre de especie.** Un destello de 8×8 en la misma rejilla `--pixels` que el
+  resto de iconos, así que hereda `currentColor` y el modo LCD. Importa más de lo que parecía: **en
+  modo LCD la forma shiny era indistinguible de la normal**, porque la paleta de cuatro tonos se come
+  la diferencia de color. Ahora se anuncia.
+- **Cobertura de assets.** Ya estaba: `node tools/projectStatus.cjs` informa de PMD shiny 77/77.
+- **Precarga antes de la eclosión.** Cuando el huevo declara especie se calientan sus dos variantes.
+  Si salía shiny y el asset no estaba cargado, el primer fotograma del nacimiento aparecía con el
+  marcador retro. `preloadNearby` ya llevaba su propio registro, así que solo hacía falta exponerlo.
 
 ### B2 · Mystery Gifts
 **Estado:** Pendiente
@@ -145,9 +155,15 @@ Nombre de jugador, Friend Code permanente, solicitudes de amistad y vista limita
 actual de cada amigo.
 
 ### B6 · Cambio de mote
-**Estado:** Pendiente
+**Estado:** Hecho · 2026-09-16
 
-Renombrar al Pokémon a través del Prof. Oak por un coste en monedas.
+Renombrar al Pokémon a través del Prof. Oak por **120 monedas**, en la pestaña Compañero de la
+Pokédex, que es donde vive su ficha. Sumidero de entrenador y se repite con cada compañero, así que
+absorbe ingreso de forma continua.
+
+**No pasa por `nicknamePending`**: esa bandera bloquea toda la interacción mientras está puesta, y
+volver a levantarla a media vida dejaría al compañero congelado hasta contestar. Rechaza el mote
+vacío y el que ya tiene, así que no cobra por no hacer nada.
 
 ### B7 · Familia de crianza en la interfaz de Oak
 **Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)
@@ -352,7 +368,12 @@ Botón nuevo debajo de Tienda que abre una pantalla dedicada a crianza y huevos,
 repartir eso por otros paneles.
 
 ### D9 · Buzón de feedback
-**Estado:** Pendiente
+**Estado:** Aparcado · 2026-09-16 — los jugadores siguen escribiendo por WhatsApp
+
+Al concretarlo apareció una restricción: **un sitio estático no puede enviar correos**. Las vías eran
+una tabla en Supabase (sin infraestructura nueva y firmada con el `user_id`, así que se sabe quién
+escribe), un `mailto:` (que deja la dirección a la vista de cualquiera) o una Edge Function con un
+servicio de email (cuenta y clave nuevas). Se aparca hasta que haga falta.
 
 Canal dentro del juego para que los jugadores envíen consejos y recomendaciones.
 

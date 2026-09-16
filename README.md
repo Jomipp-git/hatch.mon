@@ -279,6 +279,10 @@ Va en **canvas y no en `<img>`** por el modo LCD: en iOS el filtro SVG del ances
 
 Un retrato es un canvas quieto, así que **no registra ningún renderer**: `disposeMemorialSprites` ya no tiene nada que parar en esa pestaña. La Pokédex sigue usando el sprite animado.
 
+## El panel
+
+`#panel` no hace scroll: lo hace `#panel-content`. En iOS un filtro SVG sobre un contenedor **con** scroll se cachea como capa y no se repinta al desplazarse —texto roto y fondo en blanco, lo que se veía en la Pokédex, que es el único panel con el filtro LCD—. Con el scroll dentro, el filtro queda sobre algo que no se mueve, y la cabecera deja de necesitar `sticky` por el mismo motivo. Abrir un menú lo sitúa arriba: el diálogo conservaba el desplazamiento del anterior.
+
 ## Marcos de Memorias
 
 `memorialFrames.js` dibuja seis marcos —clásico, escuadra, festón, hojas, piedra y estrellas— como **9-slice de 8 px servido en `border-image`**, que es el mismo contrato que usan los cuadros de texto de los Pokémon de GBA: cuatro esquinas fijas y cuatro lados que se repiten. Una esquina dibujada, cuatro usadas por espejo.
@@ -380,6 +384,10 @@ El coste habitual (1 AP, −8 energía, −4 hambre, +3 suciedad) se cobra **al 
 
 - **Marcos** (`MemorialFrames`): solo aparecen si llegas desde un recuerdo, y entonces van los primeros. Comprar un marco sin saber a quién se lo pones no es una decisión que se pueda tomar, así que el botón vive en la tarjeta de Memorias y la tienda sigue siendo el único sitio donde salen monedas.
 - **Boutique** (`boutiqueSlot`): las carcasas de pago. **Un estilo al día con sus tres variantes**, no las 21 de golpe, así que la tienda se lee como una boutique y ningún estilo queda fuera más de una semana. Las de logro se siguen ganando y `buyShell` las rechaza: `SHELL_THEMES` marca las de tienda con `boutique: true`. El desbloqueo vive en las preferencias del entrenador, igual que las de logro, no en la partida.
+
+**Vender.** La tienda tiene dos pestañas. En Vender se eligen objetos de la Mochila y se ve lo que paga cada línea y el **total antes de confirmar**. Se paga la mitad del precio de tienda redondeando hacia abajo, así que vender nunca puede salir mejor que comprar. La selección es estado de pantalla: no entra en el guardado y cerrar el panel la olvida. Pedir más unidades de las que hay no cobra nada ni toca la Mochila, en vez de liquidar parte del ticket.
+
+**El sorteo diario es por jugador.** `dailySeed` mezcla la identidad del entrenador, que `appBootstrap` deja en `window.HatchTrainer` junto a `HatchStorage`. Dos jugadores no ven la misma tienda el mismo día —objetos, huevo nombrado y estilo de boutique cambian—. No entra en el guardado ni viaja en ningún código. Sin identidad, en pruebas y herramientas, el sorteo sigue siendo determinista.
 
 `shopPrice(id, now)` es el único sitio que decide precios. `SHINY_EGG_SALE` aplica un **50 % al huevo shiny hasta el 1 de octubre de 2026**, hora local del dispositivo —la misma con la que `shopDayKey` decide el día—. Pasado el límite el precio vuelve solo; para retirarla basta con borrar la constante y la rama de `shopPrice`.
 

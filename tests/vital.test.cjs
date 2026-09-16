@@ -61,40 +61,6 @@ run('state.age=state.vital.lifespan*.95');
 assert.equal(run('dittoBreedingCheck().ok'),false);
 assert.equal(run('dittoBreedingCheck().reason'),run('Vital.breedingReason(state)'));
 run('state.age=state.vital.lifespan*.5');assert.equal(run('breedingBlocker()'),null);
-// Aspirador. Cumple la regla de los automatizadores por las tres vias: se gasta, es parcial y se
-// nota. Toca deposiciones, nunca higiene.
-born();run('state.pokemonId="pikachu";state.age=3*DAY;state.inventory={vacuum:2}');
-run('state.vital.poops=[{id:1,createdAge:state.age-2*HOUR},{id:2,createdAge:state.age}]');
-const hygieneBefore=run('state.care.higiene');
-assert.equal(run('Vital.autoClean(state,state.inventory.vacuum)'),1,'solo la que lleva una hora');
-assert.equal(run('state.vital.poops.length'),1,'la recien hecha sigue siendo tuya');
-assert.equal(run('state.care.higiene'),hygieneBefore,'nunca toca la higiene');
-// Sin cargas no hace nada, y el paso por minuto las descuenta y retira el objeto al agotarse.
-run('state.inventory={};state.vital.poops=[{id:3,createdAge:state.age-2*HOUR}]');
-assert.equal(run('Vital.autoClean(state,state.inventory.vacuum||0)'),0);
-run('state.inventory={vacuum:1};minuteStep()');
-assert.equal(run('state.vital.poops.length'),0);
-assert.equal(run('state.inventory.vacuum'),undefined,'gastado, fuera del inventario');
-assert.equal(run('validSave(state)'),true);
-// Comedero. Solo trabaja mientras duerme, que es la ventana en la que el juego ya prohibe alimentar;
-// de dia la comida sigue siendo entera del jugador. Sirve una baya de la reserva.
-born();run('state.pokemonId="pikachu";state.inventory={feeder:1,berry:2};state.care.hambre=40;state.lightsOff=false');
-assert.equal(run('Vital.autoFeed(state,true,true)'),false,'de dia no sirve');
-run('state.lightsOff=true');
-assert.equal(run('Vital.autoFeed(state,true,true)'),true);
-assert.equal(run('state.care.hambre'),70,'una baya, no un llenado');
-assert.equal(run('Vital.autoFeed(state,true,true)'),false,'el umbral hace de limitador');
-run('state.care.hambre=40');
-assert.equal(run('Vital.autoFeed(state,false,true)'),false,'sin comedero no sirve');
-assert.equal(run('Vital.autoFeed(state,true,false)'),false,'sin bayas tampoco');
-// Y el paso por minuto descuenta la baya de la reserva.
-// minuteStep corre sleepTick antes que el comedero, y de dia eso despierta al compañero y enciende
-// la luz: hay que darle un reloj nocturno o la prueba mide otra cosa.
-run('state.inventory={feeder:1,berry:1};state.care.hambre=40;state.lightsOff=true');
-run(`minuteStep(${new Date(2026,0,1,2,0,0).getTime()})`);
-assert.equal(run('state.inventory.berry'),undefined,'la baya sale de tu reserva');
-assert.equal(run('state.inventory.feeder'),1,'el comedero no se gasta: lo recurrente son las bayas');
-assert.equal(run('validSave(state)'),true);
 // Herencia. El Vinculo del progenitor fija el techo y el azar decide entre la mitad y el techo, asi
 // que con rng fijo en .5 un Vinculo lleno da potential .75 -> ritmo +18,75 % y shiny x1,75.
 run('state.social.eggs=[];state.relationship.points=100;state.inventory.ditto=1');

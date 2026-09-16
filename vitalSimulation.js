@@ -41,13 +41,6 @@ const SICKNESS_CONFIG={hygieneThreshold:20,energyThreshold:8,exposureMinutes:120
 // se gasta (40 cargas), es parcial (solo recoge la deposicion que lleva una hora ahi, asi que la
 // recien hecha sigue siendo tuya) y cuesta lo que se nota. Toca deposiciones, NUNCA higiene: las
 // cacas son la tarea mecanica, la higiene alimenta la calidad de cuidados y no debe automatizarse.
-// El comedero solo trabaja MIENTRAS DUERME, que es justo la ventana en la que el juego ya te
-// prohibe alimentar (con la luz apagada el boton esta bloqueado). De dia la comida sigue siendo
-// entera tuya: la comida es el reloj del juego y automatizarla de dia desactivaria el bucle, no una
-// casilla. Sirve una baya de tu reserva, asi que el coste recurrente son las bayas y no un desgaste
-// aparte. El propio umbral hace de limitador: tras servir queda en 90 y dormido decae 3,6/h, asi que
-// no vuelve a poder servir hasta ~8 h despues. Sin estado nuevo y sin tocar el esquema.
-const HOME_CONFIG={vacuum:{charges:40,delayMinutes:60},feeder:{hungerBelow:60}};
 const BREEDING_CONFIG={lifeStage:'ADULTO',happiness:70,minCare:40,maxPoops:1,maxDirt:50};
 const PERSONALITY_CONFIG=Object.freeze({
   sleepy:{labelKey:'personality.sleepy',socialDemand:1,hungerPrompt:1},
@@ -166,24 +159,6 @@ globalThis.Vital=(()=>{
       v.poops.filter(p=>s.age-p.createdAge>=SICKNESS_CONFIG.poopAgeMinutes*c.minute).length>=SICKNESS_CONFIG.poopCount?'poops':null;
     if(!s.pokerus&&cause){const hourly=Math.min(SICKNESS_CONFIG.maxRiskPerHour,SICKNESS_CONFIG.riskPerHour*m.risk*d.risk);if(random(v)<1-Math.pow(1-hourly,1/60))infect(s,cause);}
   }
-  // Devuelve cuantas cargas ha gastado. Quien lleva la cuenta es el inventario, no el motor: aqui
-  // no se sabe que existe una tienda.
-  function autoClean(s,charges){
-   if(!s.vital||!charges||!['alive','critical'].includes(s.phase))return 0;
-   let used=0;
-   for(const poop of [...s.vital.poops]){
-    if(used>=charges)break;
-    if(s.age-poop.createdAge<HOME_CONFIG.vacuum.delayMinutes*CARE_CONFIG.minute)continue;
-    s.vital.poops=s.vital.poops.filter(p=>p.id!==poop.id);used++;
-   }
-   return used;
-  }
-  // Devuelve true si ha servido. Quien tiene las bayas es el inventario, no el motor.
-  function autoFeed(s,hasFeeder,hasBerry){
-   if(!hasFeeder||!hasBerry||!s.vital||!['alive','critical'].includes(s.phase))return false;
-   if(!s.lightsOff||s.care.hambre>=HOME_CONFIG.feeder.hungerBelow)return false;
-   eat(s,CARE_CONFIG.berry);return true;
-  }
   function breedingReason(s){
     if(!s.vital||getLifeStage(s)!==BREEDING_CONFIG.lifeStage)return vitalText('breeding.matureOnly');
     if(s.phase!=='alive'||s.pokerus||s.care.felicidad<BREEDING_CONFIG.happiness||Object.values(s.care).some(n=>n<BREEDING_CONFIG.minCare)||
@@ -199,5 +174,5 @@ globalThis.Vital=(()=>{
       (v.nextPoopAt===null||num(v.nextPoopAt))&&v.exposure&&num(v.exposure.hygiene)&&num(v.exposure.energy)&&typeof v.hasProducedEgg==='boolean'&&
       [null,...Object.keys(SICKNESS_CONFIG.messages)].includes(v.illnessCause)&&[null,'natural','neglect'].includes(v.deathCause);
   }
-  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,autoClean,autoFeed,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,energyResting,isNight});
+  return Object.freeze({fresh,getLifeStage,getLifeModifiers,difficulty,eat,clean,tick,valid,breedingReason,abuseRisk,personalityFor,ensureSleep,sleepPermission,sleepTick,energyResting,isNight});
 })();

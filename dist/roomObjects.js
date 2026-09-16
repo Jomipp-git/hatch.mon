@@ -17,44 +17,31 @@ globalThis.RoomObjects=(()=>{
  // hueco, así que la cara de arriba va hueca —el hueco ES la tapa— y el cuerpo va macizo debajo. La
  // línea entre las dos es el canto del disco, que es lo que separa un cilindro de una mancha.
  // El primer intento llevaba cúpula y dos huecos abajo y se leía como un coche con ruedas.
+ // Solo queda la alfombra. La aspiradora y el comedero se retiraron el 16-09-2026: medido, la franja
+ // que es habitacion son 322 px menos las dos columnas de botones, o sea 234, y la alfombra ocupa
+ // 144. Los 45 px por lado no dan para un mueble que se apoye, y abajo no hay suelo sino el nombre y
+ // las barras, donde se leian como un boton. Las ranuras de pared siguen definidas: un objeto colgado
+ // no necesita suelo y es el camino si se retoma.
  const PARTS=Object.freeze({
-  vacuum:{slot:'floor-left',map:[
-   '.....######.....',
-   '...##......##...',
-   '..#....##....#..',
-   '..#..........#..',
-   '..############..',
-   '.##############.',
-   '..############..',
-   '....########....',
-  ]},
-  // Comedero: cuenco sobre pie. La boca va ABIERTA —sin fila maciza arriba—, porque con una tapa
-  // encima se leía como un yunque. El hueco es el interior del cuenco.
-  feeder:{slot:'floor-right',map:[
-   '##############',
-   '#............#',
-   '.#..........#.',
-   '..##########..',
-   '.....####.....',
-   '...########...',
-  ]},
   // Alfombra redonda vista en escorzo. El relleno va con TRAMA al 50% —el damero clásico de 1 bit—,
   // que es como se pinta un medio tono cuando solo hay una tinta: ni maciza, que se leía como una vía
   // de tren, ni hueca, que se leía como un charco. El borde sí va macizo, que es lo que la cierra.
   // Ancha a propósito: el sprite PMD no está centrado en su propio marco —Pikachu cae 6 px a la
   // izquierda— y cada especie cae distinto, así que la anchura absorbe el desvío.
   rug:{slot:'rug',map:[
-   '...........################...........',
-   '......####.#.#.#.#.#.#.#.#.#####......',
-   '...####.#.#.#.#.#.#.#.#.#.#.#.#.###...',
-   '.###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####.',
-   '###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####',
-   '####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.###',
-   '###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####',
-   '.###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####.',
-   '...####.#.#.#.#.#.#.#.#.#.#.#.#.###...',
-   '......####.#.#.#.#.#.#.#.#.#####......',
-   '...........################...........',
+   '...............##################...............',
+   '.........#####.#.#.#.#.#.#.#.#.#.######.........',
+   '.....####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#####.....',
+   '...###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####...',
+   '.####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.###.',
+   '####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.###',
+   '###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####',
+   '####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.###',
+   '.####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.###.',
+   '...###.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.####...',
+   '.....####.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#####.....',
+   '.........#####.#.#.#.#.#.#.#.#.#.######.........',
+   '...............##################...............',
   ]},
  });
  const SLOTS=Object.freeze(['wall-left','wall-right','floor-left','floor-right','rug']);

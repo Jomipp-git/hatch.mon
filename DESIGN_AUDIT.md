@@ -1272,7 +1272,14 @@ Lo aplicado en su lugar:
 modal y no existe una tira de objetos en la pantalla principal; crearla saldría del margen vertical,
 que está medido en **cero** —en iPhone SE la página ya scrollea—, o sea de los botones de cuidado.
 
-- **Automatizadores.** Empezados el 16-09-2026 con el aspirador. **Dos de los siete propuestos se
+- **Automatizadores.** Empezados y **parados** el 16-09-2026. El aspirador y el comedero llegaron a
+  funcionar —desgaste, parcialidad, coste— y se retiraron al verlos en pantalla: no por la mecánica
+  sino por el sitio. Medido, la franja que es habitación son 322 px menos las dos columnas de botones
+  = **234**, y la alfombra ocupa **144**; los 45 px por lado no dan para un mueble apoyado, y la zona
+  de abajo no es suelo sino el nombre y las barras, donde se leían como un botón. Queda en el
+  historial y las ranuras de pared siguen definidas: **un objeto colgado no necesita suelo**, así que
+  interruptor y termostato siguen siendo viables cuando se retome.
+  Lo que sí se queda de esa pasada: la habitación con perspectiva, la línea de suelo y la alfombra. **Dos de los siete propuestos se
   eliminan, y el código da el motivo:**
   - **Despertador** — «avisa al cruzar un umbral, sin actuar» es literalmente lo que ya hace
     `attentionEngine.js` **gratis**: cuatro tipos de aviso, tres severidades, escalada por tiempo

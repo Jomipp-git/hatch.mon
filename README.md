@@ -279,12 +279,6 @@ Tres reglas que la habitación no puede romper: **uno por ranura** —el que no 
 
 No se gana alto ni se mueven los botones: medido, en iPhone SE la página ya scrollea y en iPhone 14 encaja con 0 px de margen, así que cualquier metro cuadrado extra saldría de empujar los botones de cuidado por debajo del pliegue.
 
-**Comedero.** Solo trabaja **mientras duerme**, que es justo la ventana en la que el juego ya prohíbe alimentar —con la luz apagada el botón está bloqueado—. De día la comida sigue siendo entera del jugador: la comida es el reloj del juego y automatizarla de día desactivaría el bucle, no una casilla. Sirve **una baya de tu reserva**, así que el coste recurrente son las bayas y el aparato no necesita desgaste propio. El umbral hace de limitador sin estado nuevo: sirve por debajo de 60, deja al compañero en 70 y dormido el hambre cae 3,6/h, así que no vuelve a poder servir hasta unas ocho horas después.
-
-**Perspectiva.** La habitación tiene profundidad, no una fila de iconos pegados a los bordes. Cada ranura declara un escalón —`back`, `mid`, `front`, `floor`— y cuanto más atrás, **más arriba y más pequeño** (`scale(.72)` y `scale(.86)`, con el origen en la esquina de apoyo). Dos objetos en la misma línea exacta matan la profundidad, así que las dos ranuras de suelo van a alturas distintas a propósito.
-
-La capa `#room-layer` es el **primer hijo** del hábitat, así que todo lo de la habitación pinta detrás del compañero y del nombre por orden de documento, sin pelearse con `z-index`. Eso es lo que permite que un objeto quede *detrás* del Pokémon de verdad.
-
 **Línea de suelo.** Una línea de 1 px a lo ancho del hábitat, al 22 % de opacidad, dibujada por el propio `#room-layer`. No es un objeto que se compre: es el cuarto, así que está siempre. Sin ella «más al fondo» y «flotando» se parecen demasiado, y es lo que convierte el escalado en perspectiva de verdad.
 
 **Alfombra.** Cosmética pura, sin mecánica. Óvalo en escorzo y **el compañero se planta dentro**: la mitad de atrás le queda tras el cuerpo. El relleno va con **trama al 50 %** —el damero clásico de 1 bit—, que es como se pinta un medio tono cuando solo hay una tinta: ni maciza, que se leía como una vía de tren, ni hueca, que se leía como un charco. El borde sí va macizo, que es lo que la cierra.
@@ -293,7 +287,7 @@ Va **alineada con el bicho dibujado, no con su caja**. El sprite PMD no está ce
 
 El tamaño se lee del ancho renderizado del botón del compañero y no de `--sprite-size`: esa variable es un `clamp()`, y una propiedad personalizada devuelve su texto sin resolver.
 
-**Aspirador.** `state.inventory.vacuum` cuenta **cargas**, no unidades, así que no hace falta estado nuevo y `validGameSave` ya lo valida como entero. Cumple la regla de los automatizadores por las tres vías: se gasta (40 cargas), es parcial —solo recoge la deposición que lleva una hora ahí, así que la recién hecha sigue siendo tuya— y cuesta lo que se nota. Toca deposiciones, **nunca higiene**: las cacas son la tarea mecánica, la higiene alimenta la calidad de cuidados.
+**Aspirador y comedero: retirados el 16-09-2026.** Se construyeron y se quitaron al verlos en pantalla. Medido: la franja que es habitación son los 322 px de la LCD **menos las dos columnas de botones, o sea 234**, y la alfombra ocupa **144**. Los 45 px que quedan a cada lado no dan para un mueble que se apoye en el suelo, y abajo no hay suelo sino el nombre, la especie y las barras, donde se leían como un botón más. Las ranuras de pared siguen definidas: un objeto **colgado** no necesita suelo, y es el camino si se retoma.
 
 ## Marcos de Memorias
 

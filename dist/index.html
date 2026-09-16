@@ -31,13 +31,14 @@
   .room-object::before{content:'';position:absolute;left:0;top:0;width:3px;height:3px;background:transparent;box-shadow:var(--pixels)}
   /* Perspectiva: cuanto más atrás, más arriba y más pequeño. Es lo único que separa un cuarto con
      fondo y suelo de cuatro iconos pegados a los bordes. El escalado va sobre la esquina de apoyo. */
-  .room-object[data-depth="back"]{transform:scale(.72);transform-origin:bottom center}
-  .room-object[data-depth="mid"]{transform:scale(.86);transform-origin:bottom center}
+  .room-object[data-depth="back"]{transform:scale(.6);transform-origin:bottom center}
+  .room-object[data-depth="mid"]{transform:scale(.62);transform-origin:bottom center}
   .room-object[data-slot="wall-left"]{left:44px;top:18px}
   .room-object[data-slot="wall-right"]{right:44px;top:18px}
-  .room-object[data-slot="floor-left"]{left:8px;bottom:8px}
+  .room-object[data-depth="front"]{transform:scale(.72);transform-origin:bottom center}
+  .room-object[data-slot="floor-left"]{left:44px;bottom:94px}
   /* Un escalón más atrás que la izquierda: dos objetos en la misma línea exacta matan la profundidad. */
-  .room-object[data-slot="floor-right"]{right:10px;bottom:20px}
+  .room-object[data-slot="floor-right"]{right:46px;bottom:104px}
   /* El compañero se planta DENTRO de la alfombra: la mitad de arriba le queda detrás. */
   .room-object[data-slot="rug"]{left:50%;transform:translateX(calc(-50% + var(--spriteOffsetX,0px)));bottom:98px}
   #creature-button{border:0;background:transparent;box-shadow:none;padding:0;width:var(--sprite-size);height:var(--sprite-size);min-width:0;flex-shrink:0;display:grid;place-items:center}#creature-button:disabled{opacity:1}
@@ -361,8 +362,6 @@ const itemCatalog={
   // Ditto no es un compañero al que cuidar: es el objeto que hace de pareja cuando no hay otra
   // persona. Se gasta al crear el huevo, así que la crianza es un sumidero recurrente de monedas.
   ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300},
-  vacuum:{get name(){return t('item.vacuum');},icon:'clean',kind:'home',price:280,charges:HOME_CONFIG.vacuum.charges},
-  feeder:{get name(){return t('item.feeder');},icon:'food',kind:'home',price:220},
   rug:{get name(){return t('item.rug');},icon:'bag',kind:'home',price:150}
 };
 // Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
@@ -371,12 +370,12 @@ const itemDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?`${LABELS[item.attribute]} +${CARE_CONFIG.berry.attribute}`:t('ui.inventory.goodFood')):
     item.kind==='drink'?t('ui.inventory.tea'):item.kind==='medicine'?t('ui.inventory.medicineAmmo'):
     item.kind==='breeding'?t('ui.inventory.breeding'):
-    item.kind==='home'?(item.charges?t('ui.inventory.charges',{count:state.inventory[id]||0}):t('ui.inventory.placed')):t('ui.inventory.evolution');};
+    item.kind==='home'?t('ui.inventory.placed'):t('ui.inventory.evolution');};
 const shopDetail=id=>{const item=itemCatalog[id];
   return item.kind==='berry'?(item.attribute?t('ui.shop.berry',{stat:LABELS[item.attribute]}):t('ui.shop.food')):
     item.kind==='drink'?t('ui.shop.tea'):item.kind==='medicine'?t('ui.shop.heal'):
     item.kind==='breeding'?t('ui.shop.ditto'):
-    item.kind==='home'?t(`ui.shop.${id}`,{charges:item.charges}):t('ui.shop.evolutionItem');};
+    item.kind==='home'?t(`ui.shop.${id}`):t('ui.shop.evolutionItem');};
 // Indexado por nota 1..5. Antes el array empezaba en 0 y ese hueco era inalcanzable, porque
 // Math.max(1,...) fijaba el indice minimo en 1.
 const COIN_REWARDS=Object.freeze([2,4,7,11,16]);
@@ -601,10 +600,6 @@ function minuteStep(clock=Date.now()){
   state.trainer.energy=Math.min(MAX_AP,state.trainer.energy+CARE_CONFIG.trainerRecoveryPerMinute);
   const before={...state.care};Vital.tick(state);Vital.sleepTick(state,clock);Relationship.tick(state);
   for(const k of CARE)state.averages.sum[k]+=state.care[k];
-  const vacuumed=Vital.autoClean(state,state.inventory.vacuum||0);
-  if(vacuumed){state.inventory.vacuum-=vacuumed;if(state.inventory.vacuum<=0)delete state.inventory.vacuum;}
-  if(Vital.autoFeed(state,state.inventory.feeder>0,state.inventory.berry>0)){
-   state.inventory.berry--;if(state.inventory.berry<=0)delete state.inventory.berry;}
   state.averages.count++;updateSustained(MINUTE,before);checkHealth();Attention.evaluate(state,clock);
   if(alive()){ShellSkins.observe(state);checkEvolution();}
 }
@@ -744,7 +739,7 @@ function useItem(id,destination=null){
 function buyShopItem(id){
   const item=itemCatalog[id];if(!item||!dailyShop().includes(id))return false;
   const price=shopPrice(id);if(state.coins<price)return false;
-  state.coins-=price;state.inventory[id]=(state.inventory[id]||0)+(item.charges||1);state.message=t('shop.bought',{name:itemLabel(id)});
+  state.coins-=price;state.inventory[id]=(state.inventory[id]||0)+1;state.message=t('shop.bought',{name:itemLabel(id)});
   return true;
 }
 function buyFrame(memorialId,frameId){

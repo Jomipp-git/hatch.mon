@@ -9,3 +9,6 @@ __pycache__/
 
 # Configuración local del agente
 .claude/
+
+# Intermedio de la comprobación de compatibilidad de saves: lo regenera save-generate.cjs.
+tools/design/saves-viejos.json

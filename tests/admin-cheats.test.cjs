@@ -89,3 +89,25 @@ test('rewinding the companion is committed and keeps trainer state',async()=>{
  assert.equal(h.run('state.pokemonId'),'elekid','y sobrevive a cerrar los trucos');
  assert.equal(h.run('state.coins'),200,'pero las monedas regaladas no');
 });
+
+// La seccion de rebobinar no puede desaparecer sin mas cuando no hay nada a lo que volver: sin
+// texto, el administrador no sabe si le falta el dato o si la herramienta esta rota.
+test('the rewind section explains itself when there is nothing to go back to',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Chispa")');
+ clickOak(h,10);h.run('showPanel("settings")');
+ const shown=()=>{const read=n=>(n.textContent||'')+(n.children||[]).map(read).join(' ');return read(h.els['panel-content']);};
+ assert.equal(h.run('rewindPoints().length'),0,'un companero sin evoluciones no ofrece puntos');
+ assert.ok(shown().includes(h.run("t('testing.rewind')")),'pero la seccion sigue ahi');
+ assert.ok(shown().includes(h.run("t('testing.rewindNoneYet')")),'y dice por que esta vacia');
+ // Y con una evolucion en la partida real vuelve a ofrecer el salto. Se toma la ruta que el propio
+ // companero tenga, en vez de escribir una especie a mano que quiza no sea la suya.
+ h.run('state.age=3*24*3600000;state.stageAge=state.age;state.training={iq:40,strength:40,kindness:40,style:40}');
+ const route=h.run('PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).find(id=>evolutionConfig[id])');
+ assert.ok(route,'el companero tiene alguna evolucion');
+ assert.equal(h.run(`forceEvolution(${JSON.stringify(route)})`),true);
+ h.run('cheatSandbox=null;save({immediate:true,commit:true})');
+ clickOak(h,10);h.run('renderPanel()');
+ assert.equal(h.run('rewindPoints().length'),1);
+ assert.ok(shown().includes(h.run("t('testing.rewindGo')")),'con su boton');
+});

@@ -1382,14 +1382,17 @@ function renderPanel(){
     content.append(row(t('testing.coins'),t('testing.coinsDetail',{coins:state.coins}),null),coinControls);
     // Rebobinar: cada evolucion dejo en `milestones` la edad, el entrenamiento y las acciones de ese
     // momento, asi que se puede volver a la forma anterior sin inventarse nada.
+    // La seccion se enseña SIEMPRE, tambien vacia: desaparecer sin decir nada deja al administrador
+    // sin saber si falta el dato o falla la herramienta.
     const rewinds=rewindPoints();
-    if(rewinds.length){
-      content.append(el('h3',t('testing.rewind'),'panel-group'),el('p',t('testing.rewindDetail'),'panel-note'));
-      for(const point of rewinds)content.append(row(
-        evolutionConfig[point.from]?.name||point.from,
-        t('testing.rewindAt',{days:(point.age/DAY).toFixed(2)}),
-        panelButton(t('testing.rewindGo'),()=>rewindTo(point.index),false,`rewind-${point.from}`)));
-    }
+    content.append(el('h3',t('testing.rewind'),'panel-group'),el('p',t('testing.rewindDetail'),'panel-note'));
+    if(rewinds.length)for(const point of rewinds)content.append(row(
+      evolutionConfig[point.from]?.name||point.from,
+      t('testing.rewindAt',{days:(point.age/DAY).toFixed(2)}),
+      panelButton(t('testing.rewindGo'),()=>rewindTo(point.index),false,`rewind-${point.from}`)));
+    else content.append(el('p',t(rewindBaseline()===null?'testing.rewindUnreadable'
+      :!['alive','critical'].includes(rewindBaseline().phase)?'testing.rewindNoCompanion'
+      :'testing.rewindNoneYet'),'panel-note'));
     if(state.phase==='egg')return;
     const forceRoutes=PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).filter(id=>id&&evolutionConfig[id]);
     if(alive()&&forceRoutes.length){

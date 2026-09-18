@@ -69,10 +69,12 @@ BOUTIQUE_STYLES = {
         ('desert', 'Desierto', 'Desert', '#c2a878', ('#8a7146', '#d9c79c', '#5d4b2c')),
         ('urban', 'Urbano', 'Urban', '#8d9196', ('#4c5054', '#c2c6ca', '#2e3134')),
     )),
+    # El plastico ES el color, fluorescente y macizo. El circuito va en tinta oscura encima, que es
+    # lo que lo hace legible sobre fluor y lo que le da el aire cyberpunk.
     'neon': ('Neon', 'Neon', (
-        ('magenta', 'Magenta', 'Magenta', '#2b0f1e', ('#ff3b94', '#55ffe1', '#a6fd29')),
-        ('cyan', 'Cian', 'Cyan', '#06222a', ('#55ffe1', '#a6fd29', '#ff3b94')),
-        ('lime', 'Lima', 'Lime', '#16250b', ('#a6fd29', '#ff3b94', '#55ffe1')),
+        ('magenta', 'Magenta', 'Magenta', '#ff3b94', ('#2a0a18', '#55ffe1', '#1b0610')),
+        ('cyan', 'Cian', 'Cyan', '#55ffe1', ('#05231f', '#ff3b94', '#03130f')),
+        ('lime', 'Lima', 'Lime', '#a6fd29', ('#14230a', '#ff3b94', '#0a1405')),
     )),
     'guts': ('Transparente', 'Clear', (
         ('grape', 'Uva', 'Grape', '#8d78c4', ('#3a2a6b', '#bfb0e4', '#5f5296')),
@@ -106,7 +108,8 @@ def boutique_theme(style, variant, name_es, name_en, plastic, motif_colors):
     theme = {
         'name': name_es, 'nameEn': name_en, 'boutique': True,
         # El plastico oscuro no se aclara al 48% como el claro: el neon vive de ser oscuro.
-        'shellBase': mix(primary, 255, .12) if dark else mix(primary, 255, .34),
+        # El neon no se aclara: mezclarlo con blanco lo convierte en pastel y deja de ser fluor.
+        'shellBase': plastic if style == 'neon' else (mix(primary, 255, .12) if dark else mix(primary, 255, .34)),
         'shellDark': mix(primary, 0, .55), 'shellLight': mix(primary, 255, .72),
         'accent': mix(primary, 0, .10), 'bezel': mix(primary, 0, .68),
         'button': legible_button(mix(primary, 255, .40) if dark else mix(primary, 255, .88)),
@@ -116,9 +119,11 @@ def boutique_theme(style, variant, name_es, name_en, plastic, motif_colors):
         'buttonEdges': distinct_edges(list(motif_colors)),
         'motif': style, 'motifColors': list(motif_colors),
     }
-    if dark:
-        # El plastico oscuro deja ilegible el texto de chrome, que esta fijado en un gris oscuro.
-        theme['shellText'] = mix(primary, 255, .88)
+    # El texto de chrome —"Acciones", "Monedas"— va directamente sobre el plastico, asi que se
+    # calcula contra el, no contra un gris fijo. Con plastico oscuro hay que aclararlo; con uno
+    # fluorescente hay que oscurecerlo, que es lo que le faltaba al neon nuevo: verde sobre aqua
+    # brillante no se leia.
+    theme['shellText'] = legible_on(theme['shellBase'])
     if style == 'neon':
         # El unico estilo con los botones a color completo: el resto solo tine el canto. Se baja
         # cada relleno por luminancia hasta que el texto blanco se lee, en vez de por HLS: el
@@ -170,6 +175,16 @@ def contrast(a, b):
 
     first, second = lum(a), lum(b)
     return (max(first, second) + .05) / (min(first, second) + .05)
+
+
+def legible_on(background, minimum=4.5):
+    """Tinta que se lee sobre ese fondo: se prueba oscurecer y aclarar, y gana lo que antes cumple."""
+    base = hex_to_rgb(background)
+    for step in range(1, 21):
+        for candidate in (mix(base, 0, step / 20), mix(base, 255, step / 20)):
+            if contrast(candidate, background) >= minimum:
+                return candidate
+    return '#000000'
 
 
 def legible_button(fill, text=INK, minimum=4.5):

@@ -87,6 +87,14 @@ assert.equal(run('ShellSkins.motifImage({motif:"inventado",motifColors:["#123456
   for(const fill of fills)if(fill&&contrast(fill,text)<4.5)bad.push(`${id} ${fill} sobre ${text} → ${contrast(fill,text).toFixed(2)}`);
  }
  assert.deepEqual(bad,[],`botones ilegibles: ${bad.slice(0,4).join(' · ')}`);
+ // Y el texto de chrome —"Acciones", "Monedas"— va directo sobre el plastico, asi que se mide
+ // contra el: el neon fluorescente dejaba esa linea casi invisible.
+ const faint=[];
+ for(const [id,theme] of Object.entries(JSON.parse(themes))){
+  if(!theme.shellText)continue;
+  if(contrast(theme.shellText,theme.shellBase)<4.5)faint.push(`${id} → ${contrast(theme.shellText,theme.shellBase).toFixed(2)}`);
+ }
+ assert.deepEqual(faint,[],`texto de carcasa ilegible: ${faint.slice(0,4).join(' · ')}`);
  assert.ok(Object.keys(JSON.parse(themes)).length>200,'y se han mirado todos los temas');
 }
 console.log('PASS refinement: no-space mapping, a catch basket that chases the finger and answers the arrow keys, collection slots, comparable trio mass and shell palettes that grow with the evolution line, hand-drawn species motifs and per-action button edges, and a legible care button on every one of the 245 shells.');

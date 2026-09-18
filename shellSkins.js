@@ -47,8 +47,11 @@ globalThis.ShellSkins=(()=>{
         accent:'<circle cx="6" cy="6" r="3" fill="none" stroke="%C" stroke-width="2"/><circle cx="6" cy="6" r="1" fill="%C"/>'},
   camo:{glyph:'<path d="M3 8c4-6 9-4 12-6 4-2 8 1 7 5s-5 4-4 8-3 8-7 7-4-5-8-5-4-6 0-9z" fill="%C"/>',
         accent:'<path d="M1 5c2-4 5-3 7-1s3 5 0 7-6 1-7-2z" fill="%C"/>'},
-  neon:{boost:2.7,glyph:'<path d="M2 20L12 6l10 14" fill="none" stroke="%C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12-2l10 14" fill="none" stroke="%C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>',
-        accent:'<path d="M6 0c1 4 2 5 6 6-4 1-5 2-6 6-1-4-2-5-6-6 4-1 5-2 6-6z" fill="%C"/>'},
+  // Cyberpunk sobre plastico fluorescente: pistas de circuito en angulo recto, vias y bloques de
+  // datos. Aqui el color lo pone la carcasa, asi que el dibujo va en tinta oscura; con el neon
+  // anterior era al reves, luz sobre plastico negro, y por eso pedia tanta opacidad.
+  neon:{boost:1.5,tile:'<path d="M0 12h18l6-6h14l6 6h20" fill="none" stroke="%1" stroke-width="2.2" stroke-linecap="square"/><path d="M0 40h10l8 8h22l6-6h18" fill="none" stroke="%1" stroke-width="2.2" stroke-linecap="square"/><path d="M12 0v10l6 6v14l-6 6v28" fill="none" stroke="%1" stroke-width="2" stroke-linecap="square"/><path d="M46 0v14l8 8v20l-6 6v16" fill="none" stroke="%1" stroke-width="2" stroke-linecap="square"/><path d="M30 20v12M30 52v12" stroke="%2" stroke-width="2" stroke-linecap="square"/><circle cx="12" cy="12" r="3" fill="none" stroke="%1" stroke-width="1.8"/><circle cx="46" cy="40" r="3" fill="none" stroke="%1" stroke-width="1.8"/><circle cx="30" cy="32" r="2.4" fill="%2"/><circle cx="18" cy="48" r="2.2" fill="%2"/><path d="M52 24h8v3h-8zM52 29h5v3h-5zM4 54h9v3H4zM4 59h5v3H4z" fill="%2"/><path d="M36 2h6v4h-6zM24 44h4v4h-4z" fill="%1"/>',
+        glyph:'<path d="M2 20L12 6l10 14" fill="none" stroke="%C" stroke-width="3" stroke-linecap="round"/>',accent:'<circle cx="6" cy="6" r="3" fill="none" stroke="%C" stroke-width="2"/>'},
   // La carcasa transparente ensenaba las entranas: aqui se dibujan, no se sugieren.
   guts:{glyph:'<rect x="5" y="7" width="14" height="10" rx="1.5" fill="none" stroke="%C" stroke-width="2"/><path d="M5 10H1M5 14H1M19 10h4M19 14h4" stroke="%C" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="10.5" r="1.4" fill="%C"/>',
         accent:'<circle cx="6" cy="6" r="4.5" fill="none" stroke="%C" stroke-width="1.8"/><path d="M6 2.5v7M2.5 6h7" stroke="%C" stroke-width="1.6" stroke-linecap="round"/>'},

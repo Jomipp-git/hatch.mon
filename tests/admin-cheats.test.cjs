@@ -111,3 +111,54 @@ test('the rewind section explains itself when there is nothing to go back to',as
  assert.equal(h.run('rewindPoints().length'),1);
  assert.ok(shown().includes(h.run("t('testing.rewindGo')")),'con su boton');
 });
+
+// Borrar una especie toca tres sitios distintos: la ficha vive en la partida, las carcasas en
+// `hatch.mon.shells` (fuera de ella) y las Memorias en `social.memorials`.
+test('erasing a species clears dex, shells and memories, and commits without cheat noise',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Rulo");state.coins=300');
+ const species=h.run('PokemonData.canonicalId(state.pokemonId)');
+ // Una Memoria de verdad: muerte natural y comienzo nuevo con la misma especie.
+ h.run('state.age=30*24*3600000;die("natural");rememberDeath();startNewBeginning(null,state.pokemonId)');
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Rulo2")');
+ h.run(`Pokedex.record(state.pokedex,'${species}','owned','uno');ShellSkins.unlock('${species}');save({immediate:true,commit:true})`);
+ assert.equal(h.run('state.social.memorials.length'),1);
+ const onDisk=()=>JSON.parse(h.storage.get('hatch.mon.v3'));
+ clickOak(h,10);
+ h.run('adjustCoins(500)');
+ assert.equal(h.run(`forgetSpecies('${species}')`),true);
+ assert.equal(h.run(`!!state.pokedex['${species}']`),false,'la ficha se va');
+ assert.equal(h.run(`ShellSkins.list().includes('${species}')`),false,'y su carcasa');
+ assert.equal(h.run('state.social.memorials.length'),0,'y su Memoria');
+ assert.equal(onDisk().social.memorials.length,0,'y queda guardado');
+ assert.equal(h.run('state.coins'),300,'pero las monedas del arenero no se cuelan');
+ assert.equal(onDisk().coins,300);
+});
+
+// El huevo de regalo es la vuelta atras de un huevo gastado, asi que tiene que quedarse.
+test('a granted egg is saved and survives locking the cheats',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Rulo");state.coins=300;save({immediate:true,commit:true})');
+ clickOak(h,10);
+ h.run('adjustCoins(500)');
+ assert.equal(h.run('grantEgg(true)'),true);
+ assert.equal(h.run('state.social.eggs.length'),1);
+ assert.equal(h.run('state.social.eggs[0].guaranteedShiny'),true,'sale shiny garantizado');
+ assert.equal(h.run('state.social.eggs[0].offspring'),null,'y sin especie, como el de la tienda');
+ assert.equal(JSON.parse(h.storage.get('hatch.mon.v3')).social.eggs.length,1,'guardado');
+ h.run('lockAdminCheats()');
+ assert.equal(h.run('state.social.eggs.length'),1,'y sobrevive a cerrar los trucos');
+ assert.equal(h.run('state.coins'),300,'sin arrastrar las monedas regaladas');
+});
+
+// Si la foto de la partida no se puede devolver, lo seguro es no escribir nada: el disco todavia
+// tiene la partida buena, porque el arenero no ha guardado.
+test('an unreadable sandbox snapshot never overwrites the good save',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Rulo");state.coins=300;save({immediate:true,commit:true})');
+ clickOak(h,10);
+ h.run('adjustCoins(500);cheatSandbox={snapshot:"{ esto no es JSON"}');
+ h.run('lockAdminCheats()');
+ assert.equal(JSON.parse(h.storage.get('hatch.mon.v3')).coins,300,'el disco conserva la partida buena');
+ assert.ok(h.run('storageWarning'),'y avisa de que no ha podido devolverla');
+});

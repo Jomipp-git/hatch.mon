@@ -350,8 +350,14 @@ function lockAdminCheats(){
  const sandbox=cheatSandbox;cheatSandbox=null;
  adminCheatsUnlocked=false;adminOakClicks=0;adminOakLastClickAt=0;
  if(!sandbox||runtimeStopped)return;
- try{const restored=migrateSave(JSON.parse(sandbox.snapshot));if(validSave(restored))state=restored;}catch{}
- TrainingActivities.cancel();hideToast();clearPetReaction();save({immediate:true,commit:true});sync();render(true);if(dialog.open)renderPanel();
+ let restored=null;
+ try{const parsed=migrateSave(JSON.parse(sandbox.snapshot));if(validSave(parsed))restored=parsed;}catch{}
+ TrainingActivities.cancel();hideToast();clearPetReaction();
+ // Si la foto no se puede devolver, lo seguro es NO escribir: el disco todavia tiene la partida de
+ // antes de abrir los trucos, porque el arenero no ha guardado nada. Guardar aqui seria justo lo
+ // contrario de lo que promete el arenero.
+ if(!restored){storageWarning=t('testing.sandboxLost');render(true);if(dialog.open)renderPanel();return;}
+ state=restored;save({immediate:true,commit:true});sync();render(true);if(dialog.open)renderPanel();
 }
 function unlockAdminCheats(now=Date.now()){
  if(isDevelopment())return false;
@@ -1393,6 +1399,26 @@ function renderPanel(){
     else content.append(el('p',t(rewindBaseline()===null?'testing.rewindUnreadable'
       :!['alive','critical'].includes(rewindBaseline().phase)?'testing.rewindNoCompanion'
       :'testing.rewindNoneYet'),'panel-note'));
+    // Huevos de regalo y borrado de especies. Como el rebobinado, se aplican a la partida guardada
+    // y se quedan: no son ensayos.
+    const eggControls=el('div',undefined,'dialog-actions');
+    eggControls.append(panelButton(t('testing.eggNormal'),()=>grantEgg(false),false,'give-egg'),
+      panelButton(t('testing.eggShiny'),()=>grantEgg(true),false,'give-egg-shiny'));
+    content.append(el('h3',t('testing.eggs'),'panel-group'),
+      el('p',t('testing.eggsDetail',{held:state.social.eggs.length,max:HatchMonSocial.MAX_EGGS}),'panel-note'),eggControls);
+    const known=Object.keys(rewindBaseline()?.pokedex||{}).map(id=>({id,name:PokemonData.get(id)?.DisplayName||id}))
+      .sort((a,b)=>a.name.localeCompare(b.name));
+    if(known.length){
+      content.append(el('h3',t('testing.forget'),'panel-group'),el('p',t('testing.forgetDetail'),'panel-note'));
+      for(const species of known){
+        const living=PokemonData.canonicalId(state.pokemonId)===species.id&&alive();
+        const shells=[species.id,`${species.id}:shiny`].filter(id=>ShellSkins.list().includes(id)).length;
+        const graves=(rewindBaseline()?.social.memorials||[]).filter(m=>PokemonData.canonicalId(m.canonicalSpeciesId||m.speciesId)===species.id).length;
+        content.append(row(species.name,
+          t(living?'testing.forgetLiving':'testing.forgetCounts',{shells,graves}),
+          panelButton(t('testing.forgetGo'),()=>forgetSpecies(species.id),false,`forget-${species.id}`)));
+      }
+    }
     if(state.phase==='egg')return;
     const forceRoutes=PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).filter(id=>id&&evolutionConfig[id]);
     if(alive()&&forceRoutes.length){
@@ -2011,6 +2037,43 @@ function rewindPoints(){
 // Devuelve al companero a la forma que era antes de esa evolucion, con la edad, el entrenamiento, lo
 // sostenido y las acciones que tenia entonces. Lo del entrenador —monedas, mochila, Pokedex,
 // Memorias— no se toca: no es del companero. Se guarda de verdad, porque rebobinar no es un ensayo.
+// Las acciones de administrador que se quedan pasan todas por aqui: se aplican sobre la PARTIDA
+// GUARDADA y no sobre lo que haya enredado el arenero, que si no se colarian las monedas regaladas
+// y las evoluciones de prueba. Devuelve false si el cambio no llega a hacerse.
+function applyToSavedGame(mutate){
+  if(!canUseTesting())return false;
+  const base=rewindBaseline();
+  if(!base)return false;
+  TrainingActivities.cancel();
+  if(mutate(base)===false)return false;
+  state=base;
+  commitCheatState();sync();render(true);if(dialog.open)renderPanel();
+  return true;
+}
+// Borra el rastro de una especie: su ficha de Pokedex (normal y shiny), las carcasas que dejo
+// desbloqueadas y sus Memorias. Las carcasas viven fuera de la partida, en `hatch.mon.shells`, asi
+// que hay que retirarlas aparte.
+function forgetSpecies(canonical){
+  const shells=[canonical,`${canonical}:shiny`].filter(id=>ShellSkins.list().includes(id));
+  const done=applyToSavedGame(base=>{
+    if(!base.pokedex[canonical]&&!shells.length&&!base.social.memorials.some(m=>PokemonData.canonicalId(m.canonicalSpeciesId||m.speciesId)===canonical))return false;
+    delete base.pokedex[canonical];
+    base.social.memorials=base.social.memorials.filter(m=>PokemonData.canonicalId(m.canonicalSpeciesId||m.speciesId)!==canonical);
+  });
+  if(done)for(const id of shells)ShellSkins.forget(id,$('display-root'));
+  if(done)renderPanel();
+  return done;
+}
+// Devuelve un huevo. El shiny viaja sin especie, igual que el de la tienda: `hatch()` elige forma al
+// eclosionar y la tirada ya esta ganada.
+function grantEgg(shiny){
+  return applyToSavedGame(base=>{
+    if(base.social.eggs.length>=HatchMonSocial.MAX_EGGS)return false;
+    base.social.eggs.push({id:HatchMonSocial.uid(),kind:'egg',speciesId:null,offspring:null,
+      createdAt:Date.now(),parents:[],...(shiny?{guaranteedShiny:true}:{}),snapshot:snapshotOf(freshState())});
+    base.message=t(shiny?'testing.eggGivenShiny':'testing.eggGiven');
+  });
+}
 function rewindTo(index){
   if(!canUseTesting())return false;
   const base=rewindBaseline();

@@ -224,5 +224,15 @@ globalThis.ShellSkins=(()=>{
   saved.unlocked.push(id);persist();return true;
  }
  function select(id,host){if(id!=='default'&&!saved.unlocked.includes(id))return false;saved.selected=id;persist();apply(host);return true;}
- return Object.freeze({observe,apply,select,unlock,hydrate,motifs:Object.keys(MOTIFS),actions:ACTIONS,motifImage:theme=>motifTile(theme,SHELL_OPACITY),list:()=>saved.unlocked.slice(),selected:()=>saved.selected,theme:id=>SHELL_THEMES[id]||defaults});
+ // Contraria de `unlock`, para que un administrador pueda deshacer lo que una especie dejo puesto.
+ // Si la carcasa retirada era la elegida, se vuelve a la de serie en vez de quedarse en una que ya
+ // no se tiene.
+ function forget(id,host){
+  const index=saved.unlocked.indexOf(id);
+  if(index<0)return false;
+  saved.unlocked.splice(index,1);
+  if(saved.selected===id)saved.selected='default';
+  persist();if(host)apply(host);return true;
+ }
+ return Object.freeze({observe,apply,select,unlock,forget,hydrate,motifs:Object.keys(MOTIFS),actions:ACTIONS,motifImage:theme=>motifTile(theme,SHELL_OPACITY),list:()=>saved.unlocked.slice(),selected:()=>saved.selected,theme:id=>SHELL_THEMES[id]||defaults});
 })();

@@ -338,7 +338,21 @@ const isDevelopment=()=>globalThis.HatchEnvironment?.isDevelopmentEnvironment()=
 const isAdmin=()=>window.HatchAdmin?.isAdmin?.()===true;
 let adminCheatsUnlocked=false,adminOakClicks=0,adminOakLastClickAt=0;
 const canUseTesting=()=>isDevelopment()||(isAdmin()&&adminCheatsUnlocked);
-function lockAdminCheats(){adminCheatsUnlocked=false;adminOakClicks=0;adminOakLastClickAt=0;}
+// Con los trucos abiertos el juego entra en arenero: `save` deja de escribir y, al cerrarlos, el
+// estado vuelve a como estaba antes de tocar nada. Sin esto, probar una evolucion forzada o regalarse
+// monedas ensuciaba la partida de verdad, y en la nube, sin forma de deshacerlo.
+let cheatSandbox=null;
+const sandboxed=()=>cheatSandbox!==null;
+// Lo que se hace a proposito y se quiere conservar (rebobinar, reiniciar) pasa por aqui: guarda de
+// verdad y toma el estado actual como la nueva linea de salida del arenero.
+function commitCheatState(){if(sandboxed())cheatSandbox={snapshot:JSON.stringify(state)};save({immediate:true,commit:true});}
+function lockAdminCheats(){
+ const sandbox=cheatSandbox;cheatSandbox=null;
+ adminCheatsUnlocked=false;adminOakClicks=0;adminOakLastClickAt=0;
+ if(!sandbox||runtimeStopped)return;
+ try{const restored=migrateSave(JSON.parse(sandbox.snapshot));if(validSave(restored))state=restored;}catch{}
+ TrainingActivities.cancel();hideToast();clearPetReaction();save({immediate:true,commit:true});sync();render(true);if(dialog.open)renderPanel();
+}
 function unlockAdminCheats(now=Date.now()){
  if(isDevelopment())return false;
  if(!isAdmin()){lockAdminCheats();return false;}
@@ -347,6 +361,7 @@ function unlockAdminCheats(now=Date.now()){
  adminOakClicks++;
  if(adminOakClicks<10)return false;
  adminCheatsUnlocked=true;adminOakClicks=0;adminOakLastClickAt=0;
+ cheatSandbox={snapshot:JSON.stringify(state)};
  if(dialog?.open&&panelName==='settings')renderPanel();
  return true;
 }
@@ -1064,8 +1079,10 @@ function incubateStoredEgg(id){
 }
 let storageWarning='';
 let savedImportantState=null;
-function save({immediate=false}={}){
+function save({immediate=false,commit=false}={}){
   if(runtimeStopped)return;
+  // El arenero no escribe. `commit` es la puerta de las acciones que si deben quedarse.
+  if(sandboxed()&&!commit)return;
   const important=JSON.stringify([state.phase,state.pokemonId,state.nickname,state.birthScene,state.nicknamePending,state.pokerus,state.inventory,state.pokedex,state.social,state.milestones,state.attentionEvent,state.attentionSettings]);
   immediate=immediate||important!==savedImportantState;
   try{gameStorage.setItem(SAVE_KEY,JSON.stringify(state));savedImportantState=important;window.HatchCloud?.queue({immediate});}
@@ -1356,6 +1373,23 @@ function renderPanel(){
     timeControls.className='dialog-actions time-controls';timeControls.setAttribute('role','group');timeControls.setAttribute('aria-label',t('testing.advance'));
     for(const hours of [1,3,6])timeControls.append(panelButton(`+${hours} h`,()=>skipTime(hours),state.phase==='dead'||interactionLocked(),`skip-${hours}`));
     content.append(el('p',t('testing.warning'), 'panel-note'),timeControls);
+    // Monedas a mano. Como todo lo del arenero, no se guarda al cerrar los trucos.
+    const coinControls=el('div',undefined,'dialog-actions time-controls');
+    coinControls.setAttribute('role','group');coinControls.setAttribute('aria-label',t('testing.coins'));
+    for(const amount of [-500,-100,100,500])
+      coinControls.append(panelButton(amount>0?`+${amount}`:String(amount),()=>adjustCoins(amount),
+        amount<0&&state.coins<=0,`coins-${amount}`));
+    content.append(row(t('testing.coins'),t('testing.coinsDetail',{coins:state.coins}),null),coinControls);
+    // Rebobinar: cada evolucion dejo en `milestones` la edad, el entrenamiento y las acciones de ese
+    // momento, asi que se puede volver a la forma anterior sin inventarse nada.
+    const rewinds=rewindPoints();
+    if(rewinds.length){
+      content.append(el('h3',t('testing.rewind'),'panel-group'),el('p',t('testing.rewindDetail'),'panel-note'));
+      for(const point of rewinds)content.append(row(
+        evolutionConfig[point.from]?.name||point.from,
+        t('testing.rewindAt',{days:(point.age/DAY).toFixed(2)}),
+        panelButton(t('testing.rewindGo'),()=>rewindTo(point.index),false,`rewind-${point.from}`)));
+    }
     if(state.phase==='egg')return;
     const forceRoutes=PokemonData.rules(state.pokemonId).map(r=>PokemonData.legacyId(r.ToId)).filter(id=>id&&evolutionConfig[id]);
     if(alive()&&forceRoutes.length){
@@ -1949,8 +1983,53 @@ let backdropPress=false;
 dialog.addEventListener('pointerdown',event=>{backdropPress=outsidePanel(event);});
 dialog.addEventListener('click',event=>{const press=backdropPress;backdropPress=false;if(press&&outsidePanel(event))closePanel();});
 $('oak-portrait').addEventListener('click',()=>unlockAdminCheats());
+// Sube o baja monedas sin salir del arenero. No deja el saldo en negativo.
+function adjustCoins(amount){
+  if(!canUseTesting())return false;
+  state.coins=Math.max(0,Math.min(Number.MAX_SAFE_INTEGER,state.coins+amount));
+  save();render(true);if(dialog.open)renderPanel();return true;
+}
+// Rebobinar trabaja siempre sobre la PARTIDA GUARDADA, no sobre lo que haya hecho el arenero: si no,
+// volver atras se traeria consigo las monedas regaladas y las evoluciones de prueba, que es justo lo
+// que no debe guardarse. Fuera del arenero la partida guardada es el estado a secas.
+function rewindBaseline(){
+  if(!sandboxed())return state;
+  try{const restored=migrateSave(JSON.parse(cheatSandbox.snapshot));return validSave(restored)?restored:null;}catch{return null;}
+}
+// Puntos a los que se puede volver: una entrada por evolucion del companero vivo, de la mas reciente
+// a la mas antigua. `from` es la forma que era antes de ese salto.
+function rewindPoints(){
+  const base=rewindBaseline();
+  if(!base||!['alive','critical'].includes(base.phase))return [];
+  return base.milestones.map((m,index)=>({...m,index}))
+    .filter(m=>evolutionConfig[m.from]&&PokemonData.validGender(m.from,base.gender))
+    .reverse();
+}
+// Devuelve al companero a la forma que era antes de esa evolucion, con la edad, el entrenamiento, lo
+// sostenido y las acciones que tenia entonces. Lo del entrenador —monedas, mochila, Pokedex,
+// Memorias— no se toca: no es del companero. Se guarda de verdad, porque rebobinar no es un ensayo.
+function rewindTo(index){
+  if(!canUseTesting())return false;
+  const base=rewindBaseline();
+  const point=base?.milestones?.[index];
+  if(!point||!evolutionConfig[point.from]||!PokemonData.validGender(point.from,base.gender))return false;
+  TrainingActivities.cancel();
+  state=base;
+  state.pokemonId=point.from;
+  state.age=point.age;state.stageAge=point.age;
+  state.training={...state.training,...point.training};
+  state.sustained={...point.sustained};state.actions={...point.actions};
+  state.milestones=state.milestones.slice(0,index);
+  state.remainder=0;Vital.ensureSleep(state);ShellSkins.observe(state);
+  pokemonRenderer.stop();pokemonMode=false;
+  state.message=t('testing.rewound',{name:evolutionConfig[point.from].name});
+  commitCheatState();sync();render(true);if(dialog.open)renderPanel();
+  return true;
+}
 function resetGame(){
   if(!canUseTesting())return false;
+  // Reiniciar es justo lo contrario de un ensayo: se queda.
+  cheatSandbox=null;
   TrainingActivities.cancel();
   stopSocialCamera();cancelBirthAnimation();hideToast();clearPetReaction();lastDeathId=null;pokemonRenderer.stop();pokemonMode=false;$('creature-button').classList.remove('heat-reaction');
   if(timer!==null)clearInterval(timer);timer=null;

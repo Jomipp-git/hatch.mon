@@ -79,10 +79,12 @@ BOUTIQUE_STYLES = {
         ('atomic', 'Ambar', 'Amber', '#d19b4a', ('#7a5313', '#f0d69d', '#a3762a')),
         ('smoke', 'Ahumada', 'Smoke', '#9a9690', ('#4a4743', '#cfccc7', '#6e6b66')),
     )),
-    'terrazo': ('Terrazo', 'Terrazzo', (
-        ('sand', 'Arena', 'Sand', '#e8dcc6', ('#b4543a', '#2f4858', '#c9a227')),
-        ('graphite', 'Grafito', 'Graphite', '#3c3f45', ('#e6e1d6', '#c9793f', '#7a9aa8')),
-        ('moss', 'Musgo', 'Moss', '#5b6b44', ('#efe6cf', '#b8863f', '#2f3b2a')),
+    # Cada variante manda con su gema y se acompana de dos tonos que le peguen: el brillo que la
+    # aclara y una chispa que la contrasta sin sacarla de su familia.
+    'sequins': ('Lentejuelas', 'Sequins', (
+        ('ruby', 'Rubi', 'Ruby', '#5c1020', ('#c41e3a', '#ff8fa3', '#e8b84b')),
+        ('sapphire', 'Zafiro', 'Sapphire', '#111f4d', ('#1f5fc4', '#9fd0ff', '#c9d6e8')),
+        ('emerald', 'Esmeralda', 'Emerald', '#0d3a2a', ('#128a5c', '#7fe0b0', '#e8c96b')),
     )),
     'picnic': ('Mantel', 'Picnic', (
         ('red', 'Rojo', 'Red', '#f0e6d8', ('#c2352f', '#e08a84', '#8c211c')),

@@ -177,3 +177,31 @@ test('the sandbox is visible while it is open and says so when it closes',async(
  assert.equal(badge(),null,'y se va al cerrarlos');
  assert.equal(h.els.toast.textContent,h.run("t('testing.sandboxDropped')"),'diciendo que se ha descartado');
 });
+
+// `downloadBackup` sacaba una partida y no habia forma de devolverla. Importar cierra el viaje, y se
+// guarda: traer una partida de fuera es una decision, no un ensayo del arenero.
+test('importing a save replaces the game, applies preferences and is committed',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Antiguo");state.coins=5;save({immediate:true,commit:true})');
+ clickOak(h,10);
+ h.run('adjustCoins(500)');
+ // Una partida valida cualquiera, construida con el propio runtime.
+ h.run(`globalThis.INCOMING=(()=>{const prev=state;state=freshState(Date.now());
+   state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname('Importado');
+   state.coins=2500;state.records={iq:1000,strength:1000,kindness:750,style:665};
+   const game=JSON.parse(JSON.stringify(state));state=prev;
+   return {game,preferences:{shells:{selected:'default',unlocked:[]},language:'es',displayMode:'color'}};})()`);
+ assert.equal(h.run('importSave(INCOMING)'),true);
+ assert.equal(h.run('state.nickname'),'Importado','la partida entra');
+ assert.equal(h.run('state.coins'),2500,'con sus monedas, no las del arenero');
+ assert.equal(h.run('state.records.iq'),1000);
+ assert.equal(JSON.parse(h.storage.get('hatch.mon.v3')).nickname,'Importado','y se guarda');
+ h.run('lockAdminCheats()');
+ assert.equal(h.run('state.nickname'),'Importado','sobrevive a cerrar los trucos');
+ assert.equal(h.run('state.coins'),2500);
+ // Un fichero que no es una partida no toca nada.
+ clickOak(h,10);
+ assert.equal(h.run('importSave({game:{version:12,phase:"inventada"}})'),false);
+ assert.equal(h.run('importSave(null)'),false);
+ assert.equal(h.run('state.nickname'),'Importado','y la partida buena sigue ahi');
+});

@@ -1415,6 +1415,19 @@ function renderPanel(){
     else content.append(el('p',t(rewindBaseline()===null?'testing.rewindUnreadable'
       :!['alive','critical'].includes(rewindBaseline().phase)?'testing.rewindNoCompanion'
       :'testing.rewindNoneYet'),'panel-note'));
+    // Importar una partida desde un fichero. El `<input type=file>` es lo unico que funciona igual
+    // en movil y en escritorio para traer 10 KB de JSON.
+    const importField=el('input');importField.type='file';importField.accept='application/json,.json';
+    importField.dataset.key='import-save';
+    importField.addEventListener('change',async()=>{
+      const file=importField.files?.[0];if(!file)return;
+      try{
+        const ok=importSave(JSON.parse(await file.text()));
+        if(!ok)showToast(t('testing.importFailed'),false,true);
+      }catch{showToast(t('testing.importFailed'),false,true);}
+      importField.value='';
+    });
+    content.append(el('h3',t('testing.import'),'panel-group'),el('p',t('testing.importDetail'),'panel-note'),importField);
     // Huevos de regalo y borrado de especies. Como el rebobinado, se aplican a la partida guardada
     // y se quedan: no son ensayos.
     const eggControls=el('div',undefined,'dialog-actions');
@@ -2106,6 +2119,21 @@ function rewindTo(index){
   pokemonRenderer.stop();pokemonMode=false;
   state.message=t('testing.rewound',{name:evolutionConfig[point.from].name});
   commitCheatState();sync();render(true);if(dialog.open)renderPanel();
+  return true;
+}
+// Contraria de `downloadBackup`: mete una partida desde fuera. Faltaba la vuelta, asi que un save
+// arreglado a mano no habia forma de devolverlo al juego. Se aplica por el mismo camino que usa la
+// nube —migrar, validar, montar— y se guarda de verdad: importar es una decision, no un ensayo.
+function importSave(payload){
+  if(!canUseTesting())return false;
+  const game=payload?.game??payload;
+  if(!game||typeof game!=='object')return false;
+  const preferences=payload?.preferences||{};
+  cheatSandbox=null;
+  if(!window.HatchRuntime.applyCloudSave(HatchMonSocial.copy(game),preferences))return false;
+  save({immediate:true,commit:true});
+  state.message=t('testing.importDone');
+  render(true);if(dialog.open)renderPanel();
   return true;
 }
 function resetGame(){

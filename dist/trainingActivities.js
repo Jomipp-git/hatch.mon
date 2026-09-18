@@ -38,12 +38,37 @@ globalThis.TrainingActivities=(()=>{
   strengthTimeWarning:1000,
   // Pausa para leer el veredicto de la ronda antes de que cambie la pantalla.
   verdictDelay:700,
-  // Siete rondas con la ventana estrechandose, en vez de diez todas iguales: era el minijuego mas
-  // largo y el unico sin ninguna curva.
-  cleanupRounds:7,cleanupBase:1800,cleanupStep:120,cleanupTiles:6,cleanupMinTrash:2,cleanupMaxTrash:4,
   // La tarjeta de ronda tiene que dar tiempo a leerse; con 600 ms no se registraba.
-  prepare:1000,resolveDelay:300});
+  prepare:1000});
  const launchers={};let active=null,briefingExit=null;
+ // Un `<dialog>` modal no impide que la pagina de detras siga desplazandose con el dedo, y en iOS
+ // tampoco lo impide `overflow:hidden` en el body: hay que fijarlo. Medido a 375x667: el dialogo no
+ // se desplaza (0 px), pero detras quedan 144 px de pagina que si, asi que un arrastre que se salga
+ // del canvas de Estilo mueve la pantalla a media partida. Se guarda el desplazamiento y se
+ // devuelve al cerrar, que si no la pagina vuelve arriba de golpe.
+ let lockedScroll=null;
+ const lockPage=()=>{
+  if(lockedScroll!==null)return;
+  lockedScroll=globalThis.scrollY||0;
+  const body=document.body;if(!body?.style)return;
+  body.dataset.minigameLock='true';
+  body.style.position='fixed';body.style.top=`${-lockedScroll}px`;body.style.left='0';body.style.right='0';body.style.width='100%';
+ };
+ const unlockPage=()=>{
+  if(lockedScroll===null)return;
+  const y=lockedScroll;lockedScroll=null;
+  const body=document.body;if(body?.style){delete body.dataset.minigameLock;
+   body.style.position='';body.style.top='';body.style.left='';body.style.right='';body.style.width='';}
+  globalThis.scrollTo?.(0,y);
+ };
+ // Un solo listener para todas las salidas: Cancelar, Escape, el cierre programatico y la parada
+ // del runtime pasan por `close`. Se engancha al abrir y no al cargar el modulo: los scripts de
+ // `tools/design/` evaluan este fichero sin DOM, y tocar `document` ahi reventaba la carga.
+ let releaseHooked=false;
+ const openDialog=dialog=>{
+  if(!releaseHooked){releaseHooked=true;dialog.addEventListener?.('close',unlockPage);}
+  if(!dialog.open)dialog.showModal();lockPage();
+ };
  // Un toque corto confirma, uno largo corrige. Es el unico canal de respuesta inmediata que tiene
  // el juego: no hay sonido, y en movil el dedo tapa justo la casilla que acaba de cambiar. Se
  // respeta prefers-reduced-motion, que es el interruptor que el jugador ya tiene.
@@ -54,7 +79,6 @@ globalThis.TrainingActivities=(()=>{
  const gradeHaptic=grade=>haptic(grade>=4?[18,60,18,60,18]:grade>=2?[18,60,18]:'bad');
  const memoryWindow=length=>config.memoryBase+config.memoryStep*length;
  const newChain=length=>Array.from({length},()=>Math.floor(Math.random()*4));
- const cleanupWindow=round=>config.cleanupBase-config.cleanupStep*round;
  const strengthWindow=round=>config.strengthWindowBase+config.strengthWindowStep*round;
  // El 5 pedia un 1,0 exacto. Con la precision continua de Fuerza y el trazo a pulso de Estilo eso
  // no es "excelente", es irrepetible, y la sesion se cobra igual salga como salga: un tramo
@@ -73,7 +97,9 @@ globalThis.TrainingActivities=(()=>{
   const score=config.strengthEdgeScore*(1-(offset-zone)/(miss-zone));return score>1e-9?score:0;
  };
  const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
- const roundsFor=attribute=>attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:config.strengthRounds;
+ // Amabilidad y Estilo no entran: Amabilidad es una caida continua sin rondas y Estilo lleva las
+ // suyas dentro de su modulo.
+ const roundsFor=attribute=>attribute==='iq'?config.memoryRounds:config.strengthRounds;
  // Cada actividad se explica en tres pasos antes de empezar. Los testers entraban, jugaban cuatro
  // rondas y seguian sin saber que se les pedia.
  const BRIEFINGS=Object.freeze({iq:3,strength:3,kindness:3,style:3});
@@ -86,7 +112,11 @@ globalThis.TrainingActivities=(()=>{
   host.replaceChildren();
   const steps=node('div',undefined,'minigame-field briefing');
   for(let i=1;i<=BRIEFINGS[attribute];i++)steps.append(node('p',t(`minigame.${attribute}.step${i}`)));
-  steps.append(node('p',t('minigame.common.rounds',{rounds:roundsFor(attribute)}),'briefing-rounds'));
+  // Amabilidad no tiene rondas que contar, asi que dice lo que si define su partida: cuantas latas
+  // caen y cuanto dura.
+  steps.append(node('p',attribute==='kindness'
+   ?t('minigame.kindness.briefSummary',{cans:CleanupCatch.config.cans,seconds:Math.round(CleanupCatch.duration()/1000)})
+   :t('minigame.common.rounds',{rounds:roundsFor(attribute)}),'briefing-rounds'));
   const go=node('button',t('minigame.common.start')),back=node('button',t('minigame.common.notNow'));
   go.type='button';back.type='button';
   // Reglas y partida comparten dialogo. Cerrarlo para volver a abrirlo no vale: el evento `close`
@@ -97,7 +127,7 @@ globalThis.TrainingActivities=(()=>{
   back.addEventListener('click',()=>shut(()=>close(attribute)));
   briefingExit=()=>close(attribute);
   host.append(node('h2',modeName(attribute)),node('p',t(`minigame.${attribute}.instructions`)),steps,go,back);
-  if(!dialog.open)dialog.showModal();return true;
+  openDialog(dialog);return true;
  }
  // El coste de la sesion se cobra al abrir, no al puntuar. Si llegara con el resultado, cancelar
  // una partida torcida saldria gratis y la forma optima de jugar seria reintentar hasta clavarla.
@@ -116,7 +146,7 @@ globalThis.TrainingActivities=(()=>{
   dialog=document.getElementById('training-game');const host=document.getElementById('training-game-content');host.replaceChildren();
   const setText=(element,text)=>{if(element.textContent!==text)element.textContent=text;};
   const title=node('h2',modeName(attribute)),hint=node('p',''),status=node('p',''),field=node('div',undefined,'minigame-field'),roundCard=node('div',undefined,'round-card'),exit=node('button',t('minigame.common.cancel'));exit.type='button';exit.addEventListener('click',()=>cancel());
-  host.append(title,hint,status,field,exit);if(!dialog.open)dialog.showModal();
+  host.append(title,hint,status,field,exit);openDialog(dialog);
   let earned=0,total=0,targets=[],sequence=[],answer=0,round=0,hit=false,phase='prepare',phaseStart=performance.now(),roundCorrect=true;
   const controls=[];const held=new Set(),presses=new Map();
   let lights=0,visibleStrengthPosition=.5,zoneCentre=.5,zoneScale=1,zoneStart=1,strengthView=null;
@@ -143,8 +173,10 @@ globalThis.TrainingActivities=(()=>{
   // Aqui se expone como marcador de 0 a 1000, que no tiene tope de mejora: cuando el atributo llega
   // a 100 y el entrenamiento se cierra, la marca sigue siendo superable. Intelecto no normaliza un
   // rendimiento sino que cuenta rondas, asi que su marcador son las luces acertadas sobre el total.
-  const performanceRatio=()=>attribute==='iq'?lights/MEMORY_LIGHTS:total?Math.max(0,Math.min(1,earned/total)):0;
-  const finish=(result=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),score=Math.round(performanceRatio()*1000),ok=complete(gain,score);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));
+  // Estilo y Amabilidad entregan su rendimiento ya normalizado y `finish` lo recibe: los dos viven
+ // en modulos aparte y nunca tocan `earned`/`total`, asi que sin eso su marcador salia 0 siempre.
+ const performanceRatio=()=>attribute==='iq'?lights/MEMORY_LIGHTS:total?Math.max(0,Math.min(1,earned/total)):0;
+  const finish=(result=null,ratio=null)=>{const gain=result??(attribute==='iq'?Math.max(1,earned):grade(total?earned/total:0)),score=Math.round((ratio??performanceRatio())*1000),ok=complete(gain,score);field.replaceChildren();setText(hint,ok?t(`minigame.result.grade.${gain}`):t('minigame.result.commitFailed'));setText(status,ok?t('minigame.result.statGain',{stat:modeName(attribute),gain,reward:formatReward(gain)}):t('minigame.result.noReward'));
    if(ok){const best=bestScore(attribute);
     field.append(node('p',score>=best?t('minigame.result.scoreBest',{score}):t('minigame.result.score',{score,best}),'minigame-score'));}exit.textContent=t('minigame.common.back');exit.addEventListener('click',()=>dialog.close());
    if(ok)gradeHaptic(gain);
@@ -152,7 +184,9 @@ globalThis.TrainingActivities=(()=>{
    // hace despues de casi cada partida. Solo se ofrece si la siguiente sesion se puede pagar.
    if(ok&&repeat&&canRepeat(attribute)){const again=node('button',t('minigame.common.again'),'minigame-again');again.type='button';
     again.addEventListener('click',()=>{if(!repeat(attribute)&&dialog.open)dialog.close();});field.append(again);}};
-  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:mean=>finish(grade(mean))});return true;}
+  if(attribute==='style'){dispose=StyleTracing.mount({field,hint,status,node,haptic,onFinish:mean=>finish(grade(mean),mean)});return true;}
+  // Amabilidad tampoco pasa por la maquinaria de rondas: es una caida continua y la lleva su modulo.
+  if(attribute==='kindness'){dispose=CleanupCatch.mount({field,hint,status,node,haptic,onFinish:ratio=>finish(grade(ratio),ratio)});return true;}
   if(attribute==='iq'){
    setText(hint,t('minigame.iq.instructions'));
    for(let i=0;i<4;i++)button(['A','B','C','D'][i],()=>{
@@ -181,9 +215,6 @@ globalThis.TrainingActivities=(()=>{
    // Zona y nucleo los coloca cada ronda `paintZone`, que es quien sabe donde ha caido.
    track.append(zone,core,marker,time,caption);
    strengthView={zone,core,time};targets=[marker];total=config.strengthRounds;
-  }else if(attribute==='kindness'){
-   setText(hint,t('minigame.kindness.instructions'));
-   for(let i=0;i<config.cleanupTiles;i++)button('',press=>{if(done||phase!=='play'||(!press?.valid&&performance.now()-phaseStart>=cleanupWindow(round))||controls[i].disabled)return;controls[i].disabled=true;earned+=targets[i]?1:-1;haptic(targets[i]?'good':'bad');setText(hint,targets[i]?t('minigame.kindness.collected'):t('minigame.kindness.keep'));controls[i].dataset.result=targets[i]?'correct':'wrong';});
   }
 
   function beginRound(){
@@ -198,26 +229,11 @@ globalThis.TrainingActivities=(()=>{
     if(attribute==='strength'){zoneCentre=pickZone(round?zoneCentre:null);zoneScale=config.strengthZoneShrink**round;zoneStart=zoneCentre<=.5?1:0;
      paintZone();paintTime(strengthWindow(round));visibleStrengthPosition=strengthPosition(0);targets[0].style.left=`${visibleStrengthPosition*100}%`;}
     controls.forEach(b=>b.disabled=false);
-    if(attribute==='kindness'){
-     // La basura ocupaba siempre tres casillas consecutivas (solo seis disposiciones posibles, y
-     // todas un bloque), asi que se aprendia el patron en dos partidas. Ahora las casillas se
-     // eligen al azar y cuantas hay tambien varia.
-     const count=config.cleanupMinTrash+Math.floor(Math.random()*(config.cleanupMaxTrash-config.cleanupMinTrash+1));
-     const slots=controls.map((_,i)=>i);
-     for(let i=slots.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[slots[i],slots[j]]=[slots[j],slots[i]];}
-     const chosen=new Set(slots.slice(0,count));
-     targets=controls.map((_,i)=>chosen.has(i));total+=count;
-     const trash=[['papel','minigame.kindness.paper'],['lata','minigame.kindness.can'],['botella','minigame.kindness.bottle']],keep=[['flor','minigame.kindness.flower'],['hoja','minigame.kindness.leaf']];
-     controls.forEach((b,i)=>{const pool=targets[i]?trash:keep,[id,key]=pool[Math.floor(Math.random()*pool.length)];
-      // Sin rotulo: era una prueba de lectura, no de reconocimiento. El nombre sigue estando para
-      // quien navega con lector de pantalla.
-      b.disabled=false;delete b.dataset.result;b.textContent='';b.setAttribute('aria-label',t(key));b.dataset.object=id;});
-    }
    }
   }
   const verdict=()=>{phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);};
   function nextRound(){
-   round++;const count=attribute==='iq'?config.memoryRounds:attribute==='kindness'?config.cleanupRounds:total;
+   round++;const count=attribute==='iq'?config.memoryRounds:total;
    if(round>=count){finish();return;}
    phase='prepare';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);
   }
@@ -230,9 +246,9 @@ globalThis.TrainingActivities=(()=>{
      roundCard.replaceChildren(node('strong',t('minigame.common.roundCard',{round:round+1,total:roundsFor(attribute)})),node('span',t(`minigame.${attribute}.goal`)));}
     if(elapsed>=config.prepare)beginRound();
    }else if(phase==='resolve'){
-    // Fuerza deja su veredicto en el hint, asi que aqui no se pisa: solo se le da tiempo a leerlo.
-    if(attribute==='kindness')setText(hint,t('minigame.common.nextRound'));
-    if(elapsed>=(attribute==='kindness'?config.resolveDelay:config.verdictDelay)&&!held.size)nextRound();
+    // Intelecto y Fuerza dejan su veredicto en el hint, asi que aqui no se pisa: solo se le da
+    // tiempo a leerlo.
+    if(elapsed>=config.verdictDelay&&!held.size)nextRound();
    }else if(attribute==='iq'){
     if(phase==='show'){
      setText(hint,t('minigame.common.observeRound',{round:round+1,total:config.memoryRounds}));
@@ -241,21 +257,19 @@ globalThis.TrainingActivities=(()=>{
      if(elapsed>=sequence.length*config.memoryFlash){phase='answer';phaseStart=performance.now();controls.forEach(b=>{b.disabled=false;b.classList.remove('lit');});}
     }else{if(!answer)setText(hint,t('minigame.iq.repeat'));if(elapsed>=memoryWindow(sequence.length)){haptic('bad');setText(hint,t('minigame.iq.tooSlow'));verdict();}}
    }else{
-    const duration=attribute==='strength'?strengthWindow(round):cleanupWindow(round);
-    if(elapsed>=duration){if(attribute==='kindness'){if(!held.size){phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
-     // Dejar pasar la ventana tambien se cuenta, y se dice con sus palabras: "fuera de zona"
-     // describia un fallo de punteria que en realidad no se ha llegado a cometer.
-     else{hit=true;haptic('bad');paintTime(0);setText(hint,t('minigame.strength.timeout'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}}
-    else if(attribute==='strength'){if(!hit){setText(hint,t('minigame.strength.now'));visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;paintTime(duration-elapsed);}controls[0].disabled=hit;}
-
-    else if(hint.textContent!==t('minigame.kindness.collected')&&hint.textContent!==t('minigame.kindness.keep'))setText(hint,t('minigame.kindness.reminder'));
+    const duration=strengthWindow(round);
+    // Dejar pasar la ventana tambien se cuenta, y se dice con sus palabras: "fuera de zona"
+    // describia un fallo de punteria que en realidad no se ha llegado a cometer.
+    if(elapsed>=duration){hit=true;haptic('bad');paintTime(0);setText(hint,t('minigame.strength.timeout'));phase='resolve';phaseStart=performance.now();controls.forEach(b=>b.disabled=true);}
+    else if(!hit){setText(hint,t('minigame.strength.now'));visibleStrengthPosition=strengthPosition(elapsed);targets[0].style.left=`${visibleStrengthPosition*100}%`;paintTime(duration-elapsed);controls[0].disabled=false;}
+    else controls[0].disabled=true;
    }
    if(done)return;
    // Fuerza tenia ventana de ronda pero no la enseñaba: se podia esperar a estar seguro y que la
    // ronda cambiara sola. Ahora la cuenta atras esta en la pista y tambien aqui, como en Intelecto.
    setText(status,attribute==='iq'?phase==='answer'?t('minigame.common.responseRound',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds,seconds:Math.max(0,Math.ceil((memoryWindow(sequence.length)-(performance.now()-phaseStart))/1000))}):t('minigame.common.observeStatus',{round:Math.min(round+1,config.memoryRounds),total:config.memoryRounds})
-    :attribute==='strength'&&phase==='play'?t('minigame.common.timedRound',{round:round+1,total,seconds:Math.max(0,Math.ceil((strengthWindow(round)-(performance.now()-phaseStart))/1000))})
-    :t('minigame.common.round',{round:round+1,total:attribute==='kindness'?config.cleanupRounds:total}));
+    :attribute==='strength'&&phase==='play'?t('minigame.common.timedRound',{round:round+1,total:roundsFor(attribute),seconds:Math.max(0,Math.ceil((strengthWindow(round)-(performance.now()-phaseStart))/1000))})
+    :t('minigame.common.round',{round:round+1,total}));
    if(!done){if(attribute==='strength')frame=requestFrame(tick);else timer=setTimeout(tick,config.tick);}
   }
   // Detras de los controles para no mover sus indices; Estilo no la lleva porque no tiene rondas

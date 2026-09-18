@@ -23,6 +23,7 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 | `roomObjects.js` | Dibujo y colocación de los objetos de la habitación | Ninguna; genera su propio SVG |
 | `shiny.js` | Probabilidad shiny y tirada de eclosión | Rareza canónica vía adapter |
 | `styleTracing.js` | Recorridos, precisión espacial y Pointer Events de Estilo | Canvas, callback de resultado |
+| `cleanupCatch.js` | Caída, cesto y puntuación de Amabilidad | DOM, callback de resultado |
 | `trainingActivities.js` | Sesiones y minijuegos de entrenamiento, puntuación y cancelación | DOM, callbacks `begin`/`commit`/`abandon` |
 | `tools/syncPmdAssets.py` | Importación selectiva y créditos PMD | Python + Pillow, Node, GitHub en desarrollo |
 | `socialEngine.js` | HM1, validación, historial y compatibilidad offline | Adapter, Vital |
@@ -51,7 +52,39 @@ Tamagotchi Pokémon retro como web estática, sin compilación. Se sirve por HTT
 
 La incubación activa dura 0,1 día (2 h 24 min). Cada clic resta 5 minutos y produce una reacción visual discreta y feedback breve en la franja inferior. Oak explica que tocarlo puede acelerar la eclosión, aunque esperar sigue siendo válido. Los huevos no tienen estadísticas ni edad vital. Las cinco hojas de incubación se mantienen: phase 4 a 4,5 fps y hatch a 5,5 fps, sin loop y con pausa final de 250 ms. Al nacer se ofrece mote; el género usa ratios canónicos.
 
-Las monedas empiezan en 0 y persisten dentro de la partida. Completar un minijuego concede 2, 4, 7, 11 o 16 monedas según el resultado +1 a +5. SHOP aparece bajo Configuración y ofrece tres objetos distintos por día local; la selección determinista usa la fecha y no cambia al recargar. Bayas cuestan 35, bayas de atributo 75, medicina 70, objetos de evolución de especie 170 y piedras evolutivas 180–190.
+Las monedas empiezan en 0 y persisten dentro de la partida. Completar un minijuego concede 2, 4, 7, 11 o 16 monedas según el resultado +1 a +5. SHOP aparece bajo Configuración y ofrece tres objetos distintos por día local; la selección determinista usa la fecha y no cambia al recargar. Baya 25, medicina 45, té 50. **Las piedras evolutivas valen todas 180**; los objetos ligados a una
+especie concreta (Recuerdo Extraño, Electrizador, Magmatizador) **200**. Ditto 300, Ditto shiny 600, carcasas de
+tienda 300 y marcos de Memorias 150.
+
+**La vitrina** lleva siempre tres cosas: el Ditto del día, el huevo de especie conocida y el huevo
+shiny. El Ditto **no está en la estantería** con las bayas y el té: es lo que se compra para criar,
+no un consumible del día a día. Una de cada 50 veces la vitrina trae el **Ditto shiny** en lugar del
+normal, y el huevo criado con él nace shiny garantizado. El sorteo cuelga de `dailySeed`, así que no
+rebaraja al recargar, y necesitó dos cuidados que solo salieron al medirlo: reparte sobre los bits
+**altos** —`% 50` mira los bajos, que en un LCG tienen periodo corto, y daba 1 de cada 101— y descarta
+la primera salida, porque la semilla es un hash de la fecha y un paso no la mezcla (1 de cada 44).
+Medido con las dos: 1 de cada 49,5 sobre 80.000 días. Comprar cualquiera de los dos **registra Ditto
+en la Pokédex**, que es la única vía: nunca es compañero. Al criar se gasta primero el normal, para
+no quemar el caro sin querer.
+
+Al **Jugar** cae un objeto el 10 % de las veces, elegido **uniforme sobre el catálogo**: con 15 objetos
+y uno marcado `shopOnly`, cada objeto concreto sale el 0,71 %. La marca existe porque Ditto no debe
+encontrarse jugando — se compra, como los huevos—, y cualquier objeto nuevo entra por defecto en la
+tabla de caídas si no se marca.
+
+**Especies sueltas.** Una especie que ni evoluciona ni viene de una evolución no es extremo de
+ninguna regla, así que la admisión por `MinAgeDays` la deja fuera. La columna **`Standalone`** del
+libro es la decisión, fila a fila, de admitirla igualmente; hoy la llevan Mew y Lapras. Se mantiene
+aparte de `Tag` y `Rarity`, que describen **qué es** la especie y los comparten los 112 legendarios
+del libro: esta dice **si está en el juego**. A diferencia de la escotilla de Ditto —`EggGroup ==
+'Ditto'`, que admite el registro pero lo excluye del roster de IDs legacy—, las `Standalone` sí son
+compañeros jugables y entran en `resolved`.
+
+**Regalos puntuales.** `GIFTS` lista un id y unas monedas por regalo; `migrateSave` concede los que
+falten y deja `notice` con el id, que es lo que abre `#notice-dialog`. El marcador vive en el save
+(`gifts`), así que no se repite, y es idempotente: la segunda migración ya encuentra el id. `freshState`
+arranca con todos marcados, de modo que quien empieza hoy no cobra una compensación por errores que no
+ha vivido; `gifts` es del entrenador y sobrevive al cambio de compañero, como `records` y `coins`.
 
 Los cuidados mantienen decimales. El motor usa la misma simulación por minutos para actividad, ausencia y saltos de tiempo; las siguientes son tasas **base**, antes de dificultad canónica, etapa vital, enfermedad y suciedad:
 
@@ -174,7 +207,7 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 ## Entrenamiento preparado para minijuegos
 
-`TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad identificación y Estilo trazado mediante `styleTracing.js`. Costes y requisitos permanecen en el motor de entrenamiento.
+`TrainingActivities.launch()` coordina sesiones y garantiza una única entrega o cancelación. IQ es memoria, Fuerza timing, Amabilidad puntería en movimiento mediante `cleanupCatch.js` y Estilo trazado mediante `styleTracing.js`. Amabilidad y Estilo viven fuera del bucle de rondas: se montan con `mount()` y devuelven su rendimiento ya normalizado de 0 a 1, que `finish` puntúa con la curva común. Costes y requisitos permanecen en el motor de entrenamiento.
 
 **Dos botones, dos cosas.** El interrogante de la tarjeta abre una ficha con los tres pasos y cuántas rondas tiene, con *Empezar* y *Ahora no*; va **antes** de `begin`, así que leer las reglas y echarse atrás no cuesta una sesión, y se puede consultar aunque falte AP o energía. *Empezar* arranca la partida y nada más. Antes el botón se llamaba *Practicar* y la primera vez de cada actividad desviaba a la misma ficha que el interrogante, de modo que los dos botones hacían lo mismo sin que hubiera práctica alguna.
 
@@ -188,7 +221,9 @@ Solo el huevo misterioso usa selección ponderada del pool actual de raíces. Pe
 
 **Intelecto.** Cada ronda sortea una secuencia nueva en vez de alargar la anterior: encadenar prefijos dejaba las últimas rondas en memorizar una sola luz. La curva de longitud sigue siendo `memoryLengths` (2, 3, 4, 5, 6), así que la última ronda pide seis luces recordadas desde cero, y ahí está el reto. La ventana de respuesta es proporcional (`memoryBase + memoryStep × luces`, 3 s con dos luces y 6,6 s con seis) en lugar de 4 s planos para cualquier longitud, que sobraban al principio y no llegaban al final; el tramo por luz pesa más que la base porque ya no hay prefijo memorizado que teclear en automático. Fallar cierra la ronda en el acto y lo dice, en vez de dejarte teclear el resto sabiendo que ya la has perdido, y el avance se muestra mientras tecleas.
 
-**Amabilidad.** Siete rondas en lugar de diez, con la ventana estrechándose de 1,8 s a 1,1 s: era el minijuego más largo y el único sin ninguna curva. Las casillas de basura se eligen al azar y su número varía entre dos y cuatro; antes ocupaban siempre tres posiciones consecutivas, lo que dejaba solo seis disposiciones posibles y se aprendía en dos partidas. Las casillas muestran el icono sin rótulo — era una prueba de lectura, no de reconocimiento — y conservan el nombre en `aria-label`.
+**Amabilidad.** Caída continua de 25,2 s en `cleanupCatch.js`, sin rondas: caen 26 objetos —18 latas y 8 plantas, siempre los mismos— y se recogen las latas con un cesto que sigue al dedo. Una planta en el cesto descuenta una lata. La cantidad la fija la config y el azar solo elige **el orden y la columna**, así que el denominador del marcador 0–1000 es constante y la mejor marca es comparable consigo misma. La curva es la velocidad de caída: 2.800 ms en cruzar la pista el primer objeto y 1.302 ms el último (−54 %); `fallVariation` rota tres ritmos por índice para que en pantalla no caigan dos iguales seguidos sin mover la dificultad total. El cesto **persigue** al dedo a velocidad tope (181 ms de punta a punta) en vez de teletransportarse, que si no un arrastre barría todo lo que hubiera en medio. Se juega también con las flechas del teclado.
+
+Dos propiedades medidas con `tools/design/kindness-reach.cjs`, que son las que hacen que el +5 no dependa del sorteo: **ningún par de objetos coincide en la banda del cesto** (80–90 % de su caída), así que nunca hay que elegir entre una lata y una planta; y sobre 10.000 partidas con columnas reales **no hay una sola transición imposible**, con 165 ms de margen en la más ajustada. El borde inferior de la banda está en el 90 % y no en el 94 % justamente por eso: una lata desaparece al entrar en la banda, pero una planta hay que seguir esquivándola hasta que sale, y con .94 quedaban solo 71 ms para cruzar la pista después.
 
 **Háptica.** Cada veredicto se acompaña de un pulso por `navigator.vibrate`: corto al acertar, doble al quedarse a medias, largo al fallar, y un patrón de tres pulsos si la nota llega a +4. Es el único canal de respuesta inmediata que tiene el juego — no hay sonido, y en móvil el dedo tapa justo la casilla que acaba de cambiar. `prefers-reduced-motion: reduce` lo apaga entero, así que el interruptor es el que el jugador ya tiene en el sistema.
 
@@ -232,7 +267,16 @@ Existe un único compañero vivo activo, o un único huevo incubándose cuando n
 
 `social.eggs` solo acepta huevos. Los de crianza y QR se guardan con incubación completa pendiente, edad cero y sin fisiología. No avanzan con el tiempo, no generan cuidados, cacas ni enfermedad. `incubateStoredEgg` rechaza la operación mientras haya compañero vivo. Al cambiar entre huevos, el anterior vuelve a la reserva sin progreso de incubación. Solo el elegido incuba.
 
-Al morir, el compañero se registra inmediatamente y una sola vez en `social.memorials`: identidad, especie histórica y canónica (incluye la forma), mote, género, edad final, lifespan, causa, fecha y snapshot relevante. Memorias no se exporta ni se activa. Nuevo comienzo abre «Elige tu próximo comienzo» si hay huevos guardados: muestra especie conocida y progenitores, y permite elegir uno o un huevo misterioso. Sin huevos guardados comienza directamente con el misterioso. Ambas opciones conservan recuerdos e inventario; solo se retira de la reserva el huevo elegido. El reinicio total de testing sí borra toda la partida.
+Al morir, el compañero se registra inmediatamente y una sola vez en `social.memorials`: identidad, especie histórica y canónica (incluye la forma), mote, género, edad final, lifespan, causa, fecha y snapshot relevante. Memorias no se exporta ni se activa. Nuevo comienzo abre siempre «Elige tu próximo comienzo», también sin huevos guardados: antes, sin reserva, arrancaba sin preguntar. Arriba van los huevos guardados con su especie conocida y sus progenitores; debajo, **tres huevos nuevos a elegir, cada uno con el tipo 1 del Pokémon que saldrá** y sin revelar la especie. Los tres salen de `Pokedex.choose` —el mismo sorteo ponderado del huevo misterioso, así que elegir no cuesta progreso de Pokédex— y son de **tres tipos distintos**: el tipo es lo único que se ve, y dos huevos del mismo tipo serían dos opciones que el jugador no puede distinguir. Una de las tres plazas la puede reservar la **piedad** (`PITY_CONFIG`): tras **dos** comienzos seguidos
+cuya mejor oferta fuera rareza 1 o 2, la siguiente reparte 60/35/5 entre rarezas 3, 4 y 5; y tras **40**
+comienzos sin una rareza 5, se fuerza una. El contador avanza **una vez por comienzo**, al elegir y no
+al pintar, y mide **lo mejor que se llegó a ofrecer**: tener un 4 delante y escoger un 1 es una decisión,
+no mala suerte. Medido: sin piedad hay un 20,3 % de probabilidad de tres comienzos malos seguidos y un
+6,9 % de las rachas duran seis o más. La garantía dura está en 40 y no en 10 porque a 10 la rareza 5
+salta del 1,1 % al 9,9 %, y con un solo legendario en el repertorio eso es el mismo legendario cada dos
+semanas. Si el repertorio no tiene ninguna especie de la rareza forzada, la tirada sigue sin red.
+
+La semilla es el ID del compañero que acaba de morir, así que **recargar no rebaraja** (si lo hiciera bastaría con recargar hasta sacar el tipo deseado, que es azar de salida) y no hace falta guardar nada: el esquema de save 12 no se toca. Ambas opciones conservan recuerdos e inventario; solo se retira de la reserva el huevo elegido. El reinicio total de testing sí borra toda la partida.
 
 ## Intercambio y breeding offline
 
@@ -280,6 +324,14 @@ Va en **canvas y no en `<img>`** por el modo LCD: en iOS el filtro SVG del ances
 Un retrato es un canvas quieto, así que **no registra ningún renderer**: `disposeMemorialSprites` ya no tiene nada que parar en esa pestaña. La Pokédex sigue usando el sprite animado.
 
 ## El panel
+
+Mientras el diálogo de minijuego está abierto, la **página** queda fijada: `<body>` pasa a
+`position:fixed` con el desplazamiento guardado, y al cerrar se devuelve. Un `<dialog>` modal no impide
+que lo de detrás siga desplazándose con el dedo, y en iOS tampoco lo impide `overflow:hidden` en el
+body. Medido a 375×667: el diálogo no se desplaza (0 px en los cuatro minijuegos), pero detrás quedan
+144 px de página que sí, y un arrastre que se saliera del canvas de Estilo movía la pantalla a media
+partida. El bloqueo se pone en `openDialog` —lo comparten las reglas y la partida— y se suelta en el
+evento `close`, por donde pasan Cancelar, Escape, el cierre programático y la parada del runtime.
 
 `#panel` no hace scroll: lo hace `#panel-content`. En iOS un filtro SVG sobre un contenedor **con** scroll se cachea como capa y no se repinta al desplazarse —texto roto y fondo en blanco, lo que se veía en la Pokédex, que es el único panel con el filtro LCD—. Con el scroll dentro, el filtro queda sobre algo que no se mueve, y la cabecera deja de necesitar `sticky` por el mismo motivo. Abrir un menú lo sitúa arriba: el diálogo conservaba el desplazamiento del anterior.
 
@@ -368,7 +420,7 @@ Configuración se abre desde el botón superior derecho del LCD. Color/LCD se gu
 
 Intelecto tiene cinco secuencias independientes de 2 a 6 luces: cada ronda correcta a la primera suma un punto, con +1 mínimo. Mostrar la secuencia no consume la ventana de respuesta; completar una respuesta inicia la siguiente ronda. Duración aproximada: 20–44 s según respuestas.
 
-Fuerza dispone de cinco rondas de 3,0 a 4,2 s —la ventana crece a medida que la zona se estrecha, de modo que el margen extra llega como ~2,5 pasadas por la zona en la primera ronda y ~3,5 en la última— y puntúa precisión con máxima puntuación en el núcleo de una zona que cambia de sitio cada ronda. Amabilidad presenta siete tandas de seis casillas con 2 a 4 residuos sorteados y el resto distractores —eran siempre tres residuos en bloque, seis disposiciones posibles que se aprendían en dos partidas— y su ventana baja de 1,8 s a 1,08 s. Estilo ofrece cinco trazados progresivos, sin tiempo máximo ni tempo obligatorio. La preparación de 1 s queda fuera de estos plazos; cada ventana comienza cuando se presenta su contenido.
+Fuerza dispone de cinco rondas de 3,0 a 4,2 s —la ventana crece a medida que la zona se estrecha, de modo que el margen extra llega como ~2,5 pasadas por la zona en la primera ronda y ~3,5 en la última— y puntúa precisión con máxima puntuación en el núcleo de una zona que cambia de sitio cada ronda. Amabilidad no tiene rondas: 25,2 s de caída continua con 26 objetos, y su dificultad es la velocidad de caída (2.800 → 1.302 ms en cruzar la pista). Estilo ofrece cinco trazados progresivos, sin tiempo máximo ni tempo obligatorio. La preparación de 1 s queda fuera de estos plazos; cada ventana comienza cuando se presenta su contenido.
 
 Fuerza, Amabilidad y Estilo normalizan su rendimiento a `s` entre 0 y 1 y lo pasan por la única curva del juego, `TrainingActivities.grade` (arriba). Intelecto otorga directamente el número de rondas correctas, con mínimo +1. No hay bonus por terminar rápido.
 
@@ -397,7 +449,13 @@ Cada partida produce un **marcador de 0 a 1000** además de la nota. Los tres mi
 rendimiento ya calculaban esa `s` continua y la tiraban al colapsarla en una nota del 1 al 5; Intelecto
 no normaliza nada —cuenta rondas ganadas— así que su marcador son las **luces acertadas sobre el total
 de la partida** (`MEMORY_LIGHTS`, la suma de las cinco secuencias), con crédito parcial dentro de cada
-ronda. La nota y las monedas no cambian: la recompensa sigue siendo gruesa y el feedback se vuelve fino.
+ronda. Amabilidad tenía el mismo problema por otra vía: su denominador era la basura **sorteada** de esa
+partida, así que dos sesiones producían marcadores que no se podían comparar y la mejor marca medía en
+parte la suerte. Con el reparto fijo el denominador es constante (`CleanupCatch.config.cans`, 18).
+Estilo tenía un fallo distinto y peor: `performanceRatio()` divide por `total`, y Estilo devolvía antes
+de asignarlo, así que **su marcador era 0 en todas las partidas**. Los dos módulos externos entregan
+ahora su rendimiento normalizado y `finish` lo recibe en vez de recalcularlo.
+La nota y las monedas no cambian: la recompensa sigue siendo gruesa y el feedback se vuelve fino.
 
 La **mejor marca es del entrenador**, en `state.records`, así que sobrevive a la muerte del compañero
 igual que las monedas y el Pokédex. El marcador no tiene tope de mejora, de modo que cuando el atributo
@@ -422,10 +480,15 @@ dentro de una celda de 110 px las etiquetas se partían en dos líneas.
   **Compañero** (etapa, edad, personalidad, crianza sí/no, barras y la línea evolutiva completa),
   **Especies** y **Memorias**. Las tres pestañas salen por su cuenta con `return`, porque Memorias no
   es un `else` sino la caída posterior al `return` de Especies.
-- **Crianza** es el panel social con sus cuatro flujos más **Mis huevos**, la lista de huevos guardados
-  con su sprite estático. Antes los huevos solo existían como un código dentro de «Compartir huevo».
-  `eggListRows` es el único renderizador de esa lista y lo comparten Crianza y el flujo de empezar de
-  nuevo tras una muerte.
+- **Crianza** es el panel social con sus cuatro flujos más **Mis huevos**, la lista de huevos guardados.
+  Antes los huevos solo existían como un código dentro de «Compartir huevo». `eggListRows` es el único
+  renderizador de esa lista y lo comparten Crianza y el flujo de empezar de nuevo tras una muerte.
+  Cada fila pinta **un huevo**, no la especie que lleva dentro: antes usaba el sprite de la especie, y
+  el huevo shiny de tienda viaja con `offspring:null` —no revela especie hasta que eclosiona—, así que
+  caía en el sprite por defecto. Se pinta la primera celda de `assets/eggs/egg_phase_1.png`, el mismo
+  huevo que luego se ve en pantalla, y el shiny se marca con la chispa `sparkle` que ya lleva el
+  compañero shiny. Sin filtro CSS sobre la imagen: WebKit ya enseñó en D12 que no es de fiar, y en modo
+  LCD el panel entero lleva encima el filtro de paleta.
 - **Mochila** lleva solo objetos. Las entradas a la colección y a los huevos que tenía se fueron a sus
   paneles.
 
@@ -470,7 +533,7 @@ Configuración → Carcasa permite elegir Hatch.mon o una edición desbloqueada.
 
 ## Refinamiento de interacción y colección
 
-Pedir espacio usa Hurt → Cringe → Pain → Idle. Amabilidad conserva los objetos durante una pulsación capturada y separa tandas con 300 ms sin input. Fuerza mantiene la velocidad y estrecha y reubica la zona por ronda, con preparación independiente; Estilo usa arrastre sobre curvas, onda, S, espiral y combinación final; marca progreso y una estela pixel-art. Intelecto conserva sus cinco rondas, cada una con su propia cadena.
+Pedir espacio usa Hurt → Cringe → Pain → Idle. Amabilidad mueve cada objeto con un nodo propio que se crea al salir y se retira al aterrizar, así que la pista nunca lleva más de tres a la vez. Fuerza mantiene la velocidad y estrecha y reubica la zona por ronda, con preparación independiente; Estilo usa arrastre sobre curvas, onda, S, espiral y combinación final; marca progreso y una estela pixel-art. Intelecto conserva sus cinco rondas, cada una con su propia cadena.
 
 El menú flotante se cierra con la ✕, con Escape o tocando el fondo. El toque de fondo exige que la pulsación empiece y termine fuera de la caja del diálogo, así que una selección que se sale por accidente no lo cierra. El diálogo de minijuego queda deliberadamente fuera: solo se sale con sus propios controles.
 

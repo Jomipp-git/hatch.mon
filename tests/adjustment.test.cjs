@@ -11,7 +11,11 @@ born();snapshot();assert.equal(run('forceEvolution("magmar")'),true);preserved()
 console.log('Real example Magby 10h/Style8 -> Magmar 24h/Style50, happiness70 for6h synthetic evidence; care75/21/61/88 unchanged; lifespan',run('state.vital.lifespan/HOUR'),'hours, LifeStage',run('Vital.getLifeStage(state)'));
 // All real outgoing rules, including branches, item routes, actions and sustained evidence.
 const routes=run('Object.entries(evolutionConfig).flatMap(([from,p])=>p.rules.filter(r=>r.enabled!==false).map(r=>({from,to:r.to})))');
-for(const {from,to} of routes){born(from);snapshot();assert.equal(run(`forceEvolution('${to}')`),true,`${from}>${to}`);preserved();assert.equal(run('state.pokemonId'),to);assert.equal(run('state.milestones.at(-1).testing'),true);assert.equal(run('state.milestones.at(-1).item'),null)}
+// Las familias con destino de un solo género (Kirlia→Gallade, Smoochum→Jynx) rechazan a un
+// compañero que el destino no puede ser, así que se elige un género válido para los dos.
+for(const {from,to} of routes){born(from);
+ run(`state.gender=['female','male','genderless'].find(g=>PokemonData.validGender('${from}',g)&&PokemonData.validGender('${to}',g))||state.gender`);
+ snapshot();assert.equal(run(`forceEvolution('${to}')`),true,`${from}>${to}`);preserved();assert.equal(run('state.pokemonId'),to);assert.equal(run('state.milestones.at(-1).testing'),true);assert.equal(run('state.milestones.at(-1).item'),null)}
 born('tyrogue');run('state.age=80*HOUR;state.stageAge=state.age;state.training.strength=95');snapshot();run('forceEvolution("hitmonlee")');preserved();assert.equal(run('state.age/HOUR'),80);assert.equal(run('state.training.strength'),95);assert.equal(run('state.training.style'),30);assert.equal(run('Vital.getLifeStage(state)'),'SENIOR');
 born('marill');run('state.actions.jugar=2');run('forceEvolution("azumarill")');assert.equal(run('state.milestones.at(-1).actions.jugar'),10);
 born('marill');run('state.actions.jugar=20');run('forceEvolution("azumarill")');assert.equal(run('state.milestones.at(-1).actions.jugar'),20);

@@ -85,7 +85,8 @@ assert.equal(loaded.run('state.inventory.berryStrength'),undefined);assert.equal
  assert.equal(slot.length,3,'tres variantes del estilo del dia');
  assert.equal(new Set(slot.map(id=>id.split('-')[0])).size,1,'todas del mismo estilo');
  assert.ok(JSON.parse(run('JSON.stringify([...Array(9)].map((_,i)=>boutiqueSlot({getFullYear:()=>2026,getMonth:()=>8,getDate:()=>10+i})[0].split("-")[0]))')).filter((v,i,a)=>a.indexOf(v)===i).length>=4,'el estilo rota');
- run('state.coins=450');
+ // El precio vive en SHELL_PRICE; la prueba lo lee en vez de repetirlo.
+ run('state.coins=SHELL_PRICE');
  assert.equal(run(`buyShell('${slot[0]}')`),true);
  assert.equal(run('state.coins'),0);
  assert.ok(run(`ShellSkins.list().includes('${slot[0]}')`));

@@ -80,7 +80,22 @@ test('egg loads current/next only; active PMD images reused across reactions',as
  for(const kind of ['sleep','eat','train','sick','happy','normal','eat']){h.run(`petReaction('${kind}')`);await h.flush();}
  const urls=h.images.filter(i=>i.url?.includes('assets/pmd/')).map(i=>i.url);assert.equal(new Set(urls).size,urls.length);
 });
-test('Kindness keeps targets stable while a pointer spans a round boundary',async()=>{
- const h=await setup();h.run('TrainingActivities.launch("kindness",{commit:()=>true})');h.advance(640);const field=h.els['training-game-content'].children[3],buttons=field.children;const b=buttons[0],label=b.textContent;
- b.events.pointerdown[0]({pointerId:1,button:0});h.advance(2000);assert.equal(b.textContent,label);assert.equal(field.children[0],b);b.events.pointerup[0]({pointerId:1});b.events.click[0]({detail:1});assert.equal(b.disabled,true);h.advance(500);assert.equal(field.children[0],b);
+test('Kindness reuses each falling node and clears the lane as objects land',async()=>{
+ const h=await setup();h.run('TrainingActivities.launch("kindness",{commit:()=>true})');
+ const lane=h.els['training-game-content'].children[3].children.find(e=>e.className==='catch-lane');
+ lane.rect={left:0,top:0,width:100,height:100};lane.setPointerCapture=()=>{};lane.hasPointerCapture=()=>false;lane.releasePointerCapture=()=>{};
+ const items=()=>lane.children.filter(e=>e.className==='catch-item');
+ h.advance(1200);
+ const first=items()[0];assert.ok(first,'el primer objeto ya esta en la pista');
+ // El nodo se crea una vez y se mueve; no se repinta la pista entera cada fotograma.
+ const before=parseFloat(first.style.top);h.advance(320);
+ assert.equal(items()[0],first,'el mismo nodo sigue ahi');
+ assert.ok(parseFloat(first.style.top)>before,'y ha bajado');
+ // Y al aterrizar se va: si no, la pista acumularia los 26 objetos de la partida.
+ h.advance(4000);
+ assert.ok(!lane.children.includes(first),'el objeto aterrizado sale del DOM');
+ assert.ok(items().length<=3,`la pista no acumula: ${items().length} objetos a la vez`);
+ // El bucle continuo para al cancelar, como el de Fuerza.
+ h.run('TrainingActivities.cancel()');const pending=h.timeouts.size;h.advance(2000);
+ assert.ok(h.timeouts.size<=pending,'cancelar no deja fotogramas encolados');
 });

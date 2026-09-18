@@ -6,9 +6,11 @@ const assert=require('node:assert/strict');const {setup}=require('./uiHarness.cj
  assert.equal(els['panel-content'].querySelectorAll('button').length,3+run('state.social.memorials.length'));
  assert.ok(text(els['panel-content']).includes('Ponerle un marco'));
  // Memorias enseña el retrato, no el sprite: un recuerdo es una foto enmarcada. Siempre `Normal`,
- // que es la unica emocion con las 77 formas, asi que ningun recuerdo se ve distinto por un hueco.
- assert.equal(run("Object.keys(PMD_ASSETS).filter(id=>!PMD_ASSETS[id].portraits?.Normal).length"),0,'las 77 formas tienen retrato Normal');
- assert.equal(run("Object.keys(PMD_ASSETS).filter(id=>!PMD_ASSETS[id].shiny?.portraits?.Normal).length"),0,'y las 77 shiny tambien');
+ // que es la unica emocion con todas las formas, asi que ningun recuerdo se ve distinto por un hueco.
+ // Tinkatuff no traia retrato shiny en PMDCollab: su shiny solo recolorea el martillo, que no entra
+ // en plano en un primer plano de cara, asi que el retrato es identico y se guarda como asset.
+ assert.equal(run("Object.keys(PMD_ASSETS).filter(id=>!PMD_ASSETS[id].portraits?.Normal).length"),0,'todas las formas tienen retrato Normal');
+ assert.equal(run("Object.keys(PMD_ASSETS).filter(id=>!PMD_ASSETS[id].shiny?.portraits?.Normal).length"),0,'y todas las shiny tambien');
  const retratos=els['panel-content'].querySelectorAll('button').length&&0;void retratos;
  assert.ok(run("memorialPortrait('pikachu').className.includes('memory-portrait')"),'usa el retrato');
  assert.equal(run("memorialPortrait('pikachu').children[0].width"),run('MEMORIAL_PORTRAIT'));

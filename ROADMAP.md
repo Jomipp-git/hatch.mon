@@ -192,10 +192,80 @@ Si el Pokémon no puede dormir en ese momento, el botón debe aparecer deshabili
 debe dejar claro que la acción no está disponible **antes** de pulsarla.
 
 ### C2 · Revisión general de minijuegos
-**Estado:** Pendiente
+**Estado:** En curso · Amabilidad rehecho el 18-09-2026
 
 Revisar los minijuegos en conjunto: dificultad, ritmo, claridad, controles, feedback visual y
 sensación de juego. Salida esperada: qué minijuegos necesitan retoques concretos y cuáles.
+
+La auditoría (bloque 4 de `DESIGN_AUDIT.md`) ya respondió la pregunta: Intelecto, Fuerza y Estilo
+están afinados; Amabilidad se replanteaba entero, con un pliego de 8 puntos.
+
+**Hecho, 16-09-2026:** afinado del ritmo sobre la rejilla de casillas (rondas deterministas, ventana
+proporcional al trabajo, pausa nunca más larga que el juego). Quedó superado por el rediseño.
+
+**Hecho, 18-09-2026: Amabilidad es un minijuego nuevo.** Decisión del autor: la rejilla de toques pasó
+a ser una **caída continua con cesto**, en `cleanupCatch.js`. Caen 26 objetos durante 25,2 s —18 latas
+y 8 plantas, siempre los mismos— a velocidades distintas, y se recogen las latas arrastrando un cesto
+de lado a lado; una planta en el cesto descuenta una lata. Eso cierra los ocho puntos del pliego del
+bloque 4 de `DESIGN_AUDIT.md`, incluidos los dos que quedaban abiertos: el eje ya no es la velocidad de
+toque sino la puntería en movimiento, y la categoría va por dos canales (tinta llena para las latas,
+verde claro para las plantas) en vez de solo la silueta.
+
+Las dos propiedades que hacen que la nota sea habilidad y no sorteo están medidas con
+`tools/design/kindness-reach.cjs`: **ningún par de objetos coincide en la banda del cesto**, así que
+nunca hay que elegir entre una lata y una planta; y sobre 10.000 partidas con columnas reales **no hay
+una sola transición imposible**, con 165 ms de margen en la más ajustada. Duración 25,2 s y 38
+monedas/min, frente a las 36 de Fuerza.
+
+**Pendiente:** los otros tres minijuegos. La auditoría los dio por afinados, pero el barrido conjunto
+que pide esta entrada no se ha hecho con ellos en mano.
+
+### C8 · Repertorio ampliado, Ditto comprable y piedad de rareza
+**Estado:** Hecho · 2026-09-18
+
+Diez líneas nuevas del libro (Treecko, Chikorita, Aron, Vulpix, Ralts, Piplup, Rattata, Caterpie,
+Pidgey y Tinkatink) con sus variantes de Alola, más **Mew y Lapras** por la columna `Standalone`:
+**112 especies y 40 raíces**, frente a 77 y 26. Hicieron falta dos objetos que las reglas pedían y no
+existían —Piedra Alba y Recuerdo Extraño— y sin los cuales el runtime no arrancaba.
+
+**Ditto** sale de la estantería y pasa a la vitrina con los dos huevos; una de cada 50 veces aparece
+el **Ditto shiny** (600) en su lugar, y el huevo criado con él nace shiny garantizado. Comprar
+cualquiera registra a Ditto en la Pokédex, que es su única vía porque nunca es compañero.
+
+**Piedad de rareza, variante C:** tras 2 comienzos cuya mejor oferta fuera rareza 1–2 la siguiente
+reparte 60/35/5 entre 3, 4 y 5; tras 40 sin una rareza 5, se fuerza. Contador una vez por comienzo.
+Se descartó la garantía a 10 tiradas: medido, disparaba la rareza 5 del 1,1 % al 9,9 %, y con un solo
+legendario eso es el mismo legendario cada dos semanas.
+
+Precios: todas las piedras a 180, los objetos de especie concreta a 200, carcasas 300 y marcos 150.
+Y un regalo único de 100 monedas a quien ya estaba jugando, con su aviso.
+
+### C5 · La pantalla de minijuego no debe mover la página
+**Estado:** Hecho · 2026-09-18
+
+Jugando a Estilo, un arrastre que se saliera del lienzo desplazaba la página de detrás y se jugaba
+peor. Medido a 375×667: el diálogo no se desplaza, pero detrás quedan **144 px de página que sí**; un
+`<dialog>` modal no lo impide y en iOS `overflow:hidden` en el body tampoco. Ahora el `<body>` pasa a
+`position:fixed` mientras el diálogo está abierto y recupera el desplazamiento al cerrar. Afecta a los
+cuatro minijuegos y también a la pantalla de reglas.
+
+### C6 · Los huevos tienen que parecer huevos
+**Estado:** Hecho · 2026-09-18
+
+La lista de huevos pintaba el sprite de la **especie**, y el huevo shiny de tienda viaja con
+`offspring:null` —no revela especie hasta que eclosiona—, así que caía en el sprite por defecto. Ahora
+todos los huevos se pintan como huevos, con la hoja de incubación, y el shiny lleva la misma chispa
+que marca al compañero shiny.
+
+### C7 · Elegir entre tres huevos al empezar de nuevo
+**Estado:** Hecho · 2026-09-18
+
+Tras una muerte había un único «huevo misterioso» a ciegas, y sin huevos guardados ni siquiera se
+preguntaba. Ahora se elige siempre entre **tres huevos, cada uno con el tipo 1 del Pokémon que saldrá**
+y sin revelar la especie. Son de tres tipos distintos, porque el tipo es lo único visible y dos iguales
+serían dos opciones indistinguibles. El sorteo usa `Pokedex.choose` —el mismo ponderado del huevo
+misterioso, así que elegir no cuesta progreso de Pokédex— y cuelga del ID del compañero que acaba de
+morir: recargar no rebaraja, y no hace falta tocar el esquema de save 12.
 
 ### C3 · Carcasas con más personalidad
 **Estado:** Hecho · 2026-09-16 (verificado en código; se entregó antes y la entrada se quedó sin marcar)

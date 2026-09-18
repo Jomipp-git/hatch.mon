@@ -160,12 +160,24 @@
   #panel>header{position:static;top:auto;flex:0 0 auto}
   #panel-content{overflow:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:0}
   .panel-note{font-size:.78rem;margin:6px 0 12px}.panel-row{padding:10px 0}.panel-row p{font-size:.78rem}.panel-row ul{padding-left:18px;font-size:.78rem}.memory-card{align-items:center}.memory-sprite{height:80px}
-  .minigame-field button[data-object]{padding:0}.minigame-field button[data-object]::before{content:'';display:block;width:38px;height:44px;margin:0 auto;background:currentColor;image-rendering:pixelated}
-  [data-object="papel"]::before{clip-path:polygon(10% 0,70% 0,90% 20%,90% 100%,10% 100%)}[data-object="lata"]::before{clip-path:polygon(15% 0,85% 0,85% 100%,15% 100%)}[data-object="botella"]::before{clip-path:polygon(35% 0,65% 0,65% 25%,85% 40%,85% 100%,15% 100%,15% 40%,35% 25%)}[data-object="flor"]::before{clip-path:polygon(30% 0,70% 0,70% 20%,100% 20%,100% 50%,65% 50%,65% 100%,40% 100%,40% 50%,0 50%,0 20%,30% 20%)}[data-object="hoja"]::before{clip-path:polygon(100% 0,100% 50%,70% 80%,30% 80%,10% 100%,0 90%,20% 70%,20% 30%,50% 0)}
+  .minigame-field [data-object]::before{content:'';display:block;width:38px;height:44px;margin:0 auto;background:currentColor;image-rendering:pixelated}
+  /* Amabilidad: pista de caida. El cesto se dibuja en la misma banda que puntua el modulo
+     (catchTop 80% a catchBottom 94%), asi que lo que se ve es exactamente lo que recoge. */
+  .minigame-field.catch-field{display:block;min-height:0;padding:10px}
+  .catch-lane{position:relative;width:100%;height:clamp(190px,38svh,260px);background:#e4ebcf;border:2px solid #52694a;overflow:hidden;touch-action:none;user-select:none}
+  .catch-lane:focus-visible{outline:3px solid #263b30;outline-offset:-3px}
+  /* Dos canales para la categoria, no solo la silueta: la lata va en tinta llena y las plantas en
+     el verde claro del fondo de zona. Con un solo canal habia que leer la forma a 1,3 s de caida. */
+  .catch-item{position:absolute;height:36px;translate:0 -50%;color:#263b30;pointer-events:none}
+  .catch-item[data-kind="plant"]{color:#91a477}
+  .catch-item::before{width:100%;height:36px;margin:0}
+  .catch-basket{position:absolute;top:80%;height:10%;background:#c2d3a2;border:3px solid #263b30;border-top-width:7px;pointer-events:none}
+  .catch-time{position:absolute;left:0;bottom:0;height:5px;background:#263b30;pointer-events:none}
+  [data-object="papel"]::before{clip-path:polygon(10% 0,70% 0,90% 20%,90% 100%,10% 100%)}[data-object="lata"]::before{clip-path:polygon(28% 0,72% 0,72% 9%,80% 17%,80% 100%,20% 100%,20% 17%,28% 9%)}[data-object="botella"]::before{clip-path:polygon(35% 0,65% 0,65% 25%,85% 40%,85% 100%,15% 100%,15% 40%,35% 25%)}[data-object="flor"]::before{clip-path:polygon(30% 0,70% 0,70% 20%,100% 20%,100% 50%,65% 50%,65% 100%,40% 100%,40% 50%,0 50%,0 20%,30% 20%)}[data-object="hoja"]::before{clip-path:polygon(100% 0,100% 50%,70% 80%,30% 80%,10% 100%,0 90%,20% 70%,20% 30%,50% 0)}
   .console{background:linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%),var(--shellBase,var(--shell));border-color:var(--shellDark,var(--border))}.bezel{background:var(--bezel,#4e4a56)}.care button{background:var(--fill,var(--button,var(--paper)));color:var(--buttonText,inherit);border-color:var(--edge,var(--border));box-shadow:0 3px var(--edge,var(--border))}.care button[data-action="alimentar"]{--edge:var(--edge-alimentar);--fill:var(--fill-alimentar)}.care button[data-action="jugar"]{--edge:var(--edge-jugar);--fill:var(--fill-jugar)}.care button[data-action="luz"]{--edge:var(--edge-luz);--fill:var(--fill-luz)}.care button[data-action="limpiar"]{--edge:var(--edge-limpiar);--fill:var(--fill-limpiar)}
   dialog{border-radius:10px;border:4px double var(--shellDark,#5c546b);background:#e8ecdf}dialog header{background:#e8ecdf}dialog h2{font-size:1rem}
   .diagnosis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.diagnosis .panel-row{display:block;padding:6px;border:1px solid #a9b69b;border-radius:4px}.diagnosis p{margin:3px 0}.training-card{padding:12px;margin:10px 0;border:1px solid #a9b69b;border-radius:5px}.training-card .card-actions{display:flex;gap:6px;align-items:stretch}.training-card .card-actions .card-help{flex:0 0 auto;min-width:44px;padding:0 10px;font-weight:bold}.training-card .panel-row{border:0;padding:0 0 8px}.training-card p{font-size:.72rem}
-  .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}/* La tarjeta abierta ocupa la fila entera: dentro de una celda de 110 px las etiquetas de la ficha se rompian en dos lineas y la ficha era ilegible. */details.dex-tile[open]{grid-column:1/-1;text-align:left}.dex-facts{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin:8px 0 0;font-size:.72rem}.dex-facts dt{opacity:.7;white-space:nowrap}.dex-facts dd{margin:0;font-weight:bold}.dex-facts dd:first-child{grid-column:1/-1;font-weight:bold}.egg-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #a9b69b;min-width:0}.egg-row .memory-sprite{width:40px;height:40px;flex:0 0 40px}.egg-row .memory-sprite canvas{width:40px!important;height:40px!important}.egg-row-info{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.egg-row-info strong{font-size:.8rem}.egg-row-info small{font-size:.7rem;opacity:.75}.evolution-step{border-top:1px solid #a9b69b;padding:10px 0;display:flex;flex-direction:column;gap:6px}.evolution-step-head{display:flex;align-items:center;gap:10px;min-width:0}.evolution-step-head .memory-sprite{width:44px;height:44px;flex:0 0 44px}.evolution-step-head .memory-sprite canvas{width:44px!important;height:44px!important}.evolution-step-title{display:flex;flex-direction:column;gap:2px;min-width:0}.evolution-step-title strong{font-size:.8rem}.evolution-step-title small{font-size:.7rem;opacity:.75}.evolution-step.is-done .evolution-step-head{opacity:.6}.evolution-step.is-current .evolution-step-title strong{font-weight:bold}.evolution-step.is-next .evolution-step-title strong{text-decoration:underline}
+  .variant-tabs{display:flex;gap:6px;margin:6px 0}.variant-tabs button{font-size:.68rem;padding:4px 10px;min-height:32px}.variant-tabs [aria-pressed="true"],.shell-options [aria-pressed="true"]{outline:2px solid #52694a;outline-offset:-4px}.shell-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shell-options button{min-height:54px;font-size:.75rem}/* La tarjeta abierta ocupa la fila entera: dentro de una celda de 110 px las etiquetas de la ficha se rompian en dos lineas y la ficha era ilegible. */details.dex-tile[open]{grid-column:1/-1;text-align:left}.dex-facts{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin:8px 0 0;font-size:.72rem}.dex-facts dt{opacity:.7;white-space:nowrap}.dex-facts dd{margin:0;font-weight:bold}.dex-facts dd:first-child{grid-column:1/-1;font-weight:bold}.egg-thumb{position:relative;background-image:url(assets/eggs/egg_phase_1.png);background-size:400% 400%;background-position:0 0;background-repeat:no-repeat;image-rendering:pixelated}.egg-thumb .pixel-icon{position:absolute;right:0;top:0;font-size:11px;width:11px;height:11px;color:#5b4a86}.egg-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #a9b69b;min-width:0;flex-wrap:wrap}.egg-row>button{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:6px 14px;margin-left:auto}.egg-row .memory-sprite{width:40px;height:40px;flex:0 0 40px}.egg-row .memory-sprite canvas{width:40px!important;height:40px!important}.egg-row-info{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 130px}.egg-row-info strong{font-size:.8rem}.egg-row-info small{font-size:.7rem;opacity:.75}.evolution-step{border-top:1px solid #a9b69b;padding:10px 0;display:flex;flex-direction:column;gap:6px}.evolution-step-head{display:flex;align-items:center;gap:10px;min-width:0}.evolution-step-head .memory-sprite{width:44px;height:44px;flex:0 0 44px}.evolution-step-head .memory-sprite canvas{width:44px!important;height:44px!important}.evolution-step-title{display:flex;flex-direction:column;gap:2px;min-width:0}.evolution-step-title strong{font-size:.8rem}.evolution-step-title small{font-size:.7rem;opacity:.75}.evolution-step.is-done .evolution-step-head{opacity:.6}.evolution-step.is-current .evolution-step-title strong{font-weight:bold}.evolution-step.is-next .evolution-step-title strong{text-decoration:underline}
   .minigame-field .minigame-again{grid-column:1/-1}.minigame-field[data-phase="prepare"]{border-style:dashed;opacity:.75}.minigame-field[data-phase="play"]{border-color:#263b30}.minigame-field button[data-result="correct"]{outline:3px solid #52694a;opacity:.6}.minigame-field button[data-result="wrong"]{outline:3px double #263b30;text-decoration:line-through}
   .dex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dex-tile{padding:8px 3px;text-align:center;background:#d5dfd055;border:1px solid #a9b69b;border-radius:5px;min-width:0}.dex-tile summary{cursor:pointer;list-style:none}.dex-tile strong{font-size:.7rem;display:block;overflow-wrap:anywhere}.dex-tile p,.dex-tile small{font-size:.65rem}.dex-tile .memory-sprite{margin:auto}.unknown{font-size:1.3rem;color:#6b7961}
   .console{background-image:var(--motifImage,none),linear-gradient(135deg,transparent 68%,#ffffff18 68%,#ffffff18 78%,transparent 78%);background-color:var(--shellBase,var(--shell));background-repeat:repeat,no-repeat;background-position:top left,center;background-size:var(--motifSize,58px 58px),100% 100%}
@@ -263,6 +275,7 @@
 <dialog id="training-game" data-i18n-aria="minigame.common.dialogLabel"><div id="training-game-content"></div></dialog>
 <dialog id="panel" aria-labelledby="panel-title"><header><h2 id="panel-title"></h2><button id="close-panel" type="button" data-i18n-aria="ui.closeMenu">✕</button></header><div id="panel-content"></div></dialog>
 <dialog id="found-dialog" data-i18n-aria="ui.foundItem"><button id="found-bubble" type="button"><span id="found-text"></span><small data-i18n="ui.continue"></small></button></dialog>
+<dialog id="notice-dialog" data-i18n-aria="ui.notice"><h2 id="notice-title"></h2><p id="notice-text"></p><button id="notice-ok" type="button" data-i18n="ui.continue"></button></dialog>
 <dialog id="nickname-dialog" aria-labelledby="nickname-title">
   <h2 id="nickname-title" data-i18n="ui.hatchTitle"></h2>
   <p id="birth-message"></p>
@@ -307,6 +320,7 @@
 <script type="text/plain" data-game-src="shellSkins.js"></script>
 <script type="text/plain" data-game-src="memorialFrames.js"></script>
 <script type="text/plain" data-game-src="styleTracing.js"></script>
+<script type="text/plain" data-game-src="cleanupCatch.js"></script>
 <script type="text/plain" data-game-src="trainingActivities.js"></script>
 <script type="text/plain" data-game-src="assets/pmd/manifest.js"></script>
 <script type="text/plain" data-game-src="assets/pmd/listMetrics.js"></script>
@@ -362,18 +376,31 @@ const zeroCare=()=>Object.fromEntries(CARE.map(k=>[k,0]));
 // Las cuatro bayas de atributo se retiran: 75 monedas por +5 cuando entrenar da +1..5 y encima paga.
 // Sus textos se conservan para que el historial de consumo siga legible, y validSave admite los ids
 // retirados, asi que las partidas que ya las consumieron siguen siendo validas.
+// Regalos puntuales a quien ya estaba jugando. Un id por regalo, guardado en el save para no
+// repetirlo; `freshState` arranca con todos marcados, asi que quien empieza hoy no cobra una
+// compensacion por errores que no ha vivido. Anadir otro regalo es anadir una linea aqui.
+const GIFTS=Object.freeze([Object.freeze({id:'bugfix-2026-09',coins:100})]);
+const PITY_CONFIG=Object.freeze({low:Object.freeze([1,2]),shortAfter:2,hardAfter:40,
+  slice:Object.freeze([Object.freeze([3,.60]),Object.freeze([4,.35]),Object.freeze([5,.05])])});
+const freshPity=()=>({low:0,since:0});
 const RETIRED_ITEM_IDS=Object.freeze(['alola','galar','dawn','oval','berryStrength','berryIQ','berryKindness','berryStyle']);
 const itemCatalog={
   thunder:{get name(){return t('item.thunder');},icon:'stone',kind:'stone',price:180},water:{get name(){return t('item.water');},icon:'stone',kind:'stone',price:180},fire:{get name(){return t('item.fire');},icon:'stone',kind:'stone',price:180},
-  leaf:{get name(){return t('item.leaf');},icon:'stone',kind:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',kind:'stone',price:185},moon:{get name(){return t('item.moon');},icon:'light',kind:'stone',price:185},
-  shiny:{get name(){return t('item.shiny');},icon:'light',kind:'stone',price:190},
-  electirizer:{get name(){return t('item.electirizer');},icon:'stone',kind:'stone',price:170},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',kind:'stone',price:170},
+  leaf:{get name(){return t('item.leaf');},icon:'stone',kind:'stone',price:180},ice:{get name(){return t('item.ice');},icon:'stone',kind:'stone',price:180},moon:{get name(){return t('item.moon');},icon:'light',kind:'stone',price:180},
+  shiny:{get name(){return t('item.shiny');},icon:'light',kind:'stone',price:180},
+  dawnstone:{get name(){return t('item.dawnstone');},icon:'light',kind:'stone',price:180},
+  // No es una piedra, pero evoluciona igual y vive en el mismo grupo de la Mochila.
+  souvenir:{get name(){return t('item.souvenir');},icon:'stone',kind:'stone',price:200},
+  electirizer:{get name(){return t('item.electirizer');},icon:'stone',kind:'stone',price:200},magmarizer:{get name(){return t('item.magmarizer');},icon:'stone',kind:'stone',price:200},
   berry:{get name(){return t('item.berry');},icon:'food',kind:'berry',food:true,price:25},
   medicine:{get name(){return t('item.medicine');},icon:'medicine',kind:'medicine',cures:true,price:45},
   tea:{get name(){return t('item.tea');},icon:'food',kind:'drink',care:{energia:50},price:50},
   // Ditto no es un compañero al que cuidar: es el objeto que hace de pareja cuando no hay otra
   // persona. Se gasta al crear el huevo, así que la crianza es un sumidero recurrente de monedas.
-  ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300}
+  ditto:{get name(){return t('item.ditto');},icon:'egg',kind:'breeding',price:300,shopOnly:true},
+  // El Ditto shiny sale una de cada 50 veces que sale el normal y lo sustituye en la vitrina. No es
+  // un Ditto mejor: es el que garantiza que el huevo criado con el nazca shiny.
+  dittoShiny:{get name(){return t('item.dittoShiny');},icon:'egg',kind:'breeding',price:600,shopOnly:true,shinyBreeder:true}
 };
 // Un solo eje de clasificación para Mochila y tienda; este orden es el de la Mochila.
 const ITEM_GROUPS=['berry','stone','medicine','drink','breeding'];
@@ -408,7 +435,7 @@ const dailySeed=(date=new Date())=>{let seed=[...shopDayKey(date)].reduce((n,c)=
 const EGG_SHOWCASE=Object.freeze({eggNamed:{price:600},eggShiny:{price:2500}});
 // Boutique. Las carcasas de logro cuentan de quien son y se ganan; estas cuentan de que estan
 // hechas y se pagan. Nunca se mezclan: SHELL_THEMES marca las de tienda con `boutique`.
-const SHELL_PRICE=450;
+const SHELL_PRICE=300;
 // Cambiar el mote se paga. Es sumidero de entrenador y se repite con cada compañero, asi que absorbe
 // ingreso de forma continua, que es lo que le faltaba a la economia.
 const RENAME_PRICE=120,NICKNAME_MAX=20,MEMORIAL_PORTRAIT=80;
@@ -461,7 +488,17 @@ function shopPrice(id,now=Date.now()){
 // una decision que se pudiera tomar. La rotacion queda para lo interesante.
 // El Ditto entra aquí y no en la rotación: un objeto rotando sale el 11-44% de los días, y la
 // mecánica que abre no puede depender de que la tienda diga que sí.
-const SHOP_STAPLES=Object.freeze(['berry','tea','medicine','ditto']);
+const SHOP_STAPLES=Object.freeze(['berry','tea','medicine']);
+// Ditto vive en la vitrina, con los huevos: es lo que se compra para criar, no consumible del dia a
+// dia. El sorteo del shiny va por `dailySeed`, como el resto de la tienda, asi que recargar no
+// rebaraja; una de cada 50 la vitrina trae el shiny en lugar del normal.
+const DITTO_SHINY_ODDS=50;
+// Dos cuidados que la medicion obligo a poner: se reparte sobre los bits ALTOS, porque `% 50` mira
+// los bajos y en un LCG tienen periodo corto (daba 1 de cada 101 dias); y se descarta la primera
+// salida, porque la semilla es un hash de la fecha y un solo paso no la mezcla (1 de cada 44).
+// Con las dos, medido sobre 20.000 dias: 1 de cada 48,4, que es 1/50 dentro del ruido del muestreo.
+const dittoSlot=(date=new Date())=>{const roll=dailySeed(date);roll();
+  return Math.floor(roll()/4294967296*DITTO_SHINY_ODDS)===0?'dittoShiny':'ditto';};
 function evolutionSlot(date=new Date()){
   const needed=[...new Set((current()?.rules||[]).map(r=>r.item).filter(id=>id&&Object.hasOwn(itemCatalog,id)))];
   if(needed.length)return needed;
@@ -475,7 +512,7 @@ function dailyShop(date=new Date()){return [...SHOP_STAPLES,...evolutionSlot(dat
 function namedEggSpecies(date=new Date()){return STARTERS[dailySeed(date)()%STARTERS.length];}
 // Normalizador del formato de reglas del motor. La fuente v2 aporta los valores;
 // los cuidados sostenidos exigen continuidad y el entrenamiento usa valores fijos.
-const ITEM_ALIASES={piedra_trueno:'thunder',piedra_agua:'water',piedra_fuego:'fire',piedra_hoja:'leaf',piedra_hielo:'ice',piedra_lunar:'moon',piedra_dia:'shiny',Electrizador:'electirizer',Magmatizador:'magmarizer'};
+const ITEM_ALIASES={piedra_trueno:'thunder',piedra_agua:'water',piedra_fuego:'fire',piedra_hoja:'leaf',piedra_hielo:'ice',piedra_lunar:'moon',piedra_dia:'shiny',piedra_alba:'dawnstone',strange_souvenir:'souvenir',Electrizador:'electirizer',Magmatizador:'magmarizer'};
 const FIXED_FIELDS={minIQ:'iq',minStrength:'strength',minStyle:'style',minKindness:'kindness'};
 function normalizeRule(r){
   // careMean sigue vivo: el normalizador lo produce si `estadisticas` trae una barra de cuidados.
@@ -552,7 +589,7 @@ function normalizeRecords(data){
 function freshState(now=Date.now()){
   return {version:12,relationship:null,pokedex:Pokedex.fresh(),vital:null,social:{...HatchMonSocial.fresh(),bredIds:[],memorials:[]},phase:'egg',pokemonId:null,incubationRemaining:INCUBATION_MS,care:null,training:null,age:0,stageAge:0,stage:0,
     gender:null,nickname:'',birthScene:false,nicknamePending:false,foundItem:null,lightsOff:false,personality:null,sleep:{fatigue:0,napDay:'',napMinutes:0,napping:false},attentionEvent:null,attentionMeta:Attention.freshMeta(now),attentionSettings:Attention.freshSettings(),
-    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,records:freshRecords(),pokerus:false,heat:0,aid:0,
+    averages:null,sustained:{},actions:{},inventory:{},consumed:[],milestones:[],coins:0,records:freshRecords(),gifts:GIFTS.map(g=>g.id),notice:null,pity:freshPity(),pokerus:false,heat:0,aid:0,
     trainer:{energy:MAX_AP},lastSync:now,remainder:0,message:t('oak.eggEarly')};
 }
 let state=freshState();
@@ -706,7 +743,7 @@ function careAction(action,rng=Math.random){
   if(action==='alimentar')state.message=Vital.eat(state,CARE_CONFIG.feed);
   if(action==='jugar'){
     state.care.felicidad=clamp(state.care.felicidad+CARE_CONFIG.play.happiness*Vital.getLifeModifiers(state).play);state.care.energia=clamp(state.care.energia-CARE_CONFIG.play.energy);state.vital.dirt=clamp(state.vital.dirt+CARE_CONFIG.play.dirt);state.message=t('care.play');
-    if(rng()<DROP_CHANCE){const ids=Object.keys(itemCatalog),id=ids[Math.floor(rng()*ids.length)];state.inventory[id]=(state.inventory[id]||0)+1;state.foundItem=id;state.message=t('care.playFound',{name:itemLabel(id)});}
+    if(rng()<DROP_CHANCE){const ids=Object.keys(itemCatalog).filter(key=>!itemCatalog[key].shopOnly),id=ids[Math.floor(rng()*ids.length)];state.inventory[id]=(state.inventory[id]||0)+1;state.foundItem=id;state.message=t('care.playFound',{name:itemLabel(id)});}
   }
   if(action==='limpiar'){Vital.clean(state);state.message=t('care.clean');}
   if(action==='curar'){state.inventory.medicine--;if(state.inventory.medicine<=0)delete state.inventory.medicine;heal();state.message=t('care.heal');}
@@ -776,10 +813,12 @@ function useItem(id,destination=null){
   if(!chosen){state.message=t('evolution.chooseRoute');return false;}
   spend(itemAPCost(id));return evolve(chosen,id);
 }
-function buyShopItem(id){
-  const item=itemCatalog[id];if(!item||!dailyShop().includes(id))return false;
+function buyShopItem(id,date=new Date()){
+  const item=itemCatalog[id];if(!item||!(dailyShop(date).includes(id)||dittoSlot(date)===id))return false;
   const price=shopPrice(id);if(state.coins<price)return false;
   state.coins-=price;state.inventory[id]=(state.inventory[id]||0)+1;state.message=t('shop.bought',{name:itemLabel(id)});
+  // Ditto nunca es companero, asi que la unica forma de que entre en la Pokedex es tenerlo.
+  if(item.kind==='breeding')Pokedex.record(state.pokedex,DITTO_ID,'seen',null,item.shinyBreeder===true);
   return true;
 }
 function buyFrame(memorialId,frameId){
@@ -879,7 +918,7 @@ function validGameSave(s){
     typeof s.birthScene==='boolean'&&typeof s.nicknamePending==='boolean'&&typeof s.lightsOff==='boolean'&&Attention.valid(s)&&
     (s.phase==='egg'?s.personality===null:Object.hasOwn(PERSONALITY_CONFIG,s.personality))&&s.sleep&&finite(s.sleep.fatigue,0,100)&&typeof s.sleep.napDay==='string'&&s.sleep.napDay.length<=20&&Number.isInteger(s.sleep.napMinutes)&&finite(s.sleep.napMinutes,0,SLEEP_CONFIG.napLimitMinutes)&&typeof s.sleep.napping==='boolean'&&(s.foundItem===null||Object.hasOwn(itemCatalog,s.foundItem))&&
     s.trainer&&finite(s.trainer.energy,0,MAX_AP)&&finite(s.lastSync)&&finite(s.remainder,0,MINUTE)&&
-    typeof s.pokerus==='boolean'&&Number.isInteger(s.heat)&&finite(s.heat,0,29)&&Number.isInteger(s.aid)&&finite(s.aid,0,2)&&Array.isArray(s.milestones)&&Array.isArray(s.consumed)&&typeof s.message==='string';
+    Array.isArray(s.gifts)&&s.gifts.every(id=>typeof id==='string')&&new Set(s.gifts).size===s.gifts.length&&(s.notice===null||GIFTS.some(g=>g.id===s.notice))&&s.pity&&Number.isSafeInteger(s.pity.low)&&s.pity.low>=0&&Number.isSafeInteger(s.pity.since)&&s.pity.since>=0&&typeof s.pokerus==='boolean'&&Number.isInteger(s.heat)&&finite(s.heat,0,29)&&Number.isInteger(s.aid)&&finite(s.aid,0,2)&&Array.isArray(s.milestones)&&Array.isArray(s.consumed)&&typeof s.message==='string';
 }
 // Reserva de huevos, memorias y perfiles de crianza. Identidad y origen pertenecen a la
 // criatura; mochila de objetos y AP siguen perteneciendo a esta partida.
@@ -891,7 +930,7 @@ function validSnapshot(s,e){
   for(const key of ['sustained','actions'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
   // records es del entrenador, igual que inventory, coins y trainer: el snapshot no lo lleva, asi que
   // se inyecta un valor valido para poder reutilizar validGameSave sobre una instantanea.
-  const base={...s,version:12,inventory:{},coins:0,records:freshRecords(),trainer:{energy:MAX_AP},lastSync:0,message:'',attentionEvent:null,attentionMeta:Attention.freshMeta(0),attentionSettings:Attention.freshSettings()};
+  const base={...s,version:12,inventory:{},coins:0,records:freshRecords(),gifts:GIFTS.map(g=>g.id),notice:null,pity:freshPity(),trainer:{energy:MAX_AP},lastSync:0,message:'',attentionEvent:null,attentionMeta:Attention.freshMeta(0),attentionSettings:Attention.freshSettings()};
   if(!validGameSave(base)||(s.phase==='egg'?s.vital!==null:!Vital.valid(s.vital,s.age))||s.stage>10||s.stageAge>s.age||s.age>100*365*DAY)return false;
   if(e.kind==='egg'?(e.speciesId!==e.offspring||e.offspring!==null&&!STARTERS.includes(e.offspring)):e.speciesId!==s.pokemonId)return false;
   if(e.offspring!==null&&!STARTERS.includes(e.offspring))return false;
@@ -943,13 +982,13 @@ function generatorInstruction(result){
 // evolutionConfig se indexa por ID legacy y Ditto no tiene uno: su ficha solo existe en el adapter.
 const parentOrigin=e=>({id:e.id,speciesId:e.speciesId,
   name:e.snapshot.nickname||evolutionConfig[e.speciesId]?.name||PokemonData.get(e.speciesId)?.DisplayName||e.speciesId});
-function storeBredEgg(offspring,parents,rng=Math.random){
+function storeBredEgg(offspring,parents,rng=Math.random,guaranteedShiny=false){
   if(state.social.eggs.length>=HatchMonSocial.MAX_EGGS)throw Error(t('connect.eggStorageFull',{max:HatchMonSocial.MAX_EGGS}));
   // La herencia se sortea aqui, con el Vinculo de quien genera el huevo: es quien ha hecho el
   // trabajo. Va dentro de la entidad, al lado de parents, asi que viaja con el QR sin nada extra.
   const inheritance={potential:Relationship.drawPotential(state,rng),parent:parents[0].name};
   state.social.eggs.push({id:HatchMonSocial.uid(),kind:'egg',speciesId:offspring,offspring,
-    createdAt:Date.now(),parents,inheritance,snapshot:snapshotOf(freshState())});
+    createdAt:Date.now(),parents,inheritance,...(guaranteedShiny?{guaranteedShiny:true}:{}),snapshot:snapshotOf(freshState())});
   // Ya no vetan, pero siguen siendo el registro de quien ha criado: la ficha de Oak los lee y la
   // herencia de la capa 2 los necesita para la marca de linaje.
   state.vital.hasProducedEgg=true;
@@ -990,11 +1029,13 @@ function dittoBreedingCheck(){
 }
 function breedWithDitto(){
   if(interactionLocked())throw Error(t('connect.interactionLocked'));
-  if(!(state.inventory.ditto>0))throw Error(t('breeding.dittoMissing'));
+  const breeder=state.inventory.ditto>0?'ditto':state.inventory.dittoShiny>0?'dittoShiny':null;
+  if(!breeder)throw Error(t('breeding.dittoMissing'));
   const result=dittoBreedingCheck();if(!result.ok)throw Error(result.reason);
   const partner=dittoPartner();
-  storeBredEgg(result.offspring,[parentOrigin(activeEntity()),parentOrigin(partner)]);
-  state.inventory.ditto--;
+  // Se gasta primero el normal: el shiny es caro y quemarlo sin querer seria el peor error posible.
+  storeBredEgg(result.offspring,[parentOrigin(activeEntity()),parentOrigin(partner)],Math.random,itemCatalog[breeder].shinyBreeder===true);
+  state.inventory[breeder]--;if(!state.inventory[breeder])delete state.inventory[breeder];
   if(!state.social.bredIds.includes(state.social.active.id))state.social.bredIds.push(state.social.active.id);
   return t('breeding.eggCreated',{name:companionName()});
 }
@@ -1032,6 +1073,13 @@ function migrateSave(data){
   if(!data||typeof data!=='object')return data;
   if(!Number.isSafeInteger(data.coins)||data.coins<0)data.coins=0;
   normalizeRecords(data);
+  if(!Array.isArray(data.gifts)||!data.gifts.every(id=>typeof id==='string'))data.gifts=[];
+  if(typeof data.notice!=='string')data.notice=null;
+  if(!data.pity||!Number.isSafeInteger(data.pity.low)||!Number.isSafeInteger(data.pity.since)||data.pity.low<0||data.pity.since<0)data.pity=freshPity();
+  for(const gift of GIFTS)if(!data.gifts.includes(gift.id)){
+    data.coins=Math.min(Number.MAX_SAFE_INTEGER,data.coins+gift.coins);
+    data.gifts.push(gift.id);data.notice=gift.id;
+  }
   // Las bayas de atributo se retiraron despues de estar en venta a 75 monedas, asi que las que un
   // jugador tuviera en la mochila se devuelven en monedas en vez de desaparecer. El resto de ids
   // retirados nunca se vendieron.
@@ -1264,6 +1312,14 @@ function renderPanel(){
       }
     }
     content.append(el('h3',t('ui.shop.showcase'),'panel-group'));
+    {
+      const id=dittoSlot(),item=itemCatalog[id],price=shopPrice(id);
+      const head=el('div',undefined,'shop-egg-head');
+      head.append(iconLabel('egg',t('ui.shop.item',{name:item.name,price})));
+      if(item.shinyBreeder)head.append(el('span',t('dex.shiny'),'shiny-tag'));
+      content.append(row(head,t(item.shinyBreeder?'ui.shop.dittoShiny':'ui.shop.ditto'),
+        panelButton(t('buy'),()=>{if(buyShopItem(id))render();},state.coins<price,`shop-${id}`)));
+    }
     const species=PokemonData.get(namedEggSpecies());
     for(const [id,label,detail] of [
       // 19 de las 26 raices son formas bebe con grupo huevo Undiscovered, asi que nombrarlo era
@@ -1379,7 +1435,7 @@ async function copySocialCode(){
 // sabia que existia: fallaba por dos puntos sin explicacion. breedingBlocker ya tiene el motivo;
 // aqui solo hay que ensenarlo junto al boton, que es donde el jugador esta mirando.
 function dittoBreedingRows(){
-  const held=state.inventory.ditto||0,blocked=breedingBlocker();
+  const held=(state.inventory.ditto||0)+(state.inventory.dittoShiny||0),blocked=breedingBlocker();
   const rows=[el('h4',t('breeding.dittoTitle'),'panel-group'),el('p',t('breeding.dittoGuide'),'panel-note')];
   const button=socialButton(t('breeding.createEgg'),()=>socialAction(breedWithDitto));
   button.disabled=held<1||!!blocked;
@@ -1412,17 +1468,37 @@ function renderSocialPanel(){
   }
   content.append(el('p',t('connect.offlineNotice'),'panel-note'));
 }
-function startNewBeginning(eggId=null){
-  if(state.phase!=='dead')return;rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.coins=state.coins;next.records=state.records;next.trainer=state.trainer;next.attentionSettings=state.attentionSettings;next.pokedex=state.pokedex;state=next;}
+function startNewBeginning(eggId=null,offspring=null){
+  if(state.phase!=='dead')return;
+  // El contador se mueve al elegir y no al pintar la pantalla, que puede repetirse.
+  recordPity(beginningChoices());
+  rememberDeath();if(eggId)incubateStoredEgg(eggId);else{const next=freshState();next.social={...state.social,active:next.social.active};next.inventory=state.inventory;next.coins=state.coins;next.records=state.records;next.gifts=state.gifts;next.pity=state.pity;next.trainer=state.trainer;next.attentionSettings=state.attentionSettings;next.pokedex=state.pokedex;
+    // Elegir uno de los tres huevos fija la especie por adelantado, igual que un huevo con nombre
+    // comprado en la tienda: `hatch()` respeta `offspring` y solo sortea cuando viene en null.
+    if(offspring&&STARTERS.includes(offspring))next.social.active.offspring=offspring;
+    state=next;}
   cancelBirthAnimation();hideToast();clearPetReaction();if(dialog.open)closePanel();save();render();startTimer();
 }
 // Los huevos guardados solo existian como un codigo dentro de "Compartir huevo": tenias inventario
 // de futuros compañeros y no podias verlo. Un solo renderizador para los dos sitios donde se listan.
+// Un huevo es un huevo. La fila pintaba el sprite de la ESPECIE, y el huevo shiny de tienda viaja
+// con `offspring:null` —no revela especie hasta que eclosiona—, asi que caia en el generico. Se
+// pinta la hoja de incubacion, que es el mismo huevo que se ve en pantalla, y el shiny se marca con
+// la misma chispa que lleva el compañero shiny. Sin filtro CSS sobre la imagen: WebKit ya enseño en
+// D12 que no es de fiar, y el panel entero lleva encima el filtro de paleta en modo LCD.
+function eggSprite(entity){
+  const shiny=entity.guaranteedShiny===true;
+  const visual=el('div',undefined,shiny?'memory-sprite egg-thumb is-shiny':'memory-sprite egg-thumb');
+  visual.setAttribute('role','img');
+  visual.setAttribute('aria-label',t(shiny?'connect.eggShinyAria':'connect.eggAria'));
+  if(shiny)visual.append(pixelIcon('sparkle'));
+  return visual;
+}
 function eggListRows(onPick,pickLabel){
   const rows=[];
   for(const egg of state.social.eggs){
     const wrap=el('div',undefined,'egg-row');
-    wrap.append(collectionSprite(egg.offspring||egg.speciesId));
+    wrap.append(eggSprite(egg));
     const info=el('div',undefined,'egg-row-info');
     info.append(el('strong',PokemonData.get(egg.offspring||egg.speciesId)?.DisplayName||t('connect.storedEgg',{id:egg.id.slice(-6)})));
     info.append(el('small',eggDescription(egg)));
@@ -1433,9 +1509,77 @@ function eggListRows(onPick,pickLabel){
   if(!rows.length)rows.push(el('p',t('connect.noStoredEggs'),'panel-note'));
   return rows;
 }
+// Tres huevos a elegir en vez de un unico «huevo misterioso» a ciegas, y cada uno ensena el tipo de
+// lo que saldra. El sorteo cuelga del ID del compañero que acaba de morir, asi que recargar la
+// pagina NO rebaraja: si lo hiciera bastaria con recargar hasta sacar el tipo que uno quiere, que es
+// azar de salida. Y al derivarse de algo que ya esta en la partida, el esquema de save 12 no se toca.
+const BEGINNING_CHOICES=3;
+// Piedad sobre la rareza del comienzo. Medido sin ella: un 20,3 % de probabilidad de tres comienzos
+// seguidos de baja calidad, y un 6,9 % de las rachas duran seis o mas. Eso es lo que se percibe como
+// injusto, y la piedad corta lo arregla casi gratis (el 5* pasa de 1,1 % a 1,8 %).
+// La garantia dura va a 40 y no a 10 a proposito: a 10 el 5* se dispara al 9,9 % y, con un unico
+// legendario en el repertorio, "un 5* garantizado" es "el mismo legendario cada dos semanas". A 40
+// queda en 3,4 %. El contador avanza UNA vez por comienzo, no por huevo ofrecido.
+// La rareza que la piedad obliga a ofrecer, o null si esta tirada va sin red.
+function pityTier(rng){
+  if(state.pity.since>=PITY_CONFIG.hardAfter)return 5;
+  if(state.pity.low<PITY_CONFIG.shortAfter)return null;
+  let roll=rng();
+  for(const [tier,share] of PITY_CONFIG.slice){roll-=share;if(roll<0)return tier;}
+  return PITY_CONFIG.slice.at(-1)[0];
+}
+// La racha mide lo MEJOR que se llego a ofrecer: si el jugador tenia un 4* delante y eligio un 1*,
+// eso es una decision suya y no mala suerte.
+function recordPity(offered){
+  const best=Math.max(...offered.map(id=>PokemonData.get(id)?.Rarity||1));
+  if(best>=5){state.pity=freshPity();return;}
+  state.pity.since+=1;
+  state.pity.low=PITY_CONFIG.low.includes(best)?state.pity.low+1:0;
+}
+const seededRandom=text=>{let seed=[...String(text)].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,2166136261);
+  return ()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);};
+function beginningChoices(){
+  const rng=seededRandom(`${state.social.active.id}:beginning`),picked=[],types=new Set();
+  // La piedad reserva UNA de las tres plazas; las otras dos se sortean como siempre. Si el
+  // repertorio no tiene ninguna especie de esa rareza, la tirada sigue sin red en vez de fallar.
+  const forced=pityTier(rng);
+  if(forced!==null){
+    const pool=STARTERS.filter(id=>PokemonData.get(id)?.Rarity===forced);
+    if(pool.length){const chosen=Pokedex.choose(pool,state.pokedex,rng);picked.push(chosen);types.add(PokemonData.get(chosen).Type1);}
+  }
+  // Se sortea con `Pokedex.choose`, el mismo del huevo misterioso, para conservar el sesgo hacia las
+  // especies que todavia no has tenido: elegir no deberia costarte el progreso de la Pokedex.
+  // Y los tres tipos son distintos: lo unico que se enseña es el tipo, asi que dos huevos del mismo
+  // tipo son dos opciones que el jugador no puede distinguir, o sea una eleccion de mentira. Con 26
+  // raices en 11 tipos siempre salen tres; el respaldo sin filtro esta por si el repertorio encoge.
+  const typeOf=id=>PokemonData.get(id).Type1;
+  while(picked.length<BEGINNING_CHOICES){
+    const fresh=STARTERS.filter(id=>!picked.includes(id)&&!types.has(typeOf(id)));
+    const pool=fresh.length?fresh:STARTERS.filter(id=>!picked.includes(id));
+    if(!pool.length)break;
+    const chosen=Pokedex.choose(pool,state.pokedex,rng);
+    picked.push(chosen);types.add(typeOf(chosen));
+  }
+  return picked;
+}
 function renderBeginningChoices(){
   const content=$('panel-content');content.replaceChildren();$('panel-title').textContent=t('connect.startChoice');content.append(el('p',t('connect.startGuide'),'panel-note'));
-  for(const egg of state.social.eggs)content.append(row(t('connect.storedEgg',{id:egg.id.slice(-6)}),eggDescription(egg),socialButton(t('connect.incubateEgg'),()=>startNewBeginning(egg.id))));content.append(socialButton(t('connect.startMysteriousEgg'),()=>startNewBeginning()));
+  if(state.social.eggs.length){
+    content.append(el('h3',t('connect.myEggs'),'panel-group'));
+    content.append(...eggListRows(id=>startNewBeginning(id),t('connect.incubateEgg')));
+  }
+  content.append(el('h3',t('connect.newEggs'),'panel-group'));
+  for(const id of beginningChoices()){
+    const wrap=el('div',undefined,'egg-row');
+    wrap.append(eggSprite({}));
+    const info=el('div',undefined,'egg-row-info');
+    info.append(el('strong',t('connect.eggOfType',{type:t(`type.${PokemonData.get(id).Type1}`)})));
+    info.append(el('small',t('connect.eggTypeDetail')));
+    const pick=socialButton(t('connect.incubateEgg'),()=>startNewBeginning(null,id));
+    pick.dataset.key=`begin-${id}`;
+    wrap.append(info,pick);
+    content.append(wrap);
+  }
 }
 // Precarga conjunta: al cambiar de fase nunca se expone una URL sin cargar.
 // Imágenes ausentes, inválidas o demasiado lentas usan un icono pixel-art, sin rechazos.
@@ -1475,6 +1619,13 @@ function presentNarrative(){
     if(dialog.open)closePanel();
     if(!$('nickname-dialog').open){$('birth-message').textContent=t('ui.birthMessage',{name:current().name});$('nickname-input').value='';$('nickname-dialog').showModal();$('nickname-input').focus();}
   }else if($('nickname-dialog').open)$('nickname-dialog').close();
+  // El aviso de regalo va por delante del objeto encontrado: se concede al cargar, antes de jugar.
+  if(state.notice!==null){
+    if(dialog.open)closePanel();
+    $('notice-title').textContent=t(`gift.${state.notice}.title`);
+    $('notice-text').textContent=t(`gift.${state.notice}.body`,{coins:GIFTS.find(g=>g.id===state.notice)?.coins??0});
+    if(!$('notice-dialog').open){$('notice-dialog').showModal();$('notice-ok').focus();}
+  }else if($('notice-dialog').open)$('notice-dialog').close();
   if(state.foundItem!==null){
     if(dialog.open)closePanel();
     $('found-text').textContent=t('ui.found',{name:itemLabel(state.foundItem)});
@@ -1778,6 +1929,8 @@ function dismissFound(){dispatch(acknowledgeItem);document.querySelector('[data-
 $('found-bubble').addEventListener('click',event=>{event.stopPropagation();dismissFound();});
 $('found-dialog').addEventListener('click',event=>{if(event.target===$('found-dialog'))dismissFound();});
 $('found-dialog').addEventListener('cancel',event=>event.preventDefault());
+$('notice-ok').addEventListener('click',()=>dispatch(()=>{state.notice=null;return true;}));
+$('notice-dialog').addEventListener('cancel',event=>event.preventDefault());
 $('creature-button').addEventListener('click',()=>{if(state.phase!=='egg'){sync();interactWithPokemon();startTimer();return;}dispatch(()=>heat());if(state.phase==='egg'){showToast(t(EGG_TOUCH_FEEDBACK[(state.heat-1)%EGG_TOUCH_FEEDBACK.length]),false,true);const button=$('creature-button');button.classList.remove('heat-reaction');void button.offsetWidth;button.classList.add('heat-reaction');}});
 $('creature-button').addEventListener('animationend',()=>$('creature-button').classList.remove('heat-reaction'));
 for(const k of CARE)$(k).addEventListener('animationend',()=>$(k).classList.remove('meter-changed'));
@@ -1810,7 +1963,7 @@ function resetGame(){
 if(canUseTesting())window.HatchMon=Object.freeze({reset:resetGame,roster:()=>HatchMonSocial.copy(obtainableRoster)});
 $('training-game').addEventListener('cancel',event=>{event.preventDefault();TrainingActivities.cancel();$('training-game').close();});
 $('training-game').addEventListener('close',()=>TrainingActivities.cancel());
-$('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;if(state.social.eggs.length)showPanel('beginning');else startNewBeginning();});
+$('restart').addEventListener('click',()=>{if(state.phase!=='dead')return;showPanel('beginning');});
 window.addEventListener('pagehide',()=>{if(runtimeStopped)return;TrainingActivities.cancel(true);stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();});
 window.addEventListener('pageshow',()=>{if(!runtimeStopped&&!document.hidden){resumeEggVisuals();render();}});
 document.addEventListener('visibilitychange',()=>{if(runtimeStopped)return;if(document.hidden){TrainingActivities.cancel(true);stopSocialCamera();clearPetReaction();suspendEggVisuals();sync();save();}else{resumeEggVisuals();sync();save();render();if(dialog.open)renderPanel();startTimer();}});

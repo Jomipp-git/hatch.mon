@@ -1,883 +1,1268 @@
 {
-  "total": 77,
-  "egg": [
-    {
-      "id": "pichu",
-      "name": "Pichu"
-    },
-    {
-      "id": "eevee",
-      "name": "Eevee"
-    },
-    {
-      "id": "tyrogue",
-      "name": "Tyrogue"
-    },
-    {
-      "id": "munchlax",
-      "name": "Munchlax"
-    },
-    {
-      "id": "riolu",
-      "name": "Riolu"
-    },
-    {
-      "id": "toxel",
-      "name": "Toxel"
-    },
-    {
-      "id": "cleffa",
-      "name": "Cleffa"
-    },
-    {
-      "id": "igglybuff",
-      "name": "Igglybuff"
-    },
-    {
-      "id": "togepi",
-      "name": "Togepi"
-    },
-    {
-      "id": "azurill",
-      "name": "Azurill"
-    },
-    {
-      "id": "mantyke",
-      "name": "Mantyke"
-    },
-    {
-      "id": "elekid",
-      "name": "Elekid"
-    },
-    {
-      "id": "magby",
-      "name": "Magby"
-    },
-    {
-      "id": "bulbasaur",
-      "name": "Bulbasaur"
-    },
-    {
-      "id": "charmander",
-      "name": "Charmander"
-    },
-    {
-      "id": "squirtle",
-      "name": "Squirtle"
-    },
-    {
-      "id": "dratini",
-      "name": "Dratini"
-    },
-    {
-      "id": "abra",
-      "name": "Abra"
-    },
-    {
-      "id": "growlithe",
-      "name": "Growlithe"
-    },
-    {
-      "id": "chingling",
-      "name": "Chingling"
-    },
-    {
-      "id": "budew",
-      "name": "Budew"
-    },
-    {
-      "id": "wynaut",
-      "name": "Wynaut"
-    },
-    {
-      "id": "bonsly",
-      "name": "Bonsly"
-    },
-    {
-      "id": "mimejr",
-      "name": "Mime Jr."
-    },
-    {
-      "id": "happiny",
-      "name": "Happiny"
-    },
-    {
-      "id": "smoochum",
-      "name": "Smoochum"
-    }
-  ],
-  "evolutionOnly": [
-    {
-      "id": "pikachu",
-      "name": "Pikachu"
-    },
-    {
-      "id": "vaporeon",
-      "name": "Vaporeon"
-    },
-    {
-      "id": "jolteon",
-      "name": "Jolteon"
-    },
-    {
-      "id": "flareon",
-      "name": "Flareon"
-    },
-    {
-      "id": "espeon",
-      "name": "Espeon"
-    },
-    {
-      "id": "umbreon",
-      "name": "Umbreon"
-    },
-    {
-      "id": "leafeon",
-      "name": "Leafeon"
-    },
-    {
-      "id": "glaceon",
-      "name": "Glaceon"
-    },
-    {
-      "id": "sylveon",
-      "name": "Sylveon"
-    },
-    {
-      "id": "hitmonlee",
-      "name": "Hitmonlee"
-    },
-    {
-      "id": "hitmonchan",
-      "name": "Hitmonchan"
-    },
-    {
-      "id": "hitmontop",
-      "name": "Hitmontop"
-    },
-    {
-      "id": "snorlax",
-      "name": "Snorlax"
-    },
-    {
-      "id": "lucario",
-      "name": "Lucario"
-    },
-    {
-      "id": "toxtricityamp",
-      "name": "Toxtricity (Amped Form)"
-    },
-    {
-      "id": "toxtricitylow",
-      "name": "Toxtricity (Low Key Form)"
-    },
-    {
-      "id": "clefairy",
-      "name": "Clefairy"
-    },
-    {
-      "id": "jigglypuff",
-      "name": "Jigglypuff"
-    },
-    {
-      "id": "togetic",
-      "name": "Togetic"
-    },
-    {
-      "id": "marill",
-      "name": "Marill"
-    },
-    {
-      "id": "mantine",
-      "name": "Mantine"
-    },
-    {
-      "id": "electabuzz",
-      "name": "Electabuzz"
-    },
-    {
-      "id": "magmar",
-      "name": "Magmar"
-    },
-    {
-      "id": "ivysaur",
-      "name": "Ivysaur"
-    },
-    {
-      "id": "charmeleon",
-      "name": "Charmeleon"
-    },
-    {
-      "id": "wartortle",
-      "name": "Wartortle"
-    },
-    {
-      "id": "dragonair",
-      "name": "Dragonair"
-    },
-    {
-      "id": "kadabra",
-      "name": "Kadabra"
-    },
-    {
-      "id": "arcanine",
-      "name": "Arcanine"
-    },
-    {
-      "id": "chimecho",
-      "name": "Chimecho"
-    },
-    {
-      "id": "roselia",
-      "name": "Roselia"
-    },
-    {
-      "id": "wobbuffet",
-      "name": "Wobbuffet"
-    },
-    {
-      "id": "sudowoodo",
-      "name": "Sudowoodo"
-    },
-    {
-      "id": "mrmime",
-      "name": "Mr. Mime"
-    },
-    {
-      "id": "chansey",
-      "name": "Chansey"
-    },
-    {
-      "id": "jynx",
-      "name": "Jynx"
-    },
-    {
-      "id": "raichu",
-      "name": "Raichu"
-    },
-    {
-      "id": "raichualola",
-      "name": "Raichu (Alolan Form)"
-    },
-    {
-      "id": "clefable",
-      "name": "Clefable"
-    },
-    {
-      "id": "wigglytuff",
-      "name": "Wigglytuff"
-    },
-    {
-      "id": "togekiss",
-      "name": "Togekiss"
-    },
-    {
-      "id": "azumarill",
-      "name": "Azumarill"
-    },
-    {
-      "id": "electivire",
-      "name": "Electivire"
-    },
-    {
-      "id": "magmortar",
-      "name": "Magmortar"
-    },
-    {
-      "id": "venusaur",
-      "name": "Venusaur"
-    },
-    {
-      "id": "charizard",
-      "name": "Charizard"
-    },
-    {
-      "id": "blastoise",
-      "name": "Blastoise"
-    },
-    {
-      "id": "dragonite",
-      "name": "Dragonite"
-    },
-    {
-      "id": "alakazam",
-      "name": "Alakazam"
-    },
-    {
-      "id": "roserade",
-      "name": "Roserade"
-    },
-    {
-      "id": "blissey",
-      "name": "Blissey"
-    }
-  ],
-  "dexOrder": [
-    {
-      "id": "bulbasaur",
-      "name": "Bulbasaur"
-    },
-    {
-      "id": "ivysaur",
-      "name": "Ivysaur"
-    },
-    {
-      "id": "venusaur",
-      "name": "Venusaur"
-    },
-    {
-      "id": "charmander",
-      "name": "Charmander"
-    },
-    {
-      "id": "charmeleon",
-      "name": "Charmeleon"
-    },
-    {
-      "id": "charizard",
-      "name": "Charizard"
-    },
-    {
-      "id": "squirtle",
-      "name": "Squirtle"
-    },
-    {
-      "id": "wartortle",
-      "name": "Wartortle"
-    },
-    {
-      "id": "blastoise",
-      "name": "Blastoise"
-    },
-    {
-      "id": "pikachu",
-      "name": "Pikachu"
-    },
-    {
-      "id": "raichu",
-      "name": "Raichu"
-    },
-    {
-      "id": "raichualola",
-      "name": "Raichu (Alolan Form)"
-    },
-    {
-      "id": "clefairy",
-      "name": "Clefairy"
-    },
-    {
-      "id": "clefable",
-      "name": "Clefable"
-    },
-    {
-      "id": "jigglypuff",
-      "name": "Jigglypuff"
-    },
-    {
-      "id": "wigglytuff",
-      "name": "Wigglytuff"
-    },
-    {
-      "id": "growlithe",
-      "name": "Growlithe"
-    },
-    {
-      "id": "arcanine",
-      "name": "Arcanine"
-    },
-    {
-      "id": "abra",
-      "name": "Abra"
-    },
-    {
-      "id": "kadabra",
-      "name": "Kadabra"
-    },
-    {
-      "id": "alakazam",
-      "name": "Alakazam"
-    },
-    {
-      "id": "hitmonlee",
-      "name": "Hitmonlee"
-    },
-    {
-      "id": "hitmonchan",
-      "name": "Hitmonchan"
-    },
-    {
-      "id": "chansey",
-      "name": "Chansey"
-    },
-    {
-      "id": "mrmime",
-      "name": "Mr. Mime"
-    },
-    {
-      "id": "jynx",
-      "name": "Jynx"
-    },
-    {
-      "id": "electabuzz",
-      "name": "Electabuzz"
-    },
-    {
-      "id": "magmar",
-      "name": "Magmar"
-    },
-    {
-      "id": "eevee",
-      "name": "Eevee"
-    },
-    {
-      "id": "vaporeon",
-      "name": "Vaporeon"
-    },
-    {
-      "id": "jolteon",
-      "name": "Jolteon"
-    },
-    {
-      "id": "flareon",
-      "name": "Flareon"
-    },
-    {
-      "id": "snorlax",
-      "name": "Snorlax"
-    },
-    {
-      "id": "dratini",
-      "name": "Dratini"
-    },
-    {
-      "id": "dragonair",
-      "name": "Dragonair"
-    },
-    {
-      "id": "dragonite",
-      "name": "Dragonite"
-    },
-    {
-      "id": "pichu",
-      "name": "Pichu"
-    },
-    {
-      "id": "cleffa",
-      "name": "Cleffa"
-    },
-    {
-      "id": "igglybuff",
-      "name": "Igglybuff"
-    },
-    {
-      "id": "togepi",
-      "name": "Togepi"
-    },
-    {
-      "id": "togetic",
-      "name": "Togetic"
-    },
-    {
-      "id": "marill",
-      "name": "Marill"
-    },
-    {
-      "id": "azumarill",
-      "name": "Azumarill"
-    },
-    {
-      "id": "sudowoodo",
-      "name": "Sudowoodo"
-    },
-    {
-      "id": "espeon",
-      "name": "Espeon"
-    },
-    {
-      "id": "umbreon",
-      "name": "Umbreon"
-    },
-    {
-      "id": "wobbuffet",
-      "name": "Wobbuffet"
-    },
-    {
-      "id": "mantine",
-      "name": "Mantine"
-    },
-    {
-      "id": "tyrogue",
-      "name": "Tyrogue"
-    },
-    {
-      "id": "hitmontop",
-      "name": "Hitmontop"
-    },
-    {
-      "id": "smoochum",
-      "name": "Smoochum"
-    },
-    {
-      "id": "elekid",
-      "name": "Elekid"
-    },
-    {
-      "id": "magby",
-      "name": "Magby"
-    },
-    {
-      "id": "blissey",
-      "name": "Blissey"
-    },
-    {
-      "id": "azurill",
-      "name": "Azurill"
-    },
-    {
-      "id": "roselia",
-      "name": "Roselia"
-    },
-    {
-      "id": "chimecho",
-      "name": "Chimecho"
-    },
-    {
-      "id": "wynaut",
-      "name": "Wynaut"
-    },
-    {
-      "id": "budew",
-      "name": "Budew"
-    },
-    {
-      "id": "roserade",
-      "name": "Roserade"
-    },
-    {
-      "id": "chingling",
-      "name": "Chingling"
-    },
-    {
-      "id": "bonsly",
-      "name": "Bonsly"
-    },
-    {
-      "id": "mimejr",
-      "name": "Mime Jr."
-    },
-    {
-      "id": "happiny",
-      "name": "Happiny"
-    },
-    {
-      "id": "munchlax",
-      "name": "Munchlax"
-    },
-    {
-      "id": "riolu",
-      "name": "Riolu"
-    },
-    {
-      "id": "lucario",
-      "name": "Lucario"
-    },
-    {
-      "id": "mantyke",
-      "name": "Mantyke"
-    },
-    {
-      "id": "electivire",
-      "name": "Electivire"
-    },
-    {
-      "id": "magmortar",
-      "name": "Magmortar"
-    },
-    {
-      "id": "togekiss",
-      "name": "Togekiss"
-    },
-    {
-      "id": "leafeon",
-      "name": "Leafeon"
-    },
-    {
-      "id": "glaceon",
-      "name": "Glaceon"
-    },
-    {
-      "id": "sylveon",
-      "name": "Sylveon"
-    },
-    {
-      "id": "toxel",
-      "name": "Toxel"
-    },
-    {
-      "id": "toxtricityamp",
-      "name": "Toxtricity (Amped Form)"
-    },
-    {
-      "id": "toxtricitylow",
-      "name": "Toxtricity (Low Key Form)"
-    }
-  ],
-  "excluded": [],
-  "edges": [
-    {
-      "from": "pichu",
-      "to": "pikachu",
-      "enabled": true
-    },
-    {
-      "from": "pikachu",
-      "to": "raichu",
-      "enabled": true
-    },
-    {
-      "from": "pikachu",
-      "to": "raichualola",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "vaporeon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "jolteon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "flareon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "espeon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "umbreon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "leafeon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "glaceon",
-      "enabled": true
-    },
-    {
-      "from": "eevee",
-      "to": "sylveon",
-      "enabled": true
-    },
-    {
-      "from": "tyrogue",
-      "to": "hitmonlee",
-      "enabled": true
-    },
-    {
-      "from": "tyrogue",
-      "to": "hitmonchan",
-      "enabled": true
-    },
-    {
-      "from": "tyrogue",
-      "to": "hitmontop",
-      "enabled": true
-    },
-    {
-      "from": "munchlax",
-      "to": "snorlax",
-      "enabled": true
-    },
-    {
-      "from": "riolu",
-      "to": "lucario",
-      "enabled": true
-    },
-    {
-      "from": "toxel",
-      "to": "toxtricityamp",
-      "enabled": true
-    },
-    {
-      "from": "toxel",
-      "to": "toxtricitylow",
-      "enabled": true
-    },
-    {
-      "from": "cleffa",
-      "to": "clefairy",
-      "enabled": true
-    },
-    {
-      "from": "clefairy",
-      "to": "clefable",
-      "enabled": true
-    },
-    {
-      "from": "igglybuff",
-      "to": "jigglypuff",
-      "enabled": true
-    },
-    {
-      "from": "jigglypuff",
-      "to": "wigglytuff",
-      "enabled": true
-    },
-    {
-      "from": "togepi",
-      "to": "togetic",
-      "enabled": true
-    },
-    {
-      "from": "togetic",
-      "to": "togekiss",
-      "enabled": true
-    },
-    {
-      "from": "azurill",
-      "to": "marill",
-      "enabled": true
-    },
-    {
-      "from": "marill",
-      "to": "azumarill",
-      "enabled": true
-    },
-    {
-      "from": "mantyke",
-      "to": "mantine",
-      "enabled": true
-    },
-    {
-      "from": "elekid",
-      "to": "electabuzz",
-      "enabled": true
-    },
-    {
-      "from": "electabuzz",
-      "to": "electivire",
-      "enabled": true
-    },
-    {
-      "from": "magby",
-      "to": "magmar",
-      "enabled": true
-    },
-    {
-      "from": "magmar",
-      "to": "magmortar",
-      "enabled": true
-    },
-    {
-      "from": "bulbasaur",
-      "to": "ivysaur",
-      "enabled": true
-    },
-    {
-      "from": "ivysaur",
-      "to": "venusaur",
-      "enabled": true
-    },
-    {
-      "from": "charmander",
-      "to": "charmeleon",
-      "enabled": true
-    },
-    {
-      "from": "charmeleon",
-      "to": "charizard",
-      "enabled": true
-    },
-    {
-      "from": "squirtle",
-      "to": "wartortle",
-      "enabled": true
-    },
-    {
-      "from": "wartortle",
-      "to": "blastoise",
-      "enabled": true
-    },
-    {
-      "from": "dratini",
-      "to": "dragonair",
-      "enabled": true
-    },
-    {
-      "from": "dragonair",
-      "to": "dragonite",
-      "enabled": true
-    },
-    {
-      "from": "abra",
-      "to": "kadabra",
-      "enabled": true
-    },
-    {
-      "from": "kadabra",
-      "to": "alakazam",
-      "enabled": true
-    },
-    {
-      "from": "growlithe",
-      "to": "arcanine",
-      "enabled": true
-    },
-    {
-      "from": "chingling",
-      "to": "chimecho",
-      "enabled": true
-    },
-    {
-      "from": "budew",
-      "to": "roselia",
-      "enabled": true
-    },
-    {
-      "from": "roselia",
-      "to": "roserade",
-      "enabled": true
-    },
-    {
-      "from": "wynaut",
-      "to": "wobbuffet",
-      "enabled": true
-    },
-    {
-      "from": "bonsly",
-      "to": "sudowoodo",
-      "enabled": true
-    },
-    {
-      "from": "mimejr",
-      "to": "mrmime",
-      "enabled": true
-    },
-    {
-      "from": "happiny",
-      "to": "chansey",
-      "enabled": true
-    },
-    {
-      "from": "chansey",
-      "to": "blissey",
-      "enabled": true
-    },
-    {
-      "from": "smoochum",
-      "to": "jynx",
-      "enabled": true
-    }
-  ]
+ "total": 112,
+ "egg": [
+  {
+   "id": "pichu",
+   "name": "Pichu"
+  },
+  {
+   "id": "eevee",
+   "name": "Eevee"
+  },
+  {
+   "id": "tyrogue",
+   "name": "Tyrogue"
+  },
+  {
+   "id": "munchlax",
+   "name": "Munchlax"
+  },
+  {
+   "id": "riolu",
+   "name": "Riolu"
+  },
+  {
+   "id": "toxel",
+   "name": "Toxel"
+  },
+  {
+   "id": "cleffa",
+   "name": "Cleffa"
+  },
+  {
+   "id": "igglybuff",
+   "name": "Igglybuff"
+  },
+  {
+   "id": "togepi",
+   "name": "Togepi"
+  },
+  {
+   "id": "azurill",
+   "name": "Azurill"
+  },
+  {
+   "id": "mantyke",
+   "name": "Mantyke"
+  },
+  {
+   "id": "elekid",
+   "name": "Elekid"
+  },
+  {
+   "id": "magby",
+   "name": "Magby"
+  },
+  {
+   "id": "bulbasaur",
+   "name": "Bulbasaur"
+  },
+  {
+   "id": "charmander",
+   "name": "Charmander"
+  },
+  {
+   "id": "squirtle",
+   "name": "Squirtle"
+  },
+  {
+   "id": "dratini",
+   "name": "Dratini"
+  },
+  {
+   "id": "abra",
+   "name": "Abra"
+  },
+  {
+   "id": "growlithe",
+   "name": "Growlithe"
+  },
+  {
+   "id": "chingling",
+   "name": "Chingling"
+  },
+  {
+   "id": "budew",
+   "name": "Budew"
+  },
+  {
+   "id": "wynaut",
+   "name": "Wynaut"
+  },
+  {
+   "id": "bonsly",
+   "name": "Bonsly"
+  },
+  {
+   "id": "mimejr",
+   "name": "Mime Jr."
+  },
+  {
+   "id": "happiny",
+   "name": "Happiny"
+  },
+  {
+   "id": "smoochum",
+   "name": "Smoochum"
+  },
+  {
+   "id": "caterpie",
+   "name": "Caterpie"
+  },
+  {
+   "id": "pidgey",
+   "name": "Pidgey"
+  },
+  {
+   "id": "rattata",
+   "name": "Rattata"
+  },
+  {
+   "id": "rattataalolanform",
+   "name": "Rattata (Alolan Form)"
+  },
+  {
+   "id": "vulpix",
+   "name": "Vulpix"
+  },
+  {
+   "id": "vulpixalolanform",
+   "name": "Vulpix (Alolan Form)"
+  },
+  {
+   "id": "chikorita",
+   "name": "Chikorita"
+  },
+  {
+   "id": "treecko",
+   "name": "Treecko"
+  },
+  {
+   "id": "ralts",
+   "name": "Ralts"
+  },
+  {
+   "id": "aron",
+   "name": "Aron"
+  },
+  {
+   "id": "piplup",
+   "name": "Piplup"
+  },
+  {
+   "id": "tinkatink",
+   "name": "Tinkatink"
+  },
+  {
+   "id": "lapras",
+   "name": "Lapras"
+  },
+  {
+   "id": "mew",
+   "name": "Mew"
+  }
+ ],
+ "evolutionOnly": [
+  {
+   "id": "pikachu",
+   "name": "Pikachu"
+  },
+  {
+   "id": "vaporeon",
+   "name": "Vaporeon"
+  },
+  {
+   "id": "jolteon",
+   "name": "Jolteon"
+  },
+  {
+   "id": "flareon",
+   "name": "Flareon"
+  },
+  {
+   "id": "espeon",
+   "name": "Espeon"
+  },
+  {
+   "id": "umbreon",
+   "name": "Umbreon"
+  },
+  {
+   "id": "leafeon",
+   "name": "Leafeon"
+  },
+  {
+   "id": "glaceon",
+   "name": "Glaceon"
+  },
+  {
+   "id": "sylveon",
+   "name": "Sylveon"
+  },
+  {
+   "id": "hitmonlee",
+   "name": "Hitmonlee"
+  },
+  {
+   "id": "hitmonchan",
+   "name": "Hitmonchan"
+  },
+  {
+   "id": "hitmontop",
+   "name": "Hitmontop"
+  },
+  {
+   "id": "snorlax",
+   "name": "Snorlax"
+  },
+  {
+   "id": "lucario",
+   "name": "Lucario"
+  },
+  {
+   "id": "toxtricityamp",
+   "name": "Toxtricity (Amped Form)"
+  },
+  {
+   "id": "toxtricitylow",
+   "name": "Toxtricity (Low Key Form)"
+  },
+  {
+   "id": "clefairy",
+   "name": "Clefairy"
+  },
+  {
+   "id": "jigglypuff",
+   "name": "Jigglypuff"
+  },
+  {
+   "id": "togetic",
+   "name": "Togetic"
+  },
+  {
+   "id": "marill",
+   "name": "Marill"
+  },
+  {
+   "id": "mantine",
+   "name": "Mantine"
+  },
+  {
+   "id": "electabuzz",
+   "name": "Electabuzz"
+  },
+  {
+   "id": "magmar",
+   "name": "Magmar"
+  },
+  {
+   "id": "ivysaur",
+   "name": "Ivysaur"
+  },
+  {
+   "id": "charmeleon",
+   "name": "Charmeleon"
+  },
+  {
+   "id": "wartortle",
+   "name": "Wartortle"
+  },
+  {
+   "id": "dragonair",
+   "name": "Dragonair"
+  },
+  {
+   "id": "kadabra",
+   "name": "Kadabra"
+  },
+  {
+   "id": "arcanine",
+   "name": "Arcanine"
+  },
+  {
+   "id": "chimecho",
+   "name": "Chimecho"
+  },
+  {
+   "id": "roselia",
+   "name": "Roselia"
+  },
+  {
+   "id": "wobbuffet",
+   "name": "Wobbuffet"
+  },
+  {
+   "id": "sudowoodo",
+   "name": "Sudowoodo"
+  },
+  {
+   "id": "mrmime",
+   "name": "Mr. Mime"
+  },
+  {
+   "id": "chansey",
+   "name": "Chansey"
+  },
+  {
+   "id": "jynx",
+   "name": "Jynx"
+  },
+  {
+   "id": "metapod",
+   "name": "Metapod"
+  },
+  {
+   "id": "pidgeotto",
+   "name": "Pidgeotto"
+  },
+  {
+   "id": "raticate",
+   "name": "Raticate"
+  },
+  {
+   "id": "raticatealolanform",
+   "name": "Raticate (Alolan Form)"
+  },
+  {
+   "id": "ninetales",
+   "name": "Ninetales"
+  },
+  {
+   "id": "ninetalesalolanform",
+   "name": "Ninetales (Alolan Form)"
+  },
+  {
+   "id": "bayleef",
+   "name": "Bayleef"
+  },
+  {
+   "id": "grovyle",
+   "name": "Grovyle"
+  },
+  {
+   "id": "kirlia",
+   "name": "Kirlia"
+  },
+  {
+   "id": "lairon",
+   "name": "Lairon"
+  },
+  {
+   "id": "prinplup",
+   "name": "Prinplup"
+  },
+  {
+   "id": "tinkatuff",
+   "name": "Tinkatuff"
+  },
+  {
+   "id": "raichu",
+   "name": "Raichu"
+  },
+  {
+   "id": "raichualola",
+   "name": "Raichu (Alolan Form)"
+  },
+  {
+   "id": "clefable",
+   "name": "Clefable"
+  },
+  {
+   "id": "wigglytuff",
+   "name": "Wigglytuff"
+  },
+  {
+   "id": "togekiss",
+   "name": "Togekiss"
+  },
+  {
+   "id": "azumarill",
+   "name": "Azumarill"
+  },
+  {
+   "id": "electivire",
+   "name": "Electivire"
+  },
+  {
+   "id": "magmortar",
+   "name": "Magmortar"
+  },
+  {
+   "id": "venusaur",
+   "name": "Venusaur"
+  },
+  {
+   "id": "charizard",
+   "name": "Charizard"
+  },
+  {
+   "id": "blastoise",
+   "name": "Blastoise"
+  },
+  {
+   "id": "dragonite",
+   "name": "Dragonite"
+  },
+  {
+   "id": "alakazam",
+   "name": "Alakazam"
+  },
+  {
+   "id": "roserade",
+   "name": "Roserade"
+  },
+  {
+   "id": "blissey",
+   "name": "Blissey"
+  },
+  {
+   "id": "butterfree",
+   "name": "Butterfree"
+  },
+  {
+   "id": "pidgeot",
+   "name": "Pidgeot"
+  },
+  {
+   "id": "meganium",
+   "name": "Meganium"
+  },
+  {
+   "id": "sceptile",
+   "name": "Sceptile"
+  },
+  {
+   "id": "gardevoir",
+   "name": "Gardevoir"
+  },
+  {
+   "id": "gallade",
+   "name": "Gallade"
+  },
+  {
+   "id": "aggron",
+   "name": "Aggron"
+  },
+  {
+   "id": "empoleon",
+   "name": "Empoleon"
+  },
+  {
+   "id": "tinkaton",
+   "name": "Tinkaton"
+  }
+ ],
+ "dexOrder": [
+  {
+   "id": "bulbasaur",
+   "name": "Bulbasaur"
+  },
+  {
+   "id": "ivysaur",
+   "name": "Ivysaur"
+  },
+  {
+   "id": "venusaur",
+   "name": "Venusaur"
+  },
+  {
+   "id": "charmander",
+   "name": "Charmander"
+  },
+  {
+   "id": "charmeleon",
+   "name": "Charmeleon"
+  },
+  {
+   "id": "charizard",
+   "name": "Charizard"
+  },
+  {
+   "id": "squirtle",
+   "name": "Squirtle"
+  },
+  {
+   "id": "wartortle",
+   "name": "Wartortle"
+  },
+  {
+   "id": "blastoise",
+   "name": "Blastoise"
+  },
+  {
+   "id": "caterpie",
+   "name": "Caterpie"
+  },
+  {
+   "id": "metapod",
+   "name": "Metapod"
+  },
+  {
+   "id": "butterfree",
+   "name": "Butterfree"
+  },
+  {
+   "id": "pidgey",
+   "name": "Pidgey"
+  },
+  {
+   "id": "pidgeotto",
+   "name": "Pidgeotto"
+  },
+  {
+   "id": "pidgeot",
+   "name": "Pidgeot"
+  },
+  {
+   "id": "rattata",
+   "name": "Rattata"
+  },
+  {
+   "id": "rattataalolanform",
+   "name": "Rattata (Alolan Form)"
+  },
+  {
+   "id": "raticate",
+   "name": "Raticate"
+  },
+  {
+   "id": "raticatealolanform",
+   "name": "Raticate (Alolan Form)"
+  },
+  {
+   "id": "pikachu",
+   "name": "Pikachu"
+  },
+  {
+   "id": "raichu",
+   "name": "Raichu"
+  },
+  {
+   "id": "raichualola",
+   "name": "Raichu (Alolan Form)"
+  },
+  {
+   "id": "clefairy",
+   "name": "Clefairy"
+  },
+  {
+   "id": "clefable",
+   "name": "Clefable"
+  },
+  {
+   "id": "vulpix",
+   "name": "Vulpix"
+  },
+  {
+   "id": "vulpixalolanform",
+   "name": "Vulpix (Alolan Form)"
+  },
+  {
+   "id": "ninetales",
+   "name": "Ninetales"
+  },
+  {
+   "id": "ninetalesalolanform",
+   "name": "Ninetales (Alolan Form)"
+  },
+  {
+   "id": "jigglypuff",
+   "name": "Jigglypuff"
+  },
+  {
+   "id": "wigglytuff",
+   "name": "Wigglytuff"
+  },
+  {
+   "id": "growlithe",
+   "name": "Growlithe"
+  },
+  {
+   "id": "arcanine",
+   "name": "Arcanine"
+  },
+  {
+   "id": "abra",
+   "name": "Abra"
+  },
+  {
+   "id": "kadabra",
+   "name": "Kadabra"
+  },
+  {
+   "id": "alakazam",
+   "name": "Alakazam"
+  },
+  {
+   "id": "hitmonlee",
+   "name": "Hitmonlee"
+  },
+  {
+   "id": "hitmonchan",
+   "name": "Hitmonchan"
+  },
+  {
+   "id": "chansey",
+   "name": "Chansey"
+  },
+  {
+   "id": "mrmime",
+   "name": "Mr. Mime"
+  },
+  {
+   "id": "jynx",
+   "name": "Jynx"
+  },
+  {
+   "id": "electabuzz",
+   "name": "Electabuzz"
+  },
+  {
+   "id": "magmar",
+   "name": "Magmar"
+  },
+  {
+   "id": "lapras",
+   "name": "Lapras"
+  },
+  {
+   "id": "eevee",
+   "name": "Eevee"
+  },
+  {
+   "id": "vaporeon",
+   "name": "Vaporeon"
+  },
+  {
+   "id": "jolteon",
+   "name": "Jolteon"
+  },
+  {
+   "id": "flareon",
+   "name": "Flareon"
+  },
+  {
+   "id": "snorlax",
+   "name": "Snorlax"
+  },
+  {
+   "id": "dratini",
+   "name": "Dratini"
+  },
+  {
+   "id": "dragonair",
+   "name": "Dragonair"
+  },
+  {
+   "id": "dragonite",
+   "name": "Dragonite"
+  },
+  {
+   "id": "mew",
+   "name": "Mew"
+  },
+  {
+   "id": "chikorita",
+   "name": "Chikorita"
+  },
+  {
+   "id": "bayleef",
+   "name": "Bayleef"
+  },
+  {
+   "id": "meganium",
+   "name": "Meganium"
+  },
+  {
+   "id": "pichu",
+   "name": "Pichu"
+  },
+  {
+   "id": "cleffa",
+   "name": "Cleffa"
+  },
+  {
+   "id": "igglybuff",
+   "name": "Igglybuff"
+  },
+  {
+   "id": "togepi",
+   "name": "Togepi"
+  },
+  {
+   "id": "togetic",
+   "name": "Togetic"
+  },
+  {
+   "id": "marill",
+   "name": "Marill"
+  },
+  {
+   "id": "azumarill",
+   "name": "Azumarill"
+  },
+  {
+   "id": "sudowoodo",
+   "name": "Sudowoodo"
+  },
+  {
+   "id": "espeon",
+   "name": "Espeon"
+  },
+  {
+   "id": "umbreon",
+   "name": "Umbreon"
+  },
+  {
+   "id": "wobbuffet",
+   "name": "Wobbuffet"
+  },
+  {
+   "id": "mantine",
+   "name": "Mantine"
+  },
+  {
+   "id": "tyrogue",
+   "name": "Tyrogue"
+  },
+  {
+   "id": "hitmontop",
+   "name": "Hitmontop"
+  },
+  {
+   "id": "smoochum",
+   "name": "Smoochum"
+  },
+  {
+   "id": "elekid",
+   "name": "Elekid"
+  },
+  {
+   "id": "magby",
+   "name": "Magby"
+  },
+  {
+   "id": "blissey",
+   "name": "Blissey"
+  },
+  {
+   "id": "treecko",
+   "name": "Treecko"
+  },
+  {
+   "id": "grovyle",
+   "name": "Grovyle"
+  },
+  {
+   "id": "sceptile",
+   "name": "Sceptile"
+  },
+  {
+   "id": "ralts",
+   "name": "Ralts"
+  },
+  {
+   "id": "kirlia",
+   "name": "Kirlia"
+  },
+  {
+   "id": "gardevoir",
+   "name": "Gardevoir"
+  },
+  {
+   "id": "azurill",
+   "name": "Azurill"
+  },
+  {
+   "id": "aron",
+   "name": "Aron"
+  },
+  {
+   "id": "lairon",
+   "name": "Lairon"
+  },
+  {
+   "id": "aggron",
+   "name": "Aggron"
+  },
+  {
+   "id": "roselia",
+   "name": "Roselia"
+  },
+  {
+   "id": "chimecho",
+   "name": "Chimecho"
+  },
+  {
+   "id": "wynaut",
+   "name": "Wynaut"
+  },
+  {
+   "id": "piplup",
+   "name": "Piplup"
+  },
+  {
+   "id": "prinplup",
+   "name": "Prinplup"
+  },
+  {
+   "id": "empoleon",
+   "name": "Empoleon"
+  },
+  {
+   "id": "budew",
+   "name": "Budew"
+  },
+  {
+   "id": "roserade",
+   "name": "Roserade"
+  },
+  {
+   "id": "chingling",
+   "name": "Chingling"
+  },
+  {
+   "id": "bonsly",
+   "name": "Bonsly"
+  },
+  {
+   "id": "mimejr",
+   "name": "Mime Jr."
+  },
+  {
+   "id": "happiny",
+   "name": "Happiny"
+  },
+  {
+   "id": "munchlax",
+   "name": "Munchlax"
+  },
+  {
+   "id": "riolu",
+   "name": "Riolu"
+  },
+  {
+   "id": "lucario",
+   "name": "Lucario"
+  },
+  {
+   "id": "mantyke",
+   "name": "Mantyke"
+  },
+  {
+   "id": "electivire",
+   "name": "Electivire"
+  },
+  {
+   "id": "magmortar",
+   "name": "Magmortar"
+  },
+  {
+   "id": "togekiss",
+   "name": "Togekiss"
+  },
+  {
+   "id": "leafeon",
+   "name": "Leafeon"
+  },
+  {
+   "id": "glaceon",
+   "name": "Glaceon"
+  },
+  {
+   "id": "gallade",
+   "name": "Gallade"
+  },
+  {
+   "id": "sylveon",
+   "name": "Sylveon"
+  },
+  {
+   "id": "toxel",
+   "name": "Toxel"
+  },
+  {
+   "id": "toxtricityamp",
+   "name": "Toxtricity (Amped Form)"
+  },
+  {
+   "id": "toxtricitylow",
+   "name": "Toxtricity (Low Key Form)"
+  },
+  {
+   "id": "tinkatink",
+   "name": "Tinkatink"
+  },
+  {
+   "id": "tinkatuff",
+   "name": "Tinkatuff"
+  },
+  {
+   "id": "tinkaton",
+   "name": "Tinkaton"
+  }
+ ],
+ "excluded": [],
+ "edges": [
+  {
+   "from": "pichu",
+   "to": "pikachu",
+   "enabled": true
+  },
+  {
+   "from": "pikachu",
+   "to": "raichu",
+   "enabled": true
+  },
+  {
+   "from": "pikachu",
+   "to": "raichualola",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "vaporeon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "jolteon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "flareon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "espeon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "umbreon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "leafeon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "glaceon",
+   "enabled": true
+  },
+  {
+   "from": "eevee",
+   "to": "sylveon",
+   "enabled": true
+  },
+  {
+   "from": "tyrogue",
+   "to": "hitmonlee",
+   "enabled": true
+  },
+  {
+   "from": "tyrogue",
+   "to": "hitmonchan",
+   "enabled": true
+  },
+  {
+   "from": "tyrogue",
+   "to": "hitmontop",
+   "enabled": true
+  },
+  {
+   "from": "munchlax",
+   "to": "snorlax",
+   "enabled": true
+  },
+  {
+   "from": "riolu",
+   "to": "lucario",
+   "enabled": true
+  },
+  {
+   "from": "toxel",
+   "to": "toxtricityamp",
+   "enabled": true
+  },
+  {
+   "from": "toxel",
+   "to": "toxtricitylow",
+   "enabled": true
+  },
+  {
+   "from": "cleffa",
+   "to": "clefairy",
+   "enabled": true
+  },
+  {
+   "from": "clefairy",
+   "to": "clefable",
+   "enabled": true
+  },
+  {
+   "from": "igglybuff",
+   "to": "jigglypuff",
+   "enabled": true
+  },
+  {
+   "from": "jigglypuff",
+   "to": "wigglytuff",
+   "enabled": true
+  },
+  {
+   "from": "togepi",
+   "to": "togetic",
+   "enabled": true
+  },
+  {
+   "from": "togetic",
+   "to": "togekiss",
+   "enabled": true
+  },
+  {
+   "from": "azurill",
+   "to": "marill",
+   "enabled": true
+  },
+  {
+   "from": "marill",
+   "to": "azumarill",
+   "enabled": true
+  },
+  {
+   "from": "mantyke",
+   "to": "mantine",
+   "enabled": true
+  },
+  {
+   "from": "elekid",
+   "to": "electabuzz",
+   "enabled": true
+  },
+  {
+   "from": "electabuzz",
+   "to": "electivire",
+   "enabled": true
+  },
+  {
+   "from": "magby",
+   "to": "magmar",
+   "enabled": true
+  },
+  {
+   "from": "magmar",
+   "to": "magmortar",
+   "enabled": true
+  },
+  {
+   "from": "bulbasaur",
+   "to": "ivysaur",
+   "enabled": true
+  },
+  {
+   "from": "ivysaur",
+   "to": "venusaur",
+   "enabled": true
+  },
+  {
+   "from": "charmander",
+   "to": "charmeleon",
+   "enabled": true
+  },
+  {
+   "from": "charmeleon",
+   "to": "charizard",
+   "enabled": true
+  },
+  {
+   "from": "squirtle",
+   "to": "wartortle",
+   "enabled": true
+  },
+  {
+   "from": "wartortle",
+   "to": "blastoise",
+   "enabled": true
+  },
+  {
+   "from": "dratini",
+   "to": "dragonair",
+   "enabled": true
+  },
+  {
+   "from": "dragonair",
+   "to": "dragonite",
+   "enabled": true
+  },
+  {
+   "from": "abra",
+   "to": "kadabra",
+   "enabled": true
+  },
+  {
+   "from": "kadabra",
+   "to": "alakazam",
+   "enabled": true
+  },
+  {
+   "from": "growlithe",
+   "to": "arcanine",
+   "enabled": true
+  },
+  {
+   "from": "chingling",
+   "to": "chimecho",
+   "enabled": true
+  },
+  {
+   "from": "budew",
+   "to": "roselia",
+   "enabled": true
+  },
+  {
+   "from": "roselia",
+   "to": "roserade",
+   "enabled": true
+  },
+  {
+   "from": "wynaut",
+   "to": "wobbuffet",
+   "enabled": true
+  },
+  {
+   "from": "bonsly",
+   "to": "sudowoodo",
+   "enabled": true
+  },
+  {
+   "from": "mimejr",
+   "to": "mrmime",
+   "enabled": true
+  },
+  {
+   "from": "happiny",
+   "to": "chansey",
+   "enabled": true
+  },
+  {
+   "from": "chansey",
+   "to": "blissey",
+   "enabled": true
+  },
+  {
+   "from": "smoochum",
+   "to": "jynx",
+   "enabled": true
+  },
+  {
+   "from": "caterpie",
+   "to": "metapod",
+   "enabled": true
+  },
+  {
+   "from": "metapod",
+   "to": "butterfree",
+   "enabled": true
+  },
+  {
+   "from": "pidgey",
+   "to": "pidgeotto",
+   "enabled": true
+  },
+  {
+   "from": "pidgeotto",
+   "to": "pidgeot",
+   "enabled": true
+  },
+  {
+   "from": "rattata",
+   "to": "raticate",
+   "enabled": true
+  },
+  {
+   "from": "rattataalolanform",
+   "to": "raticatealolanform",
+   "enabled": true
+  },
+  {
+   "from": "vulpix",
+   "to": "ninetales",
+   "enabled": true
+  },
+  {
+   "from": "vulpixalolanform",
+   "to": "ninetalesalolanform",
+   "enabled": true
+  },
+  {
+   "from": "chikorita",
+   "to": "bayleef",
+   "enabled": true
+  },
+  {
+   "from": "bayleef",
+   "to": "meganium",
+   "enabled": true
+  },
+  {
+   "from": "treecko",
+   "to": "grovyle",
+   "enabled": true
+  },
+  {
+   "from": "grovyle",
+   "to": "sceptile",
+   "enabled": true
+  },
+  {
+   "from": "ralts",
+   "to": "kirlia",
+   "enabled": true
+  },
+  {
+   "from": "kirlia",
+   "to": "gardevoir",
+   "enabled": true
+  },
+  {
+   "from": "kirlia",
+   "to": "gallade",
+   "enabled": true
+  },
+  {
+   "from": "aron",
+   "to": "lairon",
+   "enabled": true
+  },
+  {
+   "from": "lairon",
+   "to": "aggron",
+   "enabled": true
+  },
+  {
+   "from": "piplup",
+   "to": "prinplup",
+   "enabled": true
+  },
+  {
+   "from": "prinplup",
+   "to": "empoleon",
+   "enabled": true
+  },
+  {
+   "from": "tinkatink",
+   "to": "tinkatuff",
+   "enabled": true
+  },
+  {
+   "from": "tinkatuff",
+   "to": "tinkaton",
+   "enabled": true
+  }
+ ]
 }

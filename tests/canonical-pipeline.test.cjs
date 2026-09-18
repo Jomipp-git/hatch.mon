@@ -13,8 +13,13 @@ test('generated artifacts match the canonical workbook',()=>{
  assert.equal(result.status,0,`Regenerate with: python3 tools/syncCanonical.py\n${result.stderr||result.stdout}`);
 });
 
-test('the runtime admits exactly the species connected by a MinAgeDays rule',()=>{
- const admitted=new Set(archive.evolutionRules.filter(r=>r.MinAgeDays!==null).flatMap(r=>[r.FromId,r.ToId]));
+test('the runtime admits the species a MinAgeDays rule connects, plus the Standalone ones',()=>{
+ // Una especie que ni evoluciona ni viene de una evolucion no es extremo de ninguna regla, asi que
+ // la admision por MinAgeDays la deja fuera. La columna `Standalone` del libro es la decision, fila
+ // a fila, de meterla igualmente; a diferencia de Ditto, estas si son companeros jugables.
+ const standalone=archive.pokemon.filter(p=>p.Standalone===true).map(p=>p.PokemonId);
+ assert.ok(standalone.length,'el libro trae al menos una especie suelta');
+ const admitted=new Set([...archive.evolutionRules.filter(r=>r.MinAgeDays!==null).flatMap(r=>[r.FromId,r.ToId]),...standalone]);
  assert.deepEqual(run('Object.values(evolutionTable).map(e=>e.canonicalId)').sort(),[...admitted].sort());
  assert.deepEqual(run('HATCHMON_DATA.evolutionRules.map(r=>r.RuleId)').sort(),
   archive.evolutionRules.filter(r=>r.MinAgeDays!==null).map(r=>r.RuleId).sort());

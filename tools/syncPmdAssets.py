@@ -9,7 +9,7 @@ BASE='https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/'
 OUT=ROOT/'assets/pmd'
 EMOTIONS=['Normal','Happy','Joyous','Angry','Sad','Pain','Surprised','Worried','Sigh']
 # Verified tracker.json subgroup names, never inferred from display-name similarity.
-FORMS={'0439A0':('0439','Mime_Jr_',None),'0122A0':('0122','Mr_Mime',None),'0026L0':('0026/0001','Raichu','Alola'),'0849A0':('0849','Toxtricity',None),'0849B0':('0849/0001','Toxtricity','Lowkey')}
+FORMS={'0439A0':('0439','Mime_Jr_',None),'0122A0':('0122','Mr_Mime',None),'0026L0':('0026/0001','Raichu','Alola'),'0849A0':('0849','Toxtricity',None),'0849B0':('0849/0001','Toxtricity','Lowkey'),'0019L0':('0019/0001','Rattata','Alola'),'0020L0':('0020/0001','Raticate','Alola'),'0037L0':('0037/0001','Vulpix','Alola'),'0038L0':('0038/0001','Ninetales','Alola')}
 def fetch(remote,path,args,optional=False):
  if path.exists() and not args.refresh:return True
  if args.offline:return path.exists()
@@ -56,9 +56,13 @@ def sync(row,tracker,args,states,shiny=False):
    x,y=min(b[0] for b in boxes),min(b[1] for b in boxes);right,bottom=max(b[2] for b in boxes),max(b[3] for b in boxes)
    meta['sprites'][name]={'type':'sheet','src':file.relative_to(ROOT).as_posix(),'width':w,'height':h,'columns':im.width//w,'row':0,'frames':len(durations),'durations':durations,'scale':3,'frameBounds':[list(im.crop((i*w,0,(i+1)*w,h)).getchannel('A').getbbox() or (0,0,1,1)) for i in range(len(durations))],'crop':{'x':x,'y':y,'width':right-x,'height':bottom-y}}
  for name in EMOTIONS:
-  if name not in node['portrait_files']:continue
   file=folder/'portraits'/(name+'.png')
-  if fetch('portrait/'+route+'/'+file.name,file,args,True):
+  # Un retrato que ya esta en disco cuenta aunque el tracker no lo liste: es el caso de un shiny que
+  # PMDCollab no ha dibujado y que se ha derivado aqui (Tinkatuff). No se intenta descargar, porque
+  # con --refresh el 404 lo dejaria sin registrar teniendo el fichero delante.
+  local=name not in node['portrait_files']
+  if local and not file.exists():continue
+  if local or fetch('portrait/'+route+'/'+file.name,file,args,True):
    im=Image.open(file);im.verify();meta['portraits'][name]=file.relative_to(ROOT).as_posix()
  for kind in ['sprite','portrait']:
   fetch(kind+'/'+route+'/credits.txt',folder/('credits-'+kind+'.txt'),args,True)

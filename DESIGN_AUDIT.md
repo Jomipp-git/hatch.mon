@@ -1294,6 +1294,140 @@ que está medido en **cero** —en iPhone SE la página ya scrollea—, o sea de
 ---
 ---
 
+# 1.7 Amabilidad · ritmo, 2026-09-16
+
+> **Superado el 18-09-2026.** El autor decidió rehacer el minijuego entero, así que la rejilla de
+> casillas que se afina aquí ya no existe. Se conserva porque las mediciones —y sobre todo el error
+> de mis propias cifras— siguen siendo el diagnóstico del que sale el diseño nuevo.
+
+Aplicado el medio pliego que es ritmo. Los puntos 1, 2, 3, 4, 6 y 7 del bloque 4; el 5 (que el eje sea
+el **criterio**) y el 8 (dos canales visuales) siguen abiertos y son lo que queda de la reconstrucción.
+
+## Una corrección a mis propias cifras
+
+`minigame-duration.cjs` daba **22,0 s** para Amabilidad y **44 monedas/min**. Estaba mal: el script
+sumaba `verdictDelay` (700 ms) a los cuatro minijuegos, y Amabilidad usaba una constante propia,
+`resolveDelay` de 300 ms, que el script no leía. La duración real era **19,2 s** y el pago **50
+monedas/min** — el desequilibrio era un 14 % peor de lo que dije. El script ya lee el runtime.
+
+## El hallazgo que faltaba: la ventana no sabía cuánto se pedía
+
+El bloque 4 lo dejó a medias. No es solo que el azar moviera la dificultad: es que **Amabilidad era el
+único de los cuatro cuya ventana no escalaba con el trabajo de la ronda**. Intelecto calcula la suya
+sobre la longitud de la cadena (`1200 + 900·luces`), Fuerza la hace crecer con la ronda (3,0 → 4,2 s)
+mientras estrecha la zona. Amabilidad tenía una ventana que **encogía** (1,8 → 1,08 s) mientras la
+cantidad de basura subía por sorteo. Los otros tres dan más tiempo según piden más; este daba menos.
+
+Eso explica lo que el autor describe y la medición de cadencia no alcanzaba a decir: no es que las
+rondas fueran rápidas, es que **la progresión iba al revés**.
+
+## Aplicado
+
+| | Antes | Ahora |
+|---|---|---|
+| Rondas | 7 | **5**, como Fuerza y Estilo |
+| Basura por ronda | sorteada 2–4 | **fija por ronda: 2·3·3·4·4** |
+| Ventana | plana, `1800 − 120·ronda` | **basura × presupuesto por pieza** |
+| Presupuesto por pieza | 900 → 270 ms, factor 3,3× por azar | **1.300 → 700 ms, −46 %** |
+| Pausa entre rondas | 1.300 ms (300 de veredicto) | **1.700 ms (700 de veredicto)**, como los otros tres |
+| Ronda más corta | 1,08 s, **más corta que la pausa** | 2,6 s, siempre más larga que la pausa |
+| Cadencia por ronda | 3,1 → 2,4 s | **4,3 a 5,2 s** (Fuerza: 4,7 a 5,9) |
+| Duración | 19,2 s | **23,8 s** (objetivo del pliego: 22–27) |
+| Pago por minuto | 50 | **40** (Fuerza 36, Intelecto 22) |
+| Denominador del marcador | la basura sorteada de **esa** partida | `CLEANUP_PIECES` = 16, constante |
+| Veredicto de ronda | «Siguiente ronda…» | «Has recogido 2 de 3» |
+| Tarjeta de ronda | «Recoge basura, deja plantas» | «3 de los 6 objetos son basura» |
+| Ronda limpia | agotaba la ventana igual | la cierra en el acto, como Fuerza |
+
+Dos efectos que no estaban en el pliego y salieron al medir:
+
+- **La mejor marca de Amabilidad no era comparable consigo misma.** El marcador 0–1000 se normalizaba
+  sobre la basura sorteada, así que dos partidas idénticas en habilidad daban marcas distintas y el
+  récord medía en parte la suerte. Con el reparto fijo el denominador es constante.
+- **Crédito parcial que no se veía.** Amabilidad puntúa por pieza desde siempre, pero entre rondas solo
+  decía «Siguiente ronda…» durante 300 ms. Una nota parcial que no se enseña no existe.
+
+## Lo que esto NO arregla, y es la decisión que queda
+
+Medido con `kindness-luck.cjs`: con las ventanas nuevas, **cualquier habilidad por debajo de unos 800 ms
+por pieza saca un 5 siempre**. El eje del tiempo ha dejado de discriminar, que era el objetivo — pero el
+eje que debía sustituirlo (el **criterio**: ¿es basura este objeto?) no se ha construido. Hoy los cinco
+objetos son siluetas monocromas del mismo color, fáciles de separar con un segundo por pieza.
+
+O sea: el minijuego ya no es injusto, pero con esto solo se vuelve **gratis**. El punto 8 del pliego
+—dos canales visuales para la categoría— y el 5 —que la curva suba la ambigüedad del juicio en vez de
+la velocidad— dejan de ser mejoras opcionales y pasan a ser lo que le devuelve la dificultad.
+
+*Límite del método:* el modelo R de `kindness-luck.cjs` supone tiempo constante por pieza y **ningún
+error de juicio**. Dice qué hace la geometría del tiempo, no cuánto se falla identificando.
+
+---
+---
+
+# 1.7 bis · Amabilidad es otro minijuego, 2026-09-18
+
+Decisión del autor: en vez de seguir afinando la rejilla de toques, **una caída continua con cesto**.
+Caen 26 objetos durante 25,2 s a velocidades distintas y se recogen las latas moviendo un cesto de
+lado a lado; una flor o una hoja en el cesto descuenta una lata.
+
+**Eso cierra el pliego entero, incluidos los dos puntos que el ritmo no podía cerrar.** El 16-09 dejé
+escrito que arreglar los tiempos dejaba el minijuego *gratis*: con las ventanas nuevas cualquier
+habilidad por debajo de ~800 ms por pieza sacaba un 5, porque el eje del tiempo dejaba de discriminar
+y el eje que debía sustituirlo —el criterio— no estaba construido. El juego nuevo no lo resuelve
+poniendo la dificultad en el juicio, sino **cambiando el eje a puntería en movimiento**, que es una
+habilidad continua y no una comprobación de umbral. Y de paso resuelve el punto 8: la categoría va por
+dos canales (tinta llena para las latas, verde claro para las plantas), no solo por la silueta.
+
+Los cuatro miden ahora cuatro cosas distintas de verdad: memoria, precisión temporal, precisión
+espacial a pulso y **puntería sobre objetivos en movimiento**.
+
+## Las dos propiedades que hacen que la nota sea habilidad
+
+Medidas con `tools/design/kindness-reach.cjs`, que sustituye a `kindness-luck.cjs` porque la pregunta
+cambió: ya no hay sorteo de cantidad, así que lo que hay que probar es si el cesto llega.
+
+| | Resultado |
+|---|---|
+| Pares de objetos que coinciden en la banda del cesto | **0** — nunca hay que elegir entre una lata y una planta |
+| Transiciones imposibles en 10.000 partidas con columnas reales | **0** |
+| Margen más ajustado visto | **165 ms** |
+| Cruzar la pista de punta a punta | 181 ms |
+| Hueco más corto entre dos objetos | 377 ms |
+
+La primera fue una restricción de diseño desde el principio: si dos objetos comparten la banda y uno
+es lata y el otro planta, hay draws en los que el +5 es imposible, y eso es azar de salida sobre una
+sesión ya cobrada — justo el defecto que la auditoría le encontró a la versión vieja.
+
+**Un ajuste que salió de medir, no de jugar:** el borde inferior de la banda estaba en el 94 % de la
+caída y dejaba solo **71 ms** de margen. La asimetría no era obvia: una lata desaparece en cuanto
+entra en la banda, pero una planta hay que seguir esquivándola hasta que **sale**, así que después de
+una planta el presupuesto para cruzar la pista es mucho menor. Con el borde en el 90 % el margen sube
+a 165 ms.
+
+## Lo demás medido
+
+| | Antes (rejilla, 16-09) | Ahora (caída) |
+|---|---|---|
+| Duración | 23,8 s | **25,2 s** |
+| Pago por minuto a un +5 | 40 | **38** (Fuerza 36, Intelecto 22) |
+| Curva | 1.300 → 700 ms por pieza (−46 %) | caída de **2.800 → 1.302 ms** (−54 %) |
+| Denominador del marcador | 16, fijo | **18 latas**, fijo |
+| Qué sortea el azar | orden y columna | orden y columna |
+
+## Un fallo encontrado de paso, en Estilo
+
+`performanceRatio()` divide por `total`, y Estilo devuelve antes de asignarlo, así que **el marcador
+0–1000 de Estilo era 0 en todas las partidas** desde que se añadió el marcador en la capa 1. No se
+había visto porque la nota 1–5 sí era correcta. Los dos módulos externos —Estilo y el Amabilidad
+nuevo— entregan ahora su rendimiento ya normalizado y `finish` lo recibe en vez de recalcularlo.
+
+*Límite del método:* todo lo de arriba es geometría, no telemetría. Supone que el jugador ve venir cada
+objeto y sale hacia él en cuanto puede; dice si da tiempo, no cuánto se falla distinguiendo una lata de
+una hoja ni si la sesión se disfruta.
+
+---
+---
+
 # Utilidades de medición
 
 Los scripts que produjeron las cifras de este documento viven en `tools/design/`, con su propio

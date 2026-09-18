@@ -11,18 +11,21 @@ const num=k=>{const m=src.match(new RegExp(k+':\\s*([0-9.]+)'));return m?parseFl
 const MEM=[2,3,4,5,6];
 const memoryFlash=num('memoryFlash'),memoryBase=num('memoryBase'),memoryStep=num('memoryStep');
 const strengthRounds=num('strengthRounds'),sBase=num('strengthWindowBase'),sStep=num('strengthWindowStep');
-const cleanRounds=num('cleanupRounds'),cBase=num('cleanupBase'),cStep=num('cleanupStep');
+// Amabilidad ya no tiene rondas: es una caida continua y su modulo sabe cuanto dura.
+globalThis.performance ??= {now:()=>0};
+require(require('node:path').join(__dirname,'..','..','cleanupCatch.js'));
+const catchGame=globalThis.CleanupCatch;
 const verdict=num('verdictDelay');
 const prep=1000;
 console.log('## Duración teórica de cada minijuego (ventanas completas, sin contar la lectura de reglas)\n');
 let iq=0;for(const n of MEM){iq+=n*memoryFlash + (memoryBase+memoryStep*n) + verdict;}
 iq+=prep*MEM.length;
 let st=0;for(let r=0;r<strengthRounds;r++){st+=(sBase+sStep*r)+verdict+prep;}
-let ki=0;for(let r=0;r<cleanRounds;r++){ki+=(cBase-cStep*r)+verdict+prep;}
+const ki=catchGame.duration();
 const rows=[
  ['Intelecto',iq,'5 secuencias de 2 a 6 luces'],
  ['Fuerza',st,'5 rondas de 3,0 a 4,2 s'],
- ['Amabilidad',ki,'7 tandas de 1,8 a 1,08 s'],
+ ['Amabilidad',ki,`${catchGame.config.cans} latas y ${catchGame.config.plants} plantas cayendo, SIN rondas`],
  ['Estilo',null,'5 trazados SIN tiempo máximo'],
 ];
 for(const [name,ms,note] of rows){
@@ -37,7 +40,8 @@ for(const [name,ms] of rows){
 console.log('\n## Curvas de dificultad, estrechamiento de la ronda 1 a la última');
 console.log(`  Intelecto   secuencia 2 -> 6 luces            (+200% de carga de memoria)`);
 console.log(`  Fuerza      nucleo 67 ms -> 35 ms             (-48%)`);
-console.log(`  Amabilidad  ventana ${cBase} ms -> ${cBase-cStep*(cleanRounds-1)} ms   (-${(100-(cBase-cStep*(cleanRounds-1))/cBase*100).toFixed(0)}%)`);
+{const last=catchGame.config.cans+catchGame.config.plants-1,a=catchGame.fallMs(0),b=catchGame.fallMs(last);
+ console.log(`  Amabilidad  caida ${Math.round(a)} ms -> ${Math.round(b)} ms   (-${(100-b/a*100).toFixed(0)}%)`);}
 console.log(`  Estilo      tolerancia 18 px -> 10 px         (-44%)`);
 console.log('\n## Mapeo de rendimiento a nota');
 console.log('  Fuerza / Amabilidad / Estilo: s normalizado 0..1 -> GRADE_THRESHOLDS [.92,.78,.58,.32]');

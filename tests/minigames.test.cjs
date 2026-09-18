@@ -14,7 +14,15 @@ for(const attribute of ['iq','strength','kindness','style']){
   const fire=(type,point)=>{for(const fn of canvas.events[type]||[])fn({pointerId:1,button:0,clientX:point[0],clientY:point[1],preventDefault(){}});};
   for(let r=0;r<5;r++){const path=run(`StyleTracing.path(${r},${canvas.dataset.seed})`);
    fire('pointerdown',path[0]);fire('pointermove',path[1]);fire('pointerup',path[1]);finish.fire('click');}
- }else advance(60000);assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
+ }else{
+  // El arnes fija Math.random en .5, asi que en Amabilidad TODO cae por el centro justo encima del
+  // cesto y quedarse quieto recogeria la partida entera. Se aparta el cesto, que es la version de
+  // Amabilidad de no jugar. (En el juego real la columna se sortea y un cesto quieto recoge ~38%.)
+  if(attribute==='kindness'){const lane=els['training-game-content'].children[3].children.find(e=>e.className==='catch-lane');
+   lane.rect={left:0,top:0,width:100,height:100};lane.setPointerCapture=()=>{};lane.hasPointerCapture=()=>false;lane.releasePointerCapture=()=>{};
+   lane.fire('pointerdown',{pointerId:1,button:0,clientX:0});}
+  advance(60000);
+ }assert.equal(run(`state.training.${attribute}`),1);assert.equal(run('state.trainer.energy'),5);assert.equal(run('state.care.energia'),92);assert.equal(run('state.care.hambre'),96);assert.equal(run('state.vital.dirt'),3);assert.ok(Math.abs(run('state.relationship.points')-.3)<1e-9);
  advance(60000);assert.equal(run(`state.training.${attribute}`),1);
 }
 const {run}=await setup();run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("")');
@@ -162,5 +170,44 @@ assert.equal(run('TrainingActivities.grade(0)'),1);assert.equal(run('TrainingAct
  run('TrainingActivities.cancel()');await flush();
  assert.equal(els['training-game'].open,false);
 }
-console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again, rules that explain for free and a Start that always starts, a round card and no duplicate completion.');
+// Amabilidad: caida continua con cesto. La cantidad de latas la fija la config y el azar solo elige
+// el orden y la columna, asi que el denominador del marcador no cambia entre partidas. Y ningun par
+// de objetos comparte la banda del cesto, que es lo que hace que el +5 sea siempre alcanzable.
+{
+ const {run,els,advance}=await setup();
+ const content=els['training-game-content'];
+ const field=()=>content.children[3];
+ const lane=()=>field().children.find(e=>e.className==='catch-lane');
+ const basket=()=>lane().children.find(e=>e.className==='catch-basket');
+ run("TrainingActivities.launch('kindness',{commit:()=>true})");
+ assert.ok(lane(),'la pista existe');
+ assert.ok(basket(),'y el cesto');
+ // Cantidad fija: el marcador 0-1000 se normaliza sobre ella y tiene que ser comparable consigo mismo.
+ const plan=run('CleanupCatch.plan()');
+ assert.equal(plan.length,run('CleanupCatch.config.cans+CleanupCatch.config.plants'));
+ assert.equal(plan.filter(i=>i.isCan).length,run('CleanupCatch.config.cans'),'siempre caen las mismas latas');
+ assert.equal(new Set(plan.map(i=>i.at)).size,plan.length,'y cada una sale en su momento, fijado por la config');
+ // Duracion dentro de lo pedido, que es lo que fija el pago por minuto.
+ const seconds=run('CleanupCatch.duration()')/1000;
+ assert.ok(seconds>=25&&seconds<=30,`la partida dura ${seconds.toFixed(1)} s, fuera de 25-30`);
+ // Dos objetos en la banda a la vez serian un +5 que depende del sorteo de columnas: azar de salida.
+ const cfg=run('JSON.stringify(CleanupCatch.config)')&&run('CleanupCatch.config');
+ const band=i=>[plan[i].at+cfg.catchTop*plan[i].fall,plan[i].at+cfg.catchBottom*plan[i].fall];
+ for(let i=0;i<plan.length;i++)for(let j=i+1;j<plan.length;j++){
+  const a=band(i),b=band(j);
+  assert.ok(Math.min(a[1],b[1])<=Math.max(a[0],b[0]),`los objetos ${i} y ${j} coinciden en la banda del cesto`);
+ }
+ // El cesto persigue al dedo, no salta: un arrastre de punta a punta no barre lo que hay en medio.
+ const l=lane();l.rect={left:0,top:0,width:100,height:100};l.setPointerCapture=()=>{};l.hasPointerCapture=()=>false;l.releasePointerCapture=()=>{};
+ const at=()=>parseFloat(basket().style.left);
+ l.fire('pointerdown',{pointerId:1,button:0,clientX:10});
+ advance(600);const left=at();
+ l.fire('pointermove',{pointerId:1,clientX:90});
+ advance(16);const justAfter=at();
+ assert.ok(justAfter-left<40,`el cesto se teletransporta: ${left} -> ${justAfter}`);
+ advance(400);
+ assert.ok(at()>left+40,'pero acaba llegando');
+ run('TrainingActivities.cancel()');
+}
+console.log('PASS four minigames: open, no early reward, cancel, timeout minimum, gains 1–5, single AP/physiology charge paid up front, refund only on involuntary cancel, small bond, haptics that respect reduced motion, a replay that charges again, rules that explain for free and a Start that always starts, a round card and no duplicate completion; and a falling-catch Kindness with a fixed can count, a chasing basket and no two objects sharing the catch band.');
 })().catch(e=>{console.error(e);process.exitCode=1});

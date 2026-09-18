@@ -32,7 +32,7 @@ con qué script y con qué cadencia salió.
 | `evolution-pacing.cjs` | En qué día termina de evolucionar cada línea, y cuánta vida queda después |
 | `breeding-gate.cjs` | Probabilidad de poder criar, condición a condición, por las dos vías: QR entre dos jugadores y Ditto en solitario. La ventana de etapa se lee de `LIFE_CONFIG`, no escrita a mano |
 | `minigame-duration.cjs` | Duración, pago por minuto y curva de dificultad de los cuatro minijuegos |
-| `kindness-luck.cjs` | Cuánto de la nota de Amabilidad es habilidad y cuánto el sorteo de basura por ronda |
+| `kindness-reach.cjs` | Si el cesto de Amabilidad llega siempre a tiempo caiga donde caiga, o si el sorteo de columnas decide la nota. Comprueba también que no haya dos objetos en la banda del cesto a la vez |
 
 ## Compatibilidad de saves entre versiones
 

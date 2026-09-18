@@ -8,7 +8,7 @@
  * volver a serializar el SVG en cada pasada era trabajo regalado.
  */
 'use strict';
-const MEMORIAL_FRAME_CONFIG={price:200,cell:8,slice:24};
+const MEMORIAL_FRAME_CONFIG={price:150,cell:8,slice:24};
 globalThis.MemorialFrames=(()=>{
  const CELL=MEMORIAL_FRAME_CONFIG.cell,SIZE=MEMORIAL_FRAME_CONFIG.slice;
  // `edge` es la línea de fuera, `base` el relleno del marco, `light` el bisel de dentro y

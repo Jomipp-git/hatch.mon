@@ -94,6 +94,11 @@ def generate():
     # in the runtime even without an evolution rule; the adapter needs the record to route them.
     ditto = {pid for pid, row in records.items() if row['EggGroup'] == 'Ditto'}
     admitted |= ditto
+    # A species that neither evolves nor comes from an evolution is an endpoint of no rule, so the
+    # MinAgeDays admission drops it. The Standalone column is the per-row decision to let it in, and
+    # unlike Ditto these are playable companions: they belong in the legacy-ID roster.
+    standalone = {pid for pid, row in records.items() if row.get('Standalone') is True}
+    admitted |= standalone
     resolved, pins = legacyIds(admitted - ditto, records)
     # A pruned runtime must stay self-contained: every reference an admitted species makes has
     # to land inside the admitted set, or the adapter would resolve it to null at load time.

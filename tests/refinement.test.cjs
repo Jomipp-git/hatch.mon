@@ -1,10 +1,22 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');const {setup}=require('./uiHarness.cjs');
 (async()=>{const {run,els,advance,flush}=await setup();
 assert.equal(run('PMD_STATE_FALLBACKS.startled.join(",")'),'Hurt,Cringe,Pain,Idle');
-const TrainingActivitiesPrepare=run('TrainingActivities.config.prepare')+40;run('TrainingActivities.launch("kindness",{commit:()=>true})');advance(TrainingActivitiesPrepare);
-// Las casillas ya no llevan rotulo: se identifican por el objeto, que es lo que dibuja el icono.
-const field=els['training-game-content'].children[3],buttons=field.children.filter(b=>b.tagName==='button'),b=buttons.find(b=>['papel','lata','botella'].includes(b.dataset.object)),labels=buttons.map(b=>b.dataset.object);
-b.fire('pointerdown');advance(1800);assert.deepEqual(buttons.map(b=>b.dataset.object),labels);b.fire('pointerup');b.fire('click');assert.equal(b.dataset.result,'correct');advance(100);assert.deepEqual(buttons.map(b=>b.dataset.object),labels);advance(TrainingActivitiesPrepare+400);assert.equal(b.disabled,false,'la tarjeta de ronda precede a la tanda siguiente');run('TrainingActivities.cancel()');
+// Amabilidad: el cesto persigue al dedo y solo recoge dentro de la banda pintada. Se comprueba con
+// el propio cesto, que es lo que el jugador ve, y no con una geometria escrita a mano.
+run('TrainingActivities.launch("kindness",{commit:()=>true})');
+const catchLane=els['training-game-content'].children[3].children.find(e=>e.className==='catch-lane');
+catchLane.rect={left:0,top:0,width:100,height:100};catchLane.setPointerCapture=()=>{};catchLane.hasPointerCapture=()=>false;catchLane.releasePointerCapture=()=>{};
+const catchBasket=catchLane.children.find(e=>e.className==='catch-basket');
+assert.equal(parseFloat(catchBasket.style.width),run('CleanupCatch.config.basketWidth')*100,'el cesto mide lo que dice la config');
+// Soltar el dedo deja el cesto donde estaba: no vuelve al centro a mitad de partida.
+catchLane.fire('pointerdown',{pointerId:1,button:0,clientX:20});advance(600);
+const parked=parseFloat(catchBasket.style.left);
+catchLane.fire('pointerup',{pointerId:1});advance(600);
+assert.equal(parseFloat(catchBasket.style.left),parked,'soltar no recoloca el cesto');
+// El teclado tambien mueve, que si no el minijuego solo existe para quien puede arrastrar.
+catchLane.fire('keydown',{key:'ArrowRight'});advance(600);
+assert.ok(parseFloat(catchBasket.style.left)>parked,'las flechas mueven el cesto');
+run('TrainingActivities.cancel()');
 run('collectionTab="pokedex";renderPokedex()');const grid=els['panel-content'].children.find(e=>e.className==='dex-grid');assert.equal(grid.children.length,run('obtainableRoster.total'));
 // National-dex order: Growlithe and Arcanine are adjacent, and no tile goes backwards.
 const dexNumbers=run('obtainableRoster.dexOrder.map(e=>PokemonData.get(e.id).DexNo)');
@@ -57,5 +69,5 @@ assert.deepEqual([...unknown],[],`motivos sin implementar: ${unknown.join(', ')}
 assert.equal(run('ShellSkins.motifImage({motif:"plain",motifColors:[]})'),'none');
 assert.ok(run('ShellSkins.motifImage({motif:"waves",motifColors:["#123456"]})').startsWith('url("data:image/svg+xml,'));
 assert.equal(run('ShellSkins.motifImage({motif:"inventado",motifColors:["#123456"]})'),'none','un motivo desconocido deja la carcasa lisa');
-console.log('PASS refinement: no-space mapping, held pointer never changes targets, transition gap, collection slots, comparable trio mass and shell palettes that grow with the evolution line, hand-drawn species motifs and per-action button edges.');
+console.log('PASS refinement: no-space mapping, a catch basket that chases the finger and answers the arrow keys, collection slots, comparable trio mass and shell palettes that grow with the evolution line, hand-drawn species motifs and per-action button edges.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -77,7 +77,7 @@ test('cloud loaded before script and game, logout flushes and reloads, account s
  const b=await boot({user:{id:'A'}});b.listener('SIGNED_IN',{user:{id:'B'}});assert.equal(b.el('game-root').hidden,true);assert.ok(b.calls.includes('close'));
 });
 test('authenticated UID is the sole source of admin access',async()=>{
- const admin=await boot({user:{id:'a81c13f7-a9d6-46d5-aa5c-66512b25ed68'}});
+ const admin=await boot({user:{id:'49729aeb-0075-47d3-8a91-86312e1acfe4'}});
  const user=await boot({user:{id:'another-user'}});
  assert.equal(admin.window.HatchAdmin.isAdmin(),true);
  assert.equal(user.window.HatchAdmin.isAdmin(),false);

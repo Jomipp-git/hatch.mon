@@ -1,6 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const {setup}=require('./uiHarness.cjs');
-const ADMIN_UID='a81c13f7-a9d6-46d5-aa5c-66512b25ed68';
+const ADMIN_UID='49729aeb-0075-47d3-8a91-86312e1acfe4';
 
 function authenticated(h,uid){h.win.HatchAdmin=Object.freeze({isAdmin:()=>uid===ADMIN_UID});}
 function clickOak(h,count){for(let index=0;index<count;index++)h.els['oak-portrait'].fire('click');}
@@ -161,4 +161,19 @@ test('an unreadable sandbox snapshot never overwrites the good save',async()=>{
  h.run('lockAdminCheats()');
  assert.equal(JSON.parse(h.storage.get('hatch.mon.v3')).coins,300,'el disco conserva la partida buena');
  assert.ok(h.run('storageWarning'),'y avisa de que no ha podido devolverla');
+});
+
+// El arenero tiene que VERSE. Sin marca se abre, se sigue jugando normal creyendo que cuenta, y al
+// cerrar la pestaña se tira todo lo hecho desde entonces: eso llego a pasar en una partida real.
+test('the sandbox is visible while it is open and says so when it closes',async()=>{
+ const h=await setup({development:false});authenticated(h,ADMIN_UID);
+ h.run('state.incubationRemaining=0;hatch(()=>0);finishBirthScene();setNickname("Rulo");save({immediate:true,commit:true})');
+ const badge=()=>h.els['game-root'].children.find(n=>n.id==='sandbox-badge')||null;
+ assert.equal(badge(),null,'sin trucos no hay marca');
+ clickOak(h,10);
+ assert.ok(badge(),'con los trucos abiertos si');
+ assert.equal(badge().textContent,h.run("t('testing.sandboxBadge')"));
+ h.run('lockAdminCheats()');
+ assert.equal(badge(),null,'y se va al cerrarlos');
+ assert.equal(h.els.toast.textContent,h.run("t('testing.sandboxDropped')"),'diciendo que se ha descartado');
 });

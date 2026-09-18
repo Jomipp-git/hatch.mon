@@ -346,9 +346,24 @@ const sandboxed=()=>cheatSandbox!==null;
 // Lo que se hace a proposito y se quiere conservar (rebobinar, reiniciar) pasa por aqui: guarda de
 // verdad y toma el estado actual como la nueva linea de salida del arenero.
 function commitCheatState(){if(sandboxed())cheatSandbox={snapshot:JSON.stringify(state)};save({immediate:true,commit:true});}
+// Aviso permanente mientras el arenero esta abierto. No es decoracion: es lo unico que distingue
+// "estoy probando" de "estoy jugando", y sin ello lo jugado de verdad se tira al cerrar.
+function paintSandboxBadge(){
+ const existing=document.getElementById('sandbox-badge');
+ if(!sandboxed()){existing?.remove();return;}
+ if(existing)return;
+ const badge=document.createElement('div');
+ badge.id='sandbox-badge';badge.textContent=t('testing.sandboxBadge');
+ badge.style.cssText='position:fixed;top:0;right:0;z-index:9999;padding:3px 10px;font:700 11px/1.4 ui-monospace,monospace;'
+  +'letter-spacing:.08em;background:#8a3b1f;color:#fff;border-bottom-left-radius:8px;pointer-events:none';
+ // Cuelga del propio juego y no del body: es parte de la interfaz, y asi existe tambien donde el
+ // arnes de pruebas monta la pagina sin body.
+ ($('game-root')||document.body)?.append(badge);
+}
 function lockAdminCheats(){
  const sandbox=cheatSandbox;cheatSandbox=null;
  adminCheatsUnlocked=false;adminOakClicks=0;adminOakLastClickAt=0;
+ paintSandboxBadge();
  if(!sandbox||runtimeStopped)return;
  let restored=null;
  try{const parsed=migrateSave(JSON.parse(sandbox.snapshot));if(validSave(parsed))restored=parsed;}catch{}
@@ -357,7 +372,7 @@ function lockAdminCheats(){
  // antes de abrir los trucos, porque el arenero no ha guardado nada. Guardar aqui seria justo lo
  // contrario de lo que promete el arenero.
  if(!restored){storageWarning=t('testing.sandboxLost');render(true);if(dialog.open)renderPanel();return;}
- state=restored;save({immediate:true,commit:true});sync();render(true);if(dialog.open)renderPanel();
+ state=restored;save({immediate:true,commit:true});sync();render(true);showToast(t('testing.sandboxDropped'),false,true);if(dialog.open)renderPanel();
 }
 function unlockAdminCheats(now=Date.now()){
  if(isDevelopment())return false;
@@ -368,6 +383,7 @@ function unlockAdminCheats(now=Date.now()){
  if(adminOakClicks<10)return false;
  adminCheatsUnlocked=true;adminOakClicks=0;adminOakLastClickAt=0;
  cheatSandbox={snapshot:JSON.stringify(state)};
+ paintSandboxBadge();
  if(dialog?.open&&panelName==='settings')renderPanel();
  return true;
 }

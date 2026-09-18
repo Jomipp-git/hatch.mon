@@ -17,11 +17,13 @@ const showForm=()=>{gateState('form');$('auth-form').hidden=false;formMode(mode)
 // failed sign-in was being reported. An error announces itself; a confirmation stays quiet.
 function say(text,kind='info'){message.textContent=text;message.dataset.kind=text?kind:'';}
 const sayError=error=>say(humanError(error),'error');
-const ADMIN_UID='a81c13f7-a9d6-46d5-aa5c-66512b25ed68';
+// Una lista y no un solo id: la cuenta anterior se borro y hubo que rehacerla, asi que añadir o
+// sustituir un administrador tiene que ser cambiar una linea y nada mas.
+const ADMIN_UIDS=Object.freeze(['49729aeb-0075-47d3-8a91-86312e1acfe4']);
 let started=false,starting=false,userId=null,service=null,recovery=new URLSearchParams(location.search).has('recovery'),mode=recovery?'update':'login',busy=false,leaving=false;
 const notify=text=>{const node=$('cloud-status');if(node){node.textContent=text;node.hidden=!text;}};
 function installAdminAccess(session){
- const allowed=session?.user?.id===ADMIN_UID;
+ const allowed=ADMIN_UIDS.includes(session?.user?.id);
  Object.defineProperty(window,'HatchAdmin',{value:Object.freeze({isAdmin:()=>allowed}),configurable:false,writable:false});
 }
 delete message.dataset.i18n;

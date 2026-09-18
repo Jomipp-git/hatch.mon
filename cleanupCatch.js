@@ -10,13 +10,16 @@ globalThis.CleanupCatch=(()=>{
  // marcador tiene que ser el mismo en todas las partidas o la mejor marca mide la suerte. El azar
  // elige el ORDEN, la columna y nada mas — azar de entrada, no de salida.
  const config=Object.freeze({
-  cans:18,plants:8,
-  // El hueco entre salidas se cierra con el indice, asi que la pista se va llenando. Con estos dos
-  // la ultima sale a los 23,9 s y la partida termina sobre los 26.
-  gapBase:1100,gapStep:12,
-  // Y cada objeto tarda menos en cruzar: 2.800 ms el primero, 1.550 el ultimo (-45%), que es la
-  // misma familia de curva que Fuerza (-48%) y Estilo (-44%). Es la unica curva que hay.
-  fallBase:2800,fallDrop:1250,
+  // Con 18+8 el juego salia demasiado facil, y la medicion decia por que: solo el 2% de los pasos
+  // de un objeto al siguiente dejaba menos de 250 ms de margen, o sea que casi nunca habia prisa.
+  // Con 22+10 ese porcentaje sube al 17% y el margen del peor caso baja de 167 ms a 35. Mas arriba
+  // no se puede: a 34 objetos el margen se vuelve negativo y el +5 empieza a depender del sorteo.
+  cans:22,plants:10,
+  // El hueco entre salidas se cierra con el indice, asi que la pista se va llenando.
+  gapBase:940,gapStep:10,
+  // Y cada objeto tarda menos en cruzar: 2.650 ms el primero, 1.450 el ultimo (-45%), la misma
+  // familia de curva que Fuerza (-48%) y Estilo (-44%). Es la unica curva que hay.
+  fallBase:2650,fallDrop:1200,
   // «Caen a diferentes velocidades»: tres ritmos que rotan por indice. Es determinista —la suma de
   // dificultad no cambia entre partidas— pero en pantalla nunca caen dos iguales seguidos.
   fallVariation:Object.freeze([1,.84,1.16]),

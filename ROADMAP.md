@@ -204,8 +204,8 @@ están afinados; Amabilidad se replanteaba entero, con un pliego de 8 puntos.
 proporcional al trabajo, pausa nunca más larga que el juego). Quedó superado por el rediseño.
 
 **Hecho, 18-09-2026: Amabilidad es un minijuego nuevo.** Decisión del autor: la rejilla de toques pasó
-a ser una **caída continua con cesto**, en `cleanupCatch.js`. Caen 26 objetos durante 25,2 s —18 latas
-y 8 plantas, siempre los mismos— a velocidades distintas, y se recogen las latas arrastrando un cesto
+a ser una **caída continua con cesto**, en `cleanupCatch.js`. Caen 32 objetos durante 25,7 s —22 latas
+y 10 plantas, siempre los mismos— a velocidades distintas, y se recogen las latas arrastrando un cesto
 de lado a lado; una planta en el cesto descuenta una lata. Eso cierra los ocho puntos del pliego del
 bloque 4 de `DESIGN_AUDIT.md`, incluidos los dos que quedaban abiertos: el eje ya no es la velocidad de
 toque sino la puntería en movimiento, y la categoría va por dos canales (tinta llena para las latas,
@@ -214,7 +214,7 @@ verde claro para las plantas) en vez de solo la silueta.
 Las dos propiedades que hacen que la nota sea habilidad y no sorteo están medidas con
 `tools/design/kindness-reach.cjs`: **ningún par de objetos coincide en la banda del cesto**, así que
 nunca hay que elegir entre una lata y una planta; y sobre 10.000 partidas con columnas reales **no hay
-una sola transición imposible**, con 165 ms de margen en la más ajustada. Duración 25,2 s y 38
+una sola transición imposible**, con 34 ms de margen en la más ajustada. Duración 25,7 s y 37
 monedas/min, frente a las 36 de Fuerza.
 
 **Pendiente:** los otros tres minijuegos. La auditoría los dio por afinados, pero el barrido conjunto

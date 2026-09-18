@@ -156,7 +156,9 @@
   /* El panel no hace scroll: lo hace su contenido. En iOS un filtro SVG sobre un contenedor con
      scroll se cachea como capa y no se repinta al desplazarse —texto roto y fondo en blanco—, y con
      esto el filtro queda sobre un elemento quieto. La cabecera deja de necesitar sticky. */
-  #panel{display:flex;flex-direction:column;overflow:hidden}
+  /* Solo abierto: `display` en el propio dialogo pisa el `dialog:not([open]){display:none}` del
+     navegador, y el panel cerrado se quedaba dibujado debajo de la consola como una segunda pantalla. */
+  #panel[open]{display:flex;flex-direction:column;overflow:hidden}
   #panel>header{position:static;top:auto;flex:0 0 auto}
   #panel-content{overflow:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:0}
   .panel-note{font-size:.78rem;margin:6px 0 12px}.panel-row{padding:10px 0}.panel-row p{font-size:.78rem}.panel-row ul{padding-left:18px;font-size:.78rem}.memory-card{align-items:center}.memory-sprite{height:80px}
@@ -1160,7 +1162,7 @@ const dialog=$('panel');let panelName=null, timer=null, shownEvolution=0;
 function showPanel(name){sync();save();render();if(interactionLocked())return;panelName=name;dialog.dataset.lcdSurface=String(name==='pokedex');$('panel-content').dataset.socialReady='';renderPanel();dialog.showModal();
   // Cada menu empieza arriba: el dialogo conservaba el desplazamiento del que se cerro antes.
   dialog.scrollTop=0;$('panel-content').scrollTop=0;}
-function closePanel(){shopMode='buy';sellDraft={};disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
+function closePanel(){shopMode='buy';sellDraft={};framingMemorialId=null;disposeMemorialSprites();stopSocialCamera();dialog.close();delete dialog.dataset.lcdSurface;panelName=null;}
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined){if(typeof text==='object')n.append(text);else n.textContent=I18n?.localize(text)??text;}if(cls)n.className=cls;return n;}
 // La fecha limite se escribe en el idioma activo y con la zona del dispositivo, que es la misma
 // con la que se compara el precio.

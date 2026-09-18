@@ -70,19 +70,19 @@ BOUTIQUE_STYLES = {
         ('urban', 'Urbano', 'Urban', '#8d9196', ('#4c5054', '#c2c6ca', '#2e3134')),
     )),
     'neon': ('Neon', 'Neon', (
-        ('magenta', 'Magenta', 'Magenta', '#2a1030', ('#ff2d95', '#00e5ff', '#ffe600')),
-        ('cyan', 'Cian', 'Cyan', '#08222c', ('#00e5ff', '#39ff9e', '#ff2d95')),
-        ('lime', 'Lima', 'Lime', '#14260c', ('#9dff3c', '#ffe600', '#00e5ff')),
+        ('magenta', 'Magenta', 'Magenta', '#2b0f1e', ('#ff3b94', '#55ffe1', '#a6fd29')),
+        ('cyan', 'Cian', 'Cyan', '#06222a', ('#55ffe1', '#a6fd29', '#ff3b94')),
+        ('lime', 'Lima', 'Lime', '#16250b', ('#a6fd29', '#ff3b94', '#55ffe1')),
     )),
     'guts': ('Transparente', 'Clear', (
-        ('grape', 'Uva', 'Grape', '#9c7fc0', ('#4b3570', '#c9b3e3', '#6f5a96')),
-        ('atomic', 'Atomica', 'Atomic', '#7fb9c0', ('#2f6a72', '#bfe4e8', '#4f8f96')),
+        ('grape', 'Uva', 'Grape', '#8d78c4', ('#3a2a6b', '#bfb0e4', '#5f5296')),
+        ('atomic', 'Ambar', 'Amber', '#d19b4a', ('#7a5313', '#f0d69d', '#a3762a')),
         ('smoke', 'Ahumada', 'Smoke', '#9a9690', ('#4a4743', '#cfccc7', '#6e6b66')),
     )),
-    'sequins': ('Lentejuelas', 'Sequins', (
-        ('rose', 'Oro rosa', 'Rose gold', '#c98f88', ('#f0c0a8', '#8d4f4a', '#f7e3d2')),
-        ('silver', 'Plata', 'Silver', '#a9b0b8', ('#e2e7ec', '#5f676f', '#f4f7fa')),
-        ('emerald', 'Esmeralda', 'Emerald', '#3f8f74', ('#8fdcbe', '#1e5544', '#d6f3e6')),
+    'terrazo': ('Terrazo', 'Terrazzo', (
+        ('sand', 'Arena', 'Sand', '#e8dcc6', ('#b4543a', '#2f4858', '#c9a227')),
+        ('graphite', 'Grafito', 'Graphite', '#3c3f45', ('#e6e1d6', '#c9793f', '#7a9aa8')),
+        ('moss', 'Musgo', 'Moss', '#5b6b44', ('#efe6cf', '#b8863f', '#2f3b2a')),
     )),
     'picnic': ('Mantel', 'Picnic', (
         ('red', 'Rojo', 'Red', '#f0e6d8', ('#c2352f', '#e08a84', '#8c211c')),

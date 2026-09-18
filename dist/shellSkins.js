@@ -47,17 +47,17 @@ globalThis.ShellSkins=(()=>{
         accent:'<circle cx="6" cy="6" r="3" fill="none" stroke="%C" stroke-width="2"/><circle cx="6" cy="6" r="1" fill="%C"/>'},
   camo:{glyph:'<path d="M3 8c4-6 9-4 12-6 4-2 8 1 7 5s-5 4-4 8-3 8-7 7-4-5-8-5-4-6 0-9z" fill="%C"/>',
         accent:'<path d="M1 5c2-4 5-3 7-1s3 5 0 7-6 1-7-2z" fill="%C"/>'},
-  neon:{glyph:'<path d="M2 20L12 6l10 14" fill="none" stroke="%C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12-2l10 14" fill="none" stroke="%C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>',
+  neon:{boost:2.7,glyph:'<path d="M2 20L12 6l10 14" fill="none" stroke="%C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12-2l10 14" fill="none" stroke="%C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>',
         accent:'<path d="M6 0c1 4 2 5 6 6-4 1-5 2-6 6-1-4-2-5-6-6 4-1 5-2 6-6z" fill="%C"/>'},
   // La carcasa transparente ensenaba las entranas: aqui se dibujan, no se sugieren.
   guts:{glyph:'<rect x="5" y="7" width="14" height="10" rx="1.5" fill="none" stroke="%C" stroke-width="2"/><path d="M5 10H1M5 14H1M19 10h4M19 14h4" stroke="%C" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="10.5" r="1.4" fill="%C"/>',
         accent:'<circle cx="6" cy="6" r="4.5" fill="none" stroke="%C" stroke-width="1.8"/><path d="M6 2.5v7M2.5 6h7" stroke="%C" stroke-width="1.6" stroke-linecap="round"/>'},
-  sequins:{tile:[0,1,2,3,4,5,6,7].map(row=>[0,1,2,3,4,5,6,7].map(col=>{
-    const x=col*8+(row%2?4:0),y=row*8;
-    return `<circle cx="${x}" cy="${y+4}" r="4.6" fill="${row%2?'%2':'%1'}" opacity=".9"/>`
-      +`<path d="M${x-2.8} ${y+2}a4.6 4.6 0 0 1 4.4-1.4" fill="none" stroke="%3" stroke-width="1.3" stroke-linecap="round" opacity=".8"/>`;
-   }).join('')).join(''),
-           glyph:'<circle cx="12" cy="12" r="9" fill="%C"/>',accent:'<circle cx="6" cy="6" r="4.5" fill="%C"/>'},
+  // Terrazo: lascas de piedra, ninguna igual a otra. Sustituye a las lentejuelas, que se leian
+  // como una trama regular y no como un material.
+  // Terrazo: lascas de piedra, angulares y de tamanos distintos. Ninguna se repite, que es lo que
+  // lo separa de polka: alli son circulos regulares, aqui es material roto.
+  terrazo:{tile:'<path d="M2 6L14 2L19 9L12 16L3 14z" fill="%1"/><path d="M24 3L34 6L33 14L25 15L21 9z" fill="%2"/><path d="M40 1L52 4L50 12L41 13z" fill="%3"/><path d="M56 8L63 5L64 15L57 17z" fill="%1"/><path d="M5 22L16 19L20 27L12 32L4 29z" fill="%3"/><path d="M26 21L37 24L35 33L27 34L23 27z" fill="%2"/><path d="M44 20L56 23L54 32L45 31z" fill="%1"/><path d="M1 37L11 35L14 44L5 47z" fill="%2"/><path d="M20 40L32 38L34 47L24 50L19 45z" fill="%3"/><path d="M40 38L52 41L50 50L41 49z" fill="%1"/><path d="M57 36L64 39L63 48L56 46z" fill="%2"/><path d="M3 52L14 54L12 62L4 61z" fill="%3"/><path d="M22 55L33 53L35 62L25 64z" fill="%1"/><path d="M42 55L54 57L52 64L43 63z" fill="%2"/><path d="M58 21L64 24L63 31L57 29z" fill="%3"/><path d="M17 17L21 18L20 22L16 21z" fill="%3"/><path d="M38 16L42 17L41 21L37 20z" fill="%1"/><path d="M9 49L13 50L12 53L8 52z" fill="%2"/><path d="M36 35L40 36L39 39L35 38z" fill="%3"/><path d="M50 52L54 53L53 57L49 56z" fill="%1"/><path d="M29 8L33 9L32 13L28 12z" fill="%2"/>',
+          glyph:'<path d="M2 7L9 1l8 3 2 9-7 6-8-3z" fill="%C"/>',accent:'<path d="M1 4L5 1l5 3-1 5-5 2z" fill="%C"/>'},
   picnic:{tile:'<path d="M0 0h32v64H0z" fill="%1" opacity=".55"/><path d="M0 0h64v32H0z" fill="%1" opacity=".55"/>'
     +'<path d="M0 0h32v32H0z" fill="%1"/><path d="M32 32h32v32H32z" fill="%3" opacity=".22"/>'
     +'<path d="M0 0h64v64H0z" fill="none" stroke="%2" stroke-width="1.5" stroke-dasharray="2 6" opacity=".55"/>'
@@ -155,6 +155,7 @@ globalThis.ShellSkins=(()=>{
  function motifTile(theme,opacity){
   const draw=MOTIFS[theme.motif],colors=theme.motifColors||[];
   if(!draw||!colors.length)return 'none';
+  opacity=Math.min(1,opacity*(draw.boost||1));
   const main=colors[0],second=colors[1]||colors[0],third=colors[2];
   if(draw.tile){
    const body=draw.tile.split('%1').join(main).split('%2').join(second).split('%3').join(third||second);

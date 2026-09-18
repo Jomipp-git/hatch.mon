@@ -109,7 +109,7 @@ def boutique_theme(style, variant, name_es, name_en, plastic, motif_colors):
         'shellBase': mix(primary, 255, .12) if dark else mix(primary, 255, .34),
         'shellDark': mix(primary, 0, .55), 'shellLight': mix(primary, 255, .72),
         'accent': mix(primary, 0, .10), 'bezel': mix(primary, 0, .68),
-        'button': mix(primary, 255, .40) if dark else mix(primary, 255, .88),
+        'button': legible_button(mix(primary, 255, .40) if dark else mix(primary, 255, .88)),
         'pageBase': mix(primary, 255, .30) if dark else mix(primary, 255, .80),
         # distinct_edges separa los cuatro cantos de verdad: repetir el primer color en el cuarto
         # boton dejaba dos acciones con el mismo canto y el color dejaba de informar.
@@ -150,6 +150,42 @@ def hex_to_rgb(value):
 
 def mix(color, target, amount):
     return '#' + ''.join(f'{round(c * (1 - amount) + target * amount):02x}' for c in color)
+
+
+# La tinta del juego. Un boton de cuidado sin `buttonText` propio hereda este color, asi que su
+# fondo tiene que contrastar con el o el boton queda ilegible: paso con polka-ink y con las tres
+# gemas nuevas, que salian a 3,5-4,0 cuando el minimo legible es 4,5.
+INK = '#303d35'
+
+
+def contrast(a, b):
+    """Razon de contraste WCAG entre dos colores."""
+    def channel(value):
+        value /= 255
+        return value / 12.92 if value <= .03928 else ((value + .055) / 1.055) ** 2.4
+
+    def lum(color):
+        r, g, b_ = (channel(c) for c in hex_to_rgb(color))
+        return .2126 * r + .7152 * g + .0722 * b_
+
+    first, second = lum(a), lum(b)
+    return (max(first, second) + .05) / (min(first, second) + .05)
+
+
+def legible_button(fill, text=INK, minimum=4.5):
+    """Aclara el fondo del boton hasta que el texto se lee encima.
+
+    Se aclara en vez de oscurecer porque la tinta es oscura: llevarlo a blanco siempre acaba
+    cumpliendo, mientras que oscurecer pasaria por el mismo tono que el texto.
+    """
+    if contrast(fill, text) >= minimum:
+        return fill
+    current = hex_to_rgb(fill)
+    for step in range(1, 21):
+        candidate = mix(current, 255, step / 20)
+        if contrast(candidate, text) >= minimum:
+            return candidate
+    return '#ffffff'
 
 
 def readable(value, floor=.42):
@@ -245,7 +281,7 @@ def build(palette, record, depth, motif_names, variant='normal'):
         'name': palette['name'],
         'shellBase': mix(primary, 255, .48), 'shellDark': mix(primary, 0, .60),
         'shellLight': mix(primary, 255, .80), 'accent': mix(primary, 0, .12),
-        'bezel': mix(primary, 0, .65), 'button': mix(primary, 255, .87),
+        'bezel': mix(primary, 0, .65), 'button': legible_button(mix(primary, 255, .87)),
         # El fondo de pagina se tine, pero muy poco: es el lienzo del estampado, no el estampado.
         'pageBase': mix(primary, 255, .82),
         'buttonEdges': distinct_edges(edges),

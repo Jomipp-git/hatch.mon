@@ -69,5 +69,25 @@ assert.deepEqual([...unknown],[],`motivos sin implementar: ${unknown.join(', ')}
 assert.equal(run('ShellSkins.motifImage({motif:"plain",motifColors:[]})'),'none');
 assert.ok(run('ShellSkins.motifImage({motif:"waves",motifColors:["#123456"]})').startsWith('url("data:image/svg+xml,'));
 assert.equal(run('ShellSkins.motifImage({motif:"inventado",motifColors:["#123456"]})'),'none','un motivo desconocido deja la carcasa lisa');
-console.log('PASS refinement: no-space mapping, a catch basket that chases the finger and answers the arrow keys, collection slots, comparable trio mass and shell palettes that grow with the evolution line, hand-drawn species motifs and per-action button edges.');
+// Ninguna carcasa puede dejar un boton de cuidado ilegible. Paso de verdad: polka-ink y las tres
+// gemas daban 3,5-4,0 de contraste entre el fondo del boton y la tinta, y un boton que no se lee no
+// es un boton. El generador aclara el fondo hasta cumplir, y aqui se comprueba sobre los 245 temas.
+{
+ const rel=hex=>{const c=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255)
+   .map(v=>v<=.03928?v/12.92:((v+.055)/1.055)**2.4);
+  return .2126*c[0]+.7152*c[1]+.0722*c[2];};
+ const contrast=(a,b)=>{const x=rel(a),y=rel(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+ const INK='#303d35';
+ const themes=run('JSON.stringify(SHELL_THEMES)');
+ const bad=[];
+ for(const [id,theme] of Object.entries(JSON.parse(themes))){
+  // Sin `buttonText` propio, el boton hereda la tinta del juego.
+  const text=theme.buttonText&&theme.buttonText!=='inherit'?theme.buttonText:INK;
+  const fills=theme.buttonFills?.length?theme.buttonFills:[theme.button];
+  for(const fill of fills)if(fill&&contrast(fill,text)<4.5)bad.push(`${id} ${fill} sobre ${text} → ${contrast(fill,text).toFixed(2)}`);
+ }
+ assert.deepEqual(bad,[],`botones ilegibles: ${bad.slice(0,4).join(' · ')}`);
+ assert.ok(Object.keys(JSON.parse(themes)).length>200,'y se han mirado todos los temas');
+}
+console.log('PASS refinement: no-space mapping, a catch basket that chases the finger and answers the arrow keys, collection slots, comparable trio mass and shell palettes that grow with the evolution line, hand-drawn species motifs and per-action button edges, and a legible care button on every one of the 245 shells.');
 })().catch(e=>{console.error(e);process.exitCode=1});
